@@ -1,0 +1,1874 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="jiangfy">
+  
+  
+  
+  <link rel="prev" href="https://example.com/2014/creating-a-new-theme/" />
+  
+  <link rel="canonical" href="https://example.com/2020/linux_commond/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Linux Commond | LeaveIt
+       
+  </title>
+  <meta name="title" content="Linux Commond | LeaveIt">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/example.com"
+    },
+    "articleSection" : "posts",
+    "name" : "Linux Commond",
+    "headline" : "Linux Commond",
+    "description" : "目录操作命令 ls 1. 命令格式： ls [选项] [目录名]\n2. 命令功能： 列出目标目录中所有的子目录和文件。\n3. 常用参数： -a, –all 列出目录下的所有文件，包括以 . 开头的隐含文件\n-A 同-a，但不列出“.”(表示当前目录)和“..”(表示当前目录的父目录)。\n-c 配合 -lt：根据 ctime 排序及显示 ctime (文件状态最后更改的时间)配合 -l：显示 ctime 但根据名称排序否则：根据 ctime 排序\n-C 每栏由上至下列出项目\n–color[=WHEN] 控制是否使用色彩分辨文件。WHEN 可以是\u0026rsquo;never\u0027、\u0026lsquo;always\u0026rsquo;或\u0026rsquo;auto\u0026rsquo;其中之一\n-d, –directory 将目录象文件一样显示，而不是显示其下的文件。\n-D, –dired 产生适合 Emacs 的 dired 模式使用的结果\n-f 对输出的文件不进行排序，-aU 选项生效，-lst 选项失效\n-g 类似 -l,但不列出所有者\n-G, –no-group 不列出任何有关组的信息\n-h, –human-readable 以容易理解的格式列出文件大小 (例如 1K 234M 2G)\n–si 类似 -h,但文件大小取 1000 的次方而不是 1024\n-H, –dereference-command-line 使用命令列中的符号链接指示的真正目的地",
+    "inLanguage" : "en-us",
+    "author" : "jiangfy",
+    "creator" : "jiangfy",
+    "publisher": "jiangfy",
+    "accountablePerson" : "jiangfy",
+    "copyrightHolder" : "jiangfy",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-10-19 19:42:58 \u002b0800 CST",
+    "dateModified" : "2020-10-19 19:42:58 \u002b0800 CST",
+    "url" : "https:\/\/example.com\/2020\/linux_commond\/",
+    "wordCount" : "4003",
+    "keywords" : [ "Linux","cmd", "LeaveIt"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://example.com">LeaveIt</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+                <a class="menu-item" href="/about/" title="About Hugo">About Hugo</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://example.com">LeaveIt</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+                <a class="menu-item" href="/about/" title="About Hugo">About Hugo</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Linux Commond</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://example.com" rel="author">jiangfy</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-10-19 itemprop="datePublished">October 19, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://example.com/categories/linux/"> Linux </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="目录操作命令">目录操作命令</h1>
+<h2 id="ls">ls</h2>
+<h3 id="1-命令格式"><strong>1.</strong> <strong>命令格式：</strong></h3>
+<p>ls [选项] [目录名]</p>
+<h3 id="2-命令功能"><strong>2.</strong> <strong>命令功能：</strong></h3>
+<p>列出目标目录中所有的子目录和文件。</p>
+<h3 id="3-常用参数"><strong>3.</strong> <strong>常用参数：</strong></h3>
+<p>-a, –all 列出目录下的所有文件，包括以 . 开头的隐含文件</p>
+<p>-A 同-a，但不列出“.”(表示当前目录)和“..”(表示当前目录的父目录)。</p>
+<p>-c 配合 -lt：根据 ctime 排序及显示 ctime (文件状态最后更改的时间)配合 -l：显示 ctime 但根据名称排序否则：根据 ctime 排序</p>
+<p>-C 每栏由上至下列出项目</p>
+<p>–color[=WHEN] 控制是否使用色彩分辨文件。WHEN 可以是&rsquo;never'、&lsquo;always&rsquo;或&rsquo;auto&rsquo;其中之一</p>
+<p>-d, –directory 将目录象文件一样显示，而不是显示其下的文件。</p>
+<p>-D, –dired 产生适合 Emacs 的 dired 模式使用的结果</p>
+<p>-f 对输出的文件不进行排序，-aU 选项生效，-lst 选项失效</p>
+<p>-g 类似 -l,但不列出所有者</p>
+<p>-G, –no-group 不列出任何有关组的信息</p>
+<p>-h, –human-readable 以容易理解的格式列出文件大小 (例如 1K 234M 2G)</p>
+<p>–si 类似 -h,但文件大小取 1000 的次方而不是 1024</p>
+<p>-H, –dereference-command-line 使用命令列中的符号链接指示的真正目的地</p>
+<p>–indicator-style=方式 指定在每个项目名称后加上指示符号&lt;方式&gt;：none (默认)，classify (-F)，file-type (-p)</p>
+<p>-i, –inode 印出每个文件的 inode 号</p>
+<p>-I, –ignore=样式 不印出任何符合 shell 万用字符&lt;样式&gt;的项目</p>
+<p>-k 即 –block-size=1K,以 k 字节的形式表示文件的大小。</p>
+<p>-l 除了文件名之外，还将文件的权限、所有者、文件大小等信息详细列出来。</p>
+<p>-L, –dereference 当显示符号链接的文件信息时，显示符号链接所指示的对象而并非符号链接本身的信息</p>
+<p>-m 所有项目以逗号分隔，并填满整行行宽</p>
+<p>-o 类似 -l,显示文件的除组信息外的详细信息。</p>
+<p>-r, –reverse 依相反次序排列</p>
+<p>-R, –recursive 同时列出所有子目录层</p>
+<p>-s, –size 以块大小为单位列出所有文件的大小</p>
+<p>-S 根据文件大小排序</p>
+<p>–sort=WORD 以下是可选用的 WORD 和它们代表的相应选项：</p>
+<p>extension -X status -c</p>
+<p>none -U time -t</p>
+<p>size -S atime -u</p>
+<p>time -t access -u</p>
+<p>version -v use -u</p>
+<p>-t 以文件修改时间排序</p>
+<p>-u 配合 -lt:显示访问时间而且依访问时间排序</p>
+<p>配合 -l:显示访问时间但根据名称排序</p>
+<p>否则：根据访问时间排序</p>
+<p>-U 不进行排序;依文件系统原有的次序列出项目</p>
+<p>-v 根据版本进行排序</p>
+<p>-w, –width=COLS 自行指定屏幕宽度而不使用目前的数值</p>
+<p>-x 逐行列出项目而不是逐栏列出</p>
+<p>-X 根据扩展名排序</p>
+<p>-1 每行只列出一个文件</p>
+<p>–help 显示此帮助信息并离开</p>
+<p>–version 显示版本信息并离开</p>
+<h2 id="cd">cd</h2>
+<h3 id="1-命令格式cd-目录名">1. 命令格式：cd [目录名]</h3>
+<h3 id="2-命令功能切换当前目录至dirname">2. 命令功能：切换当前目录至dirName</h3>
+<h2 id="pwd">pwd</h2>
+<h3 id="1命令格式">1．命令格式：</h3>
+<p>​	pwd [选项]</p>
+<h3 id="2命令功能"><strong>2．命令功能：</strong></h3>
+<p>​	查看”当前工作目录“的完整路径</p>
+<h3 id="3常用参数"><strong>3．常用参数：</strong></h3>
+<p>一般情况下不带任何参数</p>
+<p>如果目录是链接时：</p>
+<p>格式：pwd -P 显示出实际路径，而非使用连接（link）路径。</p>
+<h2 id="mkdir">mkdir</h2>
+<h3 id="1命令格式-1"><strong>1．命令格式：</strong></h3>
+<p>mkdir [选项] 目录&hellip;</p>
+<h3 id="2命令功能-1"><strong>2．命令功能：</strong></h3>
+<p>通过 mkdir 命令可以实现在指定位置创建以 DirName(指定的文件名)命名的文件夹或目录。要创建文件夹或目录的用户必须对所创建的文件夹的父文件夹具有写权限。并且，所创建的文件夹(目录)不能与其父目录(即父文件夹)中的文件名重名，即同一个目录下不能有同名的(区分大小写)。</p>
+<h3 id="3命令参数"><strong>3．命令参数：</strong></h3>
+<p>-m, &ndash;mode=模式，设定权限&lt;模式&gt; (类似 chmod)，而不是 rwxrwxrwx 减 umask</p>
+<p>-p, &ndash;parents 可以是一个路径名称。此时若路径中的某些目录尚不存在,加上此选项后,系统将自动建立好那些尚不存在的目录,即一次可以建立多个目录;</p>
+<p>-v, &ndash;verbose 每次创建新目录都显示信息</p>
+<p>&ndash;help  显示此帮助信息并退出</p>
+<p>&ndash;version 输出版本信息并退出</p>
+<h2 id="rm">rm</h2>
+<h3 id="1命令格式-2"><strong>1．命令格式：</strong></h3>
+<p>rm [选项] 文件…</p>
+<h3 id="2命令功能-2"><strong>2．命令功能：</strong></h3>
+<p>删除一个目录中的一个或多个文件或目录，如果没有使用- r选项，则rm不会删除目录。如果使用 rm 来删除文件，通常仍可以将该文件恢复原状。</p>
+<h3 id="3命令参数-1"><strong>3．命令参数：</strong></h3>
+<p>-f, &ndash;force  忽略不存在的文件，从不给出提示。</p>
+<p>-i, &ndash;interactive 进行交互式删除</p>
+<p>-r, -R, &ndash;recursive  指示rm将参数中列出的全部目录和子目录均递归地删除。</p>
+<p>-v, &ndash;verbose  详细显示进行的步骤</p>
+<p>​    &ndash;help   显示此帮助信息并退出</p>
+<p>​    &ndash;version 输出版本信息并退出</p>
+<h2 id="rmdir">rmdir</h2>
+<h3 id="1命令格式-3"><strong>1．命令格式：</strong></h3>
+<p>rmdir [选项]&hellip; 目录&hellip;</p>
+<h3 id="2命令功能-3"><strong>2．命令功能：</strong></h3>
+<p>该命令从一个目录中删除一个或多个子目录项，删除某目录时也必须具有对父目录的写权限。</p>
+<h3 id="3命令参数-2"><strong>3．命令参数：</strong></h3>
+<p>- p 递归删除目录dirname，当子目录删除后其父目录为空时，也一同被删除。如果整个路径被删除或者由于某种原因保留部分路径，则系统在标准输出上显示相应的信息。</p>
+<p>-v, &ndash;verbose 显示指令执行过程</p>
+<h2 id="mv">mv</h2>
+<h3 id="1命令格式-4"><strong>1．命令格式：</strong></h3>
+<p>mv [选项] 源文件或目录 目标文件或目录</p>
+<h3 id="2命令功能-4"><strong>2．命令功能：</strong></h3>
+<p>视mv命令中第二个参数类型的不同（是目标文件还是目标目录），mv命令将文件重命名或将其移至一个新的目录中。当第二个参数类型是文件时，mv命令完成文件重命名，此时，源文件只能有一个（也可以是源目录名），它将所给的源文件或目录重命名为给定的目标文件名。当第二个参数是已存在的目录名称时，源文件或目录参数可以有多个，mv命令将各参数指定的源文件均移至目标目录中。在跨文件系统移动文件时，mv先拷贝，再将原有文件删除，而链至该文件的链接也将丢失。</p>
+<h3 id="3命令参数-3"><strong>3．命令参数：</strong></h3>
+<p>-b ：若需覆盖文件，则覆盖前先行备份。</p>
+<p>-f ：force 强制的意思，如果目标文件已经存在，不会询问而直接覆盖；</p>
+<p>-i ：若目标文件 (destination) 已经存在时，就会询问是否覆盖！</p>
+<p>-u ：若目标文件已经存在，且 source 比较新，才会更新(update)</p>
+<p>​	  -t  ： &ndash;target-directory=DIRECTORY move all SOURCE arguments into DIRECTORY，即指定mv的目标目录，该选项适用于移动多个源文件到一个目录的情况，此时目标目录在前，源文件在后。</p>
+<h2 id="cp">cp</h2>
+<h3 id="1命令格式-5"><strong>1．命令格式：</strong></h3>
+<p>用法：</p>
+<p>​	  cp [选项]&hellip; [-T] 源 目的</p>
+<p>​    或：cp [选项]&hellip; 源&hellip; 目录</p>
+<p>​    或：cp [选项]&hellip; -t 目录 源&hellip;</p>
+<h3 id="2命令功能-5"><strong>2．命令功能：</strong></h3>
+<p>将源文件复制至目标文件，或将多个源文件复制至目标目录。</p>
+<h3 id="3命令参数-4"><strong>3．命令参数：</strong></h3>
+<p>-a, &ndash;archive  等于-dR &ndash;preserve=all</p>
+<p>&ndash;backup[=CONTROL  为每个已存在的目标文件创建备份</p>
+<p>-b        类似&ndash;backup 但不接受参数</p>
+<p>&ndash;copy-contents    在递归处理是复制特殊文件内容</p>
+<p>-d        等于&ndash;no-dereference &ndash;preserve=links</p>
+<p>-f, &ndash;force    如果目标文件无法打开则将其移除并重试(当 -n 选项</p>
+<p>​          存在时则不需再选此项)</p>
+<p>-i, &ndash;interactive    覆盖前询问(使前面的 -n 选项失效)</p>
+<p>-H        跟随源文件中的命令行符号链接</p>
+<p>-l, &ndash;link      链接文件而不复制</p>
+<p>-L, &ndash;dereference  总是跟随符号链接</p>
+<p>-n, &ndash;no-clobber  不要覆盖已存在的文件(使前面的 -i 选项失效)</p>
+<p>-P, &ndash;no-dereference  不跟随源文件中的符号链接</p>
+<p>-p        等于&ndash;preserve=模式,所有权,时间戳</p>
+<p>&ndash;preserve[=属性列表  保持指定的属性(默认：模式,所有权,时间戳)，如果</p>
+<p>​        可能保持附加属性：环境、链接、xattr 等</p>
+<p>-R, -r, &ndash;recursive 复制目录及目录内的所有项目</p>
+<h2 id="touch">touch</h2>
+<h3 id="1命令格式-6"><strong>1．命令格式：</strong></h3>
+<p>touch [选项]&hellip; 文件&hellip;</p>
+<h3 id="2命令参数"><strong>2．命令参数：</strong></h3>
+<p>-a  或&ndash;time=atime或&ndash;time=access或&ndash;time=use 只更改存取时间。</p>
+<p>-c  或&ndash;no-create 不建立任何文档。</p>
+<p>-d 使用指定的日期时间，而非现在的时间。</p>
+<p>-f 此参数将忽略不予处理，仅负责解决BSD版本touch指令的兼容性问题。</p>
+<p>-m  或&ndash;time=mtime或&ndash;time=modify 只更改变动时间。</p>
+<p>-r 把指定文档或目录的日期时间，统统设成和参考文档或目录的日期时间相同。</p>
+<p>-t 使用指定的日期时间，而非现在的时间。</p>
+<h3 id="3命令功能"><strong>3．命令功能：</strong></h3>
+<p>touch命令参数可更改文档或目录的日期时间，包括存取时间和更改时间。</p>
+<h2 id="cat">cat</h2>
+<h3 id="1命令格式-7"><strong>1．命令格式：</strong></h3>
+<p>cat [选项] [文件]&hellip;</p>
+<h3 id="2命令功能-6"><strong>2．命令功能：</strong></h3>
+<p><strong>cat主要有三大功能：</strong></p>
+<p>1.一次显示整个文件:cat filename</p>
+<p>2.从键盘创建一个文件:cat &gt; filename 只能创建新文件,不能编辑已有文件.</p>
+<p>3.将几个文件合并为一个文件:cat file1 file2 &gt; file</p>
+<h3 id="3命令参数-5"><strong>3．命令参数：</strong></h3>
+<p>-A, &ndash;show-all      等价于 -vET</p>
+<p>-b, &ndash;number-nonblank  对非空输出行编号</p>
+<p>-e            等价于 -vE</p>
+<p>-E, &ndash;show-ends     在每行结束处显示 $</p>
+<p>-n, &ndash;number   对输出的所有行编号,由1开始对所有输出的行数编号</p>
+<p>-s, &ndash;squeeze-blank 有连续两行以上的空白行，就代换为一行的空白行</p>
+<p>-t            与 -vT 等价</p>
+<p>-T, &ndash;show-tabs     将跳格字符显示为 ^I</p>
+<p>-u            (被忽略)</p>
+<p>-v, &ndash;show-nonprinting  使用 ^ 和 M- 引用，除了 LFD 和 TAB 之外</p>
+<h2 id="nl">nl</h2>
+<h3 id="1命令格式-8"><strong>1．命令格式：</strong></h3>
+<p>nl [选项]&hellip; [文件]&hellip;</p>
+<h3 id="2命令参数-1"><strong>2．命令参数：</strong></h3>
+<p>-b ：指定行号指定的方式，主要有两种：</p>
+<p>-b a ：表示不论是否为空行，也同样列出行号(类似 cat -n)；</p>
+<p>-b t ：如果有空行，空的那一行不要列出行号(默认值)；</p>
+<p>-n ：列出行号表示的方法，主要有三种：</p>
+<p>-n ln ：行号在萤幕的最左方显示；</p>
+<p>-n rn ：行号在自己栏位的最右方显示，且不加 0 ；</p>
+<p>-n rz ：行号在自己栏位的最右方显示，且加 0 ；</p>
+<p>-w ：行号栏位的占用的位数。</p>
+<p>-p 在逻辑定界符处不重新开始计算。</p>
+<h3 id="3命令功能-1"><strong>3．命令功能：</strong></h3>
+<p>nl 命令读取 File 参数（缺省情况下标准输入），计算输入中的行号，将计算过的行号写入标准输出。 在输出中，nl 命令根据您在命令行中指定的标志来计算左边的行。 输入文本必须写在逻辑页中。每个逻辑页有头、主体和页脚节（可以有空节）。 除非使用 -p 标志，nl 命令在每个逻辑页开始的地方重新设置行号。 可以单独为头、主体和页脚节设置行计算标志（例如，头和页脚行可以被计算然而文本行不能）。</p>
+<h2 id="more">more</h2>
+<h3 id="1命令格式-9"><strong>1．命令格式：</strong></h3>
+<p>more [-dlfpcsu ] [-num ] [+/ pattern] [+ linenum] [file &hellip; ]</p>
+<h3 id="2命令功能-7"><strong>2．命令功能：</strong></h3>
+<p>more命令和cat的功能一样都是查看文件里的内容，但有所不同的是more可以按页来查看文件的内容，还支持直接跳转行等功能。</p>
+<h3 id="3命令参数-6"><strong>3．命令参数：</strong></h3>
+<p>+n   从笫n行开始显示</p>
+<p>-n    定义屏幕大小为n行</p>
+<p>+/pattern 在每个档案显示前搜寻该字串（pattern），然后从该字串前两行之后开始显示</p>
+<p>-c    从顶部清屏，然后显示</p>
+<p>-d    提示“Press space to continue，’q’ to quit（按空格键继续，按q键退出）”，禁用响铃功能</p>
+<p>-l    忽略Ctrl+l（换页）字符</p>
+<p>-p    通过清除窗口而不是滚屏来对文件进行换页，与-c选项相似</p>
+<p>-s    把连续的多个空行显示为一行</p>
+<p>-u    把文件内容中的下画线去掉</p>
+<h3 id="4常用操作命令"><strong>4．常用操作命令：</strong></h3>
+<p>Enter  向下n行，需要定义。默认为1行</p>
+<p>Ctrl+F  向下滚动一屏</p>
+<p>空格键 向下滚动一屏</p>
+<p>Ctrl+B 返回上一屏</p>
+<p>=    输出当前行的行号</p>
+<p>：f   输出文件名和当前行的行号</p>
+<p>V   调用vi编辑器</p>
+<p>!命令  调用Shell，并执行命令</p>
+<p>q    退出more</p>
+<h2 id="less">less</h2>
+<h3 id="1命令格式-10"><strong>1．命令格式：</strong></h3>
+<p>less [参数] 文件</p>
+<h3 id="2命令功能-8"><strong>2．命令功能：</strong></h3>
+<p>less 与 more 类似，但使用 less 可以随意浏览文件，而 more 仅能向前移动，却不能向后移动，而且 less 在查看之前不会加载整个文件。</p>
+<h3 id="3命令参数-7"><strong>3．命令参数：</strong></h3>
+<p>-b &lt;缓冲区大小&gt; 设置缓冲区的大小</p>
+<p>-e 当文件显示结束后，自动离开</p>
+<p>-f 强迫打开特殊文件，例如外围设备代号、目录和二进制文件</p>
+<p>-g 只标志最后搜索的关键词</p>
+<p>-i 忽略搜索时的大小写</p>
+<p>-m 显示类似more命令的百分比</p>
+<p>-N 显示每行的行号</p>
+<p>-o &lt;文件名&gt; 将less 输出的内容在指定文件中保存起来</p>
+<p>-Q 不使用警告音</p>
+<p>-s 显示连续空行为一行</p>
+<p>-S 行过长时间将超出部分舍弃</p>
+<p>-x &lt;数字&gt; 将“tab”键显示为规定的数字空格</p>
+<p>/字符串：向下搜索“字符串”的功能</p>
+<p>?字符串：向上搜索“字符串”的功能</p>
+<p>n：重复前一个搜索（与 / 或 ? 有关）</p>
+<p>N：反向重复前一个搜索（与 / 或 ? 有关）</p>
+<p>b 向后翻一页</p>
+<p>d 向后翻半页</p>
+<p>h 显示帮助界面</p>
+<p>Q 退出less 命令</p>
+<p>u 向前滚动半页</p>
+<p>y 向前滚动一行</p>
+<p>空格键 滚动一行</p>
+<p>回车键 滚动一页</p>
+<p>[pagedown]： 向下翻动一页</p>
+<p>[pageup]：  向上翻动一页</p>
+<h2 id="head">head</h2>
+<h3 id="1命令格式-11"><strong>1．命令格式：</strong></h3>
+<p>head [参数]&hellip; [文件]&hellip;</p>
+<h3 id="2命令功能-9">**2．**命令功能：</h3>
+<p>head 用来显示档案的开头至标准输出中，默认head命令打印其相应文件的开头10行。</p>
+<h3 id="3命令参数-8"><strong>3．命令参数：</strong></h3>
+<p>-q 隐藏文件名</p>
+<p>-v 显示文件名</p>
+<p>-c&lt;字节&gt; 显示字节数</p>
+<p>-n&lt;行数&gt; 显示的行数</p>
+<h2 id="tail">tail</h2>
+<h3 id="1命令格式-12"><strong>1．命令格式</strong></h3>
+<p>tail[必要参数][选择参数][文件]</p>
+<h3 id="2命令功能-10"><strong>2．命令功能：</strong></h3>
+<p>用于显示指定文件末尾内容，不指定文件时，作为输入信息进行处理。常用查看日志文件。</p>
+<h3 id="3命令参数-9"><strong>3．命令参数：</strong></h3>
+<p>-f 循环读取</p>
+<p>-q 不显示处理信息</p>
+<p>-v 显示详细的处理信息</p>
+<p>-c&lt;数目&gt; 显示的字节数</p>
+<p>-n&lt;行数&gt; 显示行数</p>
+<p>&ndash;pid=PID 与-f合用,表示在进程ID,PID死掉之后结束.</p>
+<p>-q, &ndash;quiet, &ndash;silent 从不输出给出文件名的首部</p>
+<p>-s, &ndash;sleep-interval=S 与-f合用,表示在每次反复的间隔休眠S秒</p>
+<h2 id="ln">ln</h2>
+<h3 id="1命令格式-13"><strong>1．命令格式：</strong></h3>
+<p>ln [参数][源文件或目录][目标文件或目录]</p>
+<h3 id="2命令功能-11"><strong>2．命令功能：</strong></h3>
+<p>Linux文件系统中，有所谓的链接(link)，我们可以将其视为档案的别名，而链接又可分为两种 : 硬链接(hard link)与软链接(symbolic link)，硬链接的意思是一个档案可以有多个名称，而软链接的方式则是产生一个特殊的档案，该档案的内容是指向另一个档案的位置。硬链接是存在同一个文件系统中，而软链接却可以跨越不同的文件系统。</p>
+<p><strong>软链接：</strong></p>
+<p>1.软链接，以路径的形式存在。类似于Windows操作系统中的快捷方式</p>
+<p>2.软链接可以 跨文件系统 ，硬链接不可以</p>
+<p>3.软链接可以对一个不存在的文件名进行链接</p>
+<p>4.软链接可以对目录进行链接</p>
+<p><strong>硬链接:</strong></p>
+<p>1.硬链接，以文件副本的形式存在。但不占用实际空间。</p>
+<p>2.不允许给目录创建硬链接</p>
+<p>3.硬链接只有在同一个文件系统中才能创建</p>
+<p><strong>这里有两点要注意：</strong></p>
+<p>第一，ln命令会保持每一处链接文件的同步性，也就是说，不论你改动了哪一处，其它的文件都会发生相同的变化；</p>
+<p>第二，ln的链接又分软链接和硬链接两种，软链接就是ln –s 源文件 目标文件，它只会在你选定的位置上生成一个文件的镜像，不会占用磁盘空间，硬链接 ln 源文件 目标文件，没有参数-s， 它会在你选定的位置上生成一个和源文件大小相同的文件，无论是软链接还是硬链接，文件都保持同步变化。</p>
+<p>ln指令用在链接文件或目录，如同时指定两个以上的文件或目录，且最后的目的地是一个已经存在的目录，则会把前面指定的所有文件或目录复制到该目录中。若同时指定多个文件或目录，且最后的目的地并非是一个已存在的目录，则会出现错误信息。</p>
+<p>**3．**<strong>命令参数：</strong></p>
+<p><strong>必要参数:</strong></p>
+<p>-b 删除，覆盖以前建立的链接</p>
+<p>-d 允许超级用户制作目录的硬链接</p>
+<p>-f 强制执行</p>
+<p>-i 交互模式，文件存在则提示用户是否覆盖</p>
+<p>-n 把符号链接视为一般目录</p>
+<p>-s 软链接(符号链接)</p>
+<p>-v 显示详细的处理过程</p>
+<p><strong>选择参数:</strong></p>
+<p>-S “-S&lt;字尾备份字符串&gt; ”或 “&ndash;suffix=&lt;字尾备份字符串&gt;”</p>
+<p>-V “-V&lt;备份方式&gt;”或“&ndash;version-control=&lt;备份方式&gt;”</p>
+<p>&ndash;help 显示帮助信息</p>
+<p>&ndash;version 显示版本信息</p>
+<h2 id="diff">diff</h2>
+<h3 id="1命令格式-14"><strong>1．命令格式：</strong></h3>
+<p>diff[参数][文件1或目录1][文件2或目录2]</p>
+<h3 id="2命令功能-12"><strong>2．命令功能：</strong></h3>
+<p>diff命令能比较单个文件或者目录内容。如果指定比较的是文件，则只有当输入为文本文件时才有效。以逐行的方式，比较文本文件的异同处。如果指定比较的是目录的的时候，diff 命令会比较两个目录下名字相同的文本文件。列出不同的二进制文件、公共子目录和只在一个目录出现的文件。</p>
+<h3 id="3命令参数-10"><strong>3．命令参数：</strong></h3>
+<p>- 指定要显示多少行的文本。此参数必须与-c或-u参数一并使用。</p>
+<p>　-a或&ndash;text diff预设只会逐行比较文本文件。</p>
+<p>-b或&ndash;ignore-space-change 不检查空格字符的不同。</p>
+<p>-B或&ndash;ignore-blank-lines 不检查空白行。</p>
+<p>-c 显示全部内文，并标出不同之处。</p>
+<p>-C或&ndash;context 与执行&quot;-c-&ldquo;指令相同。</p>
+<p>-d或&ndash;minimal 使用不同的演算法，以较小的单位来做比较。</p>
+<p>-D或ifdef 此参数的输出格式可用于前置处理器巨集。</p>
+<p>-e或&ndash;ed 此参数的输出格式可用于ed的script文件。</p>
+<p>-f或-forward-ed 输出的格式类似ed的script文件，但按照原来文件的顺序来显示不同处。</p>
+<p>-H或&ndash;speed-large-files 比较大文件时，可加快速度。</p>
+<p>-l或&ndash;ignore-matching-lines 若两个文件在某几行有所不同，而这几行同时都包含了选项中指定的字符或字符串，则不显示这两个文件的差异。</p>
+<p>-i或&ndash;ignore-case 不检查大小写的不同。</p>
+<p>-l或&ndash;paginate 将结果交由pr程序来分页。</p>
+<p>-n或&ndash;rcs 将比较结果以RCS的格式来显示。</p>
+<p>-N或&ndash;new-file 在比较目录时，若文件A仅出现在某个目录中，预设会显示：Only in目录：文件A若使用-N参数，则diff会将文件A与一个空白的文件比较。</p>
+<p>-p 若比较的文件为C语言的程序码文件时，显示差异所在的函数名称。</p>
+<p>-P或&ndash;unidirectional-new-file 与-N类似，但只有当第二个目录包含了一个第一个目录所没有的文件时，才会将这个文件与空白的文件做比较。</p>
+<p>-q或&ndash;brief 仅显示有无差异，不显示详细的信息。</p>
+<p>-r或&ndash;recursive 比较子目录中的文件。</p>
+<p>-s或&ndash;report-identical-files 若没有发现任何差异，仍然显示信息。</p>
+<p>-S或&ndash;starting-file 在比较目录时，从指定的文件开始比较。</p>
+<p>-t或&ndash;expand-tabs 在输出时，将tab字符展开。</p>
+<p>-T或&ndash;initial-tab 在每行前面加上tab字符以便对齐。</p>
+<p>-u,-U或&ndash;unified= 以合并的方式来显示文件内容的不同。</p>
+<p>-v或&ndash;version 显示版本信息。</p>
+<p>-w或&ndash;ignore-all-space 忽略全部的空格字符。</p>
+<p>-W或&ndash;width 在使用-y参数时，指定栏宽。</p>
+<p>-x或&ndash;exclude 不比较选项中所指定的文件或目录。</p>
+<p>-X或&ndash;exclude-from 您可以将文件或目录类型存成文本文件，然后在=中指定此文本文件。</p>
+<p>-y或&ndash;side-by-side 以并列的方式显示文件的异同之处。</p>
+<p>&ndash;help 显示帮助。</p>
+<p>&ndash;left-column 在使用-y参数时，若两个文件某一行内容相同，则仅在左侧的栏位显示该行内容。</p>
+<p>&ndash;suppress-common-lines 在使用-y参数时，仅显示不同之处。</p>
+<h2 id="grep">grep</h2>
+<h3 id="1命令格式-15"><strong>1．命令格式：</strong></h3>
+<p>grep [option] pattern file</p>
+<h3 id="2命令功能-13"><strong>2．命令功能：</strong></h3>
+<p>用于过滤/搜索的特定字符。可使用正则表达式能多种命令配合使用，使用上十分灵活。</p>
+<h3 id="3命令参数-11"><strong>3．命令参数：</strong></h3>
+<p>-a  &ndash;text  #不要忽略二进制的数据。</p>
+<p>-A&lt;显示行数&gt;  &ndash;after-context=&lt;显示行数&gt;  #除了显示符合范本样式的那一列之外，并显示该行之后的内容。</p>
+<p>-b  &ndash;byte-offset  #在显示符合样式的那一行之前，标示出该行第一个字符的编号。</p>
+<p>-B&lt;显示行数&gt;  &ndash;before-context=&lt;显示行数&gt;  #除了显示符合样式的那一行之外，并显示该行之前的内容。</p>
+<p>-c  &ndash;count  #计算符合样式的列数。</p>
+<p>-C&lt;显示行数&gt;  &ndash;context=&lt;显示行数&gt;或-&lt;显示行数&gt;  #除了显示符合样式的那一行之外，并显示该行之前后的内容。</p>
+<p>-d &lt;动作&gt;   &ndash;directories=&lt;动作&gt;  #当指定要查找的是目录而非文件时，必须使用这项参数，否则grep指令将回报信息并停止动作。</p>
+<p>-e&lt;范本样式&gt; &ndash;regexp=&lt;范本样式&gt;  #指定字符串做为查找文件内容的样式。</p>
+<p>-E   &ndash;extended-regexp  #将样式为延伸的普通表示法来使用。</p>
+<p>-f&lt;规则文件&gt; &ndash;file=&lt;规则文件&gt;  #指定规则文件，其内容含有一个或多个规则样式，让grep查找符合规则条件的文件内容，格式为每行一个规则样式。</p>
+<p>-F  &ndash;fixed-regexp  #将样式视为固定字符串的列表。</p>
+<p>-G  &ndash;basic-regexp  #将样式视为普通的表示法来使用。</p>
+<p>-h  &ndash;no-filename  #在显示符合样式的那一行之前，不标示该行所属的文件名称。</p>
+<p>-H  &ndash;with-filename  #在显示符合样式的那一行之前，表示该行所属的文件名称。</p>
+<p>-i  &ndash;ignore-case  #忽略字符大小写的差别。</p>
+<p>-l  &ndash;file-with-matches  #列出文件内容符合指定的样式的文件名称。</p>
+<p>-L  &ndash;files-without-match  #列出文件内容不符合指定的样式的文件名称。</p>
+<p>-n  &ndash;line-number  #在显示符合样式的那一行之前，标示出该行的列数编号。</p>
+<p>-q  &ndash;quiet或&ndash;silent  #不显示任何信息。</p>
+<p>-r  &ndash;recursive  #此参数的效果和指定“-d recurse”参数相同。</p>
+<p>-s  &ndash;no-messages  #不显示错误信息。</p>
+<p>-v  &ndash;revert-match  #显示不包含匹配文本的所有行。</p>
+<p>-V  &ndash;version  #显示版本信息。</p>
+<p>-w  &ndash;word-regexp  #只显示全字符合的列。</p>
+<p>-x  &ndash;line-regexp  #只显示全列符合的列。</p>
+<p>-y  #此参数的效果和指定“-i”参数相同。</p>
+<p><strong>4．<strong><strong>规</strong></strong>则表达式</strong>**：**</p>
+<p><strong>grep的规则表达式:</strong></p>
+<p>^ #锚定行的开始 如：'^grep&rsquo;匹配所有以grep开头的行。</p>
+<p>$ #锚定行的结束 如：&lsquo;grep$&lsquo;匹配所有以grep结尾的行。</p>
+<p>. #匹配一个非换行符的字符 如：&lsquo;gr.p&rsquo;匹配gr后接一个任意字符，然后是p。</p>
+<p>* #匹配零个或多个先前字符 如：'*grep&rsquo;匹配所有一个或多个空格后紧跟grep的行。</p>
+<p>.*  #一起用代表任意字符。</p>
+<p>[]  #匹配一个指定范围内的字符，如&rsquo;[Gg]rep&rsquo;匹配Grep和grep。</p>
+<p>[^] #匹配一个不在指定范围内的字符，如：'[^A-FH-Z]rep&rsquo;匹配不包含A-R和T-Z的一个字母开头，紧跟rep的行。</p>
+<p>(..) #标记匹配字符，如&rsquo;(love)'，love被标记为1。</p>
+<p>&lt;   #锚定单词的开始，如:'&lt;grep&rsquo;匹配包含以grep开头的单词的行。</p>
+<p>&gt;   #锚定单词的结束，如&rsquo;grep&gt;&lsquo;匹配包含以grep结尾的单词的行。</p>
+<p>x{m} #重复字符x，m次，如：&lsquo;0{5}&lsquo;匹配包含5个o的行。</p>
+<p>x{m,} #重复字符x,至少m次，如：&lsquo;o{5,}&lsquo;匹配至少有5个o的行。</p>
+<p>x{m,n} #重复字符x，至少m次，不多于n次，如：&lsquo;o{5,10}&lsquo;匹配5&ndash;10个o的行。</p>
+<p>\w  #匹配文字和数字字符，也就是[A-Za-z0-9]，如：&lsquo;G\w*p&rsquo;匹配以G后跟零个或多个文字或数字字符，然后是p。</p>
+<p>\W  #\w的反置形式，匹配一个或多个非单词字符，如点号句号等。</p>
+<p>\b  #单词锁定符，如: &lsquo;\bgrep\b&rsquo;只匹配grep。</p>
+<h2 id="ps">ps</h2>
+<p><strong>linux上进程有5种状态:</strong></p>
+<p>\1. 运行(正在运行或在运行队列中等待)</p>
+<p>\2. 中断(休眠中, 受阻, 在等待某个条件的形成或接受到信号)</p>
+<p>\3. 不可中断(收到信号不唤醒和不可运行, 进程必须等待直到有中断发生)</p>
+<p>\4. 僵死(进程已终止, 但进程描述符存在, 直到父进程调用wait4()系统调用后释放)</p>
+<p>\5. 停止(进程收到SIGSTOP, SIGSTP, SIGTIN, SIGTOU信号后停止运行运行)</p>
+<p><strong>ps工具标识进程的5种状态码:</strong></p>
+<p>D 不可中断 uninterruptible sleep (usually IO)</p>
+<p>R 运行 runnable (on run queue)</p>
+<p>S 中断 sleeping</p>
+<p>T 停止 traced or stopped</p>
+<p>Z 僵死 a defunct (”zombie”) process</p>
+<h3 id="1命令格式-16"><strong>1．命令格式：</strong></h3>
+<p>ps[参数]</p>
+<h3 id="2命令功能-14"><strong>2．命令功能：</strong></h3>
+<p>用来显示当前进程的状态</p>
+<h3 id="3命令参数-12"><strong>3．命令参数：</strong></h3>
+<p>a 显示所有进程</p>
+<p>-a 显示同一终端下的所有程序</p>
+<p>-A 显示所有进程</p>
+<p>c 显示进程的真实名称</p>
+<p>-N 反向选择</p>
+<p>-e 等于“-A”</p>
+<p>e 显示环境变量</p>
+<p>f 显示程序间的关系</p>
+<p>-H 显示树状结构</p>
+<p>r 显示当前终端的进程</p>
+<p>T 显示当前终端的所有程序</p>
+<p>u 指定用户的所有进程</p>
+<p>-au 显示较详细的资讯</p>
+<p>-aux 显示所有包含其他使用者的行程</p>
+<p>-C&lt;命令&gt; 列出指定命令的状况</p>
+<p>&ndash;lines&lt;行数&gt; 每页显示的行数</p>
+<p>&ndash;width&lt;字符数&gt; 每页显示的字符数</p>
+<p>&ndash;help 显示帮助信息</p>
+<p>&ndash;version 显示版本显示</p>
+<h2 id="watch">watch</h2>
+<h3 id="1命令格式-17"><strong>1．命令格式：</strong></h3>
+<p>watch[参数][命令]</p>
+<h3 id="2命令功能-15"><strong>2．命令功能：</strong></h3>
+<p>可以将命令的输出结果输出到标准输出设备，多用于周期性执行命令/定时执行命令</p>
+<h3 id="3命令参数-13"><strong>3．命令参数：</strong></h3>
+<p>-n或&ndash;interval watch缺省每2秒运行一下程序，可以用-n或-interval来指定间隔的时间。</p>
+<p>-d或&ndash;differences 用-d或&ndash;differences 选项watch 会高亮显示变化的区域。 而-d=cumulative选项会把变动过的地方(不管最近的那次有没有变动)都高亮显示出来。</p>
+<p>-t 或-no-title 会关闭watch命令在顶部的时间间隔,命令，当前时间的输出。</p>
+<p>-h, &ndash;help 查看帮助文档</p>
+<h3 id="4使用实例"><strong>4．使用实例：</strong></h3>
+<p><strong>实例****1：</strong></p>
+<p><strong>命令：<strong><strong>每隔一秒高亮显示</strong></strong>网络****链接数的变化情况</strong></p>
+<p>watch -n 1 -d netstat -ant
+<strong>说明：</strong></p>
+<p>其它操作：
+切换终端： Ctrl+x
+退出watch：Ctrl+g</p>
+<h2 id="at">at</h2>
+<h3 id="1命令格式-18"><strong>1．命令格式：</strong></h3>
+<p>at[参数][时间]</p>
+<h3 id="2命令功能-16"><strong>2．命令功能：</strong></h3>
+<p>在一个指定的时间执行一个指定任务，只能执行一次，且需要开启atd进程（</p>
+<p>ps -ef | grep atd查看， 开启用/etc/init.d/atd start or restart； 开机即启动则需要运行 chkconfig &ndash;level 2345 atd on）。</p>
+<h3 id="3命令参数-14"><strong>3．命令参数：</strong></h3>
+<p>-m 当指定的任务被完成之后，将给用户发送邮件，即使没有标准输出</p>
+<p>-I atq的别名</p>
+<p>-d atrm的别名</p>
+<p>-v 显示任务将被执行的时间</p>
+<p>-c 打印任务的内容到标准输出</p>
+<p>-V 显示版本信息</p>
+<p>-q&lt;列队&gt; 使用指定的列队</p>
+<p>-f&lt;文件&gt; 从指定文件读入任务而不是从标准输入读入</p>
+<p>-t&lt;时间参数&gt; 以时间参数的形式提交要运行的任务</p>
+<p>at允许使用一套相当复杂的指定时间的方法。他能够接受在当天的hh:mm（小时:分钟）式的时间指定。假如该时间已过去，那么就放在第二天执行。当然也能够使用midnight（深夜），noon（中午），teatime（饮茶时间，一般是下午4点）等比较模糊的 词语来指定时间。用户还能够采用12小时计时制，即在时间后面加上AM（上午）或PM（下午）来说明是上午还是下午。 也能够指定命令执行的具体日期，指定格式为month day（月 日）或mm/dd/yy（月/日/年）或dd.mm.yy（日.月.年）。指定的日期必须跟在指定时间的后面。 上面介绍的都是绝对计时法，其实还能够使用相对计时法，这对于安排不久就要执行的命令是很有好处的。指定格式为：now + count time-units ，now就是当前时间，time-units是时间单位，这里能够是minutes（分钟）、hours（小时）、days（天）、weeks（星期）。count是时间的数量，究竟是几天，还是几小时，等等。 更有一种计时方法就是直接使用today（今天）、tomorrow（明天）来指定完成命令的时间。</p>
+<p>TIME：时间格式，这里可以定义出什么时候要进行 at 这项任务的时间，格式有：</p>
+<p>HH:MM</p>
+<p>ex&gt; 04:00</p>
+<p>在今日的 HH:MM 时刻进行，若该时刻已超过，则明天的 HH:MM 进行此任务。</p>
+<p>HH:MM YYYY-MM-DD</p>
+<p>ex&gt; 04:00 2009-03-17</p>
+<p>强制规定在某年某月的某一天的特殊时刻进行该项任务</p>
+<p>HH:MM[am|pm] [Month] [Date]</p>
+<p>ex&gt; 04pm March 17</p>
+<p>也是一样，强制在某年某月某日的某时刻进行该项任务</p>
+<p>HH:MM[am|pm] + number [minutes|hours|days|weeks]</p>
+<p>ex&gt; now + 5 minutes</p>
+<p>ex&gt; 04pm + 3 days</p>
+<p>就是说，在某个时间点再加几个时间后才进行该项任务。</p>
+<h3 id="4使用实例-1">**4．**<strong>使用实例：</strong></h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">实例1：****三天后的下午 <span style="color:#ae81ff">5</span> 点锺执行 /bin/ls**
+
+**命令：**
+
+at 5pm+3 days
+
+**输出：**
+
+<span style="color:#f92672">[</span>root@localhost ~<span style="color:#f92672">]</span><span style="color:#75715e"># at 5pm+3 days</span>
+
+at&gt; /bin/ls
+
+at&gt; &lt;EOT&gt;
+
+job <span style="color:#ae81ff">7</span> at 2013-01-08 17:00
+</code></pre></div><h3 id="4使用实例-2"><strong>4．使用实例：</strong></h3>
+<p>**实例1：**<strong>三天后的下午 5 点锺执行 /bin/ls</strong></p>
+<p><strong>命令：</strong></p>
+<p>at 5pm+3 days</p>
+<h2 id="crontab">crontab</h2>
+<h3 id="一crond简介"><strong>一、crond简介</strong></h3>
+<p>crond是linux下用来周期性的执行某种任务或等待处理某些事件的一个守护进程，与windows下的计划任务类似，当安装完成操作系统后，默认会安装此服务工具，并且会自动启动crond进程，crond进程每分钟会定期检查是否有要执行的任务，如果有要执行的任务，则自动执行该任务。</p>
+<p>Linux下的任务调度分为两类，系统任务调度和用户任务调度。</p>
+<p>系统任务调度：系统周期性所要执行的工作，比如写缓存数据到硬盘、日志清理等。在/etc目录下有一个crontab文件，这个就是系统任务调度的配置文件。</p>
+<p>/etc/crontab文件包括下面几行：</p>
+<p>[root@localhost ~]# cat /etc/crontab</p>
+<p>SHELL=/bin/bash</p>
+<p>PATH=/sbin:/bin:/usr/sbin:/usr/bin</p>
+<p>MAILTO=&ldquo;&ldquo;HOME=/</p>
+<p># run-parts</p>
+<p>51 * * * * root run-parts /etc/cron.hourly</p>
+<p>24 7 * * * root run-parts /etc/cron.daily</p>
+<p>22 4 * * 0 root run-parts /etc/cron.weekly</p>
+<p>42 4 1 * * root run-parts /etc/cron.monthly</p>
+<p>[root@localhost ~]#</p>
+<p>前四行是用来配置crond任务运行的环境变量，第一行SHELL变量指定了系统要使用哪个shell，这里是bash，第二行PATH变量指定了系统执行命令的路径，第三行MAILTO变量指定了crond的任务执行信息将通过电子邮件发送给root用户，如果MAILTO变量的值为空，则表示不发送任务执行信息给用户，第四行的HOME变量指定了在执行命令或者脚本时使用的主目录。第六至九行表示的含义将在下个小节详细讲述。这里不在多说。</p>
+<p>用户任务调度：用户定期要执行的工作，比如用户数据备份、定时邮件提醒等。用户可以使用 crontab 工具来定制自己的计划任务。所有用户定义的crontab 文件都被保存在 /var/spool/cron目录中。其文件名与用户名一致。</p>
+<p><strong>使用者权限文件</strong>**：**</p>
+<p>文件：</p>
+<p>/etc/cron.deny</p>
+<p>说明：</p>
+<p>该文件中所列用户不允许使用crontab命令</p>
+<p>文件：</p>
+<p>/etc/cron.allow</p>
+<p>说明：</p>
+<p>该文件中所列用户允许使用crontab命令</p>
+<p>文件：</p>
+<p>/var/spool/cron/</p>
+<p>说明：</p>
+<p>所有用户crontab文件存放的目录,以用户名命名</p>
+<p><strong>crontab文件的含义：</strong></p>
+<p>用户所建立的crontab文件中，每一行都代表一项任务，每行的每个字段代表一项设置，它的格式共分为六个字段，前五段是时间设定段，第六段是要执行的命令段，格式如下：</p>
+<p>minute  hour  day  month  week  command</p>
+<p>其中：</p>
+<p>minute： 表示分钟，可以是从0到59之间的任何整数。</p>
+<p>hour：表示小时，可以是从0到23之间的任何整数。</p>
+<p>day：表示日期，可以是从1到31之间的任何整数。</p>
+<p>month：表示月份，可以是从1到12之间的任何整数。</p>
+<p>week：表示星期几，可以是从0到7之间的任何整数，这里的0或7代表星期日。</p>
+<p>command：要执行的命令，可以是系统命令，也可以是自己编写的脚本文件。</p>
+<p><strong>在以上各个字段中，还可以使用以下特殊字符：</strong></p>
+<p>星号（*）：代表所有可能的值，例如month字段如果是星号，则表示在满足其它字段的制约条件后每月都执行该命令操作。</p>
+<p>逗号（,）：可以用逗号隔开的值指定一个列表范围，例如，“1,2,5,7,8,9”</p>
+<p>中杠（-）：可以用整数之间的中杠表示一个整数范围，例如“2-6”表示“2,3,4,5,6”</p>
+<p>正斜线（/）：可以用正斜线指定时间的间隔频率，例如“0-23/2”表示每两小时执行一次。同时正斜线可以和星号一起使用，例如*/10，如果用在minute字段，表示每十分钟执行一次。</p>
+<h3 id="二crond服务"><strong>二、crond服务</strong></h3>
+<p>安装crontab：</p>
+<p>yum install crontabs</p>
+<p>服务操作说明：</p>
+<p>/sbin/service crond start //启动服务</p>
+<p>/sbin/service crond stop //关闭服务</p>
+<p>/sbin/service crond restart //重启服务</p>
+<p>/sbin/service crond reload //重新载入配置</p>
+<p>查看crontab服务状态：</p>
+<p>service crond status</p>
+<p>手动启动crontab服务：</p>
+<p>service crond start</p>
+<p>查看crontab服务是否已设置为开机启动，执行命令：</p>
+<p>ntsysv</p>
+<p>加入开机自动启动：</p>
+<p>chkconfig –level 35 crond on</p>
+<h3 id="三crontab命令详解"><strong>三、crontab命令详解</strong></h3>
+<h4 id="1命令格式-19"><strong>1．命令格式：</strong></h4>
+<p>crontab [-u user] file</p>
+<p>crontab [-u user] [ -e | -l | -r ]</p>
+<h4 id="2命令功能-17"><strong>2．命令功能：</strong></h4>
+<p>通过crontab 命令，我们可以在固定的间隔时间执行指定的系统指令或 shell script脚本。时间间隔的单位可以是分钟、小时、日、月、周及以上的任意组合。这个命令非常设合周期性的日志分析或数据备份等工作。</p>
+<h4 id="3命令参数-15"><strong>3．命令参数：</strong></h4>
+<p>-u user：用来设定某个用户的crontab服务，例如，“-u ixdba”表示设定ixdba用户的crontab服务，此参数一般有root用户来运行。</p>
+<p>file：file是命令文件的名字,表示将file做为crontab的任务列表文件并载入crontab。如果在命令行中没有指定这个文件，crontab命令将接受标准输入（键盘）上键入的命令，并将它们载入crontab。</p>
+<p>-e：编辑某个用户的crontab文件内容。如果不指定用户，则表示编辑当前用户的crontab文件。</p>
+<p>-l：显示某个用户的crontab文件内容，如果不指定用户，则表示显示当前用户的crontab文件内容。</p>
+<p>-r：从/var/spool/cron目录中删除某个用户的crontab文件，如果不指定用户，则默认删除当前用户的crontab文件。</p>
+<p>-i：在删除用户的crontab文件时给确认提示。</p>
+<h4 id="4常用方法"><strong>4．常用方法：</strong></h4>
+<h5 id="1-创建一个新的crontab文件"><strong>1). 创建一个新的crontab文件</strong></h5>
+<p>在考虑向cron进程提交一个crontab文件之前，首先要做的一件事情就是设置环境变量EDITOR。cron进程根据它来确定使用哪个编辑器编辑crontab文件。9 9 %的UNIX和LINUX用户都使用vi，如果你也是这样，那么你就编辑$ HOME目录下的. profile文件，在其中加入这样一行：</p>
+<p>EDITOR=vi; export EDITOR</p>
+<p>然后保存并退出。不妨创建一个名为<!-- raw HTML omitted --> cron的文件，其中<!-- raw HTML omitted -->是用户名，例如， davecron。在该文件中加入如下的内容。</p>
+<p># (put your own initials here)echo the date to the console every</p>
+<p># 15minutes between 6pm and 6am</p>
+<p>0,15,30,45 18-06 * * * /bin/echo &lsquo;date&rsquo; &gt; /dev/console</p>
+<p>保存并退出。确信前面5个域用空格分隔。</p>
+<p>在上面的例子中，系统将每隔1 5分钟向控制台输出一次当前时间。如果系统崩溃或挂起，从最后所显示的时间就可以一眼看出系统是什么时间停止工作的。在有些系统中，用tty1来表示控制台，可以根据实际情况对上面的例子进行相应的修改。为了提交你刚刚创建的crontab文件，可以把这个新创建的文件作为cron命令的参数：</p>
+<p>$ crontab davecron</p>
+<p>现在该文件已经提交给cron进程，它将每隔1 5分钟运行一次。</p>
+<p>同时，新创建文件的一个副本已经被放在/var/spool/cron目录中，文件名就是用户名(即dave)。</p>
+<h5 id="2-列出crontab文件"><strong>2</strong>). 列出crontab文件</h5>
+<p>为了列出crontab文件，可以用：</p>
+<p>$ crontab -l</p>
+<p>0,15,30,45,18-06 * * * /bin/echo <code>date</code> &gt; dev/tty1</p>
+<p>你将会看到和上面类似的内容。可以使用这种方法在$ H O M E目录中对crontab文件做一备份：</p>
+<p>$ crontab -l &gt; $HOME/mycron</p>
+<p>这样，一旦不小心误删了crontab文件，可以用上一节所讲述的方法迅速恢复。</p>
+<h5 id="3-编辑crontab文件">3). 编辑crontab文件</h5>
+<p>如果希望添加、删除或编辑crontab文件中的条目，而E D I TO R环境变量又设置为v i，那么就可以用v i来编辑crontab文件，相应的命令为：</p>
+<p>$ crontab -e</p>
+<p>可以像使用v i编辑其他任何文件那样修改crontab文件并退出。如果修改了某些条目或添加了新的条目，那么在保存该文件时， c r o n会对其进行必要的完整性检查。如果其中的某个域出现了超出允许范围的值，它会提示你。</p>
+<p>我们在编辑crontab文件时，没准会加入新的条目。例如，加入下面的一条：</p>
+<p># DT:delete core files,at 3.30am on 1,7,14,21,26,26 days of each month</p>
+<p>30 3 1,7,14,21,26 * * /bin/find -name &ldquo;core&rsquo; -exec rm {} ;</p>
+<p>现在保存并退出。最好在crontab文件的每一个条目之上加入一条注释，这样就可以知道它的功能、运行时间，更为重要的是，知道这是哪位用户的作业。</p>
+<p>现在让我们使用前面讲过的crontab -l命令列出它的全部信息：</p>
+<p>$ crontab -l</p>
+<p># (crondave installed on Tue May 4 13:07:43 1999)</p>
+<p># DT:ech the date to the console every 30 minites</p>
+<p>0,15,30,45 18-06 * * * /bin/echo <code>date</code> &gt; /dev/tty1</p>
+<p># DT:delete core files,at 3.30am on 1,7,14,21,26,26 days of each month</p>
+<p>30 3 1,7,14,21,26 * * /bin/find -name &ldquo;core&rsquo; -exec rm {} ;</p>
+<h5 id="4-删除crontab文件"><strong>4). 删除crontab文件</strong></h5>
+<p>要删除crontab文件，可以用：</p>
+<p>$ crontab -r</p>
+<h5 id="5-恢复丢失的crontab文件"><strong>5). 恢复丢失的crontab文件</strong></h5>
+<p>如果不小心误删了crontab文件，假设你在自己的$ H O M E目录下还有一个备份，那么可以将其拷贝到/var/spool/cron/<!-- raw HTML omitted -->，其中<!-- raw HTML omitted -->是用户名。如果由于权限问题无法完成拷贝，可以用：</p>
+<p>$ crontab <!-- raw HTML omitted --></p>
+<p>其中，<!-- raw HTML omitted -->是你在$ H O M E目录中副本的文件名。</p>
+<p>我建议你在自己的$ H O M E目录中保存一个该文件的副本。我就有过类似的经历，有数次误删了crontab文件（因为r键紧挨在e键的右边）。这就是为什么有些系统文档建议不要直接编辑crontab文件，而是编辑该文件的一个副本，然后重新提交新的文件。</p>
+<p>有些crontab的变体有些怪异，所以在使用crontab命令时要格外小心。如果遗漏了任何选项，crontab可能会打开一个空文件，或者看起来像是个空文件。这时敲delete键退出，不要按<!-- raw HTML omitted -->，否则你将丢失crontab文件。</p>
+<h4 id="5使用实例"><strong>5．使用实例</strong></h4>
+<p>**实例****1：**<strong>每1分钟执行一次command</strong></p>
+<p><strong>命令：</strong></p>
+<p>* * * * * command</p>
+<p>**实例****2：**<strong>每小时的第3和第15分钟执行</strong></p>
+<p><strong>命令：</strong></p>
+<p>3,15 * * * * command</p>
+<p>**实例****3：**<strong>在上午8点到11点的第3和第15分钟执行</strong></p>
+<p><strong>命令：</strong></p>
+<p>3,15 8-11 * * * command</p>
+<h1 id="文件查找命令">文件查找命令</h1>
+<h2 id="which">which</h2>
+<p><strong>1．命令格式：</strong></p>
+<p>which 可执行文件名称</p>
+<p><strong>2．命令功能：</strong></p>
+<p>which指令会在PATH变量指定的路径中，搜索某个系统命令的位置，并且返回第一个搜索结果。</p>
+<p><strong>3．命令参数：</strong></p>
+<p>-n 指定文件名长度，指定的长度必须大于或等于所有文件中最长的文件名。</p>
+<p>-p 与-n参数相同，但此处的包括了文件的路径。</p>
+<p>-w 指定输出时栏位的宽度。</p>
+<p>-V 显示版本信息</p>
+<h2 id="whereis">whereis</h2>
+<h3 id="1命令格式-20"><strong>1．命令格式：</strong></h3>
+<p>whereis [-bmsu] [BMS 目录名 -f ] 文件名</p>
+<h3 id="2命令功能-18"><strong>2．命令功能：</strong></h3>
+<p>whereis命令是定位可执行文件、源代码文件、帮助文件在文件系统中的位置。这些文件的属性应属于原始代码，二进制文件，或是帮助文件。whereis 程序还具有搜索源代码、指定备用搜索路径和搜索不寻常项的能力。</p>
+<h3 id="3命令参数-16"><strong>3．命令参数：</strong></h3>
+<p>-b  定位可执行文件。</p>
+<p>-m  定位帮助文件。</p>
+<p>-s  定位源代码文件。</p>
+<p>-u  搜索默认路径下除可执行文件、源代码文件、帮助文件以外的其它文件。</p>
+<p>-B  指定搜索可执行文件的路径。</p>
+<p>-M  指定搜索帮助文件的路径。</p>
+<p>-S  指定搜索源代码文件的路径。</p>
+<h2 id="locate">locate</h2>
+<h3 id="1命令格式-21"><strong>1．命令格式：</strong></h3>
+<p>Locate [选择参数] [样式]</p>
+<h3 id="2命令功能-19"><strong>2．命令功能：</strong></h3>
+<p>locate命令可以在搜寻数据库时快速找到档案，数据库由updatedb程序来更新，updatedb是由cron daemon周期性建立的，locate命令在搜寻数据库时比由整个由硬盘资料来搜寻资料来得快，但较差劲的是locate所找到的档案若是最近才建立或 刚更名的，可能会找不到，在内定值中，updatedb每天会跑一次，可以由修改crontab来更新设定值。(etc/crontab)</p>
+<p>locate指定用在搜寻符合条件的档案，它会去储存档案与目录名称的数据库内，寻找合乎范本样式条件的档案或目录录，可以使用特殊字元（如”<em>” 或”?”等）来指定范本样式，如指定范本为kcpa</em>ner, locate会找出所有起始字串为kcpa且结尾为ner的档案或目录，如名称为kcpartner若目录录名称为kcpa_ner则会列出该目录下包括 子目录在内的所有档案。</p>
+<p>locate指令和find找寻档案的功能类似，但locate是透过update程序将硬盘中的所有档案和目录资料先建立一个索引数据库，在 执行loacte时直接找该索引，查询速度会较快，索引数据库一般是由操作系统管理，但也可以直接下达update强迫系统立即修改索引数据库。</p>
+<h3 id="3命令参数-17"><strong>3．命令参数：</strong></h3>
+<p>-e  将排除在寻找的范围之外。</p>
+<p>-1 如果 是 1．则启动安全模式。在安全模式下，使用者不会看到权限无法看到 的档案。这会始速度减慢，因为 locate 必须至实际的档案系统中取得档案的 权限资料。</p>
+<p>-f  将特定的档案系统排除在外，例如我们没有到理要把 proc 档案系统中的档案 放在资料库中。</p>
+<p>-q 安静模式，不会显示任何错误讯息。</p>
+<p>-n 至多显示 n个输出。</p>
+<p>-r 使用正规运算式 做寻找的条件。</p>
+<p>-o 指定资料库存的名称。</p>
+<p>-d 指定资料库的路径</p>
+<p>-h 显示辅助讯息</p>
+<p>-V 显示程式的版本讯息</p>
+<h2 id="find">find</h2>
+<h3 id="1命令格式-22">**1．**命令格式：</h3>
+<p>find pathname -options [-print -exec -ok &hellip;]</p>
+<h3 id="2命令功能-20">**2．**命令功能：</h3>
+<p>用于在文件树种查找文件，并作出相应的处理</p>
+<h3 id="3命令参数-18"><strong>3．命令参数：</strong></h3>
+<p>pathname: find命令所查找的目录路径。例如用.来表示当前目录，用/来表示系统根目录。</p>
+<p>-print： find命令将匹配的文件输出到标准输出。</p>
+<p>-exec： find命令对匹配的文件执行该参数所给出的shell命令。相应命令的形式为&rsquo;command&rsquo; { } ;，注意{  }和\；之间的空格。</p>
+<p>-ok： 和-exec的作用相同，只不过以一种更为安全的模式来执行该参数所给出的shell命令，在执行每一个命令之前，都会给出提示，让用户来确定是否执行。</p>
+<h3 id="4命令选项"><strong>4．命令选项：</strong></h3>
+<p>-name  按照文件名查找文件。</p>
+<p>-perm  按照文件权限来查找文件。</p>
+<p>-prune 使用这一选项可以使find命令不在当前指定的目录中查找，如果同时使用-depth选项，那么-prune将被find命令忽略。</p>
+<p>-user  按照文件属主来查找文件。</p>
+<p>-group 按照文件所属的组来查找文件。</p>
+<p>-mtime -n +n 按照文件的更改时间来查找文件， - n表示文件更改时间距现在n天以内，+ n表示文件更改时间距现在n天以前。find命令还有-atime和-ctime 选项，但它们都和-m time选项。</p>
+<p>-nogroup 查找无有效所属组的文件，即该文件所属的组在/etc/groups中不存在。</p>
+<p>-nouser  查找无有效属主的文件，即该文件的属主在/etc/passwd中不存在。</p>
+<p>-newer file1 ! file2 查找更改时间比文件file1新但比文件file2旧的文件。</p>
+<p>-type 查找某一类型的文件，诸如：</p>
+<p>b - 块设备文件。</p>
+<p>d - 目录。</p>
+<p>c - 字符设备文件。</p>
+<p>p - 管道文件。</p>
+<p>l - 符号链接文件。</p>
+<p>f - 普通文件。</p>
+<p>-size n：[c] 查找文件长度为n块的文件，带有c时表示文件长度以字节计。-depth：在查找文件时，首先查找当前目录中的文件，然后再在其子目录中查找。</p>
+<p>-fstype：查找位于某一类型文件系统中的文件，这些文件系统类型通常可以在配置文件/etc/fstab中找到，该配置文件中包含了本系统中有关文件系统的信息。</p>
+<p>-mount：在查找文件时不跨越文件系统mount点。</p>
+<p>-follow：如果find命令遇到符号链接文件，就跟踪至链接所指向的文件。</p>
+<p>-cpio：对匹配的文件使用cpio命令，将这些文件备份到磁带设备中。</p>
+<p>另外,下面三个的区别:</p>
+<p>-amin n  查找系统中最后N分钟访问的文件</p>
+<p>-atime n 查找系统中最后n*24小时访问的文件</p>
+<p>-cmin n  查找系统中最后N分钟被改变文件状态的文件</p>
+<p>-ctime n 查找系统中最后n*24小时被改变文件状态的文件</p>
+<p>-mmin n  查找系统中最后N分钟被改变文件数据的文件</p>
+<p>-mtime n 查找系统中最后n*24小时被改变文件数据的文件</p>
+<h2 id="find之exec">find之exec</h2>
+<p>find是我们很常用的一个Linux命令，但是我们一般查找出来的并不仅仅是看看而已，还会有进一步的操作，这个时候exec的作用就显现出来了。</p>
+<p><strong>exec解释：</strong></p>
+<p>-exec 参数后面跟的是command命令，它的终止是以;为结束标志的，所以这句命令后面的分号是不可缺少的，考虑到各个系统中分号会有不同的意义，所以前面加反斜杠。</p>
+<p>{}  花括号代表前面find查找出来的文件名。</p>
+<p>使用find时，只要把想要的操作写在一个文件里，就可以用exec来配合find查找，很方便的。在有些操作系统中只允许-exec选项执行诸如l s或ls -l这样的命令。大多数用户使用这一选项是为了查找旧文件并删除它们。建议在真正执行rm命令删除文件之前，最好先用ls命令看一下，确认它们是所要删除的文件。 exec选项后面跟随着所要执行的命令或脚本，然后是一对儿{ }，一个空格和一个\，最后是一个分号。为了使用exec选项，必须要同时使用print选项。如果验证一下find命令，会发现该命令只输出从当前路径起的相对路径及文件名。</p>
+<p><strong>实例</strong>1：ls -l命令放在find命令的-exec选项中</p>
+<p><strong>命令：</strong></p>
+<p>find . -type f -exec ls -l {} ;</p>
+<h2 id="find之xargs">find之xargs</h2>
+<p>在使用 find命令的-exec选项处理匹配到的文件时， find命令将所有匹配到的文件一起传递给exec执行。但有些系统对能够传递给exec的命令长度有限制，这样在find命令运行几分钟之后，就会出现溢出错误。错误信息通常是“参数列太长”或“参数列溢出”。这就是xargs命令的用处所在，特别是与find命令一起使用。</p>
+<p>find命令把匹配到的文件传递给xargs命令，而xargs命令每次只获取一部分文件而不是全部，不像-exec选项那样。这样它可以先处理最先获取的一部分文件，然后是下一批，并如此继续下去。</p>
+<p>在有些系统中，使用-exec选项会为处理每一个匹配到的文件而发起一个相应的进程，并非将匹配到的文件全部作为参数一次执行；这样在有些情况下就会出现进程过多，系统性能下降的问题，因而效率不高； 而使用xargs命令则只有一个进程。另外，在使用xargs命令时，究竟是一次获取所有的参数，还是分批取得参数，以及每一次获取参数的数目都会根据该命令的选项及系统内核中相应的可调参数来确定。</p>
+<p><strong>使用实例：</strong></p>
+<p>**实例1： **查找系统中的每一个普通文件，然后使用xargs命令来测试它们分别属于哪类文件</p>
+<p><strong>命令：</strong></p>
+<p>find . -type f -print | xargs file</p>
+<h2 id="find参数详解">find参数详解</h2>
+<h3 id="1使用name选项"><strong>1．使用name选项：</strong></h3>
+<p>文件名选项是find命令最常用的选项，要么单独使用该选项，要么和其他选项一起使用。 可以使用某种文件名模式来匹配文件，记住要用引号将文件名模式引起来。 不管当前路径是什么，如果想要在自己的根目录$HOME中查找文件名符合*.log的文件，使用~作为 &lsquo;pathname&rsquo;参数，波浪号~代表了你的$HOME目录。</p>
+<p>find ~ -name &ldquo;*.log&rdquo; -print</p>
+<p>想要在当前目录及子目录中查找所有的‘ *.log‘文件，可以用：</p>
+<p>find . -name &ldquo;*.log&rdquo; -print</p>
+<p>想要的当前目录及子目录中查找文件名以一个大写字母开头的文件，可以用：</p>
+<p>find . -name &ldquo;[A-Z]*&rdquo; -print</p>
+<p>想要在/etc目录中查找文件名以host开头的文件，可以用：</p>
+<p>find /etc -name &ldquo;host*&rdquo; -print</p>
+<p>想要查找$HOME目录中的文件，可以用：</p>
+<p>find ~ -name &ldquo;*&rdquo; -print 或find . -print</p>
+<p>要想让系统高负荷运行，就从根目录开始查找所有的文件。</p>
+<p>find / -name &ldquo;*&rdquo; -print</p>
+<p>如果想在当前目录查找文件名以一个个小写字母开头，最后是4到9加上.log结束的文件：</p>
+<p>命令：</p>
+<p>find . -name &ldquo;[a-z]*[4-9].log&rdquo; -print</p>
+<h3 id="2用perm选项"><strong>2．用perm选项：</strong></h3>
+<p>按照文件权限模式用-perm选项,按文件权限模式来查找文件的话。最好使用八进制的权限表示法。</p>
+<h3 id="3忽略某个目录"><strong>3．忽略某个目录：</strong></h3>
+<p>如果在查找文件时希望忽略某个目录，因为你知道那个目录中没有你所要查找的文件，那么可以使用-prune选项来指出需要忽略的目录。在使用-prune选项时要当心，因为如果你同时使用了-depth选项，那么-prune选项就会被find命令忽略。如果希望在test目录下查找文件，但不希望在test/test3目录下查找，可以用：</p>
+<p><strong>命令：</strong></p>
+<p>find test -path &ldquo;test/test3&rdquo; -prune -o -print</p>
+<h1 id="文件和目录属性">文件和目录属性</h1>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>可分享的(shareable)</strong></th>
+<th><strong>不可分享的(unshareable)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>不变的(static)</strong></td>
+<td>/usr (软件放置处)</td>
+<td>/etc (配置文件)</td>
+</tr>
+<tr>
+<td></td>
+<td>/opt (第三方协力软件)</td>
+<td>/boot (开机与核心档)</td>
+</tr>
+<tr>
+<td><strong>可变动的(variable)</strong></td>
+<td>/var/mail (使用者邮件信箱)</td>
+<td>/var/run (程序相关)</td>
+</tr>
+<tr>
+<td></td>
+<td>/var/spool/news (新闻组)</td>
+<td>/var/lock (程序相关)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>1.</strong> <strong>可分享的：</strong></p>
+<p>可以分享给其他系统挂载使用的目录，所以包括执行文件与用户的邮件等数据， 是能够分享给网络上其他主机挂载用的目录；</p>
+<p><strong>2.</strong> <strong>不可分享的：</strong></p>
+<p>自己机器上面运作的装置文件或者是与程序有关的socket文件等， 由于仅与自身机器有关，所以当然就不适合分享给其他主机了。</p>
+<p><strong>3.</strong> <strong>不变的：</strong></p>
+<p>有些数据是不会经常变动的，跟随着distribution而不变动。 例如函式库、文件说明文件、系统管理员所管理的主机服务配置文件等等；</p>
+<p><strong>4.</strong> <strong>可变动的：</strong></p>
+<p>经常改变的数据，例如登录文件、一般用户可自行收受的新闻组等。</p>
+<table>
+<thead>
+<tr>
+<th><strong>目录</strong></th>
+<th><strong>应放置档案内容</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/bin</td>
+<td>系统有很多放置执行档的目录，但/bin比较特殊。因为/bin放置的是在单人维护模式下还能够被操作的指令。在/bin底下的指令可以被root与一般帐号所使用，主要有：cat,<a href="http://hi.baidu.com/haifengjava/blog/item/e540a894c0f36a1bd21b70d1.html">chmod(修改权限)</a>, chown, date, mv, mkdir, cp, bash等等常用的指令。</td>
+</tr>
+<tr>
+<td>/boot</td>
+<td>主要放置开机会使用到的档案，包括Linux核心档案以及开机选单与开机所需设定档等等。Linux kernel常用的档名为：vmlinuz ，如果使用的是grub这个开机管理程式，则还会存在/boot/grub/这个目录。</td>
+</tr>
+<tr>
+<td>/dev</td>
+<td>在Linux系统上，任何装置与周边设备都是以档案的型态存在于这个目录当中。 只要通过存取这个目录下的某个档案，就等于存取某个装置。比要重要的档案有/dev/null, /dev/zero, /dev/tty , /dev/lp*, / dev/hd*, /dev/sd*等等</td>
+</tr>
+<tr>
+<td>/etc</td>
+<td>系统主要的设定档几乎都放置在这个目录内，例如人员的帐号密码档、各种服务的启始档等等。 一般来说，这个目录下的各档案属性是可以让一般使用者查阅的，但是只有root有权力修改。 FHS建议不要放置可执行档(binary)在这个目录中。 比较重要的档案有：/etc/inittab, /etc/init.d/, /etc/modprobe.conf, /etc/X11/, /etc/fstab, /etc/sysconfig/等等。 另外，其下重要的目录有：/etc/init.d/ ：所有服务的预设启动script都是放在这里的，例如要启动或者关闭iptables的话： /etc/init.d/iptables start、/etc/init.d/ iptables stop/etc/xinetd.d/ ：这就是所谓的super daemon管理的各项服务的设定档目录。/etc/X11/ ：与X Window有关的各种设定档都在这里，尤其是xorg.conf或XF86Config这两个X Server的设定档。</td>
+</tr>
+<tr>
+<td>/home</td>
+<td>这是系统预设的使用者家目录(home directory)。 在你新增一个一般使用者帐号时，预设的使用者家目录都会规范到这里来。比较重要的是，家目录有两种代号：  ~ ：代表当前使用者的家目录，而 ~guest：则代表用户名为guest的家目录。</td>
+</tr>
+<tr>
+<td>/lib</td>
+<td>系统的函式库非常的多，而/lib放置的则是在开机时会用到的函式库，以及在/bin或/sbin底下的指令会呼叫的函式库而已 。 什么是函式库呢？妳可以将他想成是外挂，某些指令必须要有这些外挂才能够顺利完成程式的执行之意。 尤其重要的是/lib/modules/这个目录，因为该目录会放置核心相关的模组(驱动程式)。</td>
+</tr>
+<tr>
+<td>/media</td>
+<td>media是媒体的英文，顾名思义，这个/media底下放置的就是可移除的装置。 包括软碟、光碟、DVD等等装置都暂时挂载于此。 常见的档名有：/media/floppy, /media/cdrom等等。</td>
+</tr>
+<tr>
+<td>/mnt</td>
+<td>如果妳想要暂时挂载某些额外的装置，一般建议妳可以放置到这个目录中。在古早时候，这个目录的用途与/media相同啦。 只是有了/media之后，这个目录就用来暂时挂载用了。</td>
+</tr>
+<tr>
+<td>/opt</td>
+<td>这个是给第三方协力软体放置的目录 。 什么是第三方协力软体啊？举例来说，KDE这个桌面管理系统是一个独立的计画，不过他可以安装到Linux系统中，因此KDE的软体就建议放置到此目录下了。 另外，如果妳想要自行安装额外的软体(非原本的distribution提供的)，那么也能够将你的软体安装到这里来。 不过，以前的Linux系统中，我们还是习惯放置在/usr/local目录下。</td>
+</tr>
+<tr>
+<td>/root</td>
+<td>系统管理员(root)的家目录。 之所以放在这里，是因为如果进入单人维护模式而仅挂载根目录时，该目录就能够拥有root的家目录，所以我们会希望root的家目录与根目录放置在同一个分区中。</td>
+</tr>
+<tr>
+<td>/sbin</td>
+<td>Linux有非常多指令是用来设定系统环境的，这些指令只有root才能够利用来设定系统，其他使用者最多只能用来查询而已。放在/sbin底下的为开机过程中所需要的，里面包括了开机、修复、还原系统所需要的指令。至于某些伺服器软体程式，一般则放置到/usr/sbin/当中。至于本机自行安装的软体所产生的系统执行档(system binary)，则放置到/usr/local/sbin/当中了。常见的指令包括：fdisk, fsck, ifconfig, init, mkfs等等。</td>
+</tr>
+<tr>
+<td>/srv</td>
+<td>srv可以视为service的缩写，是一些网路服务启动之后，这些服务所需要取用的资料目录。 常见的服务例如WWW, FTP等等。 举例来说，WWW伺服器需要的网页资料就可以放置在/srv/www/里面。呵呵，看来平时我们编写的代码应该放到这里了。</td>
+</tr>
+<tr>
+<td>/tmp</td>
+<td>这是让一般使用者或者是正在执行的程序暂时放置档案的地方。这个目录是任何人都能够存取的，所以你需要定期的清理一下。当然，重要资料不可放置在此目录啊。 因为FHS甚至建议在开机时，应该要将/tmp下的资料都删除。</td>
+</tr>
+<tr>
+<td>/lost+found</td>
+<td>这个目录是使用标准的ext2/ext3档案系统格式才会产生的一个目录，目的在于当档案系统发生错误时，将一些遗失的片段放置到这个目录下。 这个目录通常会在分割槽的最顶层存在，例如你加装一个硬盘于/disk中，那在这个系统下就会自动产生一个这样的目录/disk/lost+found</td>
+</tr>
+<tr>
+<td>/proc</td>
+<td>这个目录本身是一个虚拟文件系统(virtual filesystem)喔。 他放置的资料都是在内存当中，例如系统核心、行程资讯(process)（是进程吗?）、周边装置的状态及网络状态等等。因为这个目录下的资料都是在记忆体（内存）当中，所以本身不占任何硬盘空间。比较重要的档案（目录）例如： /proc/cpuinfo, /proc/dma, /proc/interrupts, /proc/ioports, /proc/net/*等等。呵呵，是虚拟内存吗[guest]？</td>
+</tr>
+<tr>
+<td>/sys</td>
+<td>这个目录其实跟/proc非常类似，也是一个虚拟的档案系统，主要也是记录与核心相关的资讯。 包括目前已载入的核心模组与核心侦测到的硬体装置资讯等等。 这个目录同样不占硬盘容量。</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>/etc：配置文件</li>
+<li>/bin：重要执行档</li>
+<li>/dev：所需要的装置文件</li>
+<li>/lib：执行档所需的函式库与核心所需的模块</li>
+<li>/sbin：重要的系统执行文件</li>
+</ul>
+<h2 id="usr-的意义与内容"><strong>/usr 的意义与内容</strong></h2>
+<p>依据FHS的基本定义，/usr里面放置的数据属于可分享的与不可变动的(shareable, static)， 如果你知道如何透过网络进行分区的挂载(例如在服务器篇会谈到的NFS服务器)，那么/usr确实可以分享给局域网络内的其他主机来使用喔。</p>
+<p>/usr不是user的缩写，其实usr是Unix Software Resource的缩写， 也就是Unix操作系统软件资源所放置的目录，而不是用户的数据啦。这点要注意。 FHS建议所有软件开发者，应该将他们的数据合理的分别放置到这个目录下的次目录，而不要自行建立该软件自己独立的目录。</p>
+<h2 id="var-的意义与内容"><strong>/var 的意义与内容</strong></h2>
+<p>如果/usr是安装时会占用较大硬盘容量的目录，那么/var就是在系统运作后才会渐渐占用硬盘容量的目录。 因为/var目录主要针对常态性变动的文件，包括缓存(cache)、登录档(log file)以及某些软件运作所产生的文件， 包括程序文件(lock file, run file)，或者例如MySQL数据库的文件等等。</p>
+<h2 id="文件类型">文件类型</h2>
+<p>Linux文件类型常见的有：普通文件、目录文件、字符设备文件和块设备文件、符号链接文件等，现在我们进行一个简要的说明。</p>
+<h3 id="1-普通文件"><strong>1.</strong> <strong>普通文件</strong></h3>
+<p>我们用 ls -lh 来查看某个文件的属性，可以看到有类似-rwxrwxrwx，值得注意的是第一个符号是 - ，这样的文件在Linux中就是普通文件。这些文件一般是用一些相关的应用程序创建，比如图像工具、文档工具、归档工具&hellip; &hellip;. 或 cp工具等。这类文件的删除方式是用rm 命令。 另外，依照文件的内容，又大略可以分为：</p>
+<h4 id="1-纯文本档ascii"><strong>1&gt;.</strong> <strong>纯文本档(ASCII)：</strong></h4>
+<p>这是Linux系统中最多的一种文件类型，称为纯文本档是因为内容为我们人类可以直接读到的数据，例如数字、字母等等。 几乎只要我们可以用来做为设定的文件都属于这一种文件类型。 举例来说，你可以用命令： cat ~/.bashrc 来看到该文件的内容。 (cat 是将一个文件内容读出来的指令).</p>
+<h4 id="2-二进制文件binary"><strong>2&gt;.</strong> <strong>二进制文件(binary)：</strong></h4>
+<p>Linux系统其实仅认识且可以执行二进制文件(binary file)。Linux当中的可执行文件(scripts, 文字型批处理文件不算)就是这种格式的文件。 刚刚使用的命令cat就是一个binary file。</p>
+<h4 id="3-数据格式文件data"><strong>3&gt;.</strong> <strong>数据格式文件(data)：</strong></h4>
+<p>有些程序在运作的过程当中会读取某些特定格式的文件，那些特定格式的文件可以被称为数据文件 (data file)。举例来说，我们的Linux在使用者登录时，都会将登录的数据记录在 /var/log/wtmp那个文件内，该文件是一个data file，他能够透过last这个指令读出来！ 但是使用cat时，会读出乱码～因为他是属于一种特殊格式的文件？</p>
+<h3 id="2-目录文件"><strong>2.</strong> <strong>目录文件</strong></h3>
+<p>当我们在某个目录下执行，看到有类似 drwxr-xr-x ，这样的文件就是目录，目录在Linux是一个比较特殊的文件。注意它的第一个字符是d。创建目录的命令可以用 mkdir 命令，或cp命令，cp可以把一个目录复制为另一个目录。删除用rm 或rmdir命令。</p>
+<h3 id="3-字符设备或块设备文件"><strong>3.</strong> <strong>字符设备或块设备文件</strong></h3>
+<p>如时您进入/dev目录，列一下文件，会看到类似如下的:</p>
+<p>[root@localhost ~]# ls -al /dev/tty</p>
+<p>crw-rw-rw- 1 root tty 5, 0 11-03 15:11 /dev/tty</p>
+<p>[root@localhost ~]# ls -la /dev/sda1</p>
+<p>brw-r&mdash;&ndash; 1 root disk 8, 1 11-03 07:11 /dev/sda1</p>
+<p>我们看到/dev/tty的属性是 crw-rw-rw- ，注意前面第一个字符是 c ，这表示字符设备文件。比如猫等串口设备。我们看到 /dev/sda1 的属性是 brw-r&mdash;&ndash; ，注意前面的第一个字符是b，这表示块设备，比如硬盘，光驱等设备。</p>
+<p>这个种类的文件，是用mknode来创建，用rm来删除。目前在最新的Linux发行版本中，我们一般不用自己来创建设备文件。因为这些文件是和内核相关联的。</p>
+<p>与系统周边及储存等相关的一些文件， 通常都集中在/dev这个目录之下！通常又分为两种：</p>
+<h4 id="区块block设备档-"><strong>区块(block)设备档 ：</strong></h4>
+<p>就是一些储存数据， 以提供系统随机存取的接口设备，举例来说，硬盘与软盘等就是啦！ 你可以随机的在硬盘的不同区块读写，这种装置就是成组设备！你可以自行查一下/dev/sda看看， 会发现第一个属性为[ b ]！</p>
+<h4 id="字符character设备文件"><strong>字符(character)设备文件：</strong></h4>
+<p>亦即是一些串行端口的接口设备， 例如键盘、鼠标等等！这些设备的特色就是一次性读取的，不能够截断输出。 举例来说，你不可能让鼠标跳到另一个画面，而是滑动到另一个地方！第一个属性为 [ c ]。</p>
+<h3 id="4-数据接口文件sockets"><strong>4.</strong> <strong>数据接口文件(sockets)：</strong></h3>
+<p>数据接口文件（或者：套接口文件），这种类型的文件通常被用在网络上的数据承接了。我们可以启动一个程序来监听客户端的要求， 而客户端就可以透过这个socket来进行数据的沟通了。第一个属性为 [ s ]， 最常在/var/run这个目录中看到这种文件类型了。</p>
+<p>例如：当我们启动MySQL服务器时，会产生一个mysql.sock的文件。</p>
+<p>[root@localhost ~]# ls -lh /var/lib/mysql/mysql.sock</p>
+<p>srwxrwxrwx 1 mysql mysql 0 04-19 11:12 /var/lib/mysql/mysql.sock</p>
+<p>注意这个文件的属性的第一个字符是 s。</p>
+<h3 id="5-符号链接文件"><strong>5.</strong> <strong>符号链接文件：</strong></h3>
+<p>当我们查看文件属性时，会看到有类似 lrwxrwxrwx,注意第一个字符是l，这类文件是链接文件。是通过ln -s 源文件名 新文件名 。上面是一个例子，表示setup.log是install.log的软链接文件。怎么理解呢？这和Windows操作系统中的快捷方式有点相似。</p>
+<p>符号链接文件的创建方法举例:</p>
+<p>[root@localhost test]# ls -lh log2012.log</p>
+<p>-rw-r&ndash;r&ndash; 1 root root 296K 11-13 06:03 log2012.log</p>
+<p>[root@localhost test]# ln -s log2012.log linklog.log</p>
+<p>[root@localhost test]# ls -lh *.log</p>
+<p>lrwxrwxrwx 1 root root  11 11-22 06:58 linklog.log -&gt; log2012.log</p>
+<p>-rw-r&ndash;r&ndash; 1 root root 296K 11-13 06:03 log2012.log</p>
+<h3 id="6-数据输送文件fifopipe"><strong>6. 数据输送文件（FIFO,pipe）:</strong></h3>
+<p>FIFO也是一种特殊的文件类型，他主要的目的在解决多个程序同时存取一个文件所造成的错误问题。 FIFO是first-in-first-out的缩写。第一个属性为[p] 。</p>
+<h2 id="文件属性详解">文件属性详解</h2>
+<p>Linux 文件或目录的属性主要包括：文件或目录的节点、种类、权限模式、链接数量、所归属的用户和用户组、最近访问或修改的时间等内容。具体情况如下：</p>
+<p><strong>命令：</strong></p>
+<p>ls -lih</p>
+<p><strong>输出：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>root@localhost test<span style="color:#f92672">]</span><span style="color:#75715e"># ls -lih</span>
+
+总计 316K
+
+<span style="color:#ae81ff">2095120</span> lrwxrwxrwx <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">11</span> 11-22 06:58 linklog.log -&gt; log2012.log
+
+<span style="color:#ae81ff">2095112</span> -rw-r--r-- <span style="color:#ae81ff">1</span> root root 296K 11-13 06:03 log2012.log
+
+<span style="color:#ae81ff">2095110</span> -rw-r--r-- <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">61</span> 11-13 06:03 log2013.log
+
+<span style="color:#ae81ff">2095107</span> -rw-r--r-- <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">0</span> 11-13 06:03 log2014.log
+
+<span style="color:#ae81ff">2095117</span> -rw-r--r-- <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">0</span> 11-13 06:06 log2015.log
+
+<span style="color:#ae81ff">2095118</span> -rw-r--r-- <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">0</span> 11-16 14:41 log2016.log
+
+<span style="color:#ae81ff">2095119</span> -rw-r--r-- <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">0</span> 11-16 14:43 log2017.log
+
+<span style="color:#ae81ff">2095113</span> drwxr-xr-x <span style="color:#ae81ff">6</span> root root 4.0K 10-27 01:58 scf
+
+<span style="color:#ae81ff">2095109</span> drwxrwxr-x <span style="color:#ae81ff">2</span> root root 4.0K 11-13 06:08 test3
+
+<span style="color:#ae81ff">2095131</span> drwxrwxr-x <span style="color:#ae81ff">2</span> root root 4.0K 11-13 05:50 test4
+</code></pre></div><p><strong>说明：</strong></p>
+<p>第一列：inode</p>
+<p>第二列：文件种类和权限；</p>
+<p>第三列： 硬链接个数；</p>
+<p>第四列： 属主；</p>
+<p>第五列：所归属的组；</p>
+<p>第六列：文件或目录的大小；</p>
+<p>第七列和第八列：最后访问或修改时间；</p>
+<p>第九列：文件名或目录名</p>
+<p><strong>关于inode：</strong></p>
+<p>inode 译成中文就是索引节点。每个存储设备或存储设备的分区（存储设备是硬盘、软盘、U盘等等）被格式化为文件系统后，应该有两部份，一部份是inode，另一部份是Block，Block是用来存储数据用的。而inode呢，就是用来存储这些数 据的信息，这些信息包括文件大小、属主、归属的用户组、读写权限等。inode为每个文件进行信息索引，所以就有了inode的数值。操作系统根据指令， 能通过inode值最快的找到相对应的文件。</p>
+<p>做个比喻，比如一本书，存储设备或分区就相当于这本书，Block相当于书中的每一页，inode 就相当于这本书前面的目录，一本书有很多的内容，如果想查找某部份的内容，我们可以先查目录，通过目录能最快的找到我们想要看的内容。虽然不太恰当，但还是比较形象。</p>
+<h2 id="tar">tar</h2>
+<h3 id="1命令格式-23"><strong>1．命令格式：</strong></h3>
+<p>tar[必要参数][选择参数][文件]</p>
+<h3 id="2命令功能-21"><strong>2．命令功能：</strong></h3>
+<p>用来压缩和解压文件。tar本身不具有压缩功能。他是调用压缩功能实现的</p>
+<h3 id="3命令参数-19"><strong>3．命令参数：</strong></h3>
+<p><strong>必要参数有如下：</strong></p>
+<p>-A 新增压缩文件到已存在的压缩</p>
+<p>-B 设置区块大小</p>
+<p>-c 建立新的压缩文件</p>
+<p>-d 记录文件的差别</p>
+<p>-r 添加文件到已经压缩的文件</p>
+<p>-u 添加改变了和现有的文件到已经存在的压缩文件</p>
+<p>-x 从压缩的文件中提取文件</p>
+<p>-t 显示压缩文件的内容</p>
+<p>-z 支持gzip解压文件</p>
+<p>-j 支持bzip2解压文件</p>
+<p>-Z 支持compress解压文件</p>
+<p>-v 显示操作过程</p>
+<p>-l 文件系统边界设置</p>
+<p>-k 保留原有文件不覆盖</p>
+<p>-m 保留文件不被覆盖</p>
+<p>-W 确认压缩文件的正确性</p>
+<p><strong>可选参数如下：</strong></p>
+<p>-b 设置区块数目</p>
+<p>-C 切换到指定目录</p>
+<p>-f 指定压缩文件</p>
+<p>&ndash;help 显示帮助信息</p>
+<p>&ndash;version 显示版本信息</p>
+<h1 id="常见解压压缩命令"><strong>常见解压/压缩命令</strong></h1>
+<h2 id="tar-1">tar</h2>
+<p>解包：tar xvf FileName.tar
+打包：tar cvf FileName.tar DirName</p>
+<p>（注：tar是打包，不是压缩！）</p>
+<p>.gz
+解压1：gunzip FileName.gz
+解压2：gzip -d FileName.gz
+压缩：gzip FileName</p>
+<p>.tar.gz 和 .tgz
+解压：tar zxvf FileName.tar.gz
+压缩：tar zcvf FileName.tar.gz DirName</p>
+<p>.bz2
+解压1：bzip2 -d FileName.bz2
+解压2：bunzip2 FileName.bz2
+压缩： bzip2 -z FileName</p>
+<p>.tar.bz2
+解压：tar jxvf FileName.tar.bz2
+压缩：tar jcvf FileName.tar.bz2 DirName</p>
+<p>.bz
+解压1：bzip2 -d FileName.bz
+解压2：bunzip2 FileName.bz
+压缩：未知</p>
+<p>.tar.bz
+解压：tar jxvf FileName.tar.bz
+压缩：未知</p>
+<p>.Z
+解压：uncompress FileName.Z
+压缩：compress FileName</p>
+<p>.tar.Z
+解压：tar Zxvf FileName.tar.Z
+压缩：tar Zcvf FileName.tar.Z DirName</p>
+<p>.zip
+解压：unzip FileName.zip
+压缩：zip FileName.zip DirName</p>
+<p>.rar
+解压：rar x FileName.rar
+压缩：rar a FileName.rar DirName</p>
+<h2 id="gzip">gzip</h2>
+<p><strong>1．命令格式：</strong></p>
+<p>gzip[参数][文件或者目录]</p>
+<p><strong>2．命令功能：</strong></p>
+<p>gzip是个使用广泛的压缩程序，文件经它压缩过后，其名称后面会多出&rdquo;.gz&quot;的扩展名。</p>
+<p><strong>3．命令参数：</strong></p>
+<p>-a或&ndash;ascii 使用ASCII文字模式。</p>
+<p>-c或&ndash;stdout或&ndash;to-stdout 把压缩后的文件输出到标准输出设备，不去更动原始文件。</p>
+<p>-d或&ndash;decompress或&mdash;-uncompress 解开压缩文件。</p>
+<p>-f或&ndash;force 强行压缩文件。不理会文件名称或硬连接是否存在以及该文件是否为符号连接。</p>
+<p>-h或&ndash;help 在线帮助。</p>
+<p>-l或&ndash;list 列出压缩文件的相关信息。</p>
+<p>-L或&ndash;license 显示版本与版权信息。</p>
+<p>-n或&ndash;no-name 压缩文件时，不保存原来的文件名称及时间戳记。</p>
+<p>-N或&ndash;name 压缩文件时，保存原来的文件名称及时间戳记。</p>
+<p>-q或&ndash;quiet 不显示警告信息。</p>
+<p>-r或&ndash;recursive 递归处理，将指定目录下的所有文件及子目录一并处理。</p>
+<p>-S&lt;压缩字尾字符串&gt;或&mdash;-suffix&lt;压缩字尾字符串&gt; 更改压缩字尾字符串。</p>
+<p>-t或&ndash;test 测试压缩文件是否正确无误。</p>
+<p>-v或&ndash;verbose 显示指令执行过程。</p>
+<p>-V或&ndash;version 显示版本信息。</p>
+<p>-num 用指定的数字num调整压缩的速度，-1或&ndash;fast表示最快压缩方法（低压缩比），-9或&ndash;best表示最慢压缩方法（高压缩比）。系统缺省值为6。</p>
+<h1 id="权限设置">权限设置</h1>
+<h2 id="chmod">chmod</h2>
+<h3 id="1-命令格式-1"><strong>1.</strong> <strong>命令格式:</strong></h3>
+<p><a href="http://www.linuxso.com/command/chmod.html">chmod</a> [-cfvR] [&ndash;help] [&ndash;version] mode <a href="http://www.linuxso.com/command/file.html">file</a></p>
+<h3 id="2-命令功能-1"><strong>2. 命令功能：</strong></h3>
+<p>用于改变文件或目录的访问权限，用它控制文件或目录的访问权限。</p>
+<h3 id="3-命令参数"><strong>3. 命令参数：</strong></h3>
+<p><strong>必要参数：</strong>
+-c 当发生改变时，报告处理信息
+-f 错误信息不输出
+-R 处理指定目录以及其子目录下的所有文件
+-v 运行时显示详细处理信息</p>
+<p><strong>选择参数：</strong>
+&ndash;reference=&lt;目录或者文件&gt; 设置成具有指定目录或者文件具有相同的权限
+&ndash;version 显示版本信息
+&lt;权限范围&gt;+&lt;权限设置&gt; 使权限范围内的目录或者文件具有指定的权限
+&lt;权限范围&gt;-&lt;权限设置&gt; 删除权限范围的目录或者文件的指定权限
+&lt;权限范围&gt;=&lt;权限设置&gt; 设置权限范围内的目录或者文件的权限为指定的值</p>
+<p><strong>权限范围：</strong>
+u ：目录或者文件的当前的用户
+g ：目录或者文件的当前的群组
+o ：除了目录或者文件的当前用户或群组之外的用户或者群组
+a ：所有的用户及群组</p>
+<p>权限代号：
+r ：读权限，用数字4表示
+w ：写权限，用数字2表示
+x ：执行权限，用数字1表示
+- ：删除权限，用数字0表示
+s ：特殊权限</p>
+<p>该命令有两种用法。一种是包含字母和操作符表达式的文字设定法；另一种是包含数字的数字设定法。
+　　<strong>1）. 文字设定法:</strong>
+　　 chmod ［who］ ［+ | - | =］ ［mode］ 文件名
+　　<strong>2）. 数字设定法</strong>
+　　我们必须首先了解用数字表示的属性的含义：0表示没有权限，1表示可执行权限，2表示可写权限，4表示可读权限，然后将其相加。所以数字属性的格式应为3个从0到7的八进制数，其顺序是（u）（g）（o）。
+　　例如，如果想让某个文件的属主有“读/写”二种权限，需要把4（可读）+2（可写）＝6（读/写）。
+　　数字设定法的一般形式为：
+　　 chmod ［mode］ 文件名</p>
+<p><strong>数字与字符对应关系如下：</strong></p>
+<p>r=4，w=2，x=1
+若要rwx属性则4+2+1=7
+若要rw-属性则4+2=6；
+若要r-x属性则4+1=7。</p>
+<h2 id="chgrp">chgrp</h2>
+<p><strong>1．命令格式：</strong></p>
+<p>chgrp [选项] [组] [文件]</p>
+<p><strong>2．命令功能：</strong></p>
+<p>chgrp命令可采用群组名称或群组识别码的方式改变文件或目录的所属群组。使用权限是超级用户。</p>
+<p><strong>3．命令参数：</strong></p>
+<p><strong>必要参数:</strong></p>
+<p>-c 当发生改变时输出调试信息</p>
+<p>-f 不显示错误信息</p>
+<p>-R 处理指定目录以及其子目录下的所有文件</p>
+<p>-v 运行时显示详细的处理信息</p>
+<p>&ndash;dereference 作用于符号链接的指向，而不是符号链接本身</p>
+<p>&ndash;no-dereference 作用于符号链接本身</p>
+<p><strong>选择参数:</strong></p>
+<p>&ndash;reference=&lt;文件或者目录&gt;</p>
+<p>&ndash;help 显示帮助信息</p>
+<p>&ndash;version 显示版本信息</p>
+<h2 id="chown">chown</h2>
+<h3 id="1命令格式-24"><strong>1．命令格式：</strong></h3>
+<p>　　　　chown [选项]&hellip; [所有者][:[组]] 文件&hellip;</p>
+<h3 id="2命令功能-22"><strong>2．命令功能：</strong></h3>
+<p>　　　　通过chown改变文件的拥有者和群组。在更改文件的所有者或所属群组时，可以使用用户名称和用户识别码设置。普通用户不能将自己的文件改变成其他的拥有者。其操作权限一般为管理员。</p>
+<h3 id="3命令参数-20"><strong>3．命令参数：</strong></h3>
+<p>　　<strong>必要参数:</strong></p>
+<p>　　　　-c 显示更改的部分的信息</p>
+<p>　　　　-f 忽略错误信息</p>
+<p>　　　　-h 修复符号链接</p>
+<p>　　　　-R 处理指定目录以及其子目录下的所有文件</p>
+<p>　　　　-v 显示详细的处理信息</p>
+<p>　　　　-deference 作用于符号链接的指向，而不是链接文件本身</p>
+<p>　　<strong>选择参数:</strong></p>
+<p>　　　　&ndash;reference=&lt;目录或文件&gt; 把指定的目录/文件作为参考，把操作的文件/目录设置成参考文件/目录相同拥有者和群组</p>
+<p>　　　　&ndash;from=&lt;当前用户：当前群组&gt; 只有当前用户和群组跟指定的用户和群组相同时才进行改变</p>
+<p>　　　　&ndash;help 显示帮助信息</p>
+<p>　　　　&ndash;version 显示版本信息</p>
+<p>　　<strong>4．使用实例：</strong></p>
+<p>　　<strong>实例1：改变拥有者和群组</strong></p>
+<p>　　<strong>命令：</strong></p>
+<p>　　　　chown mail:mail log2012.log</p>
+<h2 id="etcgroup文件详解">/etc/group文件详解</h2>
+<p>Linux /etc/group文件与/etc/passwd和/etc/shadow文件都是有关于系统管理员对用户和用户组管理时相关的文件。linux /etc/group文件是有关于系统管理员对用户和用户组管理的文件,linux用户组的所有信息都存放在/etc/group文件中。具有某种共同特征的用户集合起来就是用户组（Group）。用户组（Group）配置文件主要有 /etc/group和/etc/gshadow，其中/etc/gshadow是/etc/group的加密信息文件。</p>
+<p>将用户分组是Linux系统中对用户进行管理及控制访问权限的一种手段。每个用户都属于某个用户组；一个组中可以有多个用户，一个用户也可以属于不 同的组。当一个用户同时是多个组中的成员时，在/etc/passwd文件中记录的是用户所属的主组，也就是登录时所属的默认组，而其他组称为附加组。</p>
+<p>用户组的所有信息都存放在/etc/group文件中。此文件的格式是由冒号(:)隔开若干个字段，这些字段具体如下：</p>
+<p>组名:口令:组标识号:组内用户列表</p>
+<p>具体解释：</p>
+<p><strong>组名：</strong></p>
+<p>组名是用户组的名称，由字母或数字构成。与/etc/passwd中的登录名一样，组名不应重复。</p>
+<p><strong>口令：</strong></p>
+<p>口令字段存放的是用户组加密后的口令字。一般Linux系统的用户组都没有口令，即这个字段一般为空，或者是*。</p>
+<p><strong>组标识号：</strong></p>
+<p>组标识号与用户标识号类似，也是一个整数，被系统内部用来标识组。别称GID.</p>
+<p><strong>组内用户列表：</strong></p>
+<p>是属于这个组的所有用户的列表，不同用户之间用逗号(,)分隔。这个用户组可能是用户的主组，也可能是附加组。</p>
+<h1 id="磁盘存储">磁盘存储</h1>
+<h3 id="df">df</h3>
+<h3 id="1命令格式-25"><strong>1．命令格式：</strong></h3>
+<p>df [选项] [文件]</p>
+<h3 id="2命令功能-23"><strong>2．命令功能：</strong></h3>
+<p>显示指定磁盘文件的可用空间。如果没有文件名被指定，则所有当前被挂载的文件系统的可用空间将被显示。默认情况下，磁盘空间将以 1KB 为单位进行显示，除非环境变量 POSIXLY_CORRECT 被指定，那样将以512字节为单位进行显示</p>
+<h3 id="3命令参数-21"><strong>3．命令参数：</strong></h3>
+<p><strong>必要参数：</strong></p>
+<p>-a 全部文件系统列表</p>
+<p>-h 方便阅读方式显示</p>
+<p>-H 等于“-h”，但是计算式，1K=1000，而不是1K=1024</p>
+<p>-i 显示inode信息</p>
+<p>-k 区块为1024字节</p>
+<p>-l 只显示本地文件系统</p>
+<p>-m 区块为1048576字节</p>
+<p>&ndash;no-sync 忽略 sync 命令</p>
+<p>-P 输出格式为POSIX</p>
+<p>&ndash;sync 在取得磁盘信息前，先执行sync命令</p>
+<p>-T 文件系统类型</p>
+<p><strong>选择参数：</strong></p>
+<p>&ndash;block-size=&lt;区块大小&gt; 指定区块大小</p>
+<p>-t&lt;文件系统类型&gt; 只显示选定文件系统的磁盘信息</p>
+<p>-x&lt;文件系统类型&gt; 不显示选定文件系统的磁盘信息</p>
+<p>&ndash;help 显示帮助信息</p>
+<p>&ndash;version 显示版本信息</p>
+<h2 id="du">du</h2>
+<h3 id="1命令格式-26"><strong>1．命令格式：</strong></h3>
+<p>du [选项][文件]</p>
+<h3 id="2命令功能-24"><strong>2．命令功能：</strong></h3>
+<p>显示每个文件和目录的磁盘使用空间。</p>
+<h3 id="3命令参数-22"><strong>3．命令参数：</strong></h3>
+<p>-a或-all 显示目录中个别文件的大小。</p>
+<p>-b或-bytes 显示目录或文件大小时，以byte为单位。</p>
+<p>-c或&ndash;total 除了显示个别目录或文件的大小外，同时也显示所有目录或文件的总和。</p>
+<p>-k或&ndash;kilobytes 以KB(1024bytes)为单位输出。</p>
+<p>-m或&ndash;megabytes 以MB为单位输出。</p>
+<p>-s或&ndash;summarize 仅显示总计，只列出最后加总的值。</p>
+<p>-h或&ndash;human-readable 以K，M，G为单位，提高信息的可读性。</p>
+<p>-x或&ndash;one-file-xystem 以一开始处理时的文件系统为准，若遇上其它不同的文件系统目录则略过。</p>
+<p>-L&lt;符号链接&gt;或&ndash;dereference&lt;符号链接&gt; 显示选项中所指定符号链接的源文件大小。</p>
+<p>-S或&ndash;separate-dirs  显示个别目录的大小时，并不含其子目录的大小。</p>
+<p>-X&lt;文件&gt;或&ndash;exclude-from=&lt;文件&gt; 在&lt;文件&gt;指定目录或文件。</p>
+<p>&ndash;exclude=&lt;目录或文件&gt;     略过指定的目录或文件。</p>
+<p>-D或&ndash;dereference-args  显示指定符号链接的源文件大小。</p>
+<p>-H或&ndash;si 与-h参数相同，但是K，M，G是以1000为换算单位。</p>
+<p>-l或&ndash;count-links  重复计算硬件链接的文件。</p>
+<h1 id="性能监控">性能监控</h1>
+<h2 id="top">top</h2>
+<h3 id="1命令格式-27"><strong>1．命令格式：</strong></h3>
+<p>top [参数]</p>
+<h3 id="2命令功能-25"><strong>2．命令功能：</strong></h3>
+<p>显示当前系统正在执行的进程的相关信息，包括进程ID、内存占用率、CPU占用率等</p>
+<h3 id="3命令参数-23">**3．**命令参数：</h3>
+<p>-b 批处理</p>
+<p>-c 显示完整的治命令</p>
+<p>-I 忽略失效过程</p>
+<p>-s 保密模式</p>
+<p>-S 累积模式</p>
+<p>-i&lt;时间&gt; 设置间隔时间</p>
+<p>-u&lt;用户名&gt; 指定用户名</p>
+<p>-p&lt;进程号&gt; 指定进程</p>
+<p>-n&lt;次数&gt; 循环显示的次数</p>
+<h2 id="free">free</h2>
+<h3 id="1命令格式-28"><strong>1．命令格式：</strong></h3>
+<p>free [参数]</p>
+<h3 id="2命令功能-26"><strong>2．命令功能：</strong></h3>
+<p>free 命令显示系统使用和空闲的内存情况，包括物理内存、交互区内存(swap)和内核缓冲区内存。共享内存将被忽略</p>
+<h3 id="3命令参数-24"><strong>3．命令参数：</strong></h3>
+<p>-b 以Byte为单位显示内存使用情况。</p>
+<p>-k 以KB为单位显示内存使用情况。</p>
+<p>-m 以MB为单位显示内存使用情况。</p>
+<p>-g  以GB为单位显示内存使用情况。</p>
+<p>-o 不显示缓冲区调节列。</p>
+<p>-s&lt;间隔秒数&gt; 持续观察内存使用状况。</p>
+<p>-t 显示内存总和列。</p>
+<p>-V 显示版本信息。</p>
+<h2 id="vmstat">vmstat</h2>
+<p>vmstat是Virtual Meomory Statistics（虚拟内存统计）的缩写，可对操作系统的虚拟内存、进程、CPU活动进行监控。</p>
+<h3 id="物理内存和虚拟内存"><strong>物理内存和虚拟内存</strong></h3>
+<p>区别：</p>
+<p>我们知道，直接从物理内存读写数据要比从硬盘读写数据要快的多，因此，我们希望所有数据的读取和写入都在内存完成，而内存是有限的，这样就引出了物理内存与虚拟内存的概念。</p>
+<p>物理内存就是系统硬件提供的内存大小，是真正的内存，相对于物理内存，在linux下还有一个虚拟内存的概念，虚拟内存就是为了满足物理内存的不足而提出的策略，它是利用磁盘空间虚拟出的一块逻辑内存，用作虚拟内存的磁盘空间被称为交换空间（Swap Space）。</p>
+<p>作为物理内存的扩展，linux会在物理内存不足时，使用交换分区的虚拟内存，更详细的说，就是内核会将暂时不用的内存块信息写到交换空间，这样以来，物理内存得到了释放，这块内存就可以用于其它目的，当需要用到原始的内容时，这些信息会被重新从交换空间读入物理内存。</p>
+<p>linux的内存管理采取的是分页存取机制，为了保证物理内存能得到充分的利用，内核会在适当的时候将物理内存中不经常使用的数据块自动交换到虚拟内存中，而将经常使用的信息保留到物理内存。</p>
+<p>要深入了解linux内存运行机制，需要知道下面提到的几个方面：</p>
+<p>首先，Linux系统会不时的进行页面交换操作，以保持尽可能多的空闲物理内存，即使并没有什么事情需要内存，Linux也会交换出暂时不用的内存页面。这可以避免等待交换所需的时间。</p>
+<p>其次，linux进行页面交换是有条件的，不是所有页面在不用时都交换到虚拟内存，linux内核根据”最近最经常使用“算法，仅仅将一些不经常使用的页面文件交换到虚拟内存，有时我们会看到这么一个现象：linux物理内存还有很多，但是交换空间也使用了很多。其实，这并不奇怪，例如，一个占用很大内存的进程运行时，需要耗费很多内存资源，此时就会有一些不常用页面文件被交换到虚拟内存中，但后来这个占用很多内存资源的进程结束并释放了很多内存时，刚才被交换出去的页面文件并不会自动的交换进物理内存，除非有这个必要，那么此刻系统物理内存就会空闲很多，同时交换空间也在被使用，就出现了刚才所说的现象了。关于这点，不用担心什么，只要知道是怎么一回事就可以了。</p>
+<p>最后，交换空间的页面在使用时会首先被交换到物理内存，如果此时没有足够的物理内存来容纳这些页面，它们又会被马上交换出去，如此以来，虚拟内存中可能没有足够空间来存储这些交换页面，最终会导致linux出现假死机、服务异常等问题，linux虽然可以在一段时间内自行恢复，但是恢复后的系统已经基本不可用了。</p>
+<p>因此，合理规划和设计linux内存的使用，是非常重要的。</p>
+<h3 id="虚拟内存原理"><strong>虚拟内存原理：</strong></h3>
+<p>在系统中运行的每个进程都需要使用到内存，但不是每个进程都需要每时每刻使用系统分配的内存空间。当系统运行所需内存超过实际的物理内存，内核会释放某些进程所占用但未使用的部分或所有物理内存，将这部分资料存储在磁盘上直到进程下一次调用，并将释放出的内存提供给有需要的进程使用。</p>
+<p>在Linux内存管理中，主要是通过“调页Paging”和“交换Swapping”来完成上述的内存调度。调页算法是将内存中最近不常使用的页面换到磁盘上，把活动页面保留在内存中供进程使用。交换技术是将整个进程，而不是部分页面，全部交换到磁盘上。</p>
+<p>分页(Page)写入磁盘的过程被称作Page-Out，分页(Page)从磁盘重新回到内存的过程被称作Page-In。当内核需要一个分页时，但发现此分页不在物理内存中(因为已经被Page-Out了)，此时就发生了分页错误（Page Fault）。</p>
+<p>当系统内核发现可运行内存变少时，就会通过Page-Out来释放一部分物理内存。经管Page-Out不是经常发生，但是如果Page-out频繁不断的发生，直到当内核管理分页的时间超过运行程式的时间时，系统效能会急剧下降。这时的系统已经运行非常慢或进入暂停状态，这种状态亦被称作thrashing(颠簸)。</p>
+<h3 id="1命令格式-29"><strong>1．命令格式：</strong></h3>
+<p>vmstat [-a] [-n] [-S unit] [delay [ count]]</p>
+<p>vmstat [-s] [-n] [-S unit]</p>
+<p>vmstat [-m] [-n] [delay [ count]]</p>
+<p>vmstat [-d] [-n] [delay [ count]]</p>
+<p>vmstat [-p disk partition] [-n] [delay [ count]]</p>
+<p>vmstat [-f]</p>
+<p>vmstat [-V]</p>
+<h3 id="2命令功能-27"><strong>2．命令功能：</strong></h3>
+<p>用来显示虚拟内存的信息</p>
+<h3 id="3命令参数-25"><strong>3．命令参数：</strong></h3>
+<p>-a：显示活跃和非活跃内存</p>
+<p>-f：显示从系统启动至今的fork数量 。</p>
+<p>-m：显示slabinfo</p>
+<p>-n：只在开始时显示一次各字段名称。</p>
+<p>-s：显示内存相关统计信息及多种系统活动数量。</p>
+<p>delay：刷新时间间隔。如果不指定，只显示一条结果。</p>
+<p>count：刷新次数。如果不指定刷新次数，但指定了刷新时间间隔，这时刷新次数为无穷。</p>
+<p>-d：显示磁盘相关统计信息。</p>
+<p>-p：显示指定磁盘分区统计信息</p>
+<p>-S：使用指定单位显示。参数有 k 、K 、m 、M ，分别代表1000、1024、1000000、1048576字节（byte）。默认单位为K（1024 bytes）</p>
+<p>-V：显示vmstat版本信息。</p>
+<h2 id="iostat">iostat</h2>
+<p>**1．<strong>命令格式：</strong></p>
+<p>iostat[参数][时间][次数]</p>
+<p><strong>2．命令功能：</strong></p>
+<p>通过iostat方便查看CPU、网卡、tty设备、磁盘、CD-ROM 等等设备的活动情况, 负载信息。</p>
+<p><strong>3．命令参数：</strong></p>
+<p>-C 显示CPU使用情况</p>
+<p>-d 显示磁盘使用情况</p>
+<p>-k 以 KB 为单位显示</p>
+<p>-m 以 M 为单位显示</p>
+<p>-N 显示磁盘阵列(LVM) 信息</p>
+<p>-n 显示NFS 使用情况</p>
+<p>-p[磁盘] 显示磁盘和分区的情况</p>
+<p>-t 显示终端和CPU的信息</p>
+<p>-x 显示详细信息</p>
+<p>-V 显示版本信息</p>
+<h2 id="lsof">lsof</h2>
+<h3 id="1命令格式-30">**1．<strong>命令格式：</strong></h3>
+<p>lsof [参数][文件]</p>
+<h3 id="2命令功能-28"><strong>2．命令功能：</strong></h3>
+<p>用于查看你进程开打的文件，打开文件的进程，进程打开的端口(TCP、UDP)。找回/恢复删除的文件。是十分方便的系统监视工具，因为 lsof 需要访问核心内存和各种文件，所以需要root用户执行。</p>
+<p>lsof打开的文件可以是：</p>
+<p>1.普通文件</p>
+<p>2.目录</p>
+<p>3.网络文件系统的文件</p>
+<p>4.字符或设备文件</p>
+<p>5.(函数)共享库</p>
+<p>6.管道，命名管道</p>
+<p>7.符号链接</p>
+<p>8.网络文件（例如：NFS file、网络socket，unix域名socket）</p>
+<p>9.还有其它类型的文件，等等</p>
+<h3 id="3命令参数-26"><strong>3．命令参数：</strong></h3>
+<p>-a 列出打开文件存在的进程</p>
+<p>-c&lt;进程名&gt; 列出指定进程所打开的文件</p>
+<p>-g 列出GID号进程详情</p>
+<p>-d&lt;文件号&gt; 列出占用该文件号的进程</p>
+<p>+d&lt;目录&gt; 列出目录下被打开的文件</p>
+<p>+D&lt;目录&gt; 递归列出目录下被打开的文件</p>
+<p>-n&lt;目录&gt; 列出使用NFS的文件</p>
+<p>-i&lt;条件&gt; 列出符合条件的进程。（4、6、协议、:端口、 @ip ）</p>
+<p>-p&lt;进程号&gt; 列出指定进程号所打开的文件</p>
+<p>-u 列出UID号进程详情</p>
+<p>-h 显示帮助信息</p>
+<p>-v 显示版本信息</p>
+<p>**4．**<strong>使用实例：</strong></p>
+<p><strong>实例****1：无任何参数</strong></p>
+<p><strong>命令：</strong></p>
+<p>lsof</p>
+<p><strong>输出：</strong></p>
+<p>​	[root@localhost ~]# lsof</p>
+<pre><code>COMMAND   PID USER  FD   TYPE       DEVICE   SIZE    NODE NAME
+init     1 root cwd    DIR        8,2   4096     2 /
+init     1 root rtd    DIR        8,2   4096     2 /
+init     1 root txt    REG        8,2  43496  6121706 /sbin/init
+init     1 root mem    REG        8,2  143600  7823908 /lib64/ld-2.5.so
+init     1 root mem    REG        8,2 1722304  7823915 /lib64/libc-2.5.so
+init     1 root mem    REG        8,2  23360  7823919 /lib64/libdl-2.5.so
+init     1 root mem    REG        8,2  95464  7824116 /lib64/libselinux.so.1
+init     1 root mem    REG        8,2  247496  7823947 /lib64/libsepol.so.1
+init     1 root  10u   FIFO        0,17        1233 /dev/initctl
+migration   2 root cwd    DIR        8,2   4096     2 /
+migration   2 root rtd    DIR        8,2   4096     2 /
+migration   2 root txt  unknown                    /proc/2/exe
+ksoftirqd   3 root cwd    DIR        8,2   4096     2 /
+ksoftirqd   3 root rtd    DIR        8,2   4096     2 /
+ksoftirqd   3 root txt  unknown                    /proc/3/exe
+migration   4 root cwd    DIR        8,2   4096     2 /
+migration   4 root rtd    DIR        8,2   4096     2 /
+migration   4 root txt  unknown                    /proc/4/exe
+ksoftirqd   5 root cwd    DIR        8,2   4096     2 /
+ksoftirqd   5 root rtd    DIR        8,2   4096     2 /
+ksoftirqd   5 root txt  unknown                    /proc/5/exe
+events/0   6 root cwd    DIR        8,2   4096     2 /
+events/0   6 root rtd    DIR        8,2   4096     2 /
+events/0   6 root txt  unknown                    /proc/6/exe
+events/1   7 root cwd    DIR        8,2   4096     2 /
+</code></pre><p><strong>说明：</strong></p>
+<p><strong>lsof输出各列信息的意义如下：</strong></p>
+<p>COMMAND：进程的名称</p>
+<p>PID：进程标识符</p>
+<p>PPID：父进程标识符（需要指定-R参数）</p>
+<p>USER：进程所有者</p>
+<p>PGID：进程所属组</p>
+<p>FD：文件描述符，应用程序通过文件描述符识别该文件。如cwd、txt等</p>
+<p>（1）cwd：表示current work dirctory，即：应用程序的当前工作目录，这是该应用程序启动的目录，除非它本身对这个目录进行更改</p>
+<p>（2）txt ：该类型的文件是程序代码，如应用程序二进制文件本身或共享库，如上列表中显示的 /sbin/init 程序</p>
+<p>（3）lnn：library references (AIX);</p>
+<p>（4）er：FD information error (see NAME column);</p>
+<p>（5）jld：jail directory (FreeBSD);</p>
+<p>（6）ltx：shared library text (code and data);</p>
+<p>（7）mxx ：hex memory-mapped type number xx.</p>
+<p>（8）m86：DOS Merge mapped file;</p>
+<p>（9）mem：memory-mapped file;</p>
+<p>（10）mmap：memory-mapped device;</p>
+<p>（11）pd：parent directory;</p>
+<p>（12）rtd：root directory;</p>
+<p>（13）tr：kernel trace file (OpenBSD);</p>
+<p>（14）v86 VP/ix mapped file;</p>
+<p>（15）0：表示标准输出</p>
+<p>（16）1：表示标准输入</p>
+<p>（17）2：表示标准错误</p>
+<p>一般在标准输出、标准错误、标准输入后还跟着文件状态模式：r、w、u等</p>
+<p>（1）u：表示该文件被打开并处于读取/写入模式</p>
+<p>（2）r：表示该文件被打开并处于只读模式</p>
+<p>（3）w：表示该文件被打开并处于</p>
+<p>（4）空格：表示该文件的状态模式为unknow，且没有锁定</p>
+<p>（5）-：表示该文件的状态模式为unknow，且被锁定</p>
+<p>同时在文件状态模式后面，还跟着相关的锁</p>
+<p>（1）N：for a Solaris NFS lock of unknown type;</p>
+<p>（2）r：for read lock on part of the file;</p>
+<p>（3）R：for a read lock on the entire file;</p>
+<p>（4）w：for a write lock on part of the file;（文件的部分写锁）</p>
+<p>（5）W：for a write lock on the entire file;（整个文件的写锁）</p>
+<p>（6）u：for a read and write lock of any length;</p>
+<p>（7）U：for a lock of unknown type;</p>
+<p>（8）x：for an SCO OpenServer Xenix lock on part   of the file;</p>
+<p>（9）X：for an SCO OpenServer Xenix lock on the   entire file;</p>
+<p>（10）space：if there is no lock.</p>
+<p>TYPE：文件类型，如DIR、REG等，常见的文件类型</p>
+<p>（1）DIR：表示目录</p>
+<p>（2）CHR：表示字符类型</p>
+<p>（3）BLK：块设备类型</p>
+<p>（4）UNIX： UNIX 域套接字</p>
+<p>（5）FIFO：先进先出 (FIFO) 队列</p>
+<p>（6）IPv4：网际协议 (IP) 套接字</p>
+<p>DEVICE：指定磁盘的名称</p>
+<p>SIZE：文件的大小</p>
+<p>NODE：索引节点（文件在磁盘上的标识）</p>
+<p>NAME：打开文件的确切名称</p>
+<h2 id="网络命令">网络命令</h2>
+<p><strong>1．命令格式：</strong></p>
+<p>ifconfig [网络设备] [参数]</p>
+<p><strong>2．命令功能：</strong></p>
+<p>ifconfig 命令用来查看和配置网络设备。当网络环境发生改变时可通过此命令对网络进行相应的配置。</p>
+<p><strong>3．命令参数：</strong></p>
+<p>up 启动指定网络设备/网卡。</p>
+<p>down 关闭指定网络设备/网卡。该参数可以有效地阻止通过指定接口的IP信息流，如果想永久地关闭一个接口，我们还需要从核心路由表中将该接口的路由信息全部删除。</p>
+<p>arp 设置指定网卡是否支持ARP协议。</p>
+<p>-promisc 设置是否支持网卡的promiscuous模式，如果选择此参数，网卡将接收网络中发给它所有的数据包</p>
+<p>-allmulti 设置是否支持多播模式，如果选择此参数，网卡将接收网络中所有的多播数据包</p>
+<p>-a 显示全部接口信息</p>
+<p>-s 显示摘要信息（类似于 netstat -i）</p>
+<p>add 给指定网卡配置IPv6地址</p>
+<p>del 删除指定网卡的IPv6地址</p>
+<p>&lt;硬件地址&gt; 配置网卡最大的传输单元</p>
+<p>mtu&lt;字节数&gt; 设置网卡的最大传输单元 (bytes)</p>
+<p>netmask&lt;子网掩码&gt; 设置网卡的子网掩码。掩码可以是有前缀0x的32位十六进制数，也可以是用点分开的4个十进制数。如果不打算将网络分成子网，可以不管这一选项；如果要使用子网，那么请记住，网络中每一个系统必须有相同子网掩码。</p>
+<p>tunel 建立隧道</p>
+<p>dstaddr 设定一个远端地址，建立点对点通信</p>
+<p>-broadcast&lt;地址&gt; 为指定网卡设置广播协议</p>
+<p>-pointtopoint&lt;地址&gt; 为网卡设置点对点通讯协议</p>
+<p>multicast 为网卡设置组播标志</p>
+<p>address 为网卡设置IPv4地址</p>
+<p>txqueuelen&lt;长度&gt; 为网卡设置传输列队的长度</p>
+<h2 id="route">route</h2>
+<p>Linux系统的route命令用于显示和操作IP路由表（show / manipulate the IP routing table）。要实现两个不同的子网之间的通信，需要一台连接两个网络的路由器，或者同时位于两个网络的网关来实现。在Linux系统中，设置路由通常是为了解决以下问题：该Linux系统在一个局域网中，局域网中有一个网关，能够让机器访问Internet，那么就需要将这台机器的IP地址设置为Linux机器的默认路由。要注意的是，直接在命令行下执行route命令来添加路由，不会永久保存，当网卡重启或者机器重启之后，该路由就失效了；可以在/etc/rc.local中添加route命令来保证该路由设置永久有效。</p>
+<h3 id="1命令格式-31"><strong>1．命令格式：</strong></h3>
+<p>route [-f] [-p] [Command [Destination] [mask Netmask] [Gateway] [metric Metric]] [if Interface]]</p>
+<h3 id="2命令功能-29"><strong>2．命令功能：</strong></h3>
+<p>Route命令是用于操作基于内核ip路由表，它的主要作用是创建一个静态路由让指定一个主机或者一个网络通过一个网络接口，如eth0。当使用&quot;add&quot;或者&quot;del&quot;参数时，路由表被修改，如果没有参数，则显示路由表当前的内容。</p>
+<h3 id="3命令参数-27"><strong>3．命令参数：</strong></h3>
+<p>-c 显示更多信息</p>
+<p>-n 不解析名字</p>
+<p>-v 显示详细的处理信息</p>
+<p>-F 显示发送信息</p>
+<p>-C 显示路由缓存</p>
+<p>-f 清除所有网关入口的路由表。</p>
+<p>-p 与 add 命令一起使用时使路由具有永久性。</p>
+<p>add:添加一条新路由。</p>
+<p>del:删除一条路由。</p>
+<p>-net:目标地址是一个网络。</p>
+<p>-host:目标地址是一个主机。</p>
+<p>netmask:当添加一个网络路由时，需要使用网络掩码。</p>
+<p>gw:路由数据包通过网关。注意，你指定的网关必须能够达到。</p>
+<p>metric：设置路由跳数。</p>
+<p>Command 指定您想运行的命令 (Add/Change/Delete/Print)。</p>
+<p>Destination 指定该路由的网络目标。</p>
+<p>mask Netmask 指定与网络目标相关的网络掩码（也被称作子网掩码）。</p>
+<p>Gateway 指定网络目标定义的地址集和子网掩码可以到达的前进或下一跃点 IP 地址。</p>
+<p>metric Metric 为路由指定一个整数成本值标（从 1 至 9999），当在路由表(与转发的数据包目标地址最匹配)的多个路由中进行选择时可以使用。</p>
+<p>if Interface 为可以访问目标的接口指定接口索引。若要获得一个接口列表和它们相应的接口索引，使用 route print 命令的显示功能。可以使用十进制或十六进制值进行接口索引。</p>
+<p>**4．**<strong>使用实例：</strong></p>
+<p>**实例1：**<strong>显示当前路由</strong></p>
+<p><strong>命令：</strong></p>
+<p>route</p>
+<p>route -n</p>
+<p><strong>输出：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>root@localhost ~<span style="color:#f92672">]</span><span style="color:#75715e"># route</span>
+Kernel IP routing table
+Destination   Gateway     Genmask     Flags Metric Ref  Use Iface
+192.168.120.0  *        255.255.255.0  U   <span style="color:#ae81ff">0</span>   <span style="color:#ae81ff">0</span>    <span style="color:#ae81ff">0</span> eth0
+e192.168.0.0   192.168.120.1  255.255.0.0   UG  <span style="color:#ae81ff">0</span>   <span style="color:#ae81ff">0</span>    <span style="color:#ae81ff">0</span> eth0
+10.0.0.0    192.168.120.1  255.0.0.0    UG  <span style="color:#ae81ff">0</span>   <span style="color:#ae81ff">0</span>    <span style="color:#ae81ff">0</span> eth0
+default     192.168.120.240 0.0.0.0     UG  <span style="color:#ae81ff">0</span>   <span style="color:#ae81ff">0</span>    <span style="color:#ae81ff">0</span> eth0
+<span style="color:#f92672">[</span>root@localhost ~<span style="color:#f92672">]</span><span style="color:#75715e"># route -n</span>
+Kernel IP routing table
+Destination   Gateway     Genmask     Flags Metric Ref  Use Iface
+192.168.120.0  0.0.0.0     255.255.255.0  U   <span style="color:#ae81ff">0</span>   <span style="color:#ae81ff">0</span>    <span style="color:#ae81ff">0</span> eth0
+192.168.0.0   192.168.120.1  255.255.0.0   UG  <span style="color:#ae81ff">0</span>   <span style="color:#ae81ff">0</span>    <span style="color:#ae81ff">0</span> eth0
+10.0.0.0    192.168.120.1  255.0.0.0    UG  <span style="color:#ae81ff">0</span>   <span style="color:#ae81ff">0</span>    <span style="color:#ae81ff">0</span> eth0
+0.0.0.0     192.168.120.240 0.0.0.0     UG  <span style="color:#ae81ff">0</span>   <span style="color:#ae81ff">0</span>    <span style="color:#ae81ff">0</span> eth0
+</code></pre></div><p><strong>说明：</strong></p>
+<p>第一行表示主机所在网络的地址为192.168.120.0，若数据传送目标是在本局域网内通信，则可直接通过eth0转发数据包;</p>
+<p>第四行表示数据传送目的是访问Internet，则由接口eth0，将数据包发送到网关192.168.120.240</p>
+<p>其中Flags为路由标志，标记当前网络节点的状态。</p>
+<p>Flags标志说明：</p>
+<p>U Up表示此路由当前为启动状态</p>
+<p>H Host，表示此网关为一主机</p>
+<p>G Gateway，表示此网关为一路由器</p>
+<p>R Reinstate Route，使用动态路由重新初始化的路由</p>
+<p>D Dynamically,此路由是动态性地写入</p>
+<p>M Modified，此路由是由路由守护程序或导向器动态修改</p>
+<p>! 表示此路由当前为关闭状态</p>
+<p>备注：</p>
+<p>route -n (-n 表示不解析名字,列出速度会比route 快)</p>
+<p><strong>实例2：添加网关/设置网关</strong></p>
+<p><strong>命令：</strong></p>
+<p>route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0</p>
+<p><strong>实例3：屏蔽一条路由</strong></p>
+<p><strong>命令：</strong></p>
+<p>route add -net 224.0.0.0 netmask 240.0.0.0 reject</p>
+<p><strong>实例4：删除路由记录</strong></p>
+<p><strong>命令：</strong></p>
+<p>route del -net 224.0.0.0 netmask 240.0.0.0</p>
+<p>route del -net 224.0.0.0 netmask 240.0.0.0 reject</p>
+<h2 id="traceroute">traceroute</h2>
+<h3 id="1命令格式-32"><strong>1.命令格式：</strong></h3>
+<p>traceroute[参数][主机]</p>
+<h3 id="2命令功能-30"><strong>2.命令功能：</strong></h3>
+<p>traceroute指令让你追踪网络数据包的路由途径，预设数据包大小是40Bytes，用户可另行设置。</p>
+<p>具体参数格式：traceroute [-dFlnrvx][-f&lt;存活数值&gt;][-g&lt;网关&gt;&hellip;][-i&lt;网络界面&gt;][-m&lt;存活数值&gt;][-p&lt;通信端口&gt;][-s&lt;来源地址&gt;][-t&lt;服务类型&gt;][-w&lt;超时秒数&gt;][主机名称或IP地址][数据包大小]</p>
+<h3 id="3命令参数-28"><strong>3.命令参数：</strong></h3>
+<p>-d 使用Socket层级的排错功能。</p>
+<p>-f 设置第一个检测数据包的存活数值TTL的大小。</p>
+<p>-F 设置勿离断位。</p>
+<p>-g 设置来源路由网关，最多可设置8个。</p>
+<p>-i 使用指定的网络界面送出数据包。</p>
+<p>-I 使用ICMP回应取代UDP资料信息。</p>
+<p>-m 设置检测数据包的最大存活数值TTL的大小。</p>
+<p>-n 直接使用IP地址而非主机名称。</p>
+<p>-p 设置UDP传输协议的通信端口。</p>
+<p>-r 忽略普通的Routing Table，直接将数据包送到远端主机上。</p>
+<p>-s 设置本地主机送出数据包的IP地址。</p>
+<p>-t 设置检测数据包的TOS数值。</p>
+<p>-v 详细显示指令的执行过程。</p>
+<p>-w 设置等待远端主机回报的时间。</p>
+<p>-x 开启或关闭数据包的正确性检验。</p>
+<h2 id="netstat">netstat</h2>
+<p>netstat命令用于显示与IP、TCP、UDP和ICMP协议相关的统计数据，一般用于检验本机各端口的网络连接情况。netstat是在内核中访问网络及相关信息的程序，它能提供TCP连接，TCP和UDP监听，进程内存管理的相关报告。</p>
+<p>如果你的计算机有时候接收到的数据报导致出错数据或故障，你不必感到奇怪，TCP/IP可以容许这些类型的错误，并能够自动重发数据报。但如果累计的出错情况数目占到所接收的IP数据报相当大的百分比，或者它的数目正迅速增加，那么你就应该使用netstat查一查为什么会出现这些情况了。</p>
+<p>**1．**<strong>命令格式：</strong></p>
+<p>netstat [-acCeFghilMnNoprstuvVwx][-A&lt;网络类型&gt;][&ndash;ip]</p>
+<p>**2．**<strong>命令功能：</strong></p>
+<p>netstat用于显示与IP、TCP、UDP和ICMP协议相关的统计数据，一般用于检验本机各端口的网络连接情况。</p>
+<p>**3．**<strong>命令参数：</strong></p>
+<p>-a或–all 显示所有连线中的Socket。</p>
+<p>-A&lt;网络类型&gt;或–&lt;网络类型&gt; 列出该网络类型连线中的相关地址。</p>
+<p>-c或–continuous 持续列出网络状态。</p>
+<p>-C或–cache 显示路由器配置的快取信息。</p>
+<p>-e或–extend 显示网络其他相关信息。</p>
+<p>-F或–fib 显示FIB。</p>
+<p>-g或–groups 显示多重广播功能群组组员名单。</p>
+<p>-h或–help 在线帮助。</p>
+<p>-i或–interfaces 显示网络界面信息表单。</p>
+<p>-l或–listening 显示监控中的服务器的Socket。</p>
+<p>-M或–masquerade 显示伪装的网络连线。</p>
+<p>-n或–numeric 直接使用IP地址，而不通过域名服务器。</p>
+<p>-N或–netlink或–symbolic 显示网络硬件外围设备的符号连接名称。</p>
+<p>-o或–timers 显示计时器。</p>
+<p>-p或–programs 显示正在使用Socket的程序识别码和程序名称。</p>
+<p>-r或–route 显示Routing Table。</p>
+<p>-s或–statistice 显示网络工作信息统计表。</p>
+<p>-t或–tcp 显示TCP传输协议的连线状况。</p>
+<p>-u或–udp 显示UDP传输协议的连线状况。</p>
+<p>-v或–verbose 显示指令执行过程。</p>
+<p>-V或–version 显示版本信息。</p>
+<p>-w或–raw 显示RAW传输协议的连线状况。</p>
+<p>-x或–unix 此参数的效果和指定”-A unix”参数相同。</p>
+<p>–ip或–inet 此参数的效果和指定”-A inet”参数相同。</p>
+<h2 id="ss">ss</h2>
+<p>ss是Socket Statistics的缩写。顾名思义，ss命令可以用来获取socket统计信息，它可以显示和netstat类似的内容。但ss的优势在于它能够显示更多更详细的有关TCP和连接状态的信息，而且比netstat更快速更高效。</p>
+<p>当服务器的socket连接数量变得非常大时，无论是使用netstat命令还是直接cat /proc/net/tcp，执行速度都会很慢。可能你不会有切身的感受，但请相信我，当服务器维持的连接达到上万个的时候，使用netstat等于浪费 生命，而用ss才是节省时间。</p>
+<p>天下武功唯快不破。ss快的秘诀在于，它利用到了TCP协议栈中tcp_diag。tcp_diag是一个用于分析统计的模块，可以获得Linux 内核中第一手的信息，这就确保了ss的快捷高效。当然，如果你的系统中没有tcp_diag，ss也可以正常运行，只是效率会变得稍慢。（但仍然比 netstat要快。）</p>
+<h3 id="1命令格式-33"><strong>1.命令格式:</strong></h3>
+<p>ss [参数]</p>
+<p>ss [参数] [过滤]</p>
+<h3 id="2命令功能-31"><strong>2.命令功能：</strong></h3>
+<p>ss(Socket Statistics的缩写)命令可以用来获取 socket统计信息，此命令输出的结果类似于 netstat输出的内容，但它能显示更多更详细的 TCP连接状态的信息，且比 netstat 更快速高效。它使用了 TCP协议栈中 tcp_diag（是一个用于分析统计的模块），能直接从获得第一手内核信息，这就使得 ss命令快捷高效。在没有 tcp_diag，ss也可以正常运行。</p>
+<h3 id="3命令参数-29"><strong>3.命令参数：</strong></h3>
+<p>-h, &ndash;help 帮助信息</p>
+<p>-V, &ndash;version 程序版本信息</p>
+<p>-n, &ndash;numeric 不解析服务名称</p>
+<p>-r, &ndash;resolve    解析主机名</p>
+<p>-a, &ndash;all 显示所有套接字（sockets）</p>
+<p>-l, &ndash;listening 显示监听状态的套接字（sockets）</p>
+<p>-o, &ndash;options    显示计时器信息</p>
+<p>-e, &ndash;extended    显示详细的套接字（sockets）信息</p>
+<p>-m, &ndash;memory     显示套接字（socket）的内存使用情况</p>
+<p>-p, &ndash;processes 显示使用套接字（socket）的进程</p>
+<p>-i, &ndash;info 显示 TCP内部信息</p>
+<p>-s, &ndash;summary 显示套接字（socket）使用概况</p>
+<p>-4, &ndash;ipv4      仅显示IPv4的套接字（sockets）</p>
+<p>-6, &ndash;ipv6      仅显示IPv6的套接字（sockets）</p>
+<p>-0, &ndash;packet     显示 PACKET 套接字（socket）</p>
+<p>-t, &ndash;tcp 仅显示 TCP套接字（sockets）</p>
+<p>-u, &ndash;udp 仅显示 UCP套接字（sockets）</p>
+<p>-d, &ndash;dccp 仅显示 DCCP套接字（sockets）</p>
+<p>-w, &ndash;raw 仅显示 RAW套接字（sockets）</p>
+<p>-x, &ndash;unix 仅显示 Unix套接字（sockets）</p>
+<p>-f, &ndash;family=FAMILY 显示 FAMILY类型的套接字（sockets），FAMILY可选，支持 unix, inet, inet6, link, netlink</p>
+<p>-A, &ndash;query=QUERY, &ndash;socket=QUERY</p>
+<p>QUERY := {all|inet|tcp|udp|raw|unix|packet|netlink}[,QUERY]</p>
+<p>-D, &ndash;diag=FILE   将原始TCP套接字（sockets）信息转储到文件</p>
+<p>-F, &ndash;filter=FILE  从文件中都去过滤器信息</p>
+<p>​    FILTER := [ state TCP-STATE ] [ EXPRESSION ]</p>
+<h2 id="telnet">telnet</h2>
+<p>telnet命令通常用来远程登录。telnet程序是基于TELNET协议的远程登录客户端程序。Telnet协议是TCP/IP协议族中的一员，是Internet远程登陆服务的标准协议和主要方式。它为用户提供了在本地计算机上完成远程主机工作的 能力。在终端使用者的电脑上使用telnet程序，用它连接到服务器。终端使用者可以在telnet程序中输入命令，这些命令会在服务器上运行，就像直接在服务器的控制台上输入一样。可以在本地就能控制服务器。要开始一个 telnet会话，必须输入用户名和密码来登录服务器。Telnet是常用的远程控制Web服务器的方法。</p>
+<p>　　但是，telnet因为采用明文传送报文，安全性不好，很多Linux服务器都不开放telnet服务，而改用更安全的ssh方式了。但仍然有很多别的系统可能采用了telnet方式来提供远程登录，因此弄清楚telnet客户端的使用方式仍是很有必要的。</p>
+<p>telnet命令还可做别的用途，比如确定远程服务的状态，比如确定远程服务器的某个端口是否能访问。</p>
+<h3 id="1命令格式-34"><strong>1．命令格式：</strong></h3>
+<p>telnet[参数][主机]</p>
+<h3 id="2命令功能-32">**2．**命令功能：</h3>
+<p>执行telnet指令开启终端机阶段作业，并登入远端主机。</p>
+<h3 id="3命令参数-30"><strong>3．命令参数：</strong></h3>
+<p>-8 允许使用8位字符资料，包括输入与输出。</p>
+<p>-a 尝试自动登入远端系统。</p>
+<p>-b&lt;主机别名&gt; 使用别名指定远端主机名称。</p>
+<p>-c 不读取用户专属目录里的.telnetrc文件。</p>
+<p>-d 启动排错模式。</p>
+<p>-e&lt;脱离字符&gt; 设置脱离字符。</p>
+<p>-E 滤除脱离字符。</p>
+<p>-f 此参数的效果和指定&rdquo;-F&quot;参数相同。</p>
+<p>-F 使用Kerberos V5认证时，加上此参数可把本地主机的认证数据上传到远端主机。</p>
+<p>-k&lt;域名&gt; 使用Kerberos认证时，加上此参数让远端主机采用指定的领域名，而非该主机的域名。</p>
+<p>-K 不自动登入远端主机。</p>
+<p>-l&lt;用户名称&gt; 指定要登入远端主机的用户名称。</p>
+<p>-L 允许输出8位字符资料。</p>
+<p>-n&lt;记录文件&gt; 指定文件记录相关信息。</p>
+<p>-r 使用类似rlogin指令的用户界面。</p>
+<p>-S&lt;服务类型&gt; 设置telnet连线所需的IP TOS信息。</p>
+<p>-x 假设主机有支持数据加密的功能，就使用它。</p>
+<p>-X&lt;认证形态&gt; 关闭指定的认证形态。</p>
+<h2 id="rcp">rcp</h2>
+<p>rcp代表“remote file copy”（远程文件拷贝）。该命令用于在计算机之间拷贝文件。rcp命令有两种格式。第一种格式用于文件到文件的拷贝；第二种格式用于把文件或目录拷贝到另一个目录中。</p>
+<h3 id="1命令格式-35"><strong>1．命令格式：</strong></h3>
+<p>rcp [参数] [源文件] [目标文件]</p>
+<h3 id="2命令功能-33"><strong>2．命令功能：</strong></h3>
+<p>rcp命令用在远端复制文件或目录，如同时指定两个以上的文件或目录，且最后的目的地是一个已经存在的目录，则它会把前面指定的所有文件或目录复制到该目录中。</p>
+<h3 id="3命令参数-31"><strong>3．命令参数：</strong></h3>
+<p>各选项含义：</p>
+<p>-r 递归地把源目录中的所有内容拷贝到目的目录中。要使用这个选项，目的必须是一个目录。</p>
+<p>-p 试图保留源文件的修改时间和模式，忽略umask。</p>
+<p>-k 请求rcp获得在指定区域内的远程主机的Kerberos 许可，而不是获得由krb_relmofhost⑶确定的远程主机区域内的远程主机的Kerberos许可。</p>
+<p>-x 为传送的所有数据打开DES加密。这会影响响应时间和CPU利用率，但是可以提高安全性。如果在文件名中指定的路径不是完整的路径名，那么这个路径被解释为相对远程机上同名用户的主目录。如果没有给出远程用户名，就使用当前用户名。如果远程机上的路径包含特殊shell字符，需要用反斜线（\）、双引号（”）或单引号（’）括起来，使所有的shell元字符都能被远程地解释。需要说明的是，rcp不提示输入口令，它通过rsh命令来执行拷贝。</p>
+<p>directory 每个文件或目录参数既可以是远程文件名也可以是本地文件名。远程文件名具有如下形式：rname@rhost：path，其中rname是远程用户名，rhost是远程计算机名，path是这个文件的路径。</p>
+<h2 id="scp">scp</h2>
+<p>scp是secure copy的简写，用于在Linux下进行远程拷贝文件的命令，和它类似的命令有cp，不过cp只是在本机进行拷贝不能跨服务器，而且scp传输是加密的。可能会稍微影响一下速度。当你服务器硬盘变为只读 read only system时，用scp可以帮你把文件移出来。另外，scp还非常不占资源，不会提高多少系统负荷，在这一点上，rsync就远远不及它了。虽然 rsync比scp会快一点，但当小文件众多的情况下，rsync会导致硬盘I/O非常高，而scp基本不影响系统正常使用。</p>
+<h3 id="1命令格式-36"><strong>1．命令格式：</strong></h3>
+<p>scp [参数] [原路径] [目标路径]</p>
+<h3 id="2命令功能-34"><strong>2．命令功能：</strong></h3>
+<p>scp是 secure copy的缩写, scp是linux系统下基于ssh登陆进行安全的远程文件拷贝命令。linux的scp命令可以在linux服务器之间复制文件和目录。</p>
+<h3 id="3命令参数-32"><strong>3．命令参数：</strong></h3>
+<p>-1 强制scp命令使用协议ssh1</p>
+<p>-2 强制scp命令使用协议ssh2</p>
+<p>-4 强制scp命令只使用IPv4寻址</p>
+<p>-6 强制scp命令只使用IPv6寻址</p>
+<p>-B 使用批处理模式（传输过程中不询问传输口令或短语）</p>
+<p>-C 允许压缩。（将-C标志传递给ssh，从而打开压缩功能）</p>
+<p>-p 保留原文件的修改时间，访问时间和访问权限。</p>
+<p>-q 不显示传输进度条。</p>
+<p>-r 递归复制整个目录。</p>
+<p>-v 详细方式显示输出。scp和ssh(1)会显示出整个过程的调试信息。这些信息用于调试连接，验证和配置问题。</p>
+<p>-c cipher 以cipher将数据传输进行加密，这个选项将直接传递给ssh。</p>
+<p>-F ssh_config 指定一个替代的ssh配置文件，此参数直接传递给ssh。</p>
+<p>-i identity_file 从指定文件中读取传输时使用的密钥文件，此参数直接传递给ssh。</p>
+<p>-l limit 限定用户所能使用的带宽，以Kbit/s为单位。</p>
+<p>-o ssh_option 如果习惯于使用ssh_config(5)中的参数传递方式，</p>
+<p>-P port 注意是大写的P, port是指定数据传输用到的端口号</p>
+<p>-S program 指定加密传输时所使用的程序。此程序必须能够理解ssh(1)的选项。</p>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>jiangfy </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://example.com/2020/linux_commond/>https://example.com/2020/linux_commond/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://example.com/tags/linux/">
+                    #Linux</a></span>
+            
+            <span class="tag"><a href="https://example.com/tags/cmd/">
+                    #cmd</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://example.com">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://example.com/2014/creating-a-new-theme/" class="prev" rel="prev" title="Creating a New Theme"><i class="iconfont icon-left"></i>&nbsp;Creating a New Theme</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://example.com">jiangfy</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>
