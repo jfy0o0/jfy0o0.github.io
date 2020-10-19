@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="jiangfy">
+  
+  
+  
+  <link rel="prev" href="https://example.com/2014/creating-a-new-theme/" />
+  <link rel="next" href="https://example.com/2020/linux_commond_file_find/" />
+  <link rel="canonical" href="https://example.com/2020/linux_commond_dir_oper/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Linux Commond --- Dir Oper | LeaveIt
+       
+  </title>
+  <meta name="title" content="Linux Commond --- Dir Oper | LeaveIt">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/example.com"
+    },
+    "articleSection" : "posts",
+    "name" : "Linux Commond --- Dir Oper",
+    "headline" : "Linux Commond --- Dir Oper",
+    "description" : "[TOC]\n目录操作命令 ls 1. 命令格式： ls [选项] [目录名]\n2. 命令功能： 列出目标目录中所有的子目录和文件。\n3. 常用参数： -a, –all 列出目录下的所有文件，包括以 . 开头的隐含文件\n-A 同-a，但不列出“.”(表示当前目录)和“..”(表示当前目录的父目录)。\n-c 配合 -lt：根据 ctime 排序及显示 ctime (文件状态最后更改的时间)配合 -l：显示 ctime 但根据名称排序否则：根据 ctime 排序\n-C 每栏由上至下列出项目\n–color[=WHEN] 控制是否使用色彩分辨文件。WHEN 可以是\u0026rsquo;never\u0027、\u0026lsquo;always\u0026rsquo;或\u0026rsquo;auto\u0026rsquo;其中之一\n-d, –directory 将目录象文件一样显示，而不是显示其下的文件。\n-D, –dired 产生适合 Emacs 的 dired 模式使用的结果\n-f 对输出的文件不进行排序，-aU 选项生效，-lst 选项失效\n-g 类似 -l,但不列出所有者\n-G, –no-group 不列出任何有关组的信息\n-h, –human-readable 以容易理解的格式列出文件大小 (例如 1K 234M 2G)\n–si 类似 -h,但文件大小取 1000 的次方而不是 1024",
+    "inLanguage" : "en-us",
+    "author" : "jiangfy",
+    "creator" : "jiangfy",
+    "publisher": "jiangfy",
+    "accountablePerson" : "jiangfy",
+    "copyrightHolder" : "jiangfy",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-10-19 19:42:58 \u002b0800 CST",
+    "dateModified" : "2020-10-19 19:42:58 \u002b0800 CST",
+    "url" : "https:\/\/example.com\/2020\/linux_commond_dir_oper\/",
+    "wordCount" : "1564",
+    "keywords" : [ "Linux","cmd", "LeaveIt"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://example.com">LeaveIt</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+                <a class="menu-item" href="/about/" title="About Hugo">About Hugo</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://example.com">LeaveIt</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+                <a class="menu-item" href="/about/" title="About Hugo">About Hugo</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Linux Commond --- Dir Oper</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://example.com" rel="author">jiangfy</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-10-19 itemprop="datePublished">October 19, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://example.com/categories/linux/"> Linux </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <p>[TOC]</p>
+<h1 id="目录操作命令">目录操作命令</h1>
+<h2 id="ls">ls</h2>
+<h3 id="1-命令格式"><strong>1.</strong> <strong>命令格式：</strong></h3>
+<p>ls [选项] [目录名]</p>
+<h3 id="2-命令功能"><strong>2.</strong> <strong>命令功能：</strong></h3>
+<p>列出目标目录中所有的子目录和文件。</p>
+<h3 id="3-常用参数"><strong>3.</strong> <strong>常用参数：</strong></h3>
+<p>-a, –all 列出目录下的所有文件，包括以 . 开头的隐含文件</p>
+<p>-A 同-a，但不列出“.”(表示当前目录)和“..”(表示当前目录的父目录)。</p>
+<p>-c 配合 -lt：根据 ctime 排序及显示 ctime (文件状态最后更改的时间)配合 -l：显示 ctime 但根据名称排序否则：根据 ctime 排序</p>
+<p>-C 每栏由上至下列出项目</p>
+<p>–color[=WHEN] 控制是否使用色彩分辨文件。WHEN 可以是&rsquo;never'、&lsquo;always&rsquo;或&rsquo;auto&rsquo;其中之一</p>
+<p>-d, –directory 将目录象文件一样显示，而不是显示其下的文件。</p>
+<p>-D, –dired 产生适合 Emacs 的 dired 模式使用的结果</p>
+<p>-f 对输出的文件不进行排序，-aU 选项生效，-lst 选项失效</p>
+<p>-g 类似 -l,但不列出所有者</p>
+<p>-G, –no-group 不列出任何有关组的信息</p>
+<p>-h, –human-readable 以容易理解的格式列出文件大小 (例如 1K 234M 2G)</p>
+<p>–si 类似 -h,但文件大小取 1000 的次方而不是 1024</p>
+<p>-H, –dereference-command-line 使用命令列中的符号链接指示的真正目的地</p>
+<p>–indicator-style=方式 指定在每个项目名称后加上指示符号&lt;方式&gt;：none (默认)，classify (-F)，file-type (-p)</p>
+<p>-i, –inode 印出每个文件的 inode 号</p>
+<p>-I, –ignore=样式 不印出任何符合 shell 万用字符&lt;样式&gt;的项目</p>
+<p>-k 即 –block-size=1K,以 k 字节的形式表示文件的大小。</p>
+<p>-l 除了文件名之外，还将文件的权限、所有者、文件大小等信息详细列出来。</p>
+<p>-L, –dereference 当显示符号链接的文件信息时，显示符号链接所指示的对象而并非符号链接本身的信息</p>
+<p>-m 所有项目以逗号分隔，并填满整行行宽</p>
+<p>-o 类似 -l,显示文件的除组信息外的详细信息。</p>
+<p>-r, –reverse 依相反次序排列</p>
+<p>-R, –recursive 同时列出所有子目录层</p>
+<p>-s, –size 以块大小为单位列出所有文件的大小</p>
+<p>-S 根据文件大小排序</p>
+<p>–sort=WORD 以下是可选用的 WORD 和它们代表的相应选项：</p>
+<p>extension -X status -c</p>
+<p>none -U time -t</p>
+<p>size -S atime -u</p>
+<p>time -t access -u</p>
+<p>version -v use -u</p>
+<p>-t 以文件修改时间排序</p>
+<p>-u 配合 -lt:显示访问时间而且依访问时间排序</p>
+<p>配合 -l:显示访问时间但根据名称排序</p>
+<p>否则：根据访问时间排序</p>
+<p>-U 不进行排序;依文件系统原有的次序列出项目</p>
+<p>-v 根据版本进行排序</p>
+<p>-w, –width=COLS 自行指定屏幕宽度而不使用目前的数值</p>
+<p>-x 逐行列出项目而不是逐栏列出</p>
+<p>-X 根据扩展名排序</p>
+<p>-1 每行只列出一个文件</p>
+<p>–help 显示此帮助信息并离开</p>
+<p>–version 显示版本信息并离开</p>
+<h2 id="cd">cd</h2>
+<h3 id="1-命令格式cd-目录名">1. 命令格式：cd [目录名]</h3>
+<h3 id="2-命令功能切换当前目录至dirname">2. 命令功能：切换当前目录至dirName</h3>
+<h2 id="pwd">pwd</h2>
+<h3 id="1命令格式">1．命令格式：</h3>
+<p>​	pwd [选项]</p>
+<h3 id="2命令功能"><strong>2．命令功能：</strong></h3>
+<p>​	查看”当前工作目录“的完整路径</p>
+<h3 id="3常用参数"><strong>3．常用参数：</strong></h3>
+<p>一般情况下不带任何参数</p>
+<p>如果目录是链接时：</p>
+<p>格式：pwd -P 显示出实际路径，而非使用连接（link）路径。</p>
+<h2 id="mkdir">mkdir</h2>
+<h3 id="1命令格式-1"><strong>1．命令格式：</strong></h3>
+<p>mkdir [选项] 目录&hellip;</p>
+<h3 id="2命令功能-1"><strong>2．命令功能：</strong></h3>
+<p>通过 mkdir 命令可以实现在指定位置创建以 DirName(指定的文件名)命名的文件夹或目录。要创建文件夹或目录的用户必须对所创建的文件夹的父文件夹具有写权限。并且，所创建的文件夹(目录)不能与其父目录(即父文件夹)中的文件名重名，即同一个目录下不能有同名的(区分大小写)。</p>
+<h3 id="3命令参数"><strong>3．命令参数：</strong></h3>
+<p>-m, &ndash;mode=模式，设定权限&lt;模式&gt; (类似 chmod)，而不是 rwxrwxrwx 减 umask</p>
+<p>-p, &ndash;parents 可以是一个路径名称。此时若路径中的某些目录尚不存在,加上此选项后,系统将自动建立好那些尚不存在的目录,即一次可以建立多个目录;</p>
+<p>-v, &ndash;verbose 每次创建新目录都显示信息</p>
+<p>&ndash;help  显示此帮助信息并退出</p>
+<p>&ndash;version 输出版本信息并退出</p>
+<h2 id="rm">rm</h2>
+<h3 id="1命令格式-2"><strong>1．命令格式：</strong></h3>
+<p>rm [选项] 文件…</p>
+<h3 id="2命令功能-2"><strong>2．命令功能：</strong></h3>
+<p>删除一个目录中的一个或多个文件或目录，如果没有使用- r选项，则rm不会删除目录。如果使用 rm 来删除文件，通常仍可以将该文件恢复原状。</p>
+<h3 id="3命令参数-1"><strong>3．命令参数：</strong></h3>
+<p>-f, &ndash;force  忽略不存在的文件，从不给出提示。</p>
+<p>-i, &ndash;interactive 进行交互式删除</p>
+<p>-r, -R, &ndash;recursive  指示rm将参数中列出的全部目录和子目录均递归地删除。</p>
+<p>-v, &ndash;verbose  详细显示进行的步骤</p>
+<p>​    &ndash;help   显示此帮助信息并退出</p>
+<p>​    &ndash;version 输出版本信息并退出</p>
+<h2 id="rmdir">rmdir</h2>
+<h3 id="1命令格式-3"><strong>1．命令格式：</strong></h3>
+<p>rmdir [选项]&hellip; 目录&hellip;</p>
+<h3 id="2命令功能-3"><strong>2．命令功能：</strong></h3>
+<p>该命令从一个目录中删除一个或多个子目录项，删除某目录时也必须具有对父目录的写权限。</p>
+<h3 id="3命令参数-2"><strong>3．命令参数：</strong></h3>
+<p>- p 递归删除目录dirname，当子目录删除后其父目录为空时，也一同被删除。如果整个路径被删除或者由于某种原因保留部分路径，则系统在标准输出上显示相应的信息。</p>
+<p>-v, &ndash;verbose 显示指令执行过程</p>
+<h2 id="mv">mv</h2>
+<h3 id="1命令格式-4"><strong>1．命令格式：</strong></h3>
+<p>mv [选项] 源文件或目录 目标文件或目录</p>
+<h3 id="2命令功能-4"><strong>2．命令功能：</strong></h3>
+<p>视mv命令中第二个参数类型的不同（是目标文件还是目标目录），mv命令将文件重命名或将其移至一个新的目录中。当第二个参数类型是文件时，mv命令完成文件重命名，此时，源文件只能有一个（也可以是源目录名），它将所给的源文件或目录重命名为给定的目标文件名。当第二个参数是已存在的目录名称时，源文件或目录参数可以有多个，mv命令将各参数指定的源文件均移至目标目录中。在跨文件系统移动文件时，mv先拷贝，再将原有文件删除，而链至该文件的链接也将丢失。</p>
+<h3 id="3命令参数-3"><strong>3．命令参数：</strong></h3>
+<p>-b ：若需覆盖文件，则覆盖前先行备份。</p>
+<p>-f ：force 强制的意思，如果目标文件已经存在，不会询问而直接覆盖；</p>
+<p>-i ：若目标文件 (destination) 已经存在时，就会询问是否覆盖！</p>
+<p>-u ：若目标文件已经存在，且 source 比较新，才会更新(update)</p>
+<p>​	  -t  ： &ndash;target-directory=DIRECTORY move all SOURCE arguments into DIRECTORY，即指定mv的目标目录，该选项适用于移动多个源文件到一个目录的情况，此时目标目录在前，源文件在后。</p>
+<h2 id="cp">cp</h2>
+<h3 id="1命令格式-5"><strong>1．命令格式：</strong></h3>
+<p>用法：</p>
+<p>​	  cp [选项]&hellip; [-T] 源 目的</p>
+<p>​    或：cp [选项]&hellip; 源&hellip; 目录</p>
+<p>​    或：cp [选项]&hellip; -t 目录 源&hellip;</p>
+<h3 id="2命令功能-5"><strong>2．命令功能：</strong></h3>
+<p>将源文件复制至目标文件，或将多个源文件复制至目标目录。</p>
+<h3 id="3命令参数-4"><strong>3．命令参数：</strong></h3>
+<p>-a, &ndash;archive  等于-dR &ndash;preserve=all</p>
+<p>&ndash;backup[=CONTROL  为每个已存在的目标文件创建备份</p>
+<p>-b        类似&ndash;backup 但不接受参数</p>
+<p>&ndash;copy-contents    在递归处理是复制特殊文件内容</p>
+<p>-d        等于&ndash;no-dereference &ndash;preserve=links</p>
+<p>-f, &ndash;force    如果目标文件无法打开则将其移除并重试(当 -n 选项</p>
+<p>​          存在时则不需再选此项)</p>
+<p>-i, &ndash;interactive    覆盖前询问(使前面的 -n 选项失效)</p>
+<p>-H        跟随源文件中的命令行符号链接</p>
+<p>-l, &ndash;link      链接文件而不复制</p>
+<p>-L, &ndash;dereference  总是跟随符号链接</p>
+<p>-n, &ndash;no-clobber  不要覆盖已存在的文件(使前面的 -i 选项失效)</p>
+<p>-P, &ndash;no-dereference  不跟随源文件中的符号链接</p>
+<p>-p        等于&ndash;preserve=模式,所有权,时间戳</p>
+<p>&ndash;preserve[=属性列表  保持指定的属性(默认：模式,所有权,时间戳)，如果</p>
+<p>​        可能保持附加属性：环境、链接、xattr 等</p>
+<p>-R, -r, &ndash;recursive 复制目录及目录内的所有项目</p>
+<h2 id="touch">touch</h2>
+<h3 id="1命令格式-6"><strong>1．命令格式：</strong></h3>
+<p>touch [选项]&hellip; 文件&hellip;</p>
+<h3 id="2命令参数"><strong>2．命令参数：</strong></h3>
+<p>-a  或&ndash;time=atime或&ndash;time=access或&ndash;time=use 只更改存取时间。</p>
+<p>-c  或&ndash;no-create 不建立任何文档。</p>
+<p>-d 使用指定的日期时间，而非现在的时间。</p>
+<p>-f 此参数将忽略不予处理，仅负责解决BSD版本touch指令的兼容性问题。</p>
+<p>-m  或&ndash;time=mtime或&ndash;time=modify 只更改变动时间。</p>
+<p>-r 把指定文档或目录的日期时间，统统设成和参考文档或目录的日期时间相同。</p>
+<p>-t 使用指定的日期时间，而非现在的时间。</p>
+<h3 id="3命令功能"><strong>3．命令功能：</strong></h3>
+<p>touch命令参数可更改文档或目录的日期时间，包括存取时间和更改时间。</p>
+<h2 id="cat">cat</h2>
+<h3 id="1命令格式-7"><strong>1．命令格式：</strong></h3>
+<p>cat [选项] [文件]&hellip;</p>
+<h3 id="2命令功能-6"><strong>2．命令功能：</strong></h3>
+<p><strong>cat主要有三大功能：</strong></p>
+<p>1.一次显示整个文件:cat filename</p>
+<p>2.从键盘创建一个文件:cat &gt; filename 只能创建新文件,不能编辑已有文件.</p>
+<p>3.将几个文件合并为一个文件:cat file1 file2 &gt; file</p>
+<h3 id="3命令参数-5"><strong>3．命令参数：</strong></h3>
+<p>-A, &ndash;show-all      等价于 -vET</p>
+<p>-b, &ndash;number-nonblank  对非空输出行编号</p>
+<p>-e            等价于 -vE</p>
+<p>-E, &ndash;show-ends     在每行结束处显示 $</p>
+<p>-n, &ndash;number   对输出的所有行编号,由1开始对所有输出的行数编号</p>
+<p>-s, &ndash;squeeze-blank 有连续两行以上的空白行，就代换为一行的空白行</p>
+<p>-t            与 -vT 等价</p>
+<p>-T, &ndash;show-tabs     将跳格字符显示为 ^I</p>
+<p>-u            (被忽略)</p>
+<p>-v, &ndash;show-nonprinting  使用 ^ 和 M- 引用，除了 LFD 和 TAB 之外</p>
+<h2 id="nl">nl</h2>
+<h3 id="1命令格式-8"><strong>1．命令格式：</strong></h3>
+<p>nl [选项]&hellip; [文件]&hellip;</p>
+<h3 id="2命令参数-1"><strong>2．命令参数：</strong></h3>
+<p>-b ：指定行号指定的方式，主要有两种：</p>
+<p>-b a ：表示不论是否为空行，也同样列出行号(类似 cat -n)；</p>
+<p>-b t ：如果有空行，空的那一行不要列出行号(默认值)；</p>
+<p>-n ：列出行号表示的方法，主要有三种：</p>
+<p>-n ln ：行号在萤幕的最左方显示；</p>
+<p>-n rn ：行号在自己栏位的最右方显示，且不加 0 ；</p>
+<p>-n rz ：行号在自己栏位的最右方显示，且加 0 ；</p>
+<p>-w ：行号栏位的占用的位数。</p>
+<p>-p 在逻辑定界符处不重新开始计算。</p>
+<h3 id="3命令功能-1"><strong>3．命令功能：</strong></h3>
+<p>nl 命令读取 File 参数（缺省情况下标准输入），计算输入中的行号，将计算过的行号写入标准输出。 在输出中，nl 命令根据您在命令行中指定的标志来计算左边的行。 输入文本必须写在逻辑页中。每个逻辑页有头、主体和页脚节（可以有空节）。 除非使用 -p 标志，nl 命令在每个逻辑页开始的地方重新设置行号。 可以单独为头、主体和页脚节设置行计算标志（例如，头和页脚行可以被计算然而文本行不能）。</p>
+<h2 id="more">more</h2>
+<h3 id="1命令格式-9"><strong>1．命令格式：</strong></h3>
+<p>more [-dlfpcsu ] [-num ] [+/ pattern] [+ linenum] [file &hellip; ]</p>
+<h3 id="2命令功能-7"><strong>2．命令功能：</strong></h3>
+<p>more命令和cat的功能一样都是查看文件里的内容，但有所不同的是more可以按页来查看文件的内容，还支持直接跳转行等功能。</p>
+<h3 id="3命令参数-6"><strong>3．命令参数：</strong></h3>
+<p>+n   从笫n行开始显示</p>
+<p>-n    定义屏幕大小为n行</p>
+<p>+/pattern 在每个档案显示前搜寻该字串（pattern），然后从该字串前两行之后开始显示</p>
+<p>-c    从顶部清屏，然后显示</p>
+<p>-d    提示“Press space to continue，’q’ to quit（按空格键继续，按q键退出）”，禁用响铃功能</p>
+<p>-l    忽略Ctrl+l（换页）字符</p>
+<p>-p    通过清除窗口而不是滚屏来对文件进行换页，与-c选项相似</p>
+<p>-s    把连续的多个空行显示为一行</p>
+<p>-u    把文件内容中的下画线去掉</p>
+<h3 id="4常用操作命令"><strong>4．常用操作命令：</strong></h3>
+<p>Enter  向下n行，需要定义。默认为1行</p>
+<p>Ctrl+F  向下滚动一屏</p>
+<p>空格键 向下滚动一屏</p>
+<p>Ctrl+B 返回上一屏</p>
+<p>=    输出当前行的行号</p>
+<p>：f   输出文件名和当前行的行号</p>
+<p>V   调用vi编辑器</p>
+<p>!命令  调用Shell，并执行命令</p>
+<p>q    退出more</p>
+<h2 id="less">less</h2>
+<h3 id="1命令格式-10"><strong>1．命令格式：</strong></h3>
+<p>less [参数] 文件</p>
+<h3 id="2命令功能-8"><strong>2．命令功能：</strong></h3>
+<p>less 与 more 类似，但使用 less 可以随意浏览文件，而 more 仅能向前移动，却不能向后移动，而且 less 在查看之前不会加载整个文件。</p>
+<h3 id="3命令参数-7"><strong>3．命令参数：</strong></h3>
+<p>-b &lt;缓冲区大小&gt; 设置缓冲区的大小</p>
+<p>-e 当文件显示结束后，自动离开</p>
+<p>-f 强迫打开特殊文件，例如外围设备代号、目录和二进制文件</p>
+<p>-g 只标志最后搜索的关键词</p>
+<p>-i 忽略搜索时的大小写</p>
+<p>-m 显示类似more命令的百分比</p>
+<p>-N 显示每行的行号</p>
+<p>-o &lt;文件名&gt; 将less 输出的内容在指定文件中保存起来</p>
+<p>-Q 不使用警告音</p>
+<p>-s 显示连续空行为一行</p>
+<p>-S 行过长时间将超出部分舍弃</p>
+<p>-x &lt;数字&gt; 将“tab”键显示为规定的数字空格</p>
+<p>/字符串：向下搜索“字符串”的功能</p>
+<p>?字符串：向上搜索“字符串”的功能</p>
+<p>n：重复前一个搜索（与 / 或 ? 有关）</p>
+<p>N：反向重复前一个搜索（与 / 或 ? 有关）</p>
+<p>b 向后翻一页</p>
+<p>d 向后翻半页</p>
+<p>h 显示帮助界面</p>
+<p>Q 退出less 命令</p>
+<p>u 向前滚动半页</p>
+<p>y 向前滚动一行</p>
+<p>空格键 滚动一行</p>
+<p>回车键 滚动一页</p>
+<p>[pagedown]： 向下翻动一页</p>
+<p>[pageup]：  向上翻动一页</p>
+<h2 id="head">head</h2>
+<h3 id="1命令格式-11"><strong>1．命令格式：</strong></h3>
+<p>head [参数]&hellip; [文件]&hellip;</p>
+<h3 id="2命令功能-9">**2．**命令功能：</h3>
+<p>head 用来显示档案的开头至标准输出中，默认head命令打印其相应文件的开头10行。</p>
+<h3 id="3命令参数-8"><strong>3．命令参数：</strong></h3>
+<p>-q 隐藏文件名</p>
+<p>-v 显示文件名</p>
+<p>-c&lt;字节&gt; 显示字节数</p>
+<p>-n&lt;行数&gt; 显示的行数</p>
+<h2 id="tail">tail</h2>
+<h3 id="1命令格式-12"><strong>1．命令格式</strong></h3>
+<p>tail[必要参数][选择参数][文件]</p>
+<h3 id="2命令功能-10"><strong>2．命令功能：</strong></h3>
+<p>用于显示指定文件末尾内容，不指定文件时，作为输入信息进行处理。常用查看日志文件。</p>
+<h3 id="3命令参数-9"><strong>3．命令参数：</strong></h3>
+<p>-f 循环读取</p>
+<p>-q 不显示处理信息</p>
+<p>-v 显示详细的处理信息</p>
+<p>-c&lt;数目&gt; 显示的字节数</p>
+<p>-n&lt;行数&gt; 显示行数</p>
+<p>&ndash;pid=PID 与-f合用,表示在进程ID,PID死掉之后结束.</p>
+<p>-q, &ndash;quiet, &ndash;silent 从不输出给出文件名的首部</p>
+<p>-s, &ndash;sleep-interval=S 与-f合用,表示在每次反复的间隔休眠S秒</p>
+<h2 id="ln">ln</h2>
+<h3 id="1命令格式-13"><strong>1．命令格式：</strong></h3>
+<p>ln [参数][源文件或目录][目标文件或目录]</p>
+<h3 id="2命令功能-11"><strong>2．命令功能：</strong></h3>
+<p>Linux文件系统中，有所谓的链接(link)，我们可以将其视为档案的别名，而链接又可分为两种 : 硬链接(hard link)与软链接(symbolic link)，硬链接的意思是一个档案可以有多个名称，而软链接的方式则是产生一个特殊的档案，该档案的内容是指向另一个档案的位置。硬链接是存在同一个文件系统中，而软链接却可以跨越不同的文件系统。</p>
+<p><strong>软链接：</strong></p>
+<p>1.软链接，以路径的形式存在。类似于Windows操作系统中的快捷方式</p>
+<p>2.软链接可以 跨文件系统 ，硬链接不可以</p>
+<p>3.软链接可以对一个不存在的文件名进行链接</p>
+<p>4.软链接可以对目录进行链接</p>
+<p><strong>硬链接:</strong></p>
+<p>1.硬链接，以文件副本的形式存在。但不占用实际空间。</p>
+<p>2.不允许给目录创建硬链接</p>
+<p>3.硬链接只有在同一个文件系统中才能创建</p>
+<p><strong>这里有两点要注意：</strong></p>
+<p>第一，ln命令会保持每一处链接文件的同步性，也就是说，不论你改动了哪一处，其它的文件都会发生相同的变化；</p>
+<p>第二，ln的链接又分软链接和硬链接两种，软链接就是ln –s 源文件 目标文件，它只会在你选定的位置上生成一个文件的镜像，不会占用磁盘空间，硬链接 ln 源文件 目标文件，没有参数-s， 它会在你选定的位置上生成一个和源文件大小相同的文件，无论是软链接还是硬链接，文件都保持同步变化。</p>
+<p>ln指令用在链接文件或目录，如同时指定两个以上的文件或目录，且最后的目的地是一个已经存在的目录，则会把前面指定的所有文件或目录复制到该目录中。若同时指定多个文件或目录，且最后的目的地并非是一个已存在的目录，则会出现错误信息。</p>
+<p>**3．**<strong>命令参数：</strong></p>
+<p><strong>必要参数:</strong></p>
+<p>-b 删除，覆盖以前建立的链接</p>
+<p>-d 允许超级用户制作目录的硬链接</p>
+<p>-f 强制执行</p>
+<p>-i 交互模式，文件存在则提示用户是否覆盖</p>
+<p>-n 把符号链接视为一般目录</p>
+<p>-s 软链接(符号链接)</p>
+<p>-v 显示详细的处理过程</p>
+<p><strong>选择参数:</strong></p>
+<p>-S “-S&lt;字尾备份字符串&gt; ”或 “&ndash;suffix=&lt;字尾备份字符串&gt;”</p>
+<p>-V “-V&lt;备份方式&gt;”或“&ndash;version-control=&lt;备份方式&gt;”</p>
+<p>&ndash;help 显示帮助信息</p>
+<p>&ndash;version 显示版本信息</p>
+<h2 id="diff">diff</h2>
+<h3 id="1命令格式-14"><strong>1．命令格式：</strong></h3>
+<p>diff[参数][文件1或目录1][文件2或目录2]</p>
+<h3 id="2命令功能-12"><strong>2．命令功能：</strong></h3>
+<p>diff命令能比较单个文件或者目录内容。如果指定比较的是文件，则只有当输入为文本文件时才有效。以逐行的方式，比较文本文件的异同处。如果指定比较的是目录的的时候，diff 命令会比较两个目录下名字相同的文本文件。列出不同的二进制文件、公共子目录和只在一个目录出现的文件。</p>
+<h3 id="3命令参数-10"><strong>3．命令参数：</strong></h3>
+<p>- 指定要显示多少行的文本。此参数必须与-c或-u参数一并使用。</p>
+<p>　-a或&ndash;text diff预设只会逐行比较文本文件。</p>
+<p>-b或&ndash;ignore-space-change 不检查空格字符的不同。</p>
+<p>-B或&ndash;ignore-blank-lines 不检查空白行。</p>
+<p>-c 显示全部内文，并标出不同之处。</p>
+<p>-C或&ndash;context 与执行&quot;-c-&ldquo;指令相同。</p>
+<p>-d或&ndash;minimal 使用不同的演算法，以较小的单位来做比较。</p>
+<p>-D或ifdef 此参数的输出格式可用于前置处理器巨集。</p>
+<p>-e或&ndash;ed 此参数的输出格式可用于ed的script文件。</p>
+<p>-f或-forward-ed 输出的格式类似ed的script文件，但按照原来文件的顺序来显示不同处。</p>
+<p>-H或&ndash;speed-large-files 比较大文件时，可加快速度。</p>
+<p>-l或&ndash;ignore-matching-lines 若两个文件在某几行有所不同，而这几行同时都包含了选项中指定的字符或字符串，则不显示这两个文件的差异。</p>
+<p>-i或&ndash;ignore-case 不检查大小写的不同。</p>
+<p>-l或&ndash;paginate 将结果交由pr程序来分页。</p>
+<p>-n或&ndash;rcs 将比较结果以RCS的格式来显示。</p>
+<p>-N或&ndash;new-file 在比较目录时，若文件A仅出现在某个目录中，预设会显示：Only in目录：文件A若使用-N参数，则diff会将文件A与一个空白的文件比较。</p>
+<p>-p 若比较的文件为C语言的程序码文件时，显示差异所在的函数名称。</p>
+<p>-P或&ndash;unidirectional-new-file 与-N类似，但只有当第二个目录包含了一个第一个目录所没有的文件时，才会将这个文件与空白的文件做比较。</p>
+<p>-q或&ndash;brief 仅显示有无差异，不显示详细的信息。</p>
+<p>-r或&ndash;recursive 比较子目录中的文件。</p>
+<p>-s或&ndash;report-identical-files 若没有发现任何差异，仍然显示信息。</p>
+<p>-S或&ndash;starting-file 在比较目录时，从指定的文件开始比较。</p>
+<p>-t或&ndash;expand-tabs 在输出时，将tab字符展开。</p>
+<p>-T或&ndash;initial-tab 在每行前面加上tab字符以便对齐。</p>
+<p>-u,-U或&ndash;unified= 以合并的方式来显示文件内容的不同。</p>
+<p>-v或&ndash;version 显示版本信息。</p>
+<p>-w或&ndash;ignore-all-space 忽略全部的空格字符。</p>
+<p>-W或&ndash;width 在使用-y参数时，指定栏宽。</p>
+<p>-x或&ndash;exclude 不比较选项中所指定的文件或目录。</p>
+<p>-X或&ndash;exclude-from 您可以将文件或目录类型存成文本文件，然后在=中指定此文本文件。</p>
+<p>-y或&ndash;side-by-side 以并列的方式显示文件的异同之处。</p>
+<p>&ndash;help 显示帮助。</p>
+<p>&ndash;left-column 在使用-y参数时，若两个文件某一行内容相同，则仅在左侧的栏位显示该行内容。</p>
+<p>&ndash;suppress-common-lines 在使用-y参数时，仅显示不同之处。</p>
+<h2 id="grep">grep</h2>
+<h3 id="1命令格式-15"><strong>1．命令格式：</strong></h3>
+<p>grep [option] pattern file</p>
+<h3 id="2命令功能-13"><strong>2．命令功能：</strong></h3>
+<p>用于过滤/搜索的特定字符。可使用正则表达式能多种命令配合使用，使用上十分灵活。</p>
+<h3 id="3命令参数-11"><strong>3．命令参数：</strong></h3>
+<p>-a  &ndash;text  #不要忽略二进制的数据。</p>
+<p>-A&lt;显示行数&gt;  &ndash;after-context=&lt;显示行数&gt;  #除了显示符合范本样式的那一列之外，并显示该行之后的内容。</p>
+<p>-b  &ndash;byte-offset  #在显示符合样式的那一行之前，标示出该行第一个字符的编号。</p>
+<p>-B&lt;显示行数&gt;  &ndash;before-context=&lt;显示行数&gt;  #除了显示符合样式的那一行之外，并显示该行之前的内容。</p>
+<p>-c  &ndash;count  #计算符合样式的列数。</p>
+<p>-C&lt;显示行数&gt;  &ndash;context=&lt;显示行数&gt;或-&lt;显示行数&gt;  #除了显示符合样式的那一行之外，并显示该行之前后的内容。</p>
+<p>-d &lt;动作&gt;   &ndash;directories=&lt;动作&gt;  #当指定要查找的是目录而非文件时，必须使用这项参数，否则grep指令将回报信息并停止动作。</p>
+<p>-e&lt;范本样式&gt; &ndash;regexp=&lt;范本样式&gt;  #指定字符串做为查找文件内容的样式。</p>
+<p>-E   &ndash;extended-regexp  #将样式为延伸的普通表示法来使用。</p>
+<p>-f&lt;规则文件&gt; &ndash;file=&lt;规则文件&gt;  #指定规则文件，其内容含有一个或多个规则样式，让grep查找符合规则条件的文件内容，格式为每行一个规则样式。</p>
+<p>-F  &ndash;fixed-regexp  #将样式视为固定字符串的列表。</p>
+<p>-G  &ndash;basic-regexp  #将样式视为普通的表示法来使用。</p>
+<p>-h  &ndash;no-filename  #在显示符合样式的那一行之前，不标示该行所属的文件名称。</p>
+<p>-H  &ndash;with-filename  #在显示符合样式的那一行之前，表示该行所属的文件名称。</p>
+<p>-i  &ndash;ignore-case  #忽略字符大小写的差别。</p>
+<p>-l  &ndash;file-with-matches  #列出文件内容符合指定的样式的文件名称。</p>
+<p>-L  &ndash;files-without-match  #列出文件内容不符合指定的样式的文件名称。</p>
+<p>-n  &ndash;line-number  #在显示符合样式的那一行之前，标示出该行的列数编号。</p>
+<p>-q  &ndash;quiet或&ndash;silent  #不显示任何信息。</p>
+<p>-r  &ndash;recursive  #此参数的效果和指定“-d recurse”参数相同。</p>
+<p>-s  &ndash;no-messages  #不显示错误信息。</p>
+<p>-v  &ndash;revert-match  #显示不包含匹配文本的所有行。</p>
+<p>-V  &ndash;version  #显示版本信息。</p>
+<p>-w  &ndash;word-regexp  #只显示全字符合的列。</p>
+<p>-x  &ndash;line-regexp  #只显示全列符合的列。</p>
+<p>-y  #此参数的效果和指定“-i”参数相同。</p>
+<p><strong>4．<strong><strong>规</strong></strong>则表达式</strong>**：**</p>
+<p><strong>grep的规则表达式:</strong></p>
+<p>^ #锚定行的开始 如：'^grep&rsquo;匹配所有以grep开头的行。</p>
+<p>$ #锚定行的结束 如：&lsquo;grep$&lsquo;匹配所有以grep结尾的行。</p>
+<p>. #匹配一个非换行符的字符 如：&lsquo;gr.p&rsquo;匹配gr后接一个任意字符，然后是p。</p>
+<p>* #匹配零个或多个先前字符 如：'*grep&rsquo;匹配所有一个或多个空格后紧跟grep的行。</p>
+<p>.*  #一起用代表任意字符。</p>
+<p>[]  #匹配一个指定范围内的字符，如&rsquo;[Gg]rep&rsquo;匹配Grep和grep。</p>
+<p>[^] #匹配一个不在指定范围内的字符，如：'[^A-FH-Z]rep&rsquo;匹配不包含A-R和T-Z的一个字母开头，紧跟rep的行。</p>
+<p>(..) #标记匹配字符，如&rsquo;(love)'，love被标记为1。</p>
+<p>&lt;   #锚定单词的开始，如:'&lt;grep&rsquo;匹配包含以grep开头的单词的行。</p>
+<p>&gt;   #锚定单词的结束，如&rsquo;grep&gt;&lsquo;匹配包含以grep结尾的单词的行。</p>
+<p>x{m} #重复字符x，m次，如：&lsquo;0{5}&lsquo;匹配包含5个o的行。</p>
+<p>x{m,} #重复字符x,至少m次，如：&lsquo;o{5,}&lsquo;匹配至少有5个o的行。</p>
+<p>x{m,n} #重复字符x，至少m次，不多于n次，如：&lsquo;o{5,10}&lsquo;匹配5&ndash;10个o的行。</p>
+<p>\w  #匹配文字和数字字符，也就是[A-Za-z0-9]，如：&lsquo;G\w*p&rsquo;匹配以G后跟零个或多个文字或数字字符，然后是p。</p>
+<p>\W  #\w的反置形式，匹配一个或多个非单词字符，如点号句号等。</p>
+<p>\b  #单词锁定符，如: &lsquo;\bgrep\b&rsquo;只匹配grep。</p>
+<h2 id="ps">ps</h2>
+<p><strong>linux上进程有5种状态:</strong></p>
+<p>\1. 运行(正在运行或在运行队列中等待)</p>
+<p>\2. 中断(休眠中, 受阻, 在等待某个条件的形成或接受到信号)</p>
+<p>\3. 不可中断(收到信号不唤醒和不可运行, 进程必须等待直到有中断发生)</p>
+<p>\4. 僵死(进程已终止, 但进程描述符存在, 直到父进程调用wait4()系统调用后释放)</p>
+<p>\5. 停止(进程收到SIGSTOP, SIGSTP, SIGTIN, SIGTOU信号后停止运行运行)</p>
+<p><strong>ps工具标识进程的5种状态码:</strong></p>
+<p>D 不可中断 uninterruptible sleep (usually IO)</p>
+<p>R 运行 runnable (on run queue)</p>
+<p>S 中断 sleeping</p>
+<p>T 停止 traced or stopped</p>
+<p>Z 僵死 a defunct (”zombie”) process</p>
+<h3 id="1命令格式-16"><strong>1．命令格式：</strong></h3>
+<p>ps[参数]</p>
+<h3 id="2命令功能-14"><strong>2．命令功能：</strong></h3>
+<p>用来显示当前进程的状态</p>
+<h3 id="3命令参数-12"><strong>3．命令参数：</strong></h3>
+<p>a 显示所有进程</p>
+<p>-a 显示同一终端下的所有程序</p>
+<p>-A 显示所有进程</p>
+<p>c 显示进程的真实名称</p>
+<p>-N 反向选择</p>
+<p>-e 等于“-A”</p>
+<p>e 显示环境变量</p>
+<p>f 显示程序间的关系</p>
+<p>-H 显示树状结构</p>
+<p>r 显示当前终端的进程</p>
+<p>T 显示当前终端的所有程序</p>
+<p>u 指定用户的所有进程</p>
+<p>-au 显示较详细的资讯</p>
+<p>-aux 显示所有包含其他使用者的行程</p>
+<p>-C&lt;命令&gt; 列出指定命令的状况</p>
+<p>&ndash;lines&lt;行数&gt; 每页显示的行数</p>
+<p>&ndash;width&lt;字符数&gt; 每页显示的字符数</p>
+<p>&ndash;help 显示帮助信息</p>
+<p>&ndash;version 显示版本显示</p>
+<h2 id="watch">watch</h2>
+<h3 id="1命令格式-17"><strong>1．命令格式：</strong></h3>
+<p>watch[参数][命令]</p>
+<h3 id="2命令功能-15"><strong>2．命令功能：</strong></h3>
+<p>可以将命令的输出结果输出到标准输出设备，多用于周期性执行命令/定时执行命令</p>
+<h3 id="3命令参数-13"><strong>3．命令参数：</strong></h3>
+<p>-n或&ndash;interval watch缺省每2秒运行一下程序，可以用-n或-interval来指定间隔的时间。</p>
+<p>-d或&ndash;differences 用-d或&ndash;differences 选项watch 会高亮显示变化的区域。 而-d=cumulative选项会把变动过的地方(不管最近的那次有没有变动)都高亮显示出来。</p>
+<p>-t 或-no-title 会关闭watch命令在顶部的时间间隔,命令，当前时间的输出。</p>
+<p>-h, &ndash;help 查看帮助文档</p>
+<h3 id="4使用实例"><strong>4．使用实例：</strong></h3>
+<p><strong>实例****1：</strong></p>
+<p><strong>命令：<strong><strong>每隔一秒高亮显示</strong></strong>网络****链接数的变化情况</strong></p>
+<p>watch -n 1 -d netstat -ant
+<strong>说明：</strong></p>
+<p>其它操作：
+切换终端： Ctrl+x
+退出watch：Ctrl+g</p>
+<h2 id="at">at</h2>
+<h3 id="1命令格式-18"><strong>1．命令格式：</strong></h3>
+<p>at[参数][时间]</p>
+<h3 id="2命令功能-16"><strong>2．命令功能：</strong></h3>
+<p>在一个指定的时间执行一个指定任务，只能执行一次，且需要开启atd进程（</p>
+<p>ps -ef | grep atd查看， 开启用/etc/init.d/atd start or restart； 开机即启动则需要运行 chkconfig &ndash;level 2345 atd on）。</p>
+<h3 id="3命令参数-14"><strong>3．命令参数：</strong></h3>
+<p>-m 当指定的任务被完成之后，将给用户发送邮件，即使没有标准输出</p>
+<p>-I atq的别名</p>
+<p>-d atrm的别名</p>
+<p>-v 显示任务将被执行的时间</p>
+<p>-c 打印任务的内容到标准输出</p>
+<p>-V 显示版本信息</p>
+<p>-q&lt;列队&gt; 使用指定的列队</p>
+<p>-f&lt;文件&gt; 从指定文件读入任务而不是从标准输入读入</p>
+<p>-t&lt;时间参数&gt; 以时间参数的形式提交要运行的任务</p>
+<p>at允许使用一套相当复杂的指定时间的方法。他能够接受在当天的hh:mm（小时:分钟）式的时间指定。假如该时间已过去，那么就放在第二天执行。当然也能够使用midnight（深夜），noon（中午），teatime（饮茶时间，一般是下午4点）等比较模糊的 词语来指定时间。用户还能够采用12小时计时制，即在时间后面加上AM（上午）或PM（下午）来说明是上午还是下午。 也能够指定命令执行的具体日期，指定格式为month day（月 日）或mm/dd/yy（月/日/年）或dd.mm.yy（日.月.年）。指定的日期必须跟在指定时间的后面。 上面介绍的都是绝对计时法，其实还能够使用相对计时法，这对于安排不久就要执行的命令是很有好处的。指定格式为：now + count time-units ，now就是当前时间，time-units是时间单位，这里能够是minutes（分钟）、hours（小时）、days（天）、weeks（星期）。count是时间的数量，究竟是几天，还是几小时，等等。 更有一种计时方法就是直接使用today（今天）、tomorrow（明天）来指定完成命令的时间。</p>
+<p>TIME：时间格式，这里可以定义出什么时候要进行 at 这项任务的时间，格式有：</p>
+<p>HH:MM</p>
+<p>ex&gt; 04:00</p>
+<p>在今日的 HH:MM 时刻进行，若该时刻已超过，则明天的 HH:MM 进行此任务。</p>
+<p>HH:MM YYYY-MM-DD</p>
+<p>ex&gt; 04:00 2009-03-17</p>
+<p>强制规定在某年某月的某一天的特殊时刻进行该项任务</p>
+<p>HH:MM[am|pm] [Month] [Date]</p>
+<p>ex&gt; 04pm March 17</p>
+<p>也是一样，强制在某年某月某日的某时刻进行该项任务</p>
+<p>HH:MM[am|pm] + number [minutes|hours|days|weeks]</p>
+<p>ex&gt; now + 5 minutes</p>
+<p>ex&gt; 04pm + 3 days</p>
+<p>就是说，在某个时间点再加几个时间后才进行该项任务。</p>
+<h3 id="4使用实例-1">**4．**<strong>使用实例：</strong></h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">实例1：****三天后的下午 <span style="color:#ae81ff">5</span> 点锺执行 /bin/ls**
+
+**命令：**
+
+at 5pm+3 days
+
+**输出：**
+
+<span style="color:#f92672">[</span>root@localhost ~<span style="color:#f92672">]</span><span style="color:#75715e"># at 5pm+3 days</span>
+
+at&gt; /bin/ls
+
+at&gt; &lt;EOT&gt;
+
+job <span style="color:#ae81ff">7</span> at 2013-01-08 17:00
+</code></pre></div><h3 id="4使用实例-2"><strong>4．使用实例：</strong></h3>
+<p>**实例1：**<strong>三天后的下午 5 点锺执行 /bin/ls</strong></p>
+<p><strong>命令：</strong></p>
+<p>at 5pm+3 days</p>
+<h2 id="crontab">crontab</h2>
+<h3 id="一crond简介"><strong>一、crond简介</strong></h3>
+<p>crond是linux下用来周期性的执行某种任务或等待处理某些事件的一个守护进程，与windows下的计划任务类似，当安装完成操作系统后，默认会安装此服务工具，并且会自动启动crond进程，crond进程每分钟会定期检查是否有要执行的任务，如果有要执行的任务，则自动执行该任务。</p>
+<p>Linux下的任务调度分为两类，系统任务调度和用户任务调度。</p>
+<p>系统任务调度：系统周期性所要执行的工作，比如写缓存数据到硬盘、日志清理等。在/etc目录下有一个crontab文件，这个就是系统任务调度的配置文件。</p>
+<p>/etc/crontab文件包括下面几行：</p>
+<p>[root@localhost ~]# cat /etc/crontab</p>
+<p>SHELL=/bin/bash</p>
+<p>PATH=/sbin:/bin:/usr/sbin:/usr/bin</p>
+<p>MAILTO=&ldquo;&ldquo;HOME=/</p>
+<p># run-parts</p>
+<p>51 * * * * root run-parts /etc/cron.hourly</p>
+<p>24 7 * * * root run-parts /etc/cron.daily</p>
+<p>22 4 * * 0 root run-parts /etc/cron.weekly</p>
+<p>42 4 1 * * root run-parts /etc/cron.monthly</p>
+<p>[root@localhost ~]#</p>
+<p>前四行是用来配置crond任务运行的环境变量，第一行SHELL变量指定了系统要使用哪个shell，这里是bash，第二行PATH变量指定了系统执行命令的路径，第三行MAILTO变量指定了crond的任务执行信息将通过电子邮件发送给root用户，如果MAILTO变量的值为空，则表示不发送任务执行信息给用户，第四行的HOME变量指定了在执行命令或者脚本时使用的主目录。第六至九行表示的含义将在下个小节详细讲述。这里不在多说。</p>
+<p>用户任务调度：用户定期要执行的工作，比如用户数据备份、定时邮件提醒等。用户可以使用 crontab 工具来定制自己的计划任务。所有用户定义的crontab 文件都被保存在 /var/spool/cron目录中。其文件名与用户名一致。</p>
+<p><strong>使用者权限文件</strong>**：**</p>
+<p>文件：</p>
+<p>/etc/cron.deny</p>
+<p>说明：</p>
+<p>该文件中所列用户不允许使用crontab命令</p>
+<p>文件：</p>
+<p>/etc/cron.allow</p>
+<p>说明：</p>
+<p>该文件中所列用户允许使用crontab命令</p>
+<p>文件：</p>
+<p>/var/spool/cron/</p>
+<p>说明：</p>
+<p>所有用户crontab文件存放的目录,以用户名命名</p>
+<p><strong>crontab文件的含义：</strong></p>
+<p>用户所建立的crontab文件中，每一行都代表一项任务，每行的每个字段代表一项设置，它的格式共分为六个字段，前五段是时间设定段，第六段是要执行的命令段，格式如下：</p>
+<p>minute  hour  day  month  week  command</p>
+<p>其中：</p>
+<p>minute： 表示分钟，可以是从0到59之间的任何整数。</p>
+<p>hour：表示小时，可以是从0到23之间的任何整数。</p>
+<p>day：表示日期，可以是从1到31之间的任何整数。</p>
+<p>month：表示月份，可以是从1到12之间的任何整数。</p>
+<p>week：表示星期几，可以是从0到7之间的任何整数，这里的0或7代表星期日。</p>
+<p>command：要执行的命令，可以是系统命令，也可以是自己编写的脚本文件。</p>
+<p><strong>在以上各个字段中，还可以使用以下特殊字符：</strong></p>
+<p>星号（*）：代表所有可能的值，例如month字段如果是星号，则表示在满足其它字段的制约条件后每月都执行该命令操作。</p>
+<p>逗号（,）：可以用逗号隔开的值指定一个列表范围，例如，“1,2,5,7,8,9”</p>
+<p>中杠（-）：可以用整数之间的中杠表示一个整数范围，例如“2-6”表示“2,3,4,5,6”</p>
+<p>正斜线（/）：可以用正斜线指定时间的间隔频率，例如“0-23/2”表示每两小时执行一次。同时正斜线可以和星号一起使用，例如*/10，如果用在minute字段，表示每十分钟执行一次。</p>
+<h3 id="二crond服务"><strong>二、crond服务</strong></h3>
+<p>安装crontab：</p>
+<p>yum install crontabs</p>
+<p>服务操作说明：</p>
+<p>/sbin/service crond start //启动服务</p>
+<p>/sbin/service crond stop //关闭服务</p>
+<p>/sbin/service crond restart //重启服务</p>
+<p>/sbin/service crond reload //重新载入配置</p>
+<p>查看crontab服务状态：</p>
+<p>service crond status</p>
+<p>手动启动crontab服务：</p>
+<p>service crond start</p>
+<p>查看crontab服务是否已设置为开机启动，执行命令：</p>
+<p>ntsysv</p>
+<p>加入开机自动启动：</p>
+<p>chkconfig –level 35 crond on</p>
+<h3 id="三crontab命令详解"><strong>三、crontab命令详解</strong></h3>
+<h4 id="1命令格式-19"><strong>1．命令格式：</strong></h4>
+<p>crontab [-u user] file</p>
+<p>crontab [-u user] [ -e | -l | -r ]</p>
+<h4 id="2命令功能-17"><strong>2．命令功能：</strong></h4>
+<p>通过crontab 命令，我们可以在固定的间隔时间执行指定的系统指令或 shell script脚本。时间间隔的单位可以是分钟、小时、日、月、周及以上的任意组合。这个命令非常设合周期性的日志分析或数据备份等工作。</p>
+<h4 id="3命令参数-15"><strong>3．命令参数：</strong></h4>
+<p>-u user：用来设定某个用户的crontab服务，例如，“-u ixdba”表示设定ixdba用户的crontab服务，此参数一般有root用户来运行。</p>
+<p>file：file是命令文件的名字,表示将file做为crontab的任务列表文件并载入crontab。如果在命令行中没有指定这个文件，crontab命令将接受标准输入（键盘）上键入的命令，并将它们载入crontab。</p>
+<p>-e：编辑某个用户的crontab文件内容。如果不指定用户，则表示编辑当前用户的crontab文件。</p>
+<p>-l：显示某个用户的crontab文件内容，如果不指定用户，则表示显示当前用户的crontab文件内容。</p>
+<p>-r：从/var/spool/cron目录中删除某个用户的crontab文件，如果不指定用户，则默认删除当前用户的crontab文件。</p>
+<p>-i：在删除用户的crontab文件时给确认提示。</p>
+<h4 id="4常用方法"><strong>4．常用方法：</strong></h4>
+<h5 id="1-创建一个新的crontab文件"><strong>1). 创建一个新的crontab文件</strong></h5>
+<p>在考虑向cron进程提交一个crontab文件之前，首先要做的一件事情就是设置环境变量EDITOR。cron进程根据它来确定使用哪个编辑器编辑crontab文件。9 9 %的UNIX和LINUX用户都使用vi，如果你也是这样，那么你就编辑$ HOME目录下的. profile文件，在其中加入这样一行：</p>
+<p>EDITOR=vi; export EDITOR</p>
+<p>然后保存并退出。不妨创建一个名为<!-- raw HTML omitted --> cron的文件，其中<!-- raw HTML omitted -->是用户名，例如， davecron。在该文件中加入如下的内容。</p>
+<p># (put your own initials here)echo the date to the console every</p>
+<p># 15minutes between 6pm and 6am</p>
+<p>0,15,30,45 18-06 * * * /bin/echo &lsquo;date&rsquo; &gt; /dev/console</p>
+<p>保存并退出。确信前面5个域用空格分隔。</p>
+<p>在上面的例子中，系统将每隔1 5分钟向控制台输出一次当前时间。如果系统崩溃或挂起，从最后所显示的时间就可以一眼看出系统是什么时间停止工作的。在有些系统中，用tty1来表示控制台，可以根据实际情况对上面的例子进行相应的修改。为了提交你刚刚创建的crontab文件，可以把这个新创建的文件作为cron命令的参数：</p>
+<p>$ crontab davecron</p>
+<p>现在该文件已经提交给cron进程，它将每隔1 5分钟运行一次。</p>
+<p>同时，新创建文件的一个副本已经被放在/var/spool/cron目录中，文件名就是用户名(即dave)。</p>
+<h5 id="2-列出crontab文件"><strong>2</strong>). 列出crontab文件</h5>
+<p>为了列出crontab文件，可以用：</p>
+<p>$ crontab -l</p>
+<p>0,15,30,45,18-06 * * * /bin/echo <code>date</code> &gt; dev/tty1</p>
+<p>你将会看到和上面类似的内容。可以使用这种方法在$ H O M E目录中对crontab文件做一备份：</p>
+<p>$ crontab -l &gt; $HOME/mycron</p>
+<p>这样，一旦不小心误删了crontab文件，可以用上一节所讲述的方法迅速恢复。</p>
+<h5 id="3-编辑crontab文件">3). 编辑crontab文件</h5>
+<p>如果希望添加、删除或编辑crontab文件中的条目，而E D I TO R环境变量又设置为v i，那么就可以用v i来编辑crontab文件，相应的命令为：</p>
+<p>$ crontab -e</p>
+<p>可以像使用v i编辑其他任何文件那样修改crontab文件并退出。如果修改了某些条目或添加了新的条目，那么在保存该文件时， c r o n会对其进行必要的完整性检查。如果其中的某个域出现了超出允许范围的值，它会提示你。</p>
+<p>我们在编辑crontab文件时，没准会加入新的条目。例如，加入下面的一条：</p>
+<p># DT:delete core files,at 3.30am on 1,7,14,21,26,26 days of each month</p>
+<p>30 3 1,7,14,21,26 * * /bin/find -name &ldquo;core&rsquo; -exec rm {} ;</p>
+<p>现在保存并退出。最好在crontab文件的每一个条目之上加入一条注释，这样就可以知道它的功能、运行时间，更为重要的是，知道这是哪位用户的作业。</p>
+<p>现在让我们使用前面讲过的crontab -l命令列出它的全部信息：</p>
+<p>$ crontab -l</p>
+<p># (crondave installed on Tue May 4 13:07:43 1999)</p>
+<p># DT:ech the date to the console every 30 minites</p>
+<p>0,15,30,45 18-06 * * * /bin/echo <code>date</code> &gt; /dev/tty1</p>
+<p># DT:delete core files,at 3.30am on 1,7,14,21,26,26 days of each month</p>
+<p>30 3 1,7,14,21,26 * * /bin/find -name &ldquo;core&rsquo; -exec rm {} ;</p>
+<h5 id="4-删除crontab文件"><strong>4). 删除crontab文件</strong></h5>
+<p>要删除crontab文件，可以用：</p>
+<p>$ crontab -r</p>
+<h5 id="5-恢复丢失的crontab文件"><strong>5). 恢复丢失的crontab文件</strong></h5>
+<p>如果不小心误删了crontab文件，假设你在自己的$ H O M E目录下还有一个备份，那么可以将其拷贝到/var/spool/cron/<!-- raw HTML omitted -->，其中<!-- raw HTML omitted -->是用户名。如果由于权限问题无法完成拷贝，可以用：</p>
+<p>$ crontab <!-- raw HTML omitted --></p>
+<p>其中，<!-- raw HTML omitted -->是你在$ H O M E目录中副本的文件名。</p>
+<p>我建议你在自己的$ H O M E目录中保存一个该文件的副本。我就有过类似的经历，有数次误删了crontab文件（因为r键紧挨在e键的右边）。这就是为什么有些系统文档建议不要直接编辑crontab文件，而是编辑该文件的一个副本，然后重新提交新的文件。</p>
+<p>有些crontab的变体有些怪异，所以在使用crontab命令时要格外小心。如果遗漏了任何选项，crontab可能会打开一个空文件，或者看起来像是个空文件。这时敲delete键退出，不要按<!-- raw HTML omitted -->，否则你将丢失crontab文件。</p>
+<h4 id="5使用实例"><strong>5．使用实例</strong></h4>
+<p>**实例****1：**<strong>每1分钟执行一次command</strong></p>
+<p><strong>命令：</strong></p>
+<p>* * * * * command</p>
+<p>**实例****2：**<strong>每小时的第3和第15分钟执行</strong></p>
+<p><strong>命令：</strong></p>
+<p>3,15 * * * * command</p>
+<p>**实例****3：**<strong>在上午8点到11点的第3和第15分钟执行</strong></p>
+<p><strong>命令：</strong></p>
+<p>3,15 8-11 * * * command</p>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>jiangfy </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://example.com/2020/linux_commond_dir_oper/>https://example.com/2020/linux_commond_dir_oper/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://example.com/tags/linux/">
+                    #Linux</a></span>
+            
+            <span class="tag"><a href="https://example.com/tags/cmd/">
+                    #cmd</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://example.com">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://example.com/2014/creating-a-new-theme/" class="prev" rel="prev" title="Creating a New Theme"><i class="iconfont icon-left"></i>&nbsp;Creating a New Theme</a>
+         
+        
+        <a href="https://example.com/2020/linux_commond_file_find/" class="next" rel="next" title="Linux Commond --- file find">Linux Commond --- file find&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://example.com">jiangfy</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>
