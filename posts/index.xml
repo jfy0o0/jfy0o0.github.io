@@ -2,37 +2,60 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on LeaveIt</title>
-    <link>https://jfy0o0.github.io/posts/</link>
+    <link>https://example.com/posts/</link>
     <description>Recent content in Posts on LeaveIt</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 29 Aug 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://jfy0o0.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 19 Oct 2020 19:42:58 +0800</lastBuildDate><atom:link href="https://example.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux Commond</title>
+      <link>https://example.com/2020/linux_commond/</link>
+      <pubDate>Mon, 19 Oct 2020 19:42:58 +0800</pubDate>
+      
+      <guid>https://example.com/2020/linux_commond/</guid>
+      <description>目录操作命令 ls 1. 命令格式： ls [选项] [目录名]
+2. 命令功能： 列出目标目录中所有的子目录和文件。
+3. 常用参数： -a, –all 列出目录下的所有文件，包括以 . 开头的隐含文件
+-A 同-a，但不列出“.”(表示当前目录)和“..”(表示当前目录的父目录)。
+-c 配合 -lt：根据 ctime 排序及显示 ctime (文件状态最后更改的时间)配合 -l：显示 ctime 但根据名称排序否则：根据 ctime 排序
+-C 每栏由上至下列出项目
+–color[=WHEN] 控制是否使用色彩分辨文件。WHEN 可以是&amp;rsquo;never&#39;、&amp;lsquo;always&amp;rsquo;或&amp;rsquo;auto&amp;rsquo;其中之一
+-d, –directory 将目录象文件一样显示，而不是显示其下的文件。
+-D, –dired 产生适合 Emacs 的 dired 模式使用的结果
+-f 对输出的文件不进行排序，-aU 选项生效，-lst 选项失效
+-g 类似 -l,但不列出所有者
+-G, –no-group 不列出任何有关组的信息
+-h, –human-readable 以容易理解的格式列出文件大小 (例如 1K 234M 2G)
+–si 类似 -h,但文件大小取 1000 的次方而不是 1024
+-H, –dereference-command-line 使用命令列中的符号链接指示的真正目的地</description>
+    </item>
+    
     <item>
       <title>Creating a New Theme</title>
-      <link>https://jfy0o0.github.io/2014/creating-a-new-theme/</link>
+      <link>https://example.com/2014/creating-a-new-theme/</link>
       <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://jfy0o0.github.io/2014/creating-a-new-theme/</guid>
+      <guid>https://example.com/2014/creating-a-new-theme/</guid>
       <description>Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.
 We&amp;rsquo;ll start with creating a new site with a very basic template.</description>
     </item>
     
     <item>
       <title>(Hu)go Template Primer</title>
-      <link>https://jfy0o0.github.io/2014/goisforlovers/</link>
+      <link>https://example.com/2014/goisforlovers/</link>
       <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://jfy0o0.github.io/2014/goisforlovers/</guid>
+      <guid>https://example.com/2014/goisforlovers/</guid>
       <description>Hugo uses the excellent go html/template library for its template engine. It is an extremely lightweight engine that provides a very small amount of logic. In our experience that it is just the right amount of logic to be able to create a good static website. If you have used other template systems from different languages or frameworks you will find a lot of similarities in go templates.
 This document is a brief primer on using go templates.</description>
     </item>
     
     <item>
       <title>Getting Started with Hugo</title>
-      <link>https://jfy0o0.github.io/2014/hugoisforlovers/</link>
+      <link>https://example.com/2014/hugoisforlovers/</link>
       <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://jfy0o0.github.io/2014/hugoisforlovers/</guid>
+      <guid>https://example.com/2014/hugoisforlovers/</guid>
       <description>Step 1. Install Hugo Goto hugo releases and download the appropriate version for your os and architecture.
 Save it somewhere specific as we will be using it in the next step.
 More complete instructions are available at installing hugo
@@ -43,10 +66,10 @@ Follow the following steps:
     
     <item>
       <title>Migrate to Hugo from Jekyll</title>
-      <link>https://jfy0o0.github.io/2014/migrate-from-jekyll/</link>
+      <link>https://example.com/2014/migrate-from-jekyll/</link>
       <pubDate>Mon, 10 Mar 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://jfy0o0.github.io/2014/migrate-from-jekyll/</guid>
+      <guid>https://example.com/2014/migrate-from-jekyll/</guid>
       <description>Move static content to static Jekyll has a rule that any directory not starting with _ will be copied as-is to the _site output. Hugo keeps all static content under static. You should therefore move it all there. With Jekyll, something that looked like
 ▾ &amp;lt;root&amp;gt;/ ▾ images/ logo.png  should become
 ▾ &amp;lt;root&amp;gt;/ ▾ static/ ▾ images/ logo.png  Additionally, you&amp;rsquo;ll want any files that should reside at the root (such as CNAME) to be moved to static.</description>
