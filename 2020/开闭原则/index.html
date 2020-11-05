@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Covey.Liu">
+  
+  
+  
+  <link rel="prev" href="https://jfy0o0.github.io/2020/%E8%BF%AA%E7%B1%B3%E7%89%B9%E6%B3%95%E5%88%99/" />
+  
+  <link rel="canonical" href="https://jfy0o0.github.io/2020/%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Design Patterns - 开闭原则 | LeaveIt
+       
+  </title>
+  <meta name="title" content="Design Patterns - 开闭原则 | LeaveIt">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/jfy0o0.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Design Patterns - 开闭原则",
+    "headline" : "Design Patterns - 开闭原则",
+    "description" : "开闭原则： ​\t软件对象（类、模块、方法等）应该对于扩展是开放的，对修改是关闭的。比如：一个网络模块，原来只有服务端功能，而现在要加入客户端功能，那么应当在不用修改服务端功能代码的前提下，就能够增加客户端功能的实现代码，这要求在设计之初，就应当将客户端和服务端分开。公共部分抽象出来。\n问题由来：\n　在软件的生命周期内，因为变化、升级和维护等原因需要对软件原有代码进行修改时，可能会给旧代码中引入错误，也可能会使我们不得不对整个功能进行重构，并且需要原有代码经过重新测试。\n解决办法：\n　当软件需要变化时，尽量通过扩展软件实体的行为来实现变化，而不是通过修改已有的代码来实现变化。\n　开闭原则是面向对象设计中最基础的设计原则，它指导我们如何建立稳定灵活的系统。开闭原则可能是设计模式六项原则中定义最模糊的一个了，它只告诉我们对扩展开放，对修改关闭，可是到底如何才能做到对扩展开放，对修改关闭，并没有明确的告诉我们。以前，如果有人告诉我\u0026quot;你进行设计的时候一定要遵守开闭原则\u0026quot;，我会觉的他什么都没说，但貌似又什么都说了。因为开闭原则真的太虚了。\n　在仔细思考以及仔细阅读很多设计模式的文章后，终于对开闭原则有了一点认识。其实，我们遵循设计模式前面5大原则，以及使用23种设计模式的目的就是遵循开闭原则。也就是说，只要我们对前面5项原则遵守的好了，设计出的软件自然是符合开闭原则的，这个开闭原则更像是前面五项原则遵守程度的\u0026quot;平均得分\u0026quot;，前面5项原则遵守的好，平均分自然就高，说明软件设计开闭原则遵守的好；如果前面5项原则遵守的不好，则说明开闭原则遵守的不好。\n　其实笔者认为，开闭原则无非就是想表达这样一层意思：用抽象构建框架，用实现扩展细节。因为抽象灵活性好，适应性广，只要抽象的合理，可以基本保持软件架构的稳定。而软件中易变的细节，我们用从抽象派生的实现类来进行扩展，当软件需要发生变化时，我们只需要根据需求重新派生一个实现类来扩展就可以了。当然前提是我们的抽象要合理，要对需求的变更有前瞻性和预见性才行。\n　说到这里，再回想一下前面说的5项原则，恰恰是告诉我们用抽象构建框架，用实现扩展细节的注意事项而已：\n 单一职责原则告诉我们实现类要职责单一； 里氏替换原则告诉我们不要破坏继承体系； 依赖倒置原则告诉我们要面向接口编程； 接口隔离原则告诉我们在设计接口的时候要精简单一； 迪米特法则告诉我们要降低耦合。 而开闭原则是总纲，他告诉我们要对扩展开放，对修改关闭。  为什么使用开闭原则？ 　1、只要是面向对象的编程，在开发过程中都会强调开闭原则\n　2、是最基础的设计原则，其他五个设计原则都是开闭原则的具体形态\n　3、可以提高代码的复用性\n　4、可以提高代码的可维护性\n如何使用开闭原则？ 　1、抽象约束\n　抽象对一组事物的通用描述，没有具体的实现，也就表示它可以有非常多的可能性，可以跟随需求的变化而变化。因此，通过接口或抽象类可以约束一组可能变化的行为，并且能够实现对扩展开放。\n　2、元数据控件模块行为　　3、制定项目章程\n　4、封装变化\n　将相同的变化封装到一个接口或抽象类中，将不同的变化封装到不同的接口或抽象类中，不应该有两个不同变化出现在同一个接口或抽象类中。",
+    "inLanguage" : "en-us",
+    "author" : "Jiang",
+    "creator" : "Jiang",
+    "publisher": "Jiang",
+    "accountablePerson" : "Jiang",
+    "copyrightHolder" : "Jiang",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-11-05 19:54:08 \u002b0800 CST",
+    "dateModified" : "2020-11-05 19:54:08 \u002b0800 CST",
+    "url" : "https:\/\/jfy0o0.github.io\/2020\/%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99\/",
+    "wordCount" : "29",
+    "keywords" : [ "c\u002b\u002b","Design Patterns", "LeaveIt"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">LeaveIt</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">LeaveIt</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Design Patterns - 开闭原则</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://jfy0o0.github.io" rel="author">Jiang</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-11-05 itemprop="datePublished">November 5, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://jfy0o0.github.io/categories/design-patterns/"> Design Patterns </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="开闭原则">开闭原则：</h1>
+<p>​		软件对象（类、模块、方法等）应该对于扩展是开放的，对修改是关闭的。比如：一个网络模块，原来只有服务端功能，而现在要加入客户端功能，那么应当在不用修改服务端功能代码的前提下，就能够增加客户端功能的实现代码，这要求在设计之初，就应当将客户端和服务端分开。公共部分抽象出来。</p>
+<p>问题由来：</p>
+<p>　　在软件的生命周期内，因为变化、升级和维护等原因需要对软件原有代码进行修改时，可能会给旧代码中引入错误，也可能会使我们不得不对整个功能进行重构，并且需要原有代码经过重新测试。</p>
+<p>解决办法：</p>
+<p>　　当软件需要变化时，尽量通过扩展软件实体的行为来实现变化，而不是通过修改已有的代码来实现变化。</p>
+<p>　　开闭原则是面向对象设计中最基础的设计原则，它指导我们如何建立稳定灵活的系统。开闭原则可能是设计模式六项原则中定义最模糊的一个了，它只告诉我们对扩展开放，对修改关闭，可是到底如何才能做到对扩展开放，对修改关闭，并没有明确的告诉我们。以前，如果有人告诉我&quot;你进行设计的时候一定要遵守开闭原则&quot;，我会觉的他什么都没说，但貌似又什么都说了。因为开闭原则真的太虚了。</p>
+<p>　　在仔细思考以及仔细阅读很多设计模式的文章后，终于对开闭原则有了一点认识。其实，我们遵循设计模式前面5大原则，以及使用23种设计模式的目的就是遵循开闭原则。也就是说，只要我们对前面5项原则遵守的好了，设计出的软件自然是符合开闭原则的，这个开闭原则更像是前面五项原则遵守程度的&quot;平均得分&quot;，前面5项原则遵守的好，平均分自然就高，说明软件设计开闭原则遵守的好；如果前面5项原则遵守的不好，则说明开闭原则遵守的不好。</p>
+<p>　　其实笔者认为，开闭原则无非就是想表达这样一层意思：用抽象构建框架，用实现扩展细节。因为抽象灵活性好，适应性广，只要抽象的合理，可以基本保持软件架构的稳定。而软件中易变的细节，我们用从抽象派生的实现类来进行扩展，当软件需要发生变化时，我们只需要根据需求重新派生一个实现类来扩展就可以了。当然前提是我们的抽象要合理，要对需求的变更有前瞻性和预见性才行。</p>
+<p>　　说到这里，再回想一下前面说的5项原则，恰恰是告诉我们用抽象构建框架，用实现扩展细节的注意事项而已：</p>
+<ul>
+<li>单一职责原则告诉我们实现类要职责单一；</li>
+<li>里氏替换原则告诉我们不要破坏继承体系；</li>
+<li>依赖倒置原则告诉我们要面向接口编程；</li>
+<li>接口隔离原则告诉我们在设计接口的时候要精简单一；</li>
+<li>迪米特法则告诉我们要降低耦合。</li>
+<li>而开闭原则是总纲，他告诉我们要对扩展开放，对修改关闭。</li>
+</ul>
+<h2 id="为什么使用开闭原则">为什么使用开闭原则？</h2>
+<p>　　1、只要是面向对象的编程，在开发过程中都会强调开闭原则</p>
+<p>　　2、是最基础的设计原则，其他五个设计原则都是开闭原则的具体形态</p>
+<p>　　3、可以提高代码的复用性</p>
+<p>　　4、可以提高代码的可维护性</p>
+<h2 id="如何使用开闭原则">如何使用开闭原则？</h2>
+<p>　　1、抽象约束</p>
+<p>　　　　抽象对一组事物的通用描述，没有具体的实现，也就表示它可以有非常多的可能性，可以跟随需求的变化而变化。因此，通过接口或抽象类可以约束一组可能变化的行为，并且能够实现对扩展开放。</p>
+<p>　　2、元数据控件模块行为　　　　</p>
+<p>　　3、制定项目章程</p>
+<p>　　4、封装变化</p>
+<p>　　　　将相同的变化封装到一个接口或抽象类中，将不同的变化封装到不同的接口或抽象类中，不应该有两个不同变化出现在同一个接口或抽象类中。</p>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Covey.Liu </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://jfy0o0.github.io/2020/%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99/>https://jfy0o0.github.io/2020/%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/c&#43;&#43;/">
+                    #c&#43;&#43;</a></span>
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/design-patterns/">
+                    #Design Patterns</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://jfy0o0.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://jfy0o0.github.io/2020/%E8%BF%AA%E7%B1%B3%E7%89%B9%E6%B3%95%E5%88%99/" class="prev" rel="prev" title="Design Patterns - 迪米特法则"><i class="iconfont icon-left"></i>&nbsp;Design Patterns - 迪米特法则</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://jfy0o0.github.io">Covey.Liu</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

@@ -2,127 +2,149 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on LeaveIt</title>
-    <link>https://example.com/posts/</link>
+    <link>https://jfy0o0.github.io/posts/</link>
     <description>Recent content in Posts on LeaveIt</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Oct 2020 20:36:12 +0800</lastBuildDate><atom:link href="https://example.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 05 Nov 2020 19:54:08 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Linux Commond Other</title>
-      <link>https://example.com/2020/linux_commond_other/</link>
-      <pubDate>Mon, 19 Oct 2020 20:36:12 +0800</pubDate>
+      <title>Design Patterns - 开闭原则</title>
+      <link>https://jfy0o0.github.io/2020/%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99/</link>
+      <pubDate>Thu, 05 Nov 2020 19:54:08 +0800</pubDate>
       
-      <guid>https://example.com/2020/linux_commond_other/</guid>
-      <description>[TOC]
-权限设置 chmod 1. 命令格式: chmod [-cfvR] [&amp;ndash;help] [&amp;ndash;version] mode file
-2. 命令功能： 用于改变文件或目录的访问权限，用它控制文件或目录的访问权限。
-3. 命令参数： 必要参数： -c 当发生改变时，报告处理信息 -f 错误信息不输出 -R 处理指定目录以及其子目录下的所有文件 -v 运行时显示详细处理信息
-选择参数： &amp;ndash;reference=&amp;lt;目录或者文件&amp;gt; 设置成具有指定目录或者文件具有相同的权限 &amp;ndash;version 显示版本信息 &amp;lt;权限范围&amp;gt;+&amp;lt;权限设置&amp;gt; 使权限范围内的目录或者文件具有指定的权限 &amp;lt;权限范围&amp;gt;-&amp;lt;权限设置&amp;gt; 删除权限范围的目录或者文件的指定权限 &amp;lt;权限范围&amp;gt;=&amp;lt;权限设置&amp;gt; 设置权限范围内的目录或者文件的权限为指定的值
-权限范围： u ：目录或者文件的当前的用户 g ：目录或者文件的当前的群组 o ：除了目录或者文件的当前用户或群组之外的用户或者群组 a ：所有的用户及群组
-权限代号： r ：读权限，用数字4表示 w ：写权限，用数字2表示 x ：执行权限，用数字1表示 - ：删除权限，用数字0表示 s ：特殊权限
-该命令有两种用法。一种是包含字母和操作符表达式的文字设定法；另一种是包含数字的数字设定法。 1）. 文字设定法: chmod ［who］ ［+ | - | =］ ［mode］ 文件名 2）. 数字设定法 我们必须首先了解用数字表示的属性的含义：0表示没有权限，1表示可执行权限，2表示可写权限，4表示可读权限，然后将其相加。所以数字属性的格式应为3个从0到7的八进制数，其顺序是（u）（g）（o）。 例如，如果想让某个文件的属主有“读/写”二种权限，需要把4（可读）+2（可写）＝6（读/写）。 数字设定法的一般形式为： chmod ［mode］ 文件名</description>
+      <guid>https://jfy0o0.github.io/2020/%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99/</guid>
+      <description>开闭原则： ​	软件对象（类、模块、方法等）应该对于扩展是开放的，对修改是关闭的。比如：一个网络模块，原来只有服务端功能，而现在要加入客户端功能，那么应当在不用修改服务端功能代码的前提下，就能够增加客户端功能的实现代码，这要求在设计之初，就应当将客户端和服务端分开。公共部分抽象出来。
+问题由来：
+　在软件的生命周期内，因为变化、升级和维护等原因需要对软件原有代码进行修改时，可能会给旧代码中引入错误，也可能会使我们不得不对整个功能进行重构，并且需要原有代码经过重新测试。
+解决办法：
+　当软件需要变化时，尽量通过扩展软件实体的行为来实现变化，而不是通过修改已有的代码来实现变化。
+　开闭原则是面向对象设计中最基础的设计原则，它指导我们如何建立稳定灵活的系统。开闭原则可能是设计模式六项原则中定义最模糊的一个了，它只告诉我们对扩展开放，对修改关闭，可是到底如何才能做到对扩展开放，对修改关闭，并没有明确的告诉我们。以前，如果有人告诉我&amp;quot;你进行设计的时候一定要遵守开闭原则&amp;quot;，我会觉的他什么都没说，但貌似又什么都说了。因为开闭原则真的太虚了。
+　在仔细思考以及仔细阅读很多设计模式的文章后，终于对开闭原则有了一点认识。其实，我们遵循设计模式前面5大原则，以及使用23种设计模式的目的就是遵循开闭原则。也就是说，只要我们对前面5项原则遵守的好了，设计出的软件自然是符合开闭原则的，这个开闭原则更像是前面五项原则遵守程度的&amp;quot;平均得分&amp;quot;，前面5项原则遵守的好，平均分自然就高，说明软件设计开闭原则遵守的好；如果前面5项原则遵守的不好，则说明开闭原则遵守的不好。
+　其实笔者认为，开闭原则无非就是想表达这样一层意思：用抽象构建框架，用实现扩展细节。因为抽象灵活性好，适应性广，只要抽象的合理，可以基本保持软件架构的稳定。而软件中易变的细节，我们用从抽象派生的实现类来进行扩展，当软件需要发生变化时，我们只需要根据需求重新派生一个实现类来扩展就可以了。当然前提是我们的抽象要合理，要对需求的变更有前瞻性和预见性才行。
+　说到这里，再回想一下前面说的5项原则，恰恰是告诉我们用抽象构建框架，用实现扩展细节的注意事项而已：
+ 单一职责原则告诉我们实现类要职责单一； 里氏替换原则告诉我们不要破坏继承体系； 依赖倒置原则告诉我们要面向接口编程； 接口隔离原则告诉我们在设计接口的时候要精简单一； 迪米特法则告诉我们要降低耦合。 而开闭原则是总纲，他告诉我们要对扩展开放，对修改关闭。  为什么使用开闭原则？ 　1、只要是面向对象的编程，在开发过程中都会强调开闭原则
+　2、是最基础的设计原则，其他五个设计原则都是开闭原则的具体形态
+　3、可以提高代码的复用性
+　4、可以提高代码的可维护性
+如何使用开闭原则？ 　1、抽象约束
+　抽象对一组事物的通用描述，没有具体的实现，也就表示它可以有非常多的可能性，可以跟随需求的变化而变化。因此，通过接口或抽象类可以约束一组可能变化的行为，并且能够实现对扩展开放。
+　2、元数据控件模块行为　　3、制定项目章程
+　4、封装变化
+　将相同的变化封装到一个接口或抽象类中，将不同的变化封装到不同的接口或抽象类中，不应该有两个不同变化出现在同一个接口或抽象类中。</description>
     </item>
     
     <item>
-      <title>Linux Commond --- File Dir Property</title>
-      <link>https://example.com/2020/linux_commond_file_dir_property/</link>
-      <pubDate>Mon, 19 Oct 2020 20:13:26 +0800</pubDate>
+      <title>Design Patterns - 迪米特法则</title>
+      <link>https://jfy0o0.github.io/2020/%E8%BF%AA%E7%B1%B3%E7%89%B9%E6%B3%95%E5%88%99/</link>
+      <pubDate>Thu, 05 Nov 2020 19:51:41 +0800</pubDate>
       
-      <guid>https://example.com/2020/linux_commond_file_dir_property/</guid>
-      <description>[TOC]
-文件和目录属性     可分享的(shareable) 不可分享的(unshareable)     不变的(static) /usr (软件放置处) /etc (配置文件)    /opt (第三方协力软件) /boot (开机与核心档)   可变动的(variable) /var/mail (使用者邮件信箱) /var/run (程序相关)    /var/spool/news (新闻组) /var/lock (程序相关)    1. 可分享的：
-可以分享给其他系统挂载使用的目录，所以包括执行文件与用户的邮件等数据， 是能够分享给网络上其他主机挂载用的目录；
-2. 不可分享的：
-自己机器上面运作的装置文件或者是与程序有关的socket文件等， 由于仅与自身机器有关，所以当然就不适合分享给其他主机了。
-3. 不变的：
-有些数据是不会经常变动的，跟随着distribution而不变动。 例如函式库、文件说明文件、系统管理员所管理的主机服务配置文件等等；
-4. 可变动的：
-经常改变的数据，例如登录文件、一般用户可自行收受的新闻组等。
-   目录 应放置档案内容     /bin 系统有很多放置执行档的目录，但/bin比较特殊。因为/bin放置的是在单人维护模式下还能够被操作的指令。在/bin底下的指令可以被root与一般帐号所使用，主要有：cat,chmod(修改权限), chown, date, mv, mkdir, cp, bash等等常用的指令。   /boot 主要放置开机会使用到的档案，包括Linux核心档案以及开机选单与开机所需设定档等等。Linux kernel常用的档名为：vmlinuz ，如果使用的是grub这个开机管理程式，则还会存在/boot/grub/这个目录。   /dev 在Linux系统上，任何装置与周边设备都是以档案的型态存在于这个目录当中。 只要通过存取这个目录下的某个档案，就等于存取某个装置。比要重要的档案有/dev/null, /dev/zero, /dev/tty , /dev/lp*, / dev/hd*, /dev/sd*等等   /etc 系统主要的设定档几乎都放置在这个目录内，例如人员的帐号密码档、各种服务的启始档等等。 一般来说，这个目录下的各档案属性是可以让一般使用者查阅的，但是只有root有权力修改。 FHS建议不要放置可执行档(binary)在这个目录中。 比较重要的档案有：/etc/inittab, /etc/init.</description>
+      <guid>https://jfy0o0.github.io/2020/%E8%BF%AA%E7%B1%B3%E7%89%B9%E6%B3%95%E5%88%99/</guid>
+      <description>迪米特法则： 　也叫最少知识原则。迪米特法则的定义是只与你的直接朋友交谈，不与&amp;quot;陌生人&amp;quot;说话。如果两个软件实体无须直接通信，那么就不应当发生直接的相互调用，可以通过第三方转发该应用。其目的是降低类之间的耦合度，提高模块的相对独立性。
+　迪米特法则中的朋友是指：当前对象本身、当前对象的成员对象、当前对象所创建的对象、当前对象的方法参数等，这些对象存在关联、聚合或组合关系，可以直接访问这些对象的方法。
+优点： 　1、降低类之间的耦合度，提高模块的相对独立性。
+　2、由于亲和度降低，从而提高了类的可复用率和系统的扩展性。
+缺点： 　过度使用迪米特法则会使系统产生大量的中介类，从而增加系统的复杂性，使模块之间的通信效率降低。所以，在釆用迪米特法则时需要反复权衡，确保高内聚和低耦合的同时，保证系统的结构清晰。
+注意： 使用迪米特法则需要注意：
+　1、在类的划分上，应该创建弱耦合的类。类与类之间的耦合越弱，就越有利于实现可复用的目标。
+　2、在类的结构设计上，尽量降低类成员的访问权限。
+　3、在类的设计上，优先考虑将一个类设置成不变类。
+　4、在对其他类的引用上，将引用其他对象的次数降到最低。
+　5、不暴露类的属性成员，而应该提供相应的访问器（set 和 get 方法）。
+　6、谨慎使用序列化（Serializable）功能。</description>
     </item>
     
     <item>
-      <title>Linux Commond --- file find</title>
-      <link>https://example.com/2020/linux_commond_file_find/</link>
-      <pubDate>Mon, 19 Oct 2020 20:13:18 +0800</pubDate>
+      <title>Design Patterns - 里氏替换原则</title>
+      <link>https://jfy0o0.github.io/2020/%E9%87%8C%E6%B0%8F%E6%9B%BF%E6%8D%A2%E5%8E%9F%E5%88%99/</link>
+      <pubDate>Thu, 05 Nov 2020 19:48:54 +0800</pubDate>
       
-      <guid>https://example.com/2020/linux_commond_file_find/</guid>
-      <description>[TOC]
-文件查找命令 which 1．命令格式：
-which 可执行文件名称
-2．命令功能：
-which指令会在PATH变量指定的路径中，搜索某个系统命令的位置，并且返回第一个搜索结果。
-3．命令参数：
--n 指定文件名长度，指定的长度必须大于或等于所有文件中最长的文件名。
--p 与-n参数相同，但此处的包括了文件的路径。
--w 指定输出时栏位的宽度。
--V 显示版本信息
-whereis 1．命令格式： whereis [-bmsu] [BMS 目录名 -f ] 文件名
-2．命令功能： whereis命令是定位可执行文件、源代码文件、帮助文件在文件系统中的位置。这些文件的属性应属于原始代码，二进制文件，或是帮助文件。whereis 程序还具有搜索源代码、指定备用搜索路径和搜索不寻常项的能力。
-3．命令参数： -b 定位可执行文件。
--m 定位帮助文件。
--s 定位源代码文件。
--u 搜索默认路径下除可执行文件、源代码文件、帮助文件以外的其它文件。
--B 指定搜索可执行文件的路径。
--M 指定搜索帮助文件的路径。
--S 指定搜索源代码文件的路径。
-locate 1．命令格式： Locate [选择参数] [样式]
-2．命令功能： locate命令可以在搜寻数据库时快速找到档案，数据库由updatedb程序来更新，updatedb是由cron daemon周期性建立的，locate命令在搜寻数据库时比由整个由硬盘资料来搜寻资料来得快，但较差劲的是locate所找到的档案若是最近才建立或 刚更名的，可能会找不到，在内定值中，updatedb每天会跑一次，可以由修改crontab来更新设定值。(etc/crontab)
-locate指定用在搜寻符合条件的档案，它会去储存档案与目录名称的数据库内，寻找合乎范本样式条件的档案或目录录，可以使用特殊字元（如”” 或”?”等）来指定范本样式，如指定范本为kcpaner, locate会找出所有起始字串为kcpa且结尾为ner的档案或目录，如名称为kcpartner若目录录名称为kcpa_ner则会列出该目录下包括 子目录在内的所有档案。
-locate指令和find找寻档案的功能类似，但locate是透过update程序将硬盘中的所有档案和目录资料先建立一个索引数据库，在 执行loacte时直接找该索引，查询速度会较快，索引数据库一般是由操作系统管理，但也可以直接下达update强迫系统立即修改索引数据库。
-3．命令参数： -e 将排除在寻找的范围之外。
--1 如果 是 1．则启动安全模式。在安全模式下，使用者不会看到权限无法看到 的档案。这会始速度减慢，因为 locate 必须至实际的档案系统中取得档案的 权限资料。</description>
+      <guid>https://jfy0o0.github.io/2020/%E9%87%8C%E6%B0%8F%E6%9B%BF%E6%8D%A2%E5%8E%9F%E5%88%99/</guid>
+      <description>里氏替换原则： 　子类应当可以替换父类并出现在父类能够出现的地方。比如：公司搞年度派对，都有员工都可以抽奖，那么不管是新员工还是老员工，也不管是总部员工还是外派员工，都应当可以参加抽奖。
+　里氏替换至少包含一下两个含义：
+ 里氏替换原则是针对继承而言的，如果继承是为了实现代码重用，也就是为了共享方法，那么共享的父类方法就应该保持不变，不能被子类重新定义。子类只能通过新添加方法来扩展功能，父类和子类都可以实例化，而子类继承的方法和父类是一样的，父类调用方法的地方，子类也可以调用同一个继承得来的，逻辑和父类一致的方法，这时用子类对象将父类对象替换掉时，当然逻辑一致，相安无事。 如果继承的目的是为了多态，而多态的前提就是子类覆盖并重新定义父类的方法，为了符合LSP，我们应该将父类定义为抽象类，并定义抽象方法，让子类重新定义这些方法，当父类是抽象类时，父类就是不能实例化，所以也不存在可实例化的父类对象在程序里。也就不存在子类替换父类实例（根本不存在父类实例了）时逻辑不一致的可能。  要求： 里氏转换原则应满足以下要求：
+　1、子类可以实现父类的抽象方法，但不能覆盖父类的非抽象方法
+　2、子类可以增加自己特有的方法
+　3、当子类的方法重载父类的方法时，方法的形参要比父类方法的输入参数更宽松
+　4、当子类的方法实现父类的抽象方法时，方法的返回值应比父类更严格
+优点：
+　可以大大减少程序的bug以及增强代码的可读性</description>
     </item>
     
     <item>
-      <title>Linux Commond --- Dir Oper</title>
-      <link>https://example.com/2020/linux_commond_dir_oper/</link>
-      <pubDate>Mon, 19 Oct 2020 19:42:58 +0800</pubDate>
+      <title>Design Patterns - 依赖倒置原则</title>
+      <link>https://jfy0o0.github.io/2020/%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99/</link>
+      <pubDate>Thu, 05 Nov 2020 19:46:00 +0800</pubDate>
       
-      <guid>https://example.com/2020/linux_commond_dir_oper/</guid>
-      <description>[TOC]
-目录操作命令 ls 1. 命令格式： ls [选项] [目录名]
-2. 命令功能： 列出目标目录中所有的子目录和文件。
-3. 常用参数： -a, –all 列出目录下的所有文件，包括以 . 开头的隐含文件
--A 同-a，但不列出“.”(表示当前目录)和“..”(表示当前目录的父目录)。
--c 配合 -lt：根据 ctime 排序及显示 ctime (文件状态最后更改的时间)配合 -l：显示 ctime 但根据名称排序否则：根据 ctime 排序
--C 每栏由上至下列出项目
-–color[=WHEN] 控制是否使用色彩分辨文件。WHEN 可以是&amp;rsquo;never&#39;、&amp;lsquo;always&amp;rsquo;或&amp;rsquo;auto&amp;rsquo;其中之一
--d, –directory 将目录象文件一样显示，而不是显示其下的文件。
--D, –dired 产生适合 Emacs 的 dired 模式使用的结果
--f 对输出的文件不进行排序，-aU 选项生效，-lst 选项失效
--g 类似 -l,但不列出所有者
--G, –no-group 不列出任何有关组的信息
--h, –human-readable 以容易理解的格式列出文件大小 (例如 1K 234M 2G)
-–si 类似 -h,但文件大小取 1000 的次方而不是 1024</description>
+      <guid>https://jfy0o0.github.io/2020/%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99/</guid>
+      <description>依赖倒置原则：　 　1、高层模块不应该依赖底层模块，二者都应该依赖抽象。
+　2、抽象不应该依赖细节，细节应该依赖抽象。
+　3、依赖倒置的中心思想是面向接口编程。
+　4、依赖倒置原则是基于这样的设计理念：相对于细节的多变性，抽象的东西要稳定的多。以抽象为基础搭建的架构比以细节为基础搭建的架构要稳定的多。
+　5、使用接口或抽象类的目的是指定好规范，而不涉及任何具体的操作，把展现细节的任务交给他们的实现类来完成。
+本质： 依赖倒置原则的本质就是通过抽象(接口或抽象类)使各个类或模块的实现彼此独立，不互相影响，实现模块间的松耦合。我们在项目中使用这个原则要遵循下面的规则：
+　1、每个类尽量都有接口或者抽象类，或者抽象类和接口两都具备
+　2、变量的表面类型尽量是接口或者抽象类
+　3、任何类都不应该从具体类派生
+　4、尽量不要覆写基类的方法
+　5、如果基类是一个抽象类，而这个方法已经实现了，子类尽量不要覆写。类间依赖的是抽象，覆写了抽象方法，对依赖的稳定性会有一定的影响
+　6、结合里氏替换原则使用</description>
+    </item>
+    
+    <item>
+      <title>Design Patterns - 接口隔离原则</title>
+      <link>https://jfy0o0.github.io/2020/%E6%8E%A5%E5%8F%A3%E9%9A%94%E7%A6%BB%E5%8E%9F%E5%88%99/</link>
+      <pubDate>Thu, 05 Nov 2020 19:40:00 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E6%8E%A5%E5%8F%A3%E9%9A%94%E7%A6%BB%E5%8E%9F%E5%88%99/</guid>
+      <description>接口隔离原则： 　1、客户端不应依赖它不需要的接口
+　2、类间的依赖关系应该建立在最小的接口上
+ 其实通俗来理解就是，不要在一个接口里面放很多的方法，这样会显得这个类很臃肿。 接口应该尽量细化，一个接口对应一个功能模块，同时接口里面的方法应该尽可能的少，使接口更加灵活轻便。 或许有的人认为接口隔离原则和单一职责原则很像，但两个原则还是存在着明显的区别。 单一职责原则是在业务逻辑上的划分，注重的是职责。接口隔离原则是基于接口设计考虑。  例如一个接口的职责包含10个方法，这10个方法都放在同一接口中，并且提供给多个模块调用，但不同模块需要依赖的方法是不一样的，这时模块为了实现自己的功能就不得不实现一些对其没有意义的方法，这样的设计是不符合接口隔离原则的。   接口隔离原则要求&amp;quot;尽量使用多个专门的接口&amp;quot;专门提供给不同的模块。  </description>
+    </item>
+    
+    <item>
+      <title>Design Patterns - 单一职责原则</title>
+      <link>https://jfy0o0.github.io/2020/%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99/</link>
+      <pubDate>Thu, 05 Nov 2020 19:30:09 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99/</guid>
+      <description>单一职责原则： 　对象不应承担太多功能，正如一心不能而用，比如太多的工作(种类)会使人崩溃。唯有专注才能保证对象的高内聚；唯有唯一，才能保证对象的细粒度。
+解决问题： 　假如有A和B两个类，当A需求发生改变需要修改时，不能导致B类出问题。
+现状： 　在实际情况很难去做到单一职责原则，因为随着业务的不断变更，类的职责也在发生着变化，即职责扩散。
+  如类A完成职责P的功能，但是随着后期业务细化，职责P分解成更小粒度的P1与P2，这时根据单一职责原则则需要拆分类A以分别满足细分后的职责P1和P2。
+  但是实际开发环节，若类的逻辑足够简单，可以在代码上级别上违背单一职责原则；
+  若类的方法足够少，可以在方法级别上违背单一职责原则。
+  优点： 　1、降低类的功能复杂度
+　2、提高系统的可维护性
+　3、变更风险低</description>
     </item>
     
     <item>
       <title>Creating a New Theme</title>
-      <link>https://example.com/2014/creating-a-new-theme/</link>
+      <link>https://jfy0o0.github.io/2014/creating-a-new-theme/</link>
       <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://example.com/2014/creating-a-new-theme/</guid>
-      <description>Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.
+      <guid>https://jfy0o0.github.io/2014/creating-a-new-theme/</guid>
+      <description>[TOC]
+Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme..
 We&amp;rsquo;ll start with creating a new site with a very basic template.</description>
     </item>
     
     <item>
       <title>(Hu)go Template Primer</title>
-      <link>https://example.com/2014/goisforlovers/</link>
+      <link>https://jfy0o0.github.io/2014/goisforlovers/</link>
       <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://example.com/2014/goisforlovers/</guid>
+      <guid>https://jfy0o0.github.io/2014/goisforlovers/</guid>
       <description>Hugo uses the excellent go html/template library for its template engine. It is an extremely lightweight engine that provides a very small amount of logic. In our experience that it is just the right amount of logic to be able to create a good static website. If you have used other template systems from different languages or frameworks you will find a lot of similarities in go templates.
 This document is a brief primer on using go templates.</description>
     </item>
     
     <item>
       <title>Getting Started with Hugo</title>
-      <link>https://example.com/2014/hugoisforlovers/</link>
+      <link>https://jfy0o0.github.io/2014/hugoisforlovers/</link>
       <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://example.com/2014/hugoisforlovers/</guid>
+      <guid>https://jfy0o0.github.io/2014/hugoisforlovers/</guid>
       <description>Step 1. Install Hugo Goto hugo releases and download the appropriate version for your os and architecture.
 Save it somewhere specific as we will be using it in the next step.
 More complete instructions are available at installing hugo
@@ -133,10 +155,10 @@ Follow the following steps:
     
     <item>
       <title>Migrate to Hugo from Jekyll</title>
-      <link>https://example.com/2014/migrate-from-jekyll/</link>
+      <link>https://jfy0o0.github.io/2014/migrate-from-jekyll/</link>
       <pubDate>Mon, 10 Mar 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://example.com/2014/migrate-from-jekyll/</guid>
+      <guid>https://jfy0o0.github.io/2014/migrate-from-jekyll/</guid>
       <description>Move static content to static Jekyll has a rule that any directory not starting with _ will be copied as-is to the _site output. Hugo keeps all static content under static. You should therefore move it all there. With Jekyll, something that looked like
 ▾ &amp;lt;root&amp;gt;/ ▾ images/ logo.png  should become
 ▾ &amp;lt;root&amp;gt;/ ▾ static/ ▾ images/ logo.png  Additionally, you&amp;rsquo;ll want any files that should reside at the root (such as CNAME) to be moved to static.</description>
