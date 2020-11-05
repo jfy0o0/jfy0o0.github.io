@@ -6,13 +6,44 @@
     <description>Recent content in c&#43;&#43; on LeaveIt</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Nov 2020 19:54:08 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 05 Nov 2020 20:19:07 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Design Patterns - 创建型模式 - 抽象工厂模式</title>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Thu, 05 Nov 2020 20:19:07 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</guid>
+      <description>抽象工厂模式 前一章节，我们介绍了简单工厂模式以及工厂方法模式，但是这两种模式都存在一定的局限性，只能生产某一类型下的某一种产品，如果需求变更，同类型下出现了不同的产品，比如芝士披萨不仅有口味上的不同，同时存在外观上的不同。这种时候，工厂模式显然不再满足要求，该怎么办呢？于是我们想到DIP原则，它不正是为了解决这种情况而存在的吗？接下来我们来介绍下抽象工厂模式：
+  抽象工厂模式定义了一个interface用于创建相关或有依赖关系的对象簇，而无需指明具体的类。
+  抽象工厂模式可以将简单工厂模式和工厂方法模式进行整合。
+  从设计层面来说，抽象工厂模式就是对简单工厂模式的改进（即进一步抽象化）
+  将工厂抽象成两层，抽象工厂和具体的实现工厂。
+  理解： 读过一些博主的博文以及评论，有一些理解还是蛮到位的：
+ 抽象工厂比工厂方法复杂的多，它们的目的不同。工厂方法意在延迟加载，而抽象方法意在高内聚低耦合。 工厂方法模式的具体工厂类只能创建一个具体产品类的实例，而抽象工厂可以创建多个。  // 键盘 class KeyBoard { public: virtual void show() = 0; }; // 微软的键盘 class KeyBoardMicro : public KeyBoard { public: void show() { std::cout &amp;lt;&amp;lt; &amp;#34;微软的键盘&amp;#34; &amp;lt;&amp;lt; std::endl; } }; // 联想的键盘 class KeyBoardLenovo : public KeyBoard { public: void show() { std::cout &amp;lt;&amp;lt; &amp;#34;联想的键盘&amp;#34; &amp;lt;&amp;lt; std::endl; } }; //----------------------------------------- class Factory { public: virtual KeyBoard * createKeyBoard() = 0; }; // 微软的工厂 class FactoryMicro : public Factory { public: KeyBoard * createKeyBoard() { return new KeyBoardMicro(); } }; // 联想的工厂 class FactoryLenovo : public Factory { public: KeyBoard * createKeyBoard() { return new KeyBoardLenovo(); } }; //----------------------------------------- //use 	// 抽象工厂模式 	Factory * p = new FactoryMicro(); KeyBoard * pKeyBoard = p-&amp;gt;createKeyBoard(); pKeyBoard-&amp;gt;show(); </description>
+    </item>
+    
+    <item>
+      <title>Design Patterns - 创建型模式 - 工厂模式</title>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Thu, 05 Nov 2020 20:07:15 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</guid>
+      <description>工厂设计模式： 　顾名思义，该模式是用来生产对象的。在面向对象的设计模式中，万物皆对象，若使用new来创建对象，就会对该对象产生强耦合，假如我们需要更换该对象，那么使用该对象的对象都需要进行修改，这显然违背了开闭原则（OCP）。如果我们使用工厂来产生对象，我们只需要与这个工厂打交道就可以了，无需关心具体的对象，达到解耦的目的。
+　接下来我们从实际的案例出发，从无工厂到有工厂的区别。
+eg 有一个销售管理系统支持多种支付方式，如现金支付，信用卡支付，代金券支付等。
+在设计过如果不使用简单工厂模式，可能会存在如下的支付方式。
+void pay(string pay_type) { if(pay_type==现金) { 现金支付处理手段 } else if(pay_type==信用卡) { 信用卡支付处理 } else if(pay_type==代金券) { 代金券处理 } ........ } 简单工厂模式包含三个角色：   工厂角色（Factory）
+  抽象产品角色(Product)
+  具体产品角色(ConcreteProduct)
+  简单工厂模式优缺点：  由代码可以看出，虽然简单工厂模式一定程度上减少了因需求变更而导致的代码更改，但是实际仍违背了OCP原则。 所以简单工厂模式只适合产品对象相对较少，且产品固定的需求，对产品变化无常的需求来说显然不适合。  使用： //	将各种支付方式写成统一的抽象方法，为各种支付方式提供统一的接口 class AbstractPay { public: virtual void pay() = 0; }; //	将每种支付方式封装在一个独立的类中，各个支付方式类相对独立修改其一对于其他类没有任何影响， //	这些独立的支付方式类充当具体的产品类角色。是抽象类的派生类 class CashPay :public AbstractPay { public: void pay() { cout &amp;lt;&amp;lt; &amp;#34;现金支付&amp;#34; &amp;lt;&amp;lt; endl; } }; class CreditcardPay :public AbstractPay { public: void pay() { cout &amp;lt;&amp;lt; &amp;#34;信用卡支付&amp;#34; &amp;lt;&amp;lt; endl; } }; //	将针对于个种支付方式的对象的创建封装成一个统一的方法中，即：工厂化。 class PayMethodFactory { public: AbstractPay* getPayMethod(string type) { if (type == &amp;#34;cash&amp;#34;) { return new CashPay(); } else { return new CreditcardPay(); } } }; int main() { PayMethodFactory *pmf = new PayMethodFactory(); //基类指针指向带有虚函数的派生类对象形成多态 	AbstractPay* p = pmf-&amp;gt;getPayMethod(&amp;#34;cash&amp;#34;); //假定现在是现金支付 	p-&amp;gt;pay(); system(&amp;#34;pause&amp;#34;); return 0; } 工厂方法设计模式： 披萨项目需求变更，客户点披萨时可以点不同口味的披萨。</description>
+    </item>
+    
     <item>
       <title>Design Patterns - 开闭原则</title>
-      <link>https://jfy0o0.github.io/2020/%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99/</link>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8E%9F%E5%88%99-%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99/</link>
       <pubDate>Thu, 05 Nov 2020 19:54:08 +0800</pubDate>
       
-      <guid>https://jfy0o0.github.io/2020/%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99/</guid>
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8E%9F%E5%88%99-%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99/</guid>
       <description>开闭原则： ​	软件对象（类、模块、方法等）应该对于扩展是开放的，对修改是关闭的。比如：一个网络模块，原来只有服务端功能，而现在要加入客户端功能，那么应当在不用修改服务端功能代码的前提下，就能够增加客户端功能的实现代码，这要求在设计之初，就应当将客户端和服务端分开。公共部分抽象出来。
 问题由来：
 　在软件的生命周期内，因为变化、升级和维护等原因需要对软件原有代码进行修改时，可能会给旧代码中引入错误，也可能会使我们不得不对整个功能进行重构，并且需要原有代码经过重新测试。
@@ -35,10 +66,10 @@
     
     <item>
       <title>Design Patterns - 迪米特法则</title>
-      <link>https://jfy0o0.github.io/2020/%E8%BF%AA%E7%B1%B3%E7%89%B9%E6%B3%95%E5%88%99/</link>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8E%9F%E5%88%99-%E8%BF%AA%E7%B1%B3%E7%89%B9%E6%B3%95%E5%88%99/</link>
       <pubDate>Thu, 05 Nov 2020 19:51:41 +0800</pubDate>
       
-      <guid>https://jfy0o0.github.io/2020/%E8%BF%AA%E7%B1%B3%E7%89%B9%E6%B3%95%E5%88%99/</guid>
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8E%9F%E5%88%99-%E8%BF%AA%E7%B1%B3%E7%89%B9%E6%B3%95%E5%88%99/</guid>
       <description>迪米特法则： 　也叫最少知识原则。迪米特法则的定义是只与你的直接朋友交谈，不与&amp;quot;陌生人&amp;quot;说话。如果两个软件实体无须直接通信，那么就不应当发生直接的相互调用，可以通过第三方转发该应用。其目的是降低类之间的耦合度，提高模块的相对独立性。
 　迪米特法则中的朋友是指：当前对象本身、当前对象的成员对象、当前对象所创建的对象、当前对象的方法参数等，这些对象存在关联、聚合或组合关系，可以直接访问这些对象的方法。
 优点： 　1、降低类之间的耦合度，提高模块的相对独立性。
@@ -55,10 +86,10 @@
     
     <item>
       <title>Design Patterns - 里氏替换原则</title>
-      <link>https://jfy0o0.github.io/2020/%E9%87%8C%E6%B0%8F%E6%9B%BF%E6%8D%A2%E5%8E%9F%E5%88%99/</link>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8E%9F%E5%88%99-%E9%87%8C%E6%B0%8F%E6%9B%BF%E6%8D%A2%E5%8E%9F%E5%88%99/</link>
       <pubDate>Thu, 05 Nov 2020 19:48:54 +0800</pubDate>
       
-      <guid>https://jfy0o0.github.io/2020/%E9%87%8C%E6%B0%8F%E6%9B%BF%E6%8D%A2%E5%8E%9F%E5%88%99/</guid>
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8E%9F%E5%88%99-%E9%87%8C%E6%B0%8F%E6%9B%BF%E6%8D%A2%E5%8E%9F%E5%88%99/</guid>
       <description>里氏替换原则： 　子类应当可以替换父类并出现在父类能够出现的地方。比如：公司搞年度派对，都有员工都可以抽奖，那么不管是新员工还是老员工，也不管是总部员工还是外派员工，都应当可以参加抽奖。
 　里氏替换至少包含一下两个含义：
  里氏替换原则是针对继承而言的，如果继承是为了实现代码重用，也就是为了共享方法，那么共享的父类方法就应该保持不变，不能被子类重新定义。子类只能通过新添加方法来扩展功能，父类和子类都可以实例化，而子类继承的方法和父类是一样的，父类调用方法的地方，子类也可以调用同一个继承得来的，逻辑和父类一致的方法，这时用子类对象将父类对象替换掉时，当然逻辑一致，相安无事。 如果继承的目的是为了多态，而多态的前提就是子类覆盖并重新定义父类的方法，为了符合LSP，我们应该将父类定义为抽象类，并定义抽象方法，让子类重新定义这些方法，当父类是抽象类时，父类就是不能实例化，所以也不存在可实例化的父类对象在程序里。也就不存在子类替换父类实例（根本不存在父类实例了）时逻辑不一致的可能。  要求： 里氏转换原则应满足以下要求：
@@ -72,10 +103,10 @@
     
     <item>
       <title>Design Patterns - 依赖倒置原则</title>
-      <link>https://jfy0o0.github.io/2020/%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99/</link>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8E%9F%E5%88%99-%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99/</link>
       <pubDate>Thu, 05 Nov 2020 19:46:00 +0800</pubDate>
       
-      <guid>https://jfy0o0.github.io/2020/%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99/</guid>
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8E%9F%E5%88%99-%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99/</guid>
       <description>依赖倒置原则：　 　1、高层模块不应该依赖底层模块，二者都应该依赖抽象。
 　2、抽象不应该依赖细节，细节应该依赖抽象。
 　3、依赖倒置的中心思想是面向接口编程。
@@ -92,10 +123,10 @@
     
     <item>
       <title>Design Patterns - 接口隔离原则</title>
-      <link>https://jfy0o0.github.io/2020/%E6%8E%A5%E5%8F%A3%E9%9A%94%E7%A6%BB%E5%8E%9F%E5%88%99/</link>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8E%9F%E5%88%99-%E6%8E%A5%E5%8F%A3%E9%9A%94%E7%A6%BB%E5%8E%9F%E5%88%99/</link>
       <pubDate>Thu, 05 Nov 2020 19:40:00 +0800</pubDate>
       
-      <guid>https://jfy0o0.github.io/2020/%E6%8E%A5%E5%8F%A3%E9%9A%94%E7%A6%BB%E5%8E%9F%E5%88%99/</guid>
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8E%9F%E5%88%99-%E6%8E%A5%E5%8F%A3%E9%9A%94%E7%A6%BB%E5%8E%9F%E5%88%99/</guid>
       <description>接口隔离原则： 　1、客户端不应依赖它不需要的接口
 　2、类间的依赖关系应该建立在最小的接口上
  其实通俗来理解就是，不要在一个接口里面放很多的方法，这样会显得这个类很臃肿。 接口应该尽量细化，一个接口对应一个功能模块，同时接口里面的方法应该尽可能的少，使接口更加灵活轻便。 或许有的人认为接口隔离原则和单一职责原则很像，但两个原则还是存在着明显的区别。 单一职责原则是在业务逻辑上的划分，注重的是职责。接口隔离原则是基于接口设计考虑。  例如一个接口的职责包含10个方法，这10个方法都放在同一接口中，并且提供给多个模块调用，但不同模块需要依赖的方法是不一样的，这时模块为了实现自己的功能就不得不实现一些对其没有意义的方法，这样的设计是不符合接口隔离原则的。   接口隔离原则要求&amp;quot;尽量使用多个专门的接口&amp;quot;专门提供给不同的模块。  </description>
@@ -103,10 +134,10 @@
     
     <item>
       <title>Design Patterns - 单一职责原则</title>
-      <link>https://jfy0o0.github.io/2020/%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99/</link>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8E%9F%E5%88%99-%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99/</link>
       <pubDate>Thu, 05 Nov 2020 19:30:09 +0800</pubDate>
       
-      <guid>https://jfy0o0.github.io/2020/%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99/</guid>
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8E%9F%E5%88%99-%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99/</guid>
       <description>单一职责原则： 　对象不应承担太多功能，正如一心不能而用，比如太多的工作(种类)会使人崩溃。唯有专注才能保证对象的高内聚；唯有唯一，才能保证对象的细粒度。
 解决问题： 　假如有A和B两个类，当A需求发生改变需要修改时，不能导致B类出问题。
 现状： 　在实际情况很难去做到单一职责原则，因为随着业务的不断变更，类的职责也在发生着变化，即职责扩散。

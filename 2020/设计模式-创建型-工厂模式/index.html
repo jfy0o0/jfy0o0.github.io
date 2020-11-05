@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Jiang .">
+  
+  
+  
+  <link rel="prev" href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8E%9F%E5%88%99-%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99/" />
+  <link rel="next" href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" />
+  <link rel="canonical" href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Design Patterns - 创建型模式 - 工厂模式 | LeaveIt
+       
+  </title>
+  <meta name="title" content="Design Patterns - 创建型模式 - 工厂模式 | LeaveIt">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/jfy0o0.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Design Patterns - 创建型模式 - 工厂模式",
+    "headline" : "Design Patterns - 创建型模式 - 工厂模式",
+    "description" : "工厂设计模式： 　顾名思义，该模式是用来生产对象的。在面向对象的设计模式中，万物皆对象，若使用new来创建对象，就会对该对象产生强耦合，假如我们需要更换该对象，那么使用该对象的对象都需要进行修改，这显然违背了开闭原则（OCP）。如果我们使用工厂来产生对象，我们只需要与这个工厂打交道就可以了，无需关心具体的对象，达到解耦的目的。\n　接下来我们从实际的案例出发，从无工厂到有工厂的区别。\neg 有一个销售管理系统支持多种支付方式，如现金支付，信用卡支付，代金券支付等。\n在设计过如果不使用简单工厂模式，可能会存在如下的支付方式。\nvoid pay(string pay_type) { if(pay_type==现金) { 现金支付处理手段 } else if(pay_type==信用卡) { 信用卡支付处理 } else if(pay_type==代金券) { 代金券处理 } ........ } 简单工厂模式包含三个角色：   工厂角色（Factory）\n  抽象产品角色(Product)\n  具体产品角色(ConcreteProduct)\n  简单工厂模式优缺点：  由代码可以看出，虽然简单工厂模式一定程度上减少了因需求变更而导致的代码更改，但是实际仍违背了OCP原则。 所以简单工厂模式只适合产品对象相对较少，且产品固定的需求，对产品变化无常的需求来说显然不适合。  使用： \/\/\t将各种支付方式写成统一的抽象方法，为各种支付方式提供统一的接口 class AbstractPay { public: virtual void pay() = 0; }; \/\/\t将每种支付方式封装在一个独立的类中，各个支付方式类相对独立修改其一对于其他类没有任何影响， \/\/\t这些独立的支付方式类充当具体的产品类角色。是抽象类的派生类 class CashPay :public AbstractPay { public: void pay() { cout \u0026lt;\u0026lt; \u0026#34;现金支付\u0026#34; \u0026lt;\u0026lt; endl; } }; class CreditcardPay :public AbstractPay { public: void pay() { cout \u0026lt;\u0026lt; \u0026#34;信用卡支付\u0026#34; \u0026lt;\u0026lt; endl; } }; \/\/\t将针对于个种支付方式的对象的创建封装成一个统一的方法中，即：工厂化。 class PayMethodFactory { public: AbstractPay* getPayMethod(string type) { if (type == \u0026#34;cash\u0026#34;) { return new CashPay(); } else { return new CreditcardPay(); } } }; int main() { PayMethodFactory *pmf = new PayMethodFactory(); \/\/基类指针指向带有虚函数的派生类对象形成多态 \tAbstractPay* p = pmf-\u0026gt;getPayMethod(\u0026#34;cash\u0026#34;); \/\/假定现在是现金支付 \tp-\u0026gt;pay(); system(\u0026#34;pause\u0026#34;); return 0; } 工厂方法设计模式： 披萨项目需求变更，客户点披萨时可以点不同口味的披萨。",
+    "inLanguage" : "en-us",
+    "author" : "Jiang",
+    "creator" : "Jiang",
+    "publisher": "Jiang",
+    "accountablePerson" : "Jiang",
+    "copyrightHolder" : "Jiang",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-11-05 20:07:15 \u002b0800 CST",
+    "dateModified" : "2020-11-05 20:07:15 \u002b0800 CST",
+    "url" : "https:\/\/jfy0o0.github.io\/2020\/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F\/",
+    "wordCount" : "263",
+    "keywords" : [ "c\u002b\u002b","Design Patterns", "LeaveIt"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">LeaveIt</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">LeaveIt</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Design Patterns - 创建型模式 - 工厂模式</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://jfy0o0.github.io" rel="author">Jiang</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-11-05 itemprop="datePublished">November 5, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://jfy0o0.github.io/categories/design-patterns/"> Design Patterns </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="工厂设计模式">工厂设计模式：</h1>
+<p>　　顾名思义，该模式是用来生产对象的。在面向对象的设计模式中，万物皆对象，若使用new来创建对象，就会对该对象产生强耦合，假如我们需要更换该对象，那么使用该对象的对象都需要进行修改，这显然违背了开闭原则（OCP）。如果我们使用工厂来产生对象，我们只需要与这个工厂打交道就可以了，无需关心具体的对象，达到解耦的目的。</p>
+<p>　　接下来我们从实际的案例出发，从无工厂到有工厂的区别。</p>
+<h2 id="eg">eg</h2>
+<p>有一个销售管理系统支持多种支付方式，如现金支付，信用卡支付，代金券支付等。</p>
+<p>在设计过如果不使用简单工厂模式，可能会存在如下的支付方式。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">pay</span>(string pay_type)
+{
+    <span style="color:#66d9ef">if</span>(pay_type<span style="color:#f92672">==</span><span style="color:#960050;background-color:#1e0010">现金</span>)
+    {
+    	<span style="color:#960050;background-color:#1e0010">现金支付处理手段</span>
+    }
+    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(pay_type<span style="color:#f92672">==</span><span style="color:#960050;background-color:#1e0010">信用卡</span>)
+    {
+    	<span style="color:#960050;background-color:#1e0010">信用卡支付处理</span>
+    }
+    <span style="color:#66d9ef">else</span>  <span style="color:#66d9ef">if</span>(pay_type<span style="color:#f92672">==</span><span style="color:#960050;background-color:#1e0010">代金券</span>)
+    {
+    	<span style="color:#960050;background-color:#1e0010">代金券处理</span>
+    }
+	........
+}
+</code></pre></div><h2 id="简单工厂模式包含三个角色">简单工厂模式包含三个角色：</h2>
+<ol>
+<li>
+<p>工厂角色（Factory）</p>
+</li>
+<li>
+<p>抽象产品角色(Product)</p>
+</li>
+<li>
+<p>具体产品角色(ConcreteProduct)</p>
+</li>
+</ol>
+<h2 id="简单工厂模式优缺点">简单工厂模式优缺点：</h2>
+<ol>
+<li>由代码可以看出，虽然简单工厂模式一定程度上减少了因需求变更而导致的代码更改，但是实际仍违背了OCP原则。</li>
+<li>所以简单工厂模式只适合产品对象相对较少，且产品固定的需求，对产品变化无常的需求来说显然不适合。</li>
+</ol>
+<h2 id="使用">使用：</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">//	将各种支付方式写成统一的抽象方法，为各种支付方式提供统一的接口
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AbstractPay</span>
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	<span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> pay() <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+};
+
+<span style="color:#75715e">//	将每种支付方式封装在一个独立的类中，各个支付方式类相对独立修改其一对于其他类没有任何影响，
+</span><span style="color:#75715e">//	这些独立的支付方式类充当具体的产品类角色。是抽象类的派生类
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CashPay</span> <span style="color:#f92672">:</span><span style="color:#66d9ef">public</span> AbstractPay
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	<span style="color:#66d9ef">void</span> pay()
+	{
+		cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;现金支付&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+	}
+};
+ 
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CreditcardPay</span> <span style="color:#f92672">:</span><span style="color:#66d9ef">public</span> AbstractPay
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	<span style="color:#66d9ef">void</span> pay()
+	{
+		cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;信用卡支付&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+	}
+};
+
+<span style="color:#75715e">//	将针对于个种支付方式的对象的创建封装成一个统一的方法中，即：工厂化。
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PayMethodFactory</span>
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	AbstractPay<span style="color:#f92672">*</span> getPayMethod(string type)
+	{
+		<span style="color:#66d9ef">if</span> (type <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;cash&#34;</span>)
+		{
+			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">CashPay</span>();
+		}
+		<span style="color:#66d9ef">else</span>
+		{
+			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">CreditcardPay</span>();
+		}
+	}
+};
+
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+	PayMethodFactory <span style="color:#f92672">*</span>pmf <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> PayMethodFactory(); 
+    <span style="color:#75715e">//基类指针指向带有虚函数的派生类对象形成多态
+</span><span style="color:#75715e"></span>	AbstractPay<span style="color:#f92672">*</span> p <span style="color:#f92672">=</span> pmf<span style="color:#f92672">-&gt;</span>getPayMethod(<span style="color:#e6db74">&#34;cash&#34;</span>);
+	<span style="color:#75715e">//假定现在是现金支付
+</span><span style="color:#75715e"></span>	p<span style="color:#f92672">-&gt;</span>pay();
+	system(<span style="color:#e6db74">&#34;pause&#34;</span>);
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><h1 id="工厂方法设计模式">工厂方法设计模式：</h1>
+<p>披萨项目需求变更，客户点披萨时可以点不同口味的披萨。</p>
+<h2 id="工厂方法模式的优缺点">　　工厂方法模式的优缺点：</h2>
+<ol>
+<li>让父类的实现延迟到子类中去，减少判断。</li>
+<li>换汤不换药，和简单工厂模式类似，一般适用于产品对象相对较少，且产品固定的需求。</li>
+<li>工厂方法一定程度上减轻了工厂的职责，将职责细化，避免工厂类无法正常运行而导致程序崩溃。</li>
+</ol>
+<h2 id="eg-1">eg：</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Operation</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+		Operation()<span style="color:#f92672">:</span>mNumA(<span style="color:#ae81ff">0</span>),mNumB(<span style="color:#ae81ff">0</span>){};
+		<span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>Operation(){};
+		<span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">double</span> <span style="color:#a6e22e">getResult</span>() {
+			<span style="color:#66d9ef">double</span> result <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+			<span style="color:#66d9ef">return</span> result;
+		}
+
+	<span style="color:#66d9ef">double</span> mNumA;
+	<span style="color:#66d9ef">double</span> mNumB;
+};
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OperationAdd</span><span style="color:#f92672">:</span><span style="color:#66d9ef">public</span> Operation{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	<span style="color:#66d9ef">double</span> getResult(){
+		<span style="color:#66d9ef">double</span> result <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+		result <span style="color:#f92672">=</span> mNumA <span style="color:#f92672">+</span> mNumB;
+		<span style="color:#66d9ef">return</span> result;
+	}
+	OperationAdd();
+	<span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>OperationAdd();
+};
+ 
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OperationSub</span><span style="color:#f92672">:</span><span style="color:#66d9ef">public</span> Operation{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	<span style="color:#66d9ef">double</span> getResult(){
+		<span style="color:#66d9ef">double</span> result <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+		result <span style="color:#f92672">=</span> mNumA <span style="color:#f92672">-</span> mNumB;
+		<span style="color:#66d9ef">return</span> result;
+	}
+ 
+   	OperationSub();
+	<span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>OperationSub();
+};
+<span style="color:#75715e">//---------------------------------
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">IFactory</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	IFactory();
+	<span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>IFactory();
+	<span style="color:#66d9ef">virtual</span> Operation<span style="color:#f92672">*</span> <span style="color:#a6e22e">CreateOperation</span>() <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+};
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AddFactory</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> IFactory{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	AddFactory();
+	<span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>AddFactory();
+	Operation<span style="color:#f92672">*</span> <span style="color:#a6e22e">CreateOperation</span>(){
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> OperationAdd();
+	}
+ 
+};
+ 
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SubFactory</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> IFactory{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	SubFactory ();
+	<span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>SubFactory ();
+	Operation<span style="color:#f92672">*</span> <span style="color:#a6e22e">CreateOperation</span>(){
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> OperationSub();
+	}
+ 
+};
+<span style="color:#75715e">//---------------------------------
+</span><span style="color:#75715e">//use
+</span><span style="color:#75715e"></span>	IFactory <span style="color:#f92672">*</span>f <span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> AddFactory();
+	Operation <span style="color:#f92672">*</span>oper <span style="color:#f92672">=</span>f<span style="color:#f92672">-&gt;</span>CreateOperation();
+	oper<span style="color:#f92672">-&gt;</span>mNumA<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;
+	oper<span style="color:#f92672">-&gt;</span>mNumB<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>;
+	cout<span style="color:#f92672">&lt;&lt;</span> oper<span style="color:#f92672">-&gt;</span>getResult()<span style="color:#f92672">&lt;&lt;</span>endl;
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Jiang . </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/c&#43;&#43;/">
+                    #c&#43;&#43;</a></span>
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/design-patterns/">
+                    #Design Patterns</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://jfy0o0.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8E%9F%E5%88%99-%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99/" class="prev" rel="prev" title="Design Patterns - 开闭原则"><i class="iconfont icon-left"></i>&nbsp;Design Patterns - 开闭原则</a>
+         
+        
+        <a href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" class="next" rel="next" title="Design Patterns - 创建型模式 - 抽象工厂模式">Design Patterns - 创建型模式 - 抽象工厂模式&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://jfy0o0.github.io">Jiang .</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>
