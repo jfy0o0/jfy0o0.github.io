@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Jiang .">
+  
+  
+  
+  <link rel="prev" href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/" />
+  <link rel="next" href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/" />
+  <link rel="canonical" href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Design Patterns - 结构型模式 - 享元模式 | LeaveIt
+       
+  </title>
+  <meta name="title" content="Design Patterns - 结构型模式 - 享元模式 | LeaveIt">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/jfy0o0.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Design Patterns - 结构型模式 - 享元模式",
+    "headline" : "Design Patterns - 结构型模式 - 享元模式",
+    "description" : "享元模式： 定义： 　运用共享技术有效地支持大量细粒度对象的复用。享元模式可以避免大量相似类的开销，在软件开发中如果需要生成大量细粒度的类实例，而这些类实例除了几个参数外基本上相同，那么这时就可以使用享元模式大幅度减少实例化类的数量。如果能把这些参数移动到实例外，在方法调用时将他们传递进去，这样就可以通过共享大幅度减少单个实例的数目。这里我们把移动到类实例外部的参数称为享元对象的外部状态，把在享元对象内部定义称为内部状态。由于享元模式要求能够共享的对象必须是细粒度对象，因此它又称为轻量级模式，他是一种结构型设计模式。\n状态： 享元模式结构较为复杂，一般结合工厂模式一起使用。\n 外部状态：随环境改变而改变的，不可以共享的状态。 内部状态：在享元对象内部并且不会随着环境的变化而改变的共享部分。  享元模式的角色：  抽象享元类（Flyweight）：通常是一个接口或抽象类，在抽象享元类中声明了具体享元类公共的方法，这些方法可以向外界提供享元对象的内部数据（内部状态），同时也可以通过这些方法来设置外部数据（外部状态）。 具体享元类（ConcreteFlyweight）：它实现了抽象享元类，其实例称为享元对象；在具体享元类中为内部状态提供了存储空间。通常我们可以结合单例模式来设计具体享元类，为每一个具体享元类提供唯一的享元对象。 非共享具体享元类（UnsharedConcreteFlyweight）：并不是所有的抽象享元类的子类都需要被共享，不能被共享的子类可设计为非共享具体享元类；当需要一个非共享具体享元类的对象时可以直接通过实例化创建。 享元工厂类（FlyweightFactory）：享元工厂类用于创建并管理享元对象，它针对抽象享元类编程，将各种类型的具体享元对象存储在一个享元池中，享元池一般设计为一个存储“键值对”的集合（也可以是其他类型的集合），可以结合工厂模式进行设计；当用户请求一个具体享元对象时，享元工厂提供一个存储在享元池中已创建的实例或者创建一个新的实例（如果不存在的话），返回新创建的实例并将其存储在享元池中。  优点： 降低系统中的对象的数量，从而降低了系统中细粒度对象给内存带来的压力。\n缺点：  为了使对象可以共享，需要将一些状态外部化，这使得程序的逻辑更复杂，使系统复杂化。 享元模式将享元对象的状态外部化，而读取外部状态使得运行时间稍微变长。  区别： 享元模式与原型模式的区别：  享元模式是结构型设计模式，而原型模式是创建型设计模式。 原型模式关注的是类的重复创建问题，而享元模式关注的是对象的创建问题。 原型模式创建的对象属性完全一样，而享元模式会根据不同的外部状态创建不一样的对象实例。  享元模式与单例模式的区别： 通过搜索我发现有许多关于享元模式与单例模式的区别，现总结如下：\n 享元设计模式是一个类有很多对象，而单例是一个类仅一个对象。 享元模式是为了节约内存空间，提升程序性能（避免大量的new操作），而单例模式则主要是出于共享状态的目的。  eg: class Flyweight { public: virtual void Operation(int n) = 0; }; class ConcreteFlyweight_0 : public Flyweight { public: void Operation(int n) { std::cout \u0026lt;\u0026lt; \u0026#34;ConcreteFlyweight_0:\u0026#34; \u0026lt;\u0026lt; n \u0026lt;\u0026lt; std::endl; } }; class ConcreteFlyweight_1 : public Flyweight { public: void Operation(int n) { std::cout \u0026lt;\u0026lt; \u0026#34;ConcreteFlyweight_1:\u0026#34; \u0026lt;\u0026lt; n \u0026lt;\u0026lt; std::endl; } }; class ConcreteFlyweight_2 : public Flyweight { public: void Operation(int n) { std::cout \u0026lt;\u0026lt; \u0026#34;ConcreteFlyweight_2:\u0026#34; \u0026lt;\u0026lt; n \u0026lt;\u0026lt; std::endl; } }; \/\/---------------------------------------------- \/\/ 享元工厂 class FlyweightFactory { private: std::map\u0026lt;int, Flyweight *\u0026gt; m_map; public: FlyweightFactory() { m_map.",
+    "inLanguage" : "en-us",
+    "author" : "Jiang",
+    "creator" : "Jiang",
+    "publisher": "Jiang",
+    "accountablePerson" : "Jiang",
+    "copyrightHolder" : "Jiang",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-11-06 14:52:09 \u002b0800 CST",
+    "dateModified" : "2020-11-06 14:52:09 \u002b0800 CST",
+    "url" : "https:\/\/jfy0o0.github.io\/2020\/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F\/",
+    "wordCount" : "189",
+    "keywords" : [ "c\u002b\u002b","Design Patterns", "LeaveIt"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">LeaveIt</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">LeaveIt</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Design Patterns - 结构型模式 - 享元模式</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://jfy0o0.github.io" rel="author">Jiang</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-11-06 itemprop="datePublished">November 6, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://jfy0o0.github.io/categories/design-patterns/"> Design Patterns </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="享元模式">享元模式：</h1>
+<h2 id="定义">定义：</h2>
+<p>　　运用共享技术有效地支持大量细粒度对象的复用。享元模式可以避免大量相似类的开销，在软件开发中如果需要生成大量细粒度的类实例，而这些类实例除了几个参数外基本上相同，那么这时就可以使用享元模式大幅度减少实例化类的数量。如果能把这些参数移动到实例外，在方法调用时将他们传递进去，这样就可以通过共享大幅度减少单个实例的数目。这里我们把移动到类实例外部的参数称为享元对象的外部状态，把在享元对象内部定义称为内部状态。由于享元模式要求能够共享的对象必须是细粒度对象，因此它又称为轻量级模式，他是一种结构型设计模式。</p>
+<h2 id="状态">状态：</h2>
+<p>享元模式结构较为复杂，一般结合工厂模式一起使用。</p>
+<ol>
+<li>外部状态：随环境改变而改变的，不可以共享的状态。</li>
+<li>内部状态：在享元对象内部并且不会随着环境的变化而改变的共享部分。</li>
+</ol>
+<h2 id="享元模式的角色">享元模式的角色：</h2>
+<ol>
+<li>抽象享元类（Flyweight）：通常是一个接口或抽象类，在抽象享元类中声明了具体享元类公共的方法，这些方法可以向外界提供享元对象的内部数据（内部状态），同时也可以通过这些方法来设置外部数据（外部状态）。</li>
+<li>具体享元类（ConcreteFlyweight）：它实现了抽象享元类，其实例称为享元对象；在具体享元类中为内部状态提供了存储空间。通常我们可以结合单例模式来设计具体享元类，为每一个具体享元类提供唯一的享元对象。</li>
+<li>非共享具体享元类（UnsharedConcreteFlyweight）：并不是所有的抽象享元类的子类都需要被共享，不能被共享的子类可设计为非共享具体享元类；当需要一个非共享具体享元类的对象时可以直接通过实例化创建。</li>
+<li>享元工厂类（FlyweightFactory）：享元工厂类用于创建并管理享元对象，它针对抽象享元类编程，将各种类型的具体享元对象存储在一个享元池中，享元池一般设计为一个存储“键值对”的集合（也可以是其他类型的集合），可以结合工厂模式进行设计；当用户请求一个具体享元对象时，享元工厂提供一个存储在享元池中已创建的实例或者创建一个新的实例（如果不存在的话），返回新创建的实例并将其存储在享元池中。</li>
+</ol>
+<h2 id="优点">优点：</h2>
+<p>降低系统中的对象的数量，从而降低了系统中细粒度对象给内存带来的压力。</p>
+<h2 id="缺点">缺点：</h2>
+<ol>
+<li>为了使对象可以共享，需要将一些状态外部化，这使得程序的逻辑更复杂，使系统复杂化。</li>
+<li>享元模式将享元对象的状态外部化，而读取外部状态使得运行时间稍微变长。</li>
+</ol>
+<h2 id="区别">区别：</h2>
+<h3 id="享元模式与原型模式的区别">享元模式与原型模式的区别：</h3>
+<ol>
+<li>享元模式是结构型设计模式，而原型模式是创建型设计模式。</li>
+<li>原型模式关注的是类的重复创建问题，而享元模式关注的是对象的创建问题。</li>
+<li>原型模式创建的对象属性完全一样，而享元模式会根据不同的外部状态创建不一样的对象实例。</li>
+</ol>
+<h3 id="享元模式与单例模式的区别">享元模式与单例模式的区别：</h3>
+<p>通过搜索我发现有许多关于享元模式与单例模式的区别，现总结如下：</p>
+<ol>
+<li>享元设计模式是一个类有很多对象，而单例是一个类仅一个对象。</li>
+<li>享元模式是为了节约内存空间，提升程序性能（避免大量的new操作），而单例模式则主要是出于共享状态的目的。</li>
+</ol>
+<h2 id="eg">eg:</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Flyweight</span>
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	<span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> Operation(<span style="color:#66d9ef">int</span> n) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+};
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConcreteFlyweight_0</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> Flyweight
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	<span style="color:#66d9ef">void</span> Operation(<span style="color:#66d9ef">int</span> n)
+	{
+		std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;ConcreteFlyweight_0:&#34;</span> <span style="color:#f92672">&lt;&lt;</span> n <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+	}
+};
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConcreteFlyweight_1</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> Flyweight
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	<span style="color:#66d9ef">void</span> Operation(<span style="color:#66d9ef">int</span> n)
+	{
+		std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;ConcreteFlyweight_1:&#34;</span> <span style="color:#f92672">&lt;&lt;</span> n <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+	}
+};
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConcreteFlyweight_2</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> Flyweight
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	<span style="color:#66d9ef">void</span> Operation(<span style="color:#66d9ef">int</span> n)
+	{
+		std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;ConcreteFlyweight_2:&#34;</span> <span style="color:#f92672">&lt;&lt;</span> n <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+	}
+};
+<span style="color:#75715e">//----------------------------------------------
+</span><span style="color:#75715e">// 享元工厂
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FlyweightFactory</span>
+{
+<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+	std<span style="color:#f92672">::</span>map<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, Flyweight <span style="color:#f92672">*&gt;</span> m_map;
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	FlyweightFactory()
+	{
+		m_map.insert(std<span style="color:#f92672">::</span>pair<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, Flyweight <span style="color:#f92672">*&gt;</span>(<span style="color:#ae81ff">0</span>, <span style="color:#66d9ef">new</span> ConcreteFlyweight_0()));
+		m_map.insert(std<span style="color:#f92672">::</span>pair<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, Flyweight <span style="color:#f92672">*&gt;</span>(<span style="color:#ae81ff">1</span>, <span style="color:#66d9ef">new</span> ConcreteFlyweight_1()));
+		m_map.insert(std<span style="color:#f92672">::</span>pair<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, Flyweight <span style="color:#f92672">*&gt;</span>(<span style="color:#ae81ff">2</span>, <span style="color:#66d9ef">new</span> ConcreteFlyweight_2()));
+	}
+	<span style="color:#f92672">~</span>FlyweightFactory()
+	{
+		<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">auto</span> it <span style="color:#f92672">=</span> m_map.begin(); it <span style="color:#f92672">!=</span> m_map.end(); it<span style="color:#f92672">++</span>)
+		{
+			<span style="color:#66d9ef">delete</span> it<span style="color:#f92672">-&gt;</span>second;
+		}
+		m_map.clear();
+	}
+	Flyweight <span style="color:#f92672">*</span> <span style="color:#a6e22e">getFlyweight</span>(<span style="color:#66d9ef">int</span> n)
+	{
+        <span style="color:#75715e">///？？？？
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> m_map[n];
+	}
+};
+
+	<span style="color:#66d9ef">int</span> externState <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+	FlyweightFactory <span style="color:#f92672">*</span> p <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FlyweightFactory();
+
+	Flyweight <span style="color:#f92672">*</span> f0 <span style="color:#f92672">=</span> p<span style="color:#f92672">-&gt;</span>getFlyweight(<span style="color:#ae81ff">0</span>);
+	f0<span style="color:#f92672">-&gt;</span>Operation(externState<span style="color:#f92672">++</span>);
+	Flyweight <span style="color:#f92672">*</span> f1 <span style="color:#f92672">=</span> p<span style="color:#f92672">-&gt;</span>getFlyweight(<span style="color:#ae81ff">1</span>);
+	f1<span style="color:#f92672">-&gt;</span>Operation(externState<span style="color:#f92672">++</span>);
+	Flyweight <span style="color:#f92672">*</span> f2 <span style="color:#f92672">=</span> p<span style="color:#f92672">-&gt;</span>getFlyweight(<span style="color:#ae81ff">2</span>);
+	f2<span style="color:#f92672">-&gt;</span>Operation(externState<span style="color:#f92672">++</span>);
+	Flyweight <span style="color:#f92672">*</span> f3 <span style="color:#f92672">=</span> p<span style="color:#f92672">-&gt;</span>getFlyweight(<span style="color:#ae81ff">0</span>);
+	f3<span style="color:#f92672">-&gt;</span>Operation(externState<span style="color:#f92672">++</span>);
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Jiang . </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/c&#43;&#43;/">
+                    #c&#43;&#43;</a></span>
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/design-patterns/">
+                    #Design Patterns</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://jfy0o0.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/" class="prev" rel="prev" title="Design Patterns - 结构型模式 - 桥接模式"><i class="iconfont icon-left"></i>&nbsp;Design Patterns - 结构型模式 - 桥接模式</a>
+         
+        
+        <a href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/" class="next" rel="next" title="Design Patterns - 结构型模式 - 组合模式">Design Patterns - 结构型模式 - 组合模式&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://jfy0o0.github.io">Jiang .</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

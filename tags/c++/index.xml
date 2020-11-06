@@ -6,7 +6,278 @@
     <description>Recent content in c&#43;&#43; on LeaveIt</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Nov 2020 20:19:07 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 06 Nov 2020 15:54:05 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Design Patterns - 行为型模式 - 中介者模式</title>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Fri, 06 Nov 2020 15:54:05 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F/</guid>
+      <description>中介者模式： 　在现实生活中，有很多中介者模式的身影，例如QQ游戏平台，聊天室、QQ群、短信平台和房产中介。不论是QQ游戏还是QQ群，它们都是充当一个中间平台，QQ用户可以登录这个中间平台与其他QQ用户进行交流，如果没有这些中间平台，我们如果想与朋友进行聊天的话，可能就需要当面才可以了。电话、短信也同样是一个中间平台，有了这个中间平台，每个用户都不要直接依赖与其他用户，只需要依赖这个中间平台就可以了，一切操作都由中间平台去分发。中介者模式，定义了一个中介对象来封装一系列对象之间的交互关系。中介者使各个对象之间不需要显式地相互引用，从而使耦合性降低，而且可以独立地改变它们之间的交互行为。
+中介者模式的角色：  抽象中介者（Mediator）：定义了同事对象到中介者对象的接口。 具体中介者（ConcreteMediator）：实现抽象类的方法，它需要知道具体的同事类并从具体同事类接受消息，向具体同事对象发出命令。 抽象同事类（Colleague）：定义同事类的接口，保存中介者对象，提供同事对象交互的抽象方法，实现所有相互影响的同事类的公共功能。 具体同事类（ConcreteColleague）：每个具体同事类只知道自己的行为，而不了解其他同事类的情况，但它们认识中介者对象。  优点：  简化了对象之间的关系，将系统的各个对象之间的相互关系进行封装，将各个同事类解耦，使得系统变为松耦合。 提供系统的灵活性，使得各个同事对象独立而易于复用。  缺点：  中介者模式中，中介者角色承担了较多的责任，所以一旦这个中介者对象出现了问题，整个系统将会受到重大的影响。 新增加一个同事类时，不得不去修改抽象中介者类和具体中介者类，此时可以使用观察者模式和状态模式来解决这个问题。  中介者使用的场景：  一组定义良好的对象，现在要进行复杂的相互通信。 想通过一个中间类来封装多个类中的行为，而又不想生成太多的子类。  区别： 与观察者模式区别： 中介者模式主要是起到一个协调的作用，它知道所有的同事类且同事类含有中介者对象，即我有事通知你，你帮我协调一下。而观察者模式侧重在当一个对象的状态发生变化时，能够自动通知其他关联对象，自动刷新对象状态。
+eg: //抽象同事类 class Colleague { protected : Mediator *mediator; public: Colleague(Mediator* m) { mediator = m; } virtual void Sent(string message) = 0; }; //具体同事类 class ConcreteColleague1 :public Colleague { public: ConcreteColleague1(Mediator* m) : Colleague(m) {} void Sent(string message) { mediator-&amp;gt;Send(message, this); } void Notify(string message) { cout &amp;lt;&amp;lt; &amp;#34;同事1得到消息：&amp;#34; &amp;lt;&amp;lt; message &amp;lt;&amp;lt; endl; } }; class ConcreteColleague2 :public Colleague { public: ConcreteColleague2(Mediator* m) : Colleague(m) {} void Sent(string message) { mediator-&amp;gt;Send(message, this); } void Notify(string message) { cout &amp;lt;&amp;lt; &amp;#34;同事2得到消息：&amp;#34; &amp;lt;&amp;lt; message &amp;lt;&amp;lt; endl; } }; //----------------------------------------------------- //抽象中介者类 class Mediator { public: virtual void Send(string message, Colleague *colleague) = 0; }; //具体中介者类 class Concretemediator :public Mediator { private: ConcreteColleague1* colleague1; ConcreteColleague2* colleague2; public: void SetColleague1(Colleague* pColleague){ colleague1 = dynamic_cast&amp;lt;ConcreteColleague1*&amp;gt;(pColleague); } void SetColleague2(Colleague * pColleague){ colleague2 = dynamic_cast&amp;lt;ConcreteColleague2*&amp;gt;(pColleague); } void Send(string message, Colleague* colleague){ if (colleague == colleague1) colleague2-&amp;gt;Notify(message); else if (colleague == colleague2) colleague1-&amp;gt;Notify(message); } }; //----------------------------------------------------- //use 	Concretemediator* mediator = new Concretemediator(); ConcreteColleague1* colleague1 = new ConcreteColleague1(mediator);	//让他俩认识一下中介 	ConcreteColleague2* colleague2 = new ConcreteColleague2(mediator); mediator-&amp;gt;SetColleague1(colleague1);	//让中介认识一下他俩 	mediator-&amp;gt;SetColleague2(colleague2); colleague1-&amp;gt;Sent(&amp;#34;有男朋友没？&amp;#34;); colleague2-&amp;gt;Sent(&amp;#34;有了&amp;#34;); </description>
+    </item>
+    
+    <item>
+      <title>Design Patterns - 行为型模式 - 备忘录模式</title>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Fri, 06 Nov 2020 15:47:53 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/</guid>
+      <description>备忘录模式： 　后悔药来啦！！！备忘录模式在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态，以便在需要时能将该对象恢复到原先保存的状态。
+备忘录模式的角色：  发起人（Originator）：记录当前时刻的内部状态信息，提供创建备忘录和恢复备忘录数据的功能，实现其他业务功能，它可以访问备忘录里的所有信息。 备忘录（Memento）：负责存储发起人的内部状态，在需要的时候提供这些内部状态给发起人。 管理者（CareTaker）：对备忘录进行管理，提供保存与获取备忘录的功能，但其不能对备忘录的内容进行访问与修改。  优点：  给用户提供了一种可以恢复状态的机制，可以使用户能够比较方便地回到某个历史的状态。 实现了信息的封装，使得用户不需要关心状态的保存细节。  缺点： 消耗资源。如果类的成员变量过多，势必会占用比较大的资源，而且每一次保存都会消耗一定的内存。
+备忘录模式的应用场景：  　需要保存/恢复数据的相关状态场景。 　提供一个可回滚的操作。  class STMemento { private: int iVitality; public: STMemento(){} STMemento(int iVitality) { this-&amp;gt;iVitality = iVitality; } int GetVitality() const { return this-&amp;gt;iVitality; } }; //------------------------------------------------------- class STOriginator { private: int iVitality; string name; public: STOriginator(string strName, int iVit): iVitality(iVit), name(strName) { } STMemento* SaveState() { return new STMemento(iVitality); } void RecoverState(const STMemento* stMemento) { this-&amp;gt;iVitality = stMemento-&amp;gt;GetVitality(); } void SetVitality(int iVit) { this-&amp;gt;iVitality = iVit; } void Show() { cout&amp;lt;&amp;lt; &amp;#34;Name: &amp;#34;&amp;lt;&amp;lt; name&amp;lt;&amp;lt; endl; cout&amp;lt;&amp;lt; &amp;#34;Live: &amp;#34;&amp;lt;&amp;lt; iVitality&amp;lt;&amp;lt; endl; } }; //------------------------------------------------------- class STCareTaker { private: vector&amp;lt;STMemento*&amp;gt; vecStMemento; public: void AddMemento(STMemento* stMemento) { vecStMemento.</description>
+    </item>
+    
+    <item>
+      <title>Design Patterns - 行为型模式 - 解释器模式</title>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%A7%A3%E9%87%8A%E5%99%A8%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Fri, 06 Nov 2020 15:43:06 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%A7%A3%E9%87%8A%E5%99%A8%E6%A8%A1%E5%BC%8F/</guid>
+      <description>解释器模式： 　从名称上来看看这个模式，个人的最初理解“解释器”和Google的中英翻译功能类似。如果有一天你去国外旅游去了，比如去美国吧，美国人是讲英语的，我们是讲汉语的，如果英语听不懂，讲不好，估计沟通就完蛋了，不能沟通，估计玩的就很难尽兴了，因为有很多景点的解说你可能不明白（没有中文翻译的情况下，一般情况会有的）。所以我们需要一个软件，可以把中英文互译，那彼此就可以更好的理解对方的意思，我感觉翻译软件也可以称得上是解释器，把你不懂的解释成你能理解的。我们写代码，需要编译器把我们写的代码编译成机器可以理解的机器语言，从这方面来讲，C#的编译器也是一种解释器。
+解释器模式的角色：  抽象解释器（AbstractExpression）：定义解释器的接口，约定解释器的解释操作。其中的Interpret接口，正如其名字那样，它是专门用来解释该解释器所要实现的功能。 终结符表达式（TermialExpression）：实现了抽象表达式角色所要求的接口，主要是一个interpret()方法；文法中的每一个终结符都有一个具体终结表达式与之相对应。比如有一个简单的公式R=R1+R2，在里面R1和R2就是终结符，对应的解析R1和R2的解释器就是终结符表达式。 非终结符表达式（NonterminalExpression）：文法中的每一条规则都需要一个具体的非终结符表达式，非终结符表达式一般是文法中的运算符或者其他关键字，比如公式R=R1+R2中，“+”就是非终结符，解析“+”的解释器就是一个非终结符表达式。 环境角色（Context）：这个角色的任务一般是用来存放文法中各个终结符所对应的具体值，比如R=R1+R2，我们给R1赋值100，给R2赋值200。这些信息需要存放到环境角色中，很多情况下我们使用Map来充当环境角色就足够了。  优点：  易于改变和扩展文法。 每一条文法规则都可以表示为一个类，因此可以方便地实现一个简单的语言。 实现文法较为容易。在抽象语法树中每一个表达式节点类的实现方式都是相似的，这些类的代码编写都不会特别复杂，还可以通过一些工具自动生成节点类代码。 增加新的解释表达式较为方便。如果用户需要增加新的解释表达式只需要对应增加一个新的终结符表达式或非终结符表达式类，原有表达式类代码无须修改，符合“开闭原则”。  缺点：  对于复杂文法难以维护。在解释器模式中，每一条规则至少需要定义一个类，因此如果一个语言包含太多文法规则，类的个数将会急剧增加，导致系统难以管理和维护，此时可以考虑使用语法分析程序等方式来取代解释器模式。 执行效率较低。由于在解释器模式中使用了大量的循环和递归调用，因此在解释较为复杂的句子时其速度很慢，而且代码的调试过程也比较麻烦。  解释器模式的应用场景：  当一个语言需要解释执行，并可以将该语言中的句子表示为一个抽象语法树的时候，可以考虑使用解释器模式（如XML文档解释、正则表达式等领域）。 一些重复出现的问题可以用一种简单的语言来进行表达。 一个语言的文法较为简单. 当执行效率不是关键和主要关心的问题时可考虑解释器模式（注：高效的解释器通常不是通过直接解释抽象语法树来实现的，而是需要将它们转换成其他形式，使用解释器模式的执行效率并不高。）  eg: class Context { private: map&amp;lt;string,int&amp;gt; valueMap; public: void addValue(string key,int value) { valueMap.insert(std::pair&amp;lt;string,int&amp;gt;(key,value)); } int getValue(string key) { return valueMap[key]; } }; //-------------------------------------------------- class AbstractExpression { public : virtual int interpreter(Context context) = 0; }; class AddNonterminalExpression:public AbstractExpression { private : AbstractExpression *left; AbstractExpression *right; public: AddNonterminalExpression(AbstractExpression *left, AbstractExpression *right) { this-&amp;gt;left = left; this-&amp;gt;right = right; } int interpreter(Context context) { return this-&amp;gt;left-&amp;gt;interpreter(context) + this-&amp;gt;right-&amp;gt;interpreter(context); } }; class SubtractNonterminalExpression:public AbstractExpression { private : AbstractExpression *left; AbstractExpression *right; public: SubtractNonterminalExpression(AbstractExpression *left, AbstractExpression *right) { this-&amp;gt;left = left; this-&amp;gt;right = right; } int interpreter(Context context) { return this-&amp;gt;left-&amp;gt;interpreter(context) - this-&amp;gt;right-&amp;gt;interpreter(context); } }; class TerminalExpression :public AbstractExpression { private: int i; public: TerminalExpression(int i) { this-&amp;gt;i = i; } int interpreter(Context context) { return this-&amp;gt;i; } }; //-------------------------------------------------- //use  //a-b+c  cout&amp;lt;&amp;lt;&amp;#34;解释器模式:a-b+c&amp;#34;&amp;lt;&amp;lt;endl; Context context; context.</description>
+    </item>
+    
+    <item>
+      <title>Design Patterns - 行为型模式 - 命令模式</title>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Fri, 06 Nov 2020 15:36:09 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F/</guid>
+      <description>命令模式： 　将请求封装成对象，以便使用不同的请求、日志、队列等来参数化其他对象。命令模式也支持撤销操作。
+命令模式的角色：  传递命令对象（Invoker）：是请求的发送者，它通常拥有很多的命令对象，并通过访问命令对象来执行相关请求，它不直接访问接收者。 抽象命令接口（Command）：声明执行命令的接口，拥有执行命令的抽象方法execute()。 具体的命令对象（ConcreteCommand）：是抽象命令类的具体实现类，它拥有接收者对象，并通过调用接收者的功能来完成命令要执行的操作。 接受者对象（Receiver）：执行命令功能的相关操作，是具体命令对象业务的真正实现者。 客户端对象（Client）：创建具体命令的对象并且设置命令对象的接受者。  优点：  　1）降低系统的耦合度。命令模式能将调用操作的对象与实现该操作的对象解耦。 　2）增加或删除命令非常方便。采用命令模式增加与删除命令不会影响其他类，它满足OCP原则，对扩展比较灵活。 　3）可以实现宏命令。命令模式可以与组合模式结合，将多个命令装配成一个组合命令，即宏命令。 　4）方便实现 Undo 和 Redo 操作。命令模式可以与备忘录模式结合，实现命令的撤销与恢复。  缺点： 可能产生大量的具体命令类。
+适用环境：  使用命令模式作为“CallBack”在面向对象系统中的替代。“CallBack”讲的便是先将一个函数登记上，然后在以后调用此函数。 需要在不同的时间指定请求、将请求排队。一个命令对象和原先的请求发出者可以有不同的生命期。换言之，原先的请求发出者可能已经不在了，而命令对象本身仍然是活动的。这时命令的接收者可以是在本地，也可以在网络的另外一个地址。命令对象可以在串形化之后传送到另外一台机器上去。 系统需要支持命令的撤消(undo)。命令对象可以把状态存储起来，等到客户端需要撤销命令所产生的效果时，可以调用undo()方法，把命令所产生的效果撤销掉。命令对象还可以提供redo()方法，以供客户端在需要时，再重新实施命令效果。 如果一个系统要将系统中所有的数据更新到日志里，以便在系统崩溃时，可以根据日志里读回所有的数据更新命令，重新调用Execute()方法一条一条执行这些命令，从而恢复系统在崩溃前所做的数据更新。  区别： 命令模式与策略模式的区别：  命令模式与策略模式都封装了变化，但命令模式封装的是请求的变化，而策略模式封装的是算法的变化。 命令模式可以抽象化成策略模式。策略模式较简单，而命令模式比较复杂。策略模式聚焦的是对相同请求更换解决方案的灵活性；而命令模式聚焦的是对多请求变化的封装以及对相同请求不同的请求形式解决方法的可复用性。  eg： class Barbecuer { public: void BakeMutton(){cout&amp;lt;&amp;lt;&amp;#34;Bake mutton&amp;#34;&amp;lt;&amp;lt;endl;} void BakeChickenWing(){cout&amp;lt;&amp;lt;&amp;#34;Bake ChickenWing&amp;#34;&amp;lt;&amp;lt;endl;} }; //----------------------------------------------  /*抽象命令类：是执行具体操作的接口*/ class Command { public: Command(){} Command(Barbecuer *receiver):p_receiver(receiver){} virtual void ExecuteCommand() = 0; //执行命令  protected: Barbecuer *p_receiver; }; /*具体命令类:烤羊肉串命令*/ class BakeMuttonCommand:public Command { public: BakeMuttonCommand(Barbecuer *receiver){p_receiver = receiver;} void ExecuteCommand(){p_receiver-&amp;gt;BakeMutton();} }; /*具体命令类:烤鸡翅串命令*/ class BakeChickenWingCommand:public Command { public: BakeChickenWingCommand(Barbecuer *receiver){p_receiver = receiver;} void ExecuteCommand() {p_receiver-&amp;gt;BakeChickenWing();} }; //----------------------------------------------  /*服务员类*/ class Waiter { public: void SetOrder(Command *command) { p_commandList.</description>
+    </item>
+    
+    <item>
+      <title>Design Patterns - 行为型模式 - 状态模式</title>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Fri, 06 Nov 2020 15:30:26 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/</guid>
+      <description>状态模式： 　在软件开发过程中，应用程序可能会根据不同的情况作出不同的处理。最直接的解决方案是将这些所有可能发生的情况全都考虑到，然后使用if else语句来做状态判断来进行不同情况的处理。但对复杂状态的判断就显得&amp;quot;力不从心了&amp;quot;，随着增加新的状态或者修改一个状体if else(或switch case)语句的增多或者修改）可能会引起很大的修改，违反OCP原则。状态模式就是在当控制一个对象状态转换的条件表达式过于复杂时，把相关&amp;quot;判断逻辑&amp;quot;提取出来，放到一系列的状态类当中，这样可以把原来复杂的逻辑判断简单化。
+状态模式的角色：　  环境类（Context）：也称为上下文，它定义了客户感兴趣的接口，维护一个当前状态，并将与状态相关的操作委托给当前状态对象来处理。 抽象状态类（AbstractState）：定义一个接口以封装与Context的一个特定状态相关的行为。 具体状态类（ConcreteState）：实现抽象状态所对应的行为。  优点：  状态模式将与特定状态相关的行为局部化到一个状态中，并且将不同状态的行为分割开来，满足”单一职责原则”。 减少对象间的相互依赖。将不同的状态引入独立的对象中会使得状态转换变得更加明确，且减少对象间的相互依赖。 有利于程序的扩展。通过定义新的子类很容易地增加新的状态和转换。  缺点：  状态模式的使用必然会增加系统的类与对象的个数。 状态模式的结构与实现都较为复杂，如果使用不当会导致程序结构和代码的混乱。  状态模式的应用场景：  当一个对象的行为取决于它的状态，并且它必须在运行时根据状态改变它的行为。 一个操作中含有庞大的分支结构，并且这些分支决定于对象的状态。  区别： 状态模式与策略模式的区别： 　从UML图上我们会发现这两种设计模式几乎一摸一样，都是利用多态把一些操作分配到一组相关的简单的类中。然而在显示世界中，策略模式和状态模式是两种完全不同的思想。对状态进行建模时，状态迁移是一个核心问题；但策略模式与迁移毫无关系，策略模式允许一个客户选择或提供一种策略。
+状态模式与责任链模式的区别： 　职责链模式和状态模式都可以解决if分支过多的问题，从定义来看，状态模式是一个对象内在状态发生改变（一个对象，相对稳定，处理完一个对象下一个对象一般已确定），而职责链模式是多个对象之间的改变（多个对象之间的话，就会出现某个对象不存在的问题，且该模式由客户端指定，不稳定），这也说明了这两个模式处理的情况不同。
+eg： class State { public: virtual void Handle(Context *pContext) = 0; }; //------------------------------------------- class ConcreteStateA : public State { public: virtual void Handle(Context *pContext) { cout&amp;lt;&amp;lt;&amp;#34;I am concretestateA.&amp;#34;&amp;lt;&amp;lt;endl; } }; class ConcreteStateB : public State { public: virtual void Handle(Context *pContext) { cout&amp;lt;&amp;lt;&amp;#34;I am concretestateB.</description>
+    </item>
+    
+    <item>
+      <title>Design Patterns - 行为型模式 - 观察者模式</title>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Fri, 06 Nov 2020 15:22:11 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/</guid>
+      <description>观察者模式： 　指多个对象间存在一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。
+观察者模式的角色：  抽象目标（Subject）：也叫抽象目标类，它提供了一个用于保存观察者对象的聚集类和增加、删除观察者对象的方法，以及通知所有观察者的抽象方法。 具体目标（ConcreteSubject）：也叫具体目标类，它实现抽象目标中的通知方法，当具体主题的内部状态发生改变时，通知所有注册过的观察者对象。 抽象观察者（Observer）：它是一个抽象类或接口，它包含了一个更新自己的抽象方法，当接到具体主题的更改通知时被调用。 具体观察者（ConcreteObserver）：实现抽象观察者中定义的抽象方法，以便在得到目标的更改通知时更新自身的状态。  观察者模式的应用场景：  对象间存在一对多关系，一个对象的状态发生改变会影响其他对象。 当一个抽象模型有两个方面，其中一个方面依赖于另一方面时，可将这二者封装在独立的对象中以使它们可以各自独立地改变和复用。  优点： 观察者和被观察者是抽象耦合的；建立的一套触发机制。
+缺点：  如果一个被观察者对象有很多的直接和间接的观察者的话，将所有的观察者都通知到会花费很多时间。 如果在观察者和观察目标之间有循环依赖的话，观察目标会触发它们之间进行循环调用，可能导致系统崩溃。 观察者模式没有相应的机制让观察者知道所观察的目标对象是怎么发生变化的，而仅仅只是知道观察目标发生了变化。  eg： class Observer { public: Observer(); virtual ~Observer(); virtual void Update()=0; }; //--------------------------------------------- class ConcreteObserver :public Observer{ public: ConcreteObserver(ConcreteSubject *sub,string name){ pSubject = sub; mName = name; } void Update(){ mObserverState = pSubject-&amp;gt;mSubjectState; cout &amp;lt;&amp;lt; &amp;#34;观察者&amp;#34; &amp;lt;&amp;lt; mName &amp;lt;&amp;lt; &amp;#34; 状态&amp;#34; &amp;lt;&amp;lt;mObserverState&amp;lt;&amp;lt;endl; } virtual ~ConcreteObserver(); ConcreteSubject* getSubject() { return pSubject; } void setSubject( ConcreteSubject* subject) { pSubject = subject; } private: string mName; string mObserverState; ConcreteSubject *pSubject; }; //--------------------------------------------- class Subject { public: Subject(); virtual ~Subject(); void Attach(Observer* p){ observers.</description>
+    </item>
+    
+    <item>
+      <title>Design Patterns - 行为型模式 - 职责链模式</title>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Fri, 06 Nov 2020 15:17:54 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F/</guid>
+      <description>职责链模式： 　在现实生活中，常常会出现这样的事例：一个请求需要多个对象处理，但每个对象的处理条件或权限不同。如公司员工报销差旅费，可审批的领导有部分负责人、副总经理、总经理等，但每个领导能审批的金额是不同的，不同的金额需要找相应的领导审批，也就是说要报销必须先搞清楚需要谁来审批。职责链模式就是为了解决这样的问题产生的。
+　职责链模式，又叫责任链模式。是为了避免请求发送者与多个请求处理者耦合在一起，将所有请求的处理者通过前一个对象记住其下一个对象的引用而连成一条链。当发生请求时，可将请求沿着这条链传递，直到有对象处理它为止。
+职责链模式的角色：  抽象处理者（Handler）：声明了所有具体处理者的通用接口。 该接口通常仅包含单个方法用于请求处理， 但有时其还会包含一个设置链上下个处理者的方法 具体处理者（ConcreteHandler）：包含处理请求的实际代码。 每个处理者接收到请求后， 都必须决定是否进行处理， 以及是否沿着链传递请求。处理者通常是独立且不可变的， 需要通过构造函数一次性地获得所有必要地数据。 请求信息（Request）：定义请求的信息。 客户端（Client）：可根据程序逻辑一次性或者动态地生成链。值得注意的是，请求可发送给链上的任意一个处理者，而非必须是第一个处理者。  优点：  请求者和接收者松耦合。在职责链模式中，请求者并不知道接收者是谁，也不知道具体如何处理，请求者只是负责向职责链发送请求就可以了。而每个职责对象也不用管请求者或者是其他的职责对象，只负责处理自己的部分，其他的就交给其他的职责对象去处理。也就是说，请求者和接受者是完全解耦的。 动态组合职责。职责链模式会把功能处理分散到单独的职责对象中，然后再使用的时候，可以动态组合职责形成职责链，从而可以灵活地给对象分配职责，也可以灵活地实现和改变对象的职责。 减少代码中的if..else..判断，优化代码。  缺点：  产生很多细粒度对象。职责链模式会把功能处理分散到单独的职责对象中，也就是每个职责对象只处理一个方面的功能，要把整个业务处理完，需要很多职责对象的组合，这样会产生大量的细粒度职责对象。 不一定能被处理。职责链模式的每个职责对象只负责自己处理的那一部分，因此可能会出现某个请求把整个链传递完了都没有职责对象处理它。这就需要使用职责链模式的时候，需要提供默认的处理，并且注意构造的链的有效性。 职责链建立的合理性要靠客户端来保证，增加了客户端的复杂性，可能由于职责链的错误设置而导致系统出错，如可能会造成循环调用。  职责链的应用场景：  有多个对象可以处理一个请求，哪个对象处理该请求由运行时刻自动确定。 可动态指定一组对象处理请求，或添加新的处理者 在不明确指定请求处理者的情况下，向多个处理者中的一个提交请求。  eg： class Manager { protected: Manager *m_manager; string m_name; public: Manager(Manager* manager,string name):m_manager(manager),m_name(name){} virtual void DealWithRequest(string name, int num) {} }; //-------------------------------------------------- class CommonManager : public Manager { public: CommonManager(Manager* manager,string name):Manager(manager,name){} void DealWithRequest(string name,int num) { if(num &amp;lt; 500) { cout &amp;lt;&amp;lt; &amp;#34;经理&amp;#34; &amp;lt;&amp;lt;m_name &amp;lt;&amp;lt; &amp;#34;批准&amp;#34; &amp;lt;&amp;lt; name &amp;lt;&amp;lt; &amp;#34;加薪&amp;#34; &amp;lt;&amp;lt; num &amp;lt;&amp;lt; &amp;#34;元&amp;#34; &amp;lt;&amp;lt;endl; } else { cout &amp;lt;&amp;lt; &amp;#34;经理&amp;#34; &amp;lt;&amp;lt; m_name &amp;lt;&amp;lt; &amp;#34;无法处理,交由总监处理&amp;#34; &amp;lt;&amp;lt;endl; m_manager-&amp;gt;DealWithRequest(name,num); } } }; class Majordomo:public Manager { public: Majordomo(Manager *manager,string name):Manager(manager,name){} virtual void DealWithRequest(string name,int num) { if(num &amp;lt; 1000) { cout &amp;lt;&amp;lt; &amp;#34;总监&amp;#34; &amp;lt;&amp;lt;m_name &amp;lt;&amp;lt; &amp;#34;批准&amp;#34; &amp;lt;&amp;lt; name &amp;lt;&amp;lt; &amp;#34;加薪&amp;#34; &amp;lt;&amp;lt; num &amp;lt;&amp;lt; &amp;#34;元&amp;#34; &amp;lt;&amp;lt;endl; } else { cout &amp;lt;&amp;lt; &amp;#34;总监&amp;#34; &amp;lt;&amp;lt; m_name &amp;lt;&amp;lt; &amp;#34;无法处理,交由总经理处理&amp;#34; &amp;lt;&amp;lt;endl; m_manager-&amp;gt;DealWithRequest(name,num); } } }; class GeneralManager : public Manager { public: GeneralManager(Manager *manager,string name):Manager(manager,name){} void DealWithRequest(string name,int num) { cout &amp;lt;&amp;lt; &amp;#34;总经理&amp;#34; &amp;lt;&amp;lt;m_name &amp;lt;&amp;lt; &amp;#34;批准&amp;#34; &amp;lt;&amp;lt; name &amp;lt;&amp;lt; &amp;#34;加薪&amp;#34; &amp;lt;&amp;lt; num &amp;lt;&amp;lt; &amp;#34;元&amp;#34; &amp;lt;&amp;lt;endl; } }; //-------------------------------------------------- //use  Manager *general = new GeneralManager(NULL,&amp;#34;a&amp;#34;); Manager *majordomo = new Majordomo(general,&amp;#34;b&amp;#34;); Manager *common = new CommonManager(majordomo,&amp;#34;c&amp;#34;); common-&amp;gt;DealWithRequest(&amp;#34;d&amp;#34;,400); common-&amp;gt;DealWithRequest(&amp;#34;d&amp;#34;,700); common-&amp;gt;DealWithRequest(&amp;#34;d&amp;#34;,1200); </description>
+    </item>
+    
+    <item>
+      <title>Design Patterns - 行为型模式 - 模板模式</title>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E6%A8%A1%E6%9D%BF%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Fri, 06 Nov 2020 15:13:59 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E6%A8%A1%E6%9D%BF%E6%A8%A1%E5%BC%8F/</guid>
+      <description>模板模式: 　提到模板，可能大多数人想到的是&amp;quot;简历模板&amp;quot;、&amp;ldquo;论文模板&amp;quot;等，比如我们要写简历时，会从网上下载一份漂亮的简历模板，其格式是固定的，我们根据自己的情况填充不同的内容。模板模式定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。模板方法使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。
+模板模式的角色：  模板方法（AbstractClass）：定义了一个或多个抽象操作，以便让子类实现，这些抽象操作称为基本操作； 模板方法的具体实现（ConcreteClass）：实现父类所定义的一个或多个抽象方法。  优点：  封装不变部分，扩展可变部分，符合OCP原则； 提取公共代码，便于维护； 行为由父类控制，子类实现。  缺点： 每一个不同的实现都需要一个子类来实现，导致类的个数增加，使得系统更加庞大。
+eg： class AbstractClass { public: AbstractClass(); virtual ~AbstractClass(); virtual void PrimitiveOperation1() = 0; virtual void PrimitiveOperation2() = 0; void TemplateMethod(){ PrimitiveOperation1(); PrimitiveOperation2(); } }; //------------------------------------- class ConcreteClassA : public AbstractClass{ public: ConcreteClassA(); virtual ~ConcreteClassA(); void PrimitiveOperation1(){ cout&amp;lt;&amp;lt;&amp;#34;ConcreteClassA PrimitiveOperation1&amp;#34;&amp;lt;&amp;lt;endl; } void PrimitiveOperation2(){ cout&amp;lt;&amp;lt;&amp;#34;ConcreteClassA PrimitiveOperation2&amp;#34;&amp;lt;&amp;lt;endl; } }; class ConcreteClassB : public AbstractClass{ public: ConcreteClassB(); virtual ~ConcreteClassB(); void PrimitiveOperation1(){ cout&amp;lt;&amp;lt;&amp;#34;ConcreteClassB PrimitiveOperation1&amp;#34;&amp;lt;&amp;lt;endl; } void PrimitiveOperation2(){ cout&amp;lt;&amp;lt;&amp;#34;ConcreteClassB PrimitiveOperation2&amp;#34;&amp;lt;&amp;lt;endl; } }; //------------------------------------- //use 	AbstractClass * p = new ConcreteClassA(); p-&amp;gt;TemplateMethod(); </description>
+    </item>
+    
+    <item>
+      <title>Design Patterns - 行为型模式 - 策略模式</title>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Fri, 06 Nov 2020 15:06:29 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/</guid>
+      <description>策略模式： 　策略模式是对算法的包装，是把使用算法的责任和算法本身分割开来，委派给不同的对象管理。策略模式通常把一个系列的算法包装到一系列的策略类里面，作为一个抽象策略类的子类。用一句话来说，就是：“准备一组算法，并将每一个算法封装起来，使得它们可以互换”。
+策略模式的角色：　  环境类（Context）：采用组合或聚合的方式维护一个对Strategy对象的引用。 抽象策略类（Strategy）：定义所有支持的算法的公共接口。Context使用这个接口来调用某ConcreteStrategy定义的算法。 具体策略类（ConcreteStrategy）：实现Strategy接口。  优点：  策略模式提供了管理相关的算法族的办法。策略类的等级结构定义了一个算法或行为族。恰当使用继承可以把公共的代码转移到父类里面，从而避免重复的代码。 策略模式提供了可以替换继承关系的办法。继承可以处理多种算法或行为。如果不是用策略模式，那么使用算法或行为的环境类就可能会有一些子类，每一个子类提供一个不同的算法或行为。但是，这样一来算法或行为的使用者就和算法或行为本身混在一起。决定使用哪一种算法或采取哪一种行为的逻辑就和算法或行为的逻辑混合在一起，从而不可能再独立演化。继承使得动态改变算法或行为变得不可能。 使用策略模式可以避免使用多重条件转移语句。多重转移语句不易维护，它把采取哪一种算法或采取哪一种行为的逻辑与算法或行为的逻辑混合在一起，统统列在一个多重转移语句里面，比使用继承的办法还要原始和落后。  缺点：  客户端必须知道所有的策略类，并自行决定使用哪一个策略类。这就意味着客户端必须理解这些算法的区别，以便适时选择恰当的算法类。换言之，策略模式只适用于客户端知道所有的算法或行为的情况。 策略模式造成很多的策略类，每个具体策略类都会产生一个新类。有时候可以通过把依赖于环境的状态保存到客户端里面，而将策略类设计成可共享的，这样策略类实例可以被不同客户端使用。换言之，可以使用享元模式来减少对象的数量。  策略模式的应用场景：  一个系统需要动态地在几种算法中选择一种时，可将每个算法封装到策略类中。 一个类定义了多种行为，并且这些行为在这个类的操作中以多个条件语句的形式出现，可将每个条件分支移入它们各自的策略类中以代替这些条件语句。 系统中各算法彼此完全独立，且要求对客户隐藏具体算法的实现细节时。 系统要求使用算法的客户不应该知道其操作的数据时，可使用策略模式来隐藏与算法相关的数据结构。 多个类只区别在表现行为不同，可以使用策略模式，在运行时动态选择具体要执行的行为。  区别： 策略模式与工厂模式的区别？ 　从结构上看，策略模式和工厂模式都是子类继承抽象父类，通过传入参数到容器类（工厂模式的factory类，策略模式的Content类），选择对应的类进行行为操作。但是我们都知道工厂模式是创建型设计模式，而策略模式则是行为型设计模式。那两者到底有什么区别呢？
+ 工厂模式是用来创建对象，策略模式是让一个对象在许多行为中选择一种行为。 关注点不一样，一个关注对象的创建，一个关注的是行为封装。 解决不同的问题：工厂模式是创建型的设计模式，它接受指令，创建出符合要求的实例；它主要解决的是资源的统一分发，将对象的创建完全独立出来，让对象的创建和具体的使用客户无关。主要应用在多数据库选择，类库文件加载等。策略模式是为了解决的是策略的切换与扩展，更简洁的说是定义策略族，分别封装起来，让他们之间可以相互替换，策略模式让策略的变化独立于使用策略的客户。 工厂相当于黑盒子，策略相当于白盒子。  策略模式与桥接模式的区别？ 　在桥接模式中，Abstraction通过聚合的方式引用Implementor。策略模式中，Context也使用聚合的方式引用Strategy抽象接口。从两者的结构图可以看出，在这两种模式中，都存在一个对象使用聚合的方式引用另一个对象的抽象接口的情况，而且该抽象接口的实现可以有多种并且可以替换。可以说两者在表象上都是调用者与被调用者之间的解耦，以及抽象接口与实现的分离。但两者存在一定的区别：
+ 在形式上，在桥接模式中不仅Implementor具有变化（ConcreateImplementior），而且Abstraction也可以发生变化（RefinedAbstraction），而且两者的变化是完全独立的，RefinedAbstraction与ConcreateImplementior之间松散耦合，它们仅仅通过Abstraction与Implementor之间的关系联系起来。而在策略模式中，并不考虑Context的变化，只有算法的可替代性。 在语意上，桥接模式强调Implementor接口仅提供基本操作，而Abstraction则基于这些基本操作定义更高层次的操作。而策略模式强调Strategy抽象接口的提供的是一种算法，一般是无状态、无数据的，而Context则简单调用这些算法完成其操作。 桥接模式中不仅定义Implementor的接口而且定义Abstraction的接口，Abstraction的接口不仅仅是为了与Implementor通信而存在的，这也反映了结构型模式的特点：通过继承、聚合的方式组合类和对象以形成更大的结构。在策略模式中，Startegy和Context的接口都是两者之间的协作接口，并不涉及到其它的功能接口，所以它是行为模式的一种。行为模式的主要特点就是处理的是对象之间的通信方式，往往是通过引入中介者对象将通信双方解耦，在这里实际上就是将Context与实际的算法提供者解耦。 所以相对策略模式，桥接模式要表达的内容要更多，结构也更加复杂。桥接模式表达的主要意义其实是接口隔离的原则，即把本质上并不内聚的两种体系区别开来，使得它们可以松散的组合，而策略在解耦上还仅仅是某一个算法的层次，没有到体系这一层次。从结构图中可以看到，策略的结构是包容在桥接结构中的，桥接中必然存在着策略模式，Abstraction与Implementor之间就可以认为是策略模式，但是桥接模式一般Implementor将提供一系列的成体系的操作，而且Implementor是具有状态和数据的静态结构。而且桥接模式Abstraction也可以独立变化。  eg： class AbstractPay { public: virtual void pay() = 0; }; class CashPay :public AbstractPay { public: void pay() { cout &amp;lt;&amp;lt; &amp;#34;现金支付&amp;#34; &amp;lt;&amp;lt; endl; } }; class CreditcardPay :public AbstractPay { public: void pay() { cout &amp;lt;&amp;lt; &amp;#34;信用卡支付&amp;#34; &amp;lt;&amp;lt; endl; } }; //---------------------------------- class Context { private: AbstractPay* strategyPay; public: Context(AbstractPay* strategy){ this-&amp;gt;strategyPay = strategy; } void ContextPay(){ strategy-&amp;gt;Pay(); } }; //---------------------------------- //use  Context* context1; AbstractPay *basePay1 = new CashPay(); context1 = new Context(basePay1); context1-&amp;gt;ContextInterface(); Context* context2; AbstractPay *basePay2 = new CreditcardPay(); context2 = new Context(basePay2); context2-&amp;gt;ContextInterface(); </description>
+    </item>
+    
+    <item>
+      <title>Design Patterns - 结构型模式 - 组合模式</title>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Fri, 06 Nov 2020 15:01:11 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/</guid>
+      <description>组合模式： 定义： 　组合模式又叫部分整体模式，它是一种将对象组合成树状的层次结构模式，用来表示&amp;quot;部分-整体&amp;quot;的关系，使用户对单个对象和组合对象具有一致的访问性。
+组合模式的角色：  抽象构建（Component）：它的主要作用是为树叶构件和树枝构件声明公共接口，并实现它们的默认行为。在透明式的组合模式中抽象构件还声明访问和管理子类的接口；在安全式的组合模式中不声明访问和管理子类的接口，管理工作由树枝构件完成。 树叶构件（Leaf）：是组合中的叶节点对象，它没有子节点，用于实现抽象构件角色中 声明的公共接口。 树枝构件（Composite）：是组合中的分支节点对象，它有子节点。它实现了抽象构件角色中声明的接口，它的主要作用是存储和管理子部件，通常包含 Add()、Remove()、GetChild() 等方法。  优点：  组合模式使得客户端代码可以一致地处理单个对象和组合对象，无须关心自己处理的单个对象还是组合对象，这简化了客户端代码； 更容易在组合体内加入新的对象，客户端不会因为加入新的对象而更改源代码，满足OCP原则。  缺点：  设计较复杂，客户端需要花更多的时间理清类之间的层次关系； 不容易限制容器中的构件； 不容易用继承的方法来增加构件的新功能。  eg: class ComponentPtr { protected: std::string m_strName; public: ComponentPtr(std::string str) { m_strName = str; } virtual void add(ComponentPtr * p) = 0; virtual void remove(ComponentPtr * p) = 0; virtual void display() = 0; }; //----------------------------------------------- class LeafPtr : public ComponentPtr { public: LeafPtr(std::string str) : ComponentPtr(str) {} void add(ComponentPtr * p) { std::cout &amp;lt;&amp;lt; &amp;#34;Leaf cannot add&amp;#34; &amp;lt;&amp;lt; std::endl; } void remove(ComponentPtr * p) { std::cout &amp;lt;&amp;lt; &amp;#34;Leaf cannot remove&amp;#34; &amp;lt;&amp;lt; std::endl; } void display() { std::cout &amp;lt;&amp;lt; m_strName &amp;lt;&amp;lt; std::endl; } }; class CompositePtr : public ComponentPtr { private: // 这里使用智能指针不用自己释放new的内存 	std::vector&amp;lt;std::shared_ptr&amp;lt;ComponentPtr&amp;gt;&amp;gt; m_vec; public: CompositePtr(std::string str) : ComponentPtr(str) {}; ~CompositePtr() { if (!</description>
+    </item>
+    
+    <item>
+      <title>Design Patterns - 结构型模式 - 享元模式</title>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Fri, 06 Nov 2020 14:52:09 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/</guid>
+      <description>享元模式： 定义： 　运用共享技术有效地支持大量细粒度对象的复用。享元模式可以避免大量相似类的开销，在软件开发中如果需要生成大量细粒度的类实例，而这些类实例除了几个参数外基本上相同，那么这时就可以使用享元模式大幅度减少实例化类的数量。如果能把这些参数移动到实例外，在方法调用时将他们传递进去，这样就可以通过共享大幅度减少单个实例的数目。这里我们把移动到类实例外部的参数称为享元对象的外部状态，把在享元对象内部定义称为内部状态。由于享元模式要求能够共享的对象必须是细粒度对象，因此它又称为轻量级模式，他是一种结构型设计模式。
+状态： 享元模式结构较为复杂，一般结合工厂模式一起使用。
+ 外部状态：随环境改变而改变的，不可以共享的状态。 内部状态：在享元对象内部并且不会随着环境的变化而改变的共享部分。  享元模式的角色：  抽象享元类（Flyweight）：通常是一个接口或抽象类，在抽象享元类中声明了具体享元类公共的方法，这些方法可以向外界提供享元对象的内部数据（内部状态），同时也可以通过这些方法来设置外部数据（外部状态）。 具体享元类（ConcreteFlyweight）：它实现了抽象享元类，其实例称为享元对象；在具体享元类中为内部状态提供了存储空间。通常我们可以结合单例模式来设计具体享元类，为每一个具体享元类提供唯一的享元对象。 非共享具体享元类（UnsharedConcreteFlyweight）：并不是所有的抽象享元类的子类都需要被共享，不能被共享的子类可设计为非共享具体享元类；当需要一个非共享具体享元类的对象时可以直接通过实例化创建。 享元工厂类（FlyweightFactory）：享元工厂类用于创建并管理享元对象，它针对抽象享元类编程，将各种类型的具体享元对象存储在一个享元池中，享元池一般设计为一个存储“键值对”的集合（也可以是其他类型的集合），可以结合工厂模式进行设计；当用户请求一个具体享元对象时，享元工厂提供一个存储在享元池中已创建的实例或者创建一个新的实例（如果不存在的话），返回新创建的实例并将其存储在享元池中。  优点： 降低系统中的对象的数量，从而降低了系统中细粒度对象给内存带来的压力。
+缺点：  为了使对象可以共享，需要将一些状态外部化，这使得程序的逻辑更复杂，使系统复杂化。 享元模式将享元对象的状态外部化，而读取外部状态使得运行时间稍微变长。  区别： 享元模式与原型模式的区别：  享元模式是结构型设计模式，而原型模式是创建型设计模式。 原型模式关注的是类的重复创建问题，而享元模式关注的是对象的创建问题。 原型模式创建的对象属性完全一样，而享元模式会根据不同的外部状态创建不一样的对象实例。  享元模式与单例模式的区别： 通过搜索我发现有许多关于享元模式与单例模式的区别，现总结如下：
+ 享元设计模式是一个类有很多对象，而单例是一个类仅一个对象。 享元模式是为了节约内存空间，提升程序性能（避免大量的new操作），而单例模式则主要是出于共享状态的目的。  eg: class Flyweight { public: virtual void Operation(int n) = 0; }; class ConcreteFlyweight_0 : public Flyweight { public: void Operation(int n) { std::cout &amp;lt;&amp;lt; &amp;#34;ConcreteFlyweight_0:&amp;#34; &amp;lt;&amp;lt; n &amp;lt;&amp;lt; std::endl; } }; class ConcreteFlyweight_1 : public Flyweight { public: void Operation(int n) { std::cout &amp;lt;&amp;lt; &amp;#34;ConcreteFlyweight_1:&amp;#34; &amp;lt;&amp;lt; n &amp;lt;&amp;lt; std::endl; } }; class ConcreteFlyweight_2 : public Flyweight { public: void Operation(int n) { std::cout &amp;lt;&amp;lt; &amp;#34;ConcreteFlyweight_2:&amp;#34; &amp;lt;&amp;lt; n &amp;lt;&amp;lt; std::endl; } }; //---------------------------------------------- // 享元工厂 class FlyweightFactory { private: std::map&amp;lt;int, Flyweight *&amp;gt; m_map; public: FlyweightFactory() { m_map.</description>
+    </item>
+    
+    <item>
+      <title>Design Patterns - 结构型模式 - 桥接模式</title>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Fri, 06 Nov 2020 14:46:17 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/</guid>
+      <description>桥接模式： 　桥接是用于把抽象化与实现化解耦，使得两者可以独立变化。
+桥接模式的角色：  抽象化角色（Abstraction）：它是用于定义抽象接口，通常是抽象类而不是接口，其中定义了一个Implementor(实现接口)类型的对象并可以维护该对象，它与Implementor之间具有关联关系。 改善后的抽象化角色（RefinedAbstraction）：通常是具体类，实现了Abstraction中的抽象方法，在RefinedAbstraction中可以调用Implementor中定义的方法。 实现者角色（Implementor）：通常情况下提供一些基本操作的声明，将具体实现交给其子类。 具体的实现者角色（ConcreteImplementorA、ConcreteImplementorB）：实现了Implementor种定义的方法，运行时根据里氏替换原则，ConcreteImplementor对象将替换其父类对象，提供给抽象对象类具体的业务操作方法。  为什么使用桥接模式？ 　我们都知道遥控器的通用功能是开机、关机，早先我们的做法应该是这样的：创建一个抽象遥控器类，里面定义开机、关机的一组方法，然后创建具体的遥控器类去继承或实现这个接口，这样就可以满足每个电视机的需求。但突然有一天，客户觉得这个遥控器的功能太少了，需要增加一个返回按钮，这个时候你傻眼了，你给抽象类添加了一个新方法，突然发现程序大面积报错，原因是子类未实现父类方法，于是霹雳巴拉一通改。好不容易改好了，客户又说了：想要一个菜单功能，于是&amp;hellip;.
+　从上面的例子看出，这种设计违背了OCP原则，原因是类与类之间的耦合性过高，那怎样降低耦合呢？桥接模式是用于把抽象化和实现化解耦，使得两者可以独立变化。
+优点： 抽象接口与其实现解耦，其中的抽象和实现可以独立的进行扩展，不会影响对方。
+缺点： 增加了系统的复杂度。
+使用场景：  如果一个系统需要在构件的抽象化角色和具体化角色之间添加更多的灵活性，避免在两个层次之间建立静态的联系； 设计要求实现化角色的任何改变不应当影响客户端，或者实现化角色的改变对客户端是完全透明的； 需要跨越多个平台的图形和窗口系统上； 一个类存在两个独立变化的维度，且两个维度都需要进行扩展。  区别： 桥接模式和适配器模式、代理模式的区别：
+ 桥接模式提出是为了使用变化的，即需求发生多维度变化怎么办？而适配器模式的提出是为了解决兼容性问题，即由不兼容到兼容；代理模式提出主要是为了接口隔离。  eg： class COS { public: virtual void Run(){} }; class CLinuxOS : public COS { public: void Run(){cout &amp;lt;&amp;lt; &amp;#34;LinuxOS run()&amp;#34; &amp;lt;&amp;lt; endl;} }; class CUnixOS : public COS { public: void Run(){cout &amp;lt;&amp;lt; &amp;#34;CUnixOS run()&amp;#34; &amp;lt;&amp;lt; endl;} }; //------------------------------------ class CComputer { public: virtual void InstallOS(COS *os){} }; class CIBMComputer : public CComputer { public: void InstallOS(COS *os){ os-&amp;gt;Run();} }; class CHPComputer : public CComputer { public: void InstallOS(COS *os){ os-&amp;gt;Run();} }; //------------------------------------ //use  COS *os = new CLinuxOS(); CComputer *cmptr = new CIBMComputer(); cmptr-&amp;gt;InstallOS(os); </description>
+    </item>
+    
+    <item>
+      <title>Design Patterns - 结构型模式 - 适配器模式</title>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Fri, 06 Nov 2020 14:40:50 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/</guid>
+      <description>适配器模式： 　将某个类的接口转换成客户端期望的另一个接口表示，主要的目的是兼容性，让原本因接口不匹配不能一起工作的两个类可以协同工作。如读卡器是作为内存卡和笔记本之间的适配器，需要将内存卡插入读卡器，再将读卡器插入笔记本，这样笔记本就可以读取内存卡了。
+适配器模式的主要角色：  目标接口（Target）：当前系统业务所期待的接口，它可以是抽象类或接口。 适配者类（Adaptee）：被访问和适配的现存组件库中的组件接口。 适配器类（Adapter）：转换器，通过继承或引用适配者的对象，把适配者接口转换成目标接口，让客户按目标接口的格式访问适配者。  分类： 适配器模式主要分三类：
+ 类适配器模式、 对象适配器模式、 接口适配器模式。  优点： 　1、客户端通过适配器可以透明地调用目标接口。
+　2、复用了现存的类，开发人员不需要修改原有代码而重用现有的适配者类。
+　3、将目标类和适配者类解耦，解决了目标类和适配者类接口不一致的问题。
+缺点： 　1、对类适配器来说，更换适配器的实现过程比较复杂。
+　2、过多的适配器，会让系统零乱，不易整体进行把握。
+类适配器模式 　当前去外地出差，工作繁忙，回到宾馆也不得不工作。当你拿出电脑，准备接电源，卧槽&amp;hellip;不支持！！！电源是两孔的，而插座是三孔的，怎么办呢？你会想到去楼下小商店买个转换插座，将三孔插座转成两孔的来用，简直太聪明了。
+class ThreePhaseOutlet { public: void doThreePhasePlugin() { cout&amp;lt;&amp;lt;&amp;#34;三相插头强势插入！&amp;#34;&amp;lt;&amp;lt;endl; } }; class TwoPhaseOutlet { public: virtual void doPlugin() = 0; }; class OutletConvertor: public TwoPhaseOutlet,public ThreePhaseOutlet { public: void doPlugin() { doConvertor(); doThreePhasePlugin(); }	void doConvertor() { cout&amp;lt;&amp;lt;&amp;#34;三相插头转为两厢插头！&amp;#34;&amp;lt;&amp;lt;endl; } }; 对象适配器模式 　当手机没电需要充电，你不可能直接使用220V的电压，如果你真这么做了，请注意人身安全及购买一台新机。此时，充电器就起到了转换器的作用，将220V电压转换成手机可使用的5V电压。</description>
+    </item>
+    
+    <item>
+      <title>Design Patterns - 结构型模式 - 外观模式</title>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Fri, 06 Nov 2020 14:35:57 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F/</guid>
+      <description>外观模式： 　外部通过一个统一的接口，访问子系统中的一群接口。外观模式定义了一个高层接口，为子系统中的一组接口提供一个一致的入口，使得子系统更容易使用。外观模式相对比较简单，可以理解为中介，原先租房需要自己一个个筛选，联系房东，谈好价格，签合同等等，现在不需要这些了，只要你说出要求中介就会将房子找好，你只需要掏钱签合同就可以了，不需要关系其他琐碎的事情。
+外观模式的角色：  外观角色：为多个子系统对外提供一个共同的接口； 子系统角色：实现系统的部分功能，客户可以通过外观角色访问它； 客户角色：通过一个外观角色访问各个子系统的功能。  优点： 外观模式是迪米特法则的典型应用。
+ 降低了子系统与客户端之间的耦合度，使得子系统的变化不会影响调用它的客户类； 对客户屏蔽了子系统组件，减少了客户处理的对象数目，并使得子系统使用起来更加容易； 降低了大型软件系统中的编译依赖性，简化了系统在不同平台之间的移植过程，因为编译一个子系统不会影响其他的子系统，也不会影响外观对象。  缺点：  不能很好的限制客户使用子系统； 违背了开闭原则  eg： class SysOne { public: SysOne(); virtual ~SysOne(); void FuncOne(){ cout&amp;lt;&amp;lt;&amp;#34;FuncOne&amp;#34;&amp;lt;&amp;lt;endl; } }; class SysTwo { public: SysTwo (); virtual ~SysTwo (); void FuncTwo(){ cout&amp;lt;&amp;lt;&amp;#34;FuncTwo&amp;#34;&amp;lt;&amp;lt;endl; } }; class SysThree { public: SysThree (); virtual ~SysThree (); void FuncThree(){ cout&amp;lt;&amp;lt;&amp;#34;FuncThree&amp;#34;&amp;lt;&amp;lt;endl; } }; //------------------------ class Facade { public: Facade(){ p1 = new SysOne(); p2 = new SysTwo(); p3 = new SysThree(); } void FuncA(){ p1-&amp;gt;FuncOne(); p2-&amp;gt;FuncTwo(); } void FuncB(){ p1-&amp;gt;FuncOne(); p3-&amp;gt;FuncThree(); } virtual ~Facade(); private: SysOne *p1; SysTwo *p2; SysThree *p3; }; Facade * p =new Facade(); p-&amp;gt;FuncA(); </description>
+    </item>
+    
+    <item>
+      <title>Design Patterns - 结构型模式 - 装饰模式</title>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Fri, 06 Nov 2020 14:29:09 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/</guid>
+      <description>装饰者模式： 　允许向一个现有的对象添加新的功能，同时又不改变其结构。装饰器模式是一种用于代替继承的技术，无需通过继承增加子类就能扩展对象的新功能。使用对象的关联关系代替继承关系，更加灵活，同时避免类型体系的快速膨胀。
+装饰者模式有四个角色： 　1）抽象构建（Component ）：给出一个抽象接口，来规范被添加职责的对象；
+　2）具体构件（ConcreteComponent）：定义一个将要接收附加责任的具体对象；
+　3）装饰抽象类（Decorator）：持有一个构件（Component）对象的实例，并定义一个与抽象构件接口一致的接口；
+　4）具体装饰对象（ConreteDecorator）：负责给构件对象 ”贴上“附加的责任。起到给Component添加职责的功能。
+要点： 　1）装饰者和被装饰对象有相同的超类型。
+　2）可以用一个或多个装饰者包装一个对象。
+　3）装饰者可以在所委托被装饰者的行为之前或之后，加上自己的行为，以达到特定的目的。
+　4）对象可以在任何时候被装饰，所以可以在运行时动态的，不限量的用你喜欢的装饰者来装饰对象。
+　5）装饰模式中使用继承的关键是想达到装饰者和被装饰对象的类型匹配，而不是获得其行为。
+　6）装饰者一般对组件的客户是透明的，除非客户程序依赖于组件的具体类型。在实际项目中可以根据需要为装饰者添加新的行为，做到“半透明”装饰者。
+优点：  装饰这模式和继承的目的都是扩展对象的功能，但装饰者模式比继承更灵活； 通过使用不同的具体装饰类以及这些类的排列组合，设计师可以创造出很多不同行为的组合； 装饰者模式有很好地可扩展性  缺点： 装饰者模式会导致设计中出现许多小对象，如果过度使用，会让程序变的更复杂。并且更多的对象会是的差错变得困难，特别是这些对象看上去都很像。
+区别： 装饰者模式与代理模式的区别：  两种模式的关注点不同，装饰者模式关注的是在一个对象上动态的添加方法，而代理模式关注的是控制对象的访问。 装饰者模式可以让使用者直观的看到增强了哪些功能，而代理模式完全限制了使用者，只去调用代理，至于代理里面增加了什么功能，使用者是不知道，隐藏了一个对象的具体信息，这正是为什么代理模式在初始化时不能像装饰模式一样传入一个原始对象的参数的原因。 代理和真实对象之间的的关系通常在编译时就已经确定了，而装饰者能够在运行时递归地被构造。  //公共抽象类 class Phone { public: Phone() {} virtual ~Phone() {} virtual void ShowDecorate() {} }; //-------------------------------- //具体的手机类 class iPhone : public Phone { private: string m_name; //手机名称 public: iPhone(string name): m_name(name){} ~iPhone() {} void ShowDecorate() { cout&amp;lt;&amp;lt;m_name&amp;lt;&amp;lt;&amp;#34;的装饰&amp;#34;&amp;lt;&amp;lt;endl;} }; class NokiaPhone : public Phone { private: string m_name; public: NokiaPhone(string name): m_name(name){} ~NokiaPhone() {} void ShowDecorate() { cout&amp;lt;&amp;lt;m_name&amp;lt;&amp;lt;&amp;#34;的装饰&amp;#34;&amp;lt;&amp;lt;endl;} }; //-------------------------------- //装饰类 class DecoratorPhone : public Phone { private: Phone *m_phone; //要装饰的手机 public: DecoratorPhone(Phone *phone): m_phone(phone) {} virtual void ShowDecorate() { m_phone-&amp;gt;ShowDecorate(); } }; class DecoratorPhoneA : public DecoratorPhone { public: DecoratorPhoneA(Phone *phone) : DecoratorPhone(phone) {} void ShowDecorate() { DecoratorPhone::ShowDecorate(); cout&amp;lt;&amp;lt;&amp;#34;增加挂件&amp;#34;&amp;lt;&amp;lt;endl; } //增加的装饰 }; class DecoratorPhoneB : public DecoratorPhone { public: DecoratorPhoneB(Phone *phone) : DecoratorPhone(phone) {} void ShowDecorate() { DecoratorPhone::ShowDecorate(); cout&amp;lt;&amp;lt;&amp;#34;屏幕贴膜&amp;#34;&amp;lt;&amp;lt;endl; } }; //-------------------------------- //use 	Phone *iphone = new NokiaPhone(&amp;#34;6300&amp;#34;); Phone *dpa = new DecoratorPhoneA(iphone); //装饰，增加挂件 	Phone *dpb = new DecoratorPhoneB(dpa); //装饰，屏幕贴膜 	dpb-&amp;gt;ShowDecorate(); </description>
+    </item>
+    
+    <item>
+      <title>Design Patterns - 结构型模式 - 代理模式</title>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Fri, 06 Nov 2020 14:21:20 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</guid>
+      <description>代理模式： 　代理模式就是给某一个对象提供一个代理，并由代理对象控制对原有对象的引用。在一些情况下，一个客户不想或者不能直接引用一个对象，而代理对象可以在客户端和目标对象之间起到中介的作用。例如windows桌面端的快捷方式就是一个代理。
+代理模式按照使用目的可以分为：
+ 远程代理：为一个位于不同的地址空间的对象提供一个局域代表对象。这个不同的地址空间可以是本电脑中，也可以在另一台电脑中。如客户端调用web服务或wcf服务。 虚拟代理：根据需要创建一个资源消耗较大的对象，使得对象只在需要时才会被真正创建。 Copy-on-Write代理：虚拟代理的一种，把复制（或克隆）拖延到只有在客户端需要时，才真正采取行动。 保护（Protected or Access）代理：控制一个对象的访问，可以给不同的用户提供不同级别的使用权限。 Cache代理：为某一个目标操作的结果提供临时的存储空间，以便多个客户端可以操作这些结果。 防火墙（FireWall）代理：保护目标不让恶意用户接近。 同步化（Synchronization）代理 智能引用（Smart Reference）代理：当一个对象被引用时，提供一些额外的操作，比如将对此对象调用的次数记录下来。  代理模式角色分四种： 　1）主题接口（Searcher）：定义代理类和真实主题的公共对外方法，也是代理类代理真实主题的方法；
+　2）真实主题（RealSeracher）：真正实现业务逻辑的类；
+　3）代理类（ProxySeracher）：用来代理和封装真实主题；
+　4）客户端：使用代理类和主题完成工作。
+优点： 　1）代理模式能够将调用用于真正被调用的对象隔离，在一定程度上降低了系统的耦合度；
+　2）代理对象在客户端和目标对象之间起到一个中介的作用，这样可以起到对目标对象的保护。代理对象可以在对目标对象发出请求之前进行一个额外的操作，例如权限检查等。
+缺点： 　1）由于在客户端和真实主题之间增加了一个代理对象，所以会造成请求的处理速度变慢；
+　2）实现代理类也需要额外的工作，从而增加了系统的实现复杂度。
+区别： 代理模式与适配器模式的区别？ 　学习完适配器模式和代理模式之后，会产生这样的疑问：貌似两种模式差不多？两者都是定义了一个目标对象（抽象对象），客户端依赖该抽象对象完成相应功能，这么一解释好像是一样的，那为什么大牛们会分成两种模式呢？适配器模式是因为新旧接口不一致导致出现了客户端无法得到满足的问题，但由于旧的接口是不能被完全重构掉的，因为我们还想使用实现了这个接口的一些服务。那么为了使用以前实现旧接口的服务，我们就应该把新的接口转换成旧接口；实现这个转换的类就是抽象意义的转换器。相比于适配器的应用场景，代理就不一样了，虽然代理也同样是增加了一层，但是，代理提供的接口和原本的接口是一样的，代理模式的作用是不把实现直接暴露给客户端，而是通过代理这个层，代理能够做一些处理。
+代理模式与委托的区别？  代理是模式提供一种&amp;quot;一个类对另外一个类的控制权&amp;quot;是类与类之间关系；委托提供了&amp;quot;一种方法的执行会同时执行加载在上面的方法&amp;quot;是方法与方法之间的关系。 委托可以代替代理，但是代理不能代替委托。 委托可以动态加载方法，代理不能实现。 委托对象所加载的方法不一定要属于同一个类。但是代理的类必须属于同一个类。   eg: class SchoolGirl { public: SchoolGirl(string name):mName(name){}; virtual ~SchoolGirl(); string getName(){ return mName; } private: string mName; }; //-------------------------------- class GiveGift { public: GiveGift(); virtual ~GiveGift(); virtual void GiveDolls() = 0; virtual void GiveFlowers() = 0; virtual void GiveChocolate() = 0; }; class Pursuit : GiveGift{ public: Pursuit(SchoolGirl *p): pSchoolGirl(p){}; virtual ~Pursuit(); SchoolGirl *pSchoolGirl; virtual void GiveDolls() { cout&amp;lt;&amp;lt;pSchoolGirl-&amp;gt;getName()&amp;lt;&amp;lt;&amp;#34;GiveDolls&amp;#34;&amp;lt;&amp;lt;endl; } virtual void GiveFlowers() { cout&amp;lt;&amp;lt;pSchoolGirl-&amp;gt;getName()&amp;lt;&amp;lt;&amp;#34;GiveFlowers&amp;#34;&amp;lt;&amp;lt;endl; } virtual void GiveChocolate() { cout&amp;lt;&amp;lt;pSchoolGirl-&amp;gt;getName()&amp;lt;&amp;lt;&amp;#34;GiveChocolate&amp;#34;&amp;lt;&amp;lt;endl; } }; class Proxy : GiveGift{ public: Proxy(SchoolGirl *p){ pPursuit = new Pursuit(p); }; virtual ~Proxy(); Pursuit *pPursuit; virtual void GiveDolls() { pPursuit-&amp;gt;GiveDolls(); } virtual void GiveFlowers() { pPursuit-&amp;gt;GiveFlowers(); } virtual void GiveChocolate() { pPursuit-&amp;gt;GiveChocolate(); } }; //-------------------------------- //use  SchoolGirl *p =new SchoolGirl(&amp;#34;girl&amp;#34;); Proxy *daili =new Proxy(p); daili-&amp;gt;GiveDolls(); daili-&amp;gt;GiveFlowers(); daili-&amp;gt;GiveChocolate(); </description>
+    </item>
+    
+    <item>
+      <title>Design Patterns - 创建型模式 - 建造者模式</title>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Fri, 06 Nov 2020 14:14:54 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/</guid>
+      <description>建造者模式 引言： 　无论是在现实世界中还是在软件系统中，都存在一些复杂的对象，它们拥有多个组成部分，如汽车，它包括车轮、底盘、发动机、方向盘等各种部件。而对于大部分用户而言，无须知道这些部件的装配细节，也几乎不会使用单独某个部件，而是使用一辆完整的汽车。有的人说：抽象工厂模式不是用来生产产品的吗，我们使用它来解决不是可以了吗？貌似有一定的道理，但是你有没有考虑到了安装细节，每辆汽车的零部件安装细节可能是不同的。抽象工厂模式实现对产品家族的创建，一个产品家族是这样的一系列产品：具有不同分类维度的产品组合，采用抽象工厂模式不需要关心构建过程，只关心什么产品由什么工厂生产即可。那怎么办呢？于是，建造者模式应运而生。
+介绍： 　建造者模式又叫生成器模式，是一种对象构建模式。它可以将复杂对象的建造过程抽象出来（抽象类别），使这个抽象过程的不同实现方法可以构造出不同表现（属性）的对象。
+　建造者模式是一步一步创建一个复杂的对象，它允许用户只通过指定复杂对象的类型和内容就可以构建它们，用户不需要知道内部的具体构造细节。
+建造者模式有四个角色：  Product（产品）：一个具体的产品对象。（也可以使用抽象工厂模式来进行细分） Builder（抽象建造者）：创建一个Product对象的各个部件指定的接口。 ConcreteBuilder（具体建造者）：实现接口，构建和装配各个部件。 Diretor（指挥者）：构建一个使用Builder接口的对象。它主要是用于创建一个复杂的对象。它主要有两个作用，一是：隔离客户与对象的生产过程，二是：负责控制产品对象的生产过程。  建造者模式的优点：  客户端不必知道产品内部组成的细节，将产品本身与产品的创建过程解耦，使得相同的创建过程可以创建不同的产品对象。 每一个具体建造者都相对独立，而与其他的具体建造者无关，因此可以很方便地替换具体建造者或增加新的具体建造者，用户使用不同的具体建造者即可得到不同的产品对象 。 可以更加精细地控制产品的创建过程。将复杂产品的创建步骤分解在不同的方法中，使得创建过程更加清晰，也更方便使用程序来控制创建过程。 增加新的具体建造者无须修改原有类库的代码，指挥者类针对抽象建造者类编程，系统扩展方便，符合OCP原则。  建造模式的缺点：  产品之间差异性很大的情况： 建造者模式所创建的产品一般具有较多的共同点，其组成部分相似，如果产品之间的差异性很大，则不适合使用建造者模式，因此其使用范围受到一定的限制。 产品内部变化很复杂的情况： 如果产品的内部变化复杂，可能会导致需要定义很多具体建造者类来实现这种变化，导致系统变得很庞大。  eg： class Product { public: Product(); virtual ~Product(); void Add(string part){ mParts.push_back(part); } void Show(){ list &amp;lt;string&amp;gt;::iterator iter; for(iter = mParts.begin();iter!= mParts.end();iter++){ cout &amp;lt;&amp;lt; *iter &amp;lt;&amp;lt;&amp;#34; &amp;#34;&amp;lt;&amp;lt;endl; } } list &amp;lt;string&amp;gt; mParts ; }; //-------------------------------------- class Builder { public: Builder(); virtual ~Builder(); virtual void BuildPartA() = 0; virtual void BuildPartB() = 0; virtual Product* GetResult() = 0; }; class ConcreteBuilder1 :public Builder{ public: ConcreteBuilder1(){ pPro = new Product; }; virtual ~ConcreteBuilder1(); void BuildPartA(){ pPro-&amp;gt;Add(&amp;#34;Part A&amp;#34;); } void BuildPartB(){ pPro-&amp;gt;Add(&amp;#34;Part B&amp;#34;); } Product* GetResult(){ return pPro; } private: Product *pPro; }; class ConcreteBuilder2 :public Builder{ public: ConcreteBuilder2(){ pPro =new Product(); } virtual ~ConcreteBuilder2(); void BuildPartA(){ pPro-&amp;gt;Add(&amp;#34;Part X&amp;#34;); } void BuildPartB(){ pPro-&amp;gt;Add(&amp;#34;Part Y&amp;#34;); } Product* GetResult(){ return pPro; } private: Product *pPro; }; //-------------------------------------- class Director { public: Director(); virtual ~Director(); void Construct(Builder *build){ //告诉指挥者，需要什么样的小人 	build-&amp;gt;BuildPartA();//根据用户的选择建造小人 	build-&amp;gt;BuildPartB(); } }; //use 	Director * d= new Director(); Builder* b1 =new ConcreteBuilder1(); Builder* b2 =new ConcreteBuilder2(); d-&amp;gt;Construct(b1); b1-&amp;gt;GetResult()-&amp;gt;show(); </description>
+    </item>
+    
+    <item>
+      <title>Design Patterns - 创建型模式 - 单例模式</title>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Fri, 06 Nov 2020 14:09:02 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</guid>
+      <description>单例模式 前言： 　单例模式，顾名思义，只存在一个实例。官方定义：对于类的单例模式设计，就是采取一定的方法保证在整个软件系统中，对某个类只能存在一个对象实例，并且该类只提供一个取得其对象实例的方法（静态方法）。
+　单例模式在写法上有很多种，
+有饿汉式（类加载的时候实例化），
+懒汉式（类在使用的时候实例化），
+保证线程安全的写法等。具体如下：(删除线表示不推荐使用)
+　① 饿汉式（静态常量）
+　② 饿汉式（静态代码块）
+　③ 懒汉式（线程不安全）
+　④ 懒汉式（线程安全，同步方法）
+　⑤ 懒汉式（线程安全，同步方法）
+　⑥ 双重检查double check
+　⑦ 静态内部类
+　⑧ 枚举
+　在IOC模式中，通常使用生命周期来实现单例，如services.AddSingleton();
+懒汉式 懒汉式(Lazy-Initialization)的方法是直到使用时才实例化对象，
+也就说直到调用get_instance() 方法的时候才 new 一个单例的对象。
+好处是如果被调用就不会占用内存。
+class Singleton{ private: Singleton(){ std::cout&amp;lt;&amp;lt;&amp;#34;constructor called!&amp;#34;&amp;lt;&amp;lt;std::endl; } Singleton(Singleton&amp;amp;)=delete; Singleton&amp;amp; operator=(const Singleton&amp;amp;)=delete; static Singleton* m_instance_ptr; public: ~Singleton(){ std::cout&amp;lt;&amp;lt;&amp;#34;destructor called!&amp;#34;&amp;lt;&amp;lt;std::endl; } static Singleton* get_instance(){ if(m_instance_ptr==nullptr){ m_instance_ptr = new Singleton; } return m_instance_ptr; } void use() const { std::cout &amp;lt;&amp;lt; &amp;#34;in use&amp;#34; &amp;lt;&amp;lt; std::endl; } }; Singleton* Singleton::m_instance_ptr = nullptr; Singleton* instance = Singleton::get_instance(); Singleton* instance_2 = Singleton::get_instance(); return 0;  线程安全的问题,当多线程获取单例时有可能引发竞态条件：第一个线程在if中判断 m_instance_ptr是空的，于是开始实例化单例;同时第2个线程也尝试获取单例，这个时候判断m_instance_ptr还是空的，于是也开始实例化单例;这样就会实例化出两个对象,这就是线程安全问题的由来; 解决办法:加锁 内存泄漏.</description>
+    </item>
+    
+    <item>
+      <title>Design Patterns - 创建型模式 - 原型模式</title>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Fri, 06 Nov 2020 14:02:53 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/</guid>
+      <description>原型模式 引言： 　原型模式是什么？它是在什么场景下被提出的呢？本章节，我们将详细了解下原型模式。
+　在软件系统中，当创建一个类的实例过程过于昂贵或复杂，并且我们需要创建多个这样类的实例时，
+ 如果我们通过new来创建类实例，这就会增加创建类的复杂度和创建过程与客户代码复杂的耦合度。 如果采用工厂模式来创建这样的实例对象的话，随着产品类的不断增加，导致子类的数量不断增多，也导致了相应工厂类的增加，维护的代码维度增加了，因为有产品和工厂两个维度了，反而增加了系统复杂程度，所以在这里使用工厂模式来封装类创建过程并不合适。 由于每个类实例都是相同的（类型相同），但是每个实例的状态参数会有不同，如果状态数值也相同就没意义了，有一个这样的对象就可以了。 当我们需要多个相同的类实例时，可以通过对原来对象拷贝一份来完成创建，这个思路正是原型模式的实现方式。  定义： 　原型模式就是通过给出一个原型对象来指明所要创建的对象类型，然后用复制这个对象的方法来创建更多的同类型对象。
+原型模式的两种类型： 　object类的clone方法只会拷贝对象中基本的数据类型，对于数组、容器对象、引用对象等都不会拷贝，这就是浅拷贝。如果要实现深拷贝，必须将原型模式中的数组、容器对象、引用对象等另行拷贝。
+深拷贝： 　1、复制对象的基本数据类型的成员变量值。
+　2、为所有引用类型的成员变量申请存储空间，并复制每个引用数据类型成员变量所引用的对象，直到该对象可达的所有对象。也就是说，对象进行深拷贝要对整个对象进行拷贝。
+　3、深拷贝实现方式1：重写clone方法。
+　4、深拷贝实现方式2：通过对象序列化。
+原型模式的注意事项和细节： 　1、创建新的对象比较复杂时，可以利用原型模式简化对象的创建过程，同时也能够提高效率。
+　2、不用重新初始化对象，而是动态地获取对象运行时的状态。
+　3、如果原始对象发生变化（增加或减少属性），其它克隆对象也会发生相应的变化，无需修改代码。
+　4、在实现深克隆的时候可能需要比较复杂的代码。　　5、使用原型模式复制不会调用类的构造方法。因为对象的复制是通过调用clone方法完成的，它直接在内存种复制数据，因此不会调用到类的构造方法。不但构造方法中的代码不会执行，甚至连访问权限都对原型模式无效。单例模式中，我们通过私有化构造函数来实现单例模式，但clone方法直接无视构造方法的权限，所以，单例模式与原型模式是冲突的。
+原型模式的优点： 　1、原型模式向客户隐藏了创建新实例的复杂性。
+　2、原型模式允许动态增加或较少产品类。
+　3、原型模式简化了实例的创建结构，工厂方法模式需要有一个与产品类等级结构相同的等级结构，而原型模式不需要这样。
+　4、产品类不需要事先确定产品的等级结构，因为原型模式适用于任何的等级结构。
+缺点： 　1、需要为每一个类配备一个克隆方法，这对全新的类来说不是很难，但对已有的类进行改造时，需要修改源码，即违反了OCP原则。
+eg： class Prototype { private: string str; public: Prototype(string s) { str = s; } void show() { cout &amp;lt;&amp;lt; str &amp;lt;&amp;lt; endl; } virtual Prototype *clone() = 0; }; class ConcretePrototype1 :public Prototype { public: ConcretePrototype1(string s) :Prototype(s) {} ConcretePrototype1(){} virtual Prototype *clone() { ConcretePrototype1 *p = new ConcretePrototype1(); *p = *this; return p; } }; class ConcretePrototype2 :public Prototype { public: ConcretePrototype2(string s) :Prototype(s) {} ConcretePrototype2(){} virtual Prototype *clone() { ConcretePrototype2 *p = new ConcretePrototype2(); *p = *this; return p; } }; //use  ConcretePrototype1 *test = new ConcretePrototype1(&amp;#34;小李&amp;#34;); ConcretePrototype2 *test2 = (ConcretePrototype2 *)test-&amp;gt;clone(); test-&amp;gt;show(); test2-&amp;gt;show(); </description>
+    </item>
+    
     <item>
       <title>Design Patterns - 创建型模式 - 抽象工厂模式</title>
       <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</link>
@@ -19,7 +290,7 @@
   从设计层面来说，抽象工厂模式就是对简单工厂模式的改进（即进一步抽象化）
   将工厂抽象成两层，抽象工厂和具体的实现工厂。
   理解： 读过一些博主的博文以及评论，有一些理解还是蛮到位的：
- 抽象工厂比工厂方法复杂的多，它们的目的不同。工厂方法意在延迟加载，而抽象方法意在高内聚低耦合。 工厂方法模式的具体工厂类只能创建一个具体产品类的实例，而抽象工厂可以创建多个。  // 键盘 class KeyBoard { public: virtual void show() = 0; }; // 微软的键盘 class KeyBoardMicro : public KeyBoard { public: void show() { std::cout &amp;lt;&amp;lt; &amp;#34;微软的键盘&amp;#34; &amp;lt;&amp;lt; std::endl; } }; // 联想的键盘 class KeyBoardLenovo : public KeyBoard { public: void show() { std::cout &amp;lt;&amp;lt; &amp;#34;联想的键盘&amp;#34; &amp;lt;&amp;lt; std::endl; } }; //----------------------------------------- class Factory { public: virtual KeyBoard * createKeyBoard() = 0; }; // 微软的工厂 class FactoryMicro : public Factory { public: KeyBoard * createKeyBoard() { return new KeyBoardMicro(); } }; // 联想的工厂 class FactoryLenovo : public Factory { public: KeyBoard * createKeyBoard() { return new KeyBoardLenovo(); } }; //----------------------------------------- //use 	// 抽象工厂模式 	Factory * p = new FactoryMicro(); KeyBoard * pKeyBoard = p-&amp;gt;createKeyBoard(); pKeyBoard-&amp;gt;show(); </description>
+ 抽象工厂比工厂方法复杂的多，它们的目的不同。工厂方法意在延迟加载，而抽象方法意在高内聚低耦合。 工厂方法模式的具体工厂类只能创建一个具体产品类的实例，而抽象工厂可以创建多个。  // 键盘 class KeyBoard { public: virtual void show() = 0; }; // 微软的键盘 class KeyBoardMicro : public KeyBoard { public: void show() { std::cout &amp;lt;&amp;lt; &amp;#34;微软的键盘&amp;#34; &amp;lt;&amp;lt; std::endl; } }; // 联想的键盘 class KeyBoardLenovo : public KeyBoard { public: void show() { std::cout &amp;lt;&amp;lt; &amp;#34;联想的键盘&amp;#34; &amp;lt;&amp;lt; std::endl; } }; class Mouse { public: virtual void show() = 0; }; // 微软的鼠标 class MouseMicro : public Mouse { public: void show() { std::cout &amp;lt;&amp;lt; &amp;#34;微软的鼠标&amp;#34; &amp;lt;&amp;lt; std::endl; } }; // 联想的鼠标 class MouseLenovo : public Mouse { public: void show() { std::cout &amp;lt;&amp;lt; &amp;#34;联想的鼠标&amp;#34; &amp;lt;&amp;lt; std::endl; } }; //----------------------------------------- class Factory { public: virtual KeyBoard * createKeyBoard() = 0; virtual Mouse * createMouse() = 0; }; // 微软的工厂 class FactoryMicro : public Factory { public: KeyBoard * createKeyBoard() { return new KeyBoardMicro(); } Mouse * createMouse() { return new MouseMicro(); } }; // 联想的工厂 class FactoryLenovo : public Factory { public: KeyBoard * createKeyBoard() { return new KeyBoardLenovo(); } Mouse * createMouse() { return MouseLenovo(); } }; //----------------------------------------- //use 	// 抽象工厂模式 	Factory * p = new FactoryMicro(); KeyBoard * pKeyBoard = p-&amp;gt;createKeyBoard(); pKeyBoard-&amp;gt;show(); auto pMouse = p-&amp;gt;createMouse(); pMouse-&amp;gt;show(); </description>
     </item>
     
     <item>
@@ -97,8 +368,7 @@ void pay(string pay_type) { if(pay_type==现金) { 现金支付处理手段 } el
 　2、子类可以增加自己特有的方法
 　3、当子类的方法重载父类的方法时，方法的形参要比父类方法的输入参数更宽松
 　4、当子类的方法实现父类的抽象方法时，方法的返回值应比父类更严格
-优点：
-　可以大大减少程序的bug以及增强代码的可读性</description>
+优点： 　可以大大减少程序的bug以及增强代码的可读性</description>
     </item>
     
     <item>

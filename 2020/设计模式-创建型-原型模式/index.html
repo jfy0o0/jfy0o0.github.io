@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Jiang .">
+  
+  
+  
+  <link rel="prev" href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" />
+  <link rel="next" href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" />
+  <link rel="canonical" href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Design Patterns - 创建型模式 - 原型模式 | LeaveIt
+       
+  </title>
+  <meta name="title" content="Design Patterns - 创建型模式 - 原型模式 | LeaveIt">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/jfy0o0.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Design Patterns - 创建型模式 - 原型模式",
+    "headline" : "Design Patterns - 创建型模式 - 原型模式",
+    "description" : "原型模式 引言： 　原型模式是什么？它是在什么场景下被提出的呢？本章节，我们将详细了解下原型模式。\n　在软件系统中，当创建一个类的实例过程过于昂贵或复杂，并且我们需要创建多个这样类的实例时，\n 如果我们通过new来创建类实例，这就会增加创建类的复杂度和创建过程与客户代码复杂的耦合度。 如果采用工厂模式来创建这样的实例对象的话，随着产品类的不断增加，导致子类的数量不断增多，也导致了相应工厂类的增加，维护的代码维度增加了，因为有产品和工厂两个维度了，反而增加了系统复杂程度，所以在这里使用工厂模式来封装类创建过程并不合适。 由于每个类实例都是相同的（类型相同），但是每个实例的状态参数会有不同，如果状态数值也相同就没意义了，有一个这样的对象就可以了。 当我们需要多个相同的类实例时，可以通过对原来对象拷贝一份来完成创建，这个思路正是原型模式的实现方式。  定义： 　原型模式就是通过给出一个原型对象来指明所要创建的对象类型，然后用复制这个对象的方法来创建更多的同类型对象。\n原型模式的两种类型： 　object类的clone方法只会拷贝对象中基本的数据类型，对于数组、容器对象、引用对象等都不会拷贝，这就是浅拷贝。如果要实现深拷贝，必须将原型模式中的数组、容器对象、引用对象等另行拷贝。\n深拷贝： 　1、复制对象的基本数据类型的成员变量值。\n　2、为所有引用类型的成员变量申请存储空间，并复制每个引用数据类型成员变量所引用的对象，直到该对象可达的所有对象。也就是说，对象进行深拷贝要对整个对象进行拷贝。\n　3、深拷贝实现方式1：重写clone方法。\n　4、深拷贝实现方式2：通过对象序列化。\n原型模式的注意事项和细节： 　1、创建新的对象比较复杂时，可以利用原型模式简化对象的创建过程，同时也能够提高效率。\n　2、不用重新初始化对象，而是动态地获取对象运行时的状态。\n　3、如果原始对象发生变化（增加或减少属性），其它克隆对象也会发生相应的变化，无需修改代码。\n　4、在实现深克隆的时候可能需要比较复杂的代码。　　5、使用原型模式复制不会调用类的构造方法。因为对象的复制是通过调用clone方法完成的，它直接在内存种复制数据，因此不会调用到类的构造方法。不但构造方法中的代码不会执行，甚至连访问权限都对原型模式无效。单例模式中，我们通过私有化构造函数来实现单例模式，但clone方法直接无视构造方法的权限，所以，单例模式与原型模式是冲突的。\n原型模式的优点： 　1、原型模式向客户隐藏了创建新实例的复杂性。\n　2、原型模式允许动态增加或较少产品类。\n　3、原型模式简化了实例的创建结构，工厂方法模式需要有一个与产品类等级结构相同的等级结构，而原型模式不需要这样。\n　4、产品类不需要事先确定产品的等级结构，因为原型模式适用于任何的等级结构。\n缺点： 　1、需要为每一个类配备一个克隆方法，这对全新的类来说不是很难，但对已有的类进行改造时，需要修改源码，即违反了OCP原则。\neg： class Prototype { private: string str; public: Prototype(string s) { str = s; } void show() { cout \u0026lt;\u0026lt; str \u0026lt;\u0026lt; endl; } virtual Prototype *clone() = 0; }; class ConcretePrototype1 :public Prototype { public: ConcretePrototype1(string s) :Prototype(s) {} ConcretePrototype1(){} virtual Prototype *clone() { ConcretePrototype1 *p = new ConcretePrototype1(); *p = *this; return p; } }; class ConcretePrototype2 :public Prototype { public: ConcretePrototype2(string s) :Prototype(s) {} ConcretePrototype2(){} virtual Prototype *clone() { ConcretePrototype2 *p = new ConcretePrototype2(); *p = *this; return p; } }; \/\/use  ConcretePrototype1 *test = new ConcretePrototype1(\u0026#34;小李\u0026#34;); ConcretePrototype2 *test2 = (ConcretePrototype2 *)test-\u0026gt;clone(); test-\u0026gt;show(); test2-\u0026gt;show(); ",
+    "inLanguage" : "en-us",
+    "author" : "Jiang",
+    "creator" : "Jiang",
+    "publisher": "Jiang",
+    "accountablePerson" : "Jiang",
+    "copyrightHolder" : "Jiang",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-11-06 14:02:53 \u002b0800 CST",
+    "dateModified" : "2020-11-06 14:02:53 \u002b0800 CST",
+    "url" : "https:\/\/jfy0o0.github.io\/2020\/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F\/",
+    "wordCount" : "127",
+    "keywords" : [ "c\u002b\u002b","Design Patterns", "LeaveIt"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">LeaveIt</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">LeaveIt</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Design Patterns - 创建型模式 - 原型模式</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://jfy0o0.github.io" rel="author">Jiang</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-11-06 itemprop="datePublished">November 6, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://jfy0o0.github.io/categories/design-patterns/"> Design Patterns </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="原型模式">原型模式</h1>
+<h2 id="引言">引言：</h2>
+<p>　　原型模式是什么？它是在什么场景下被提出的呢？本章节，我们将详细了解下原型模式。</p>
+<p>　　在软件系统中，当创建一个类的实例过程过于昂贵或复杂，并且我们需要创建多个这样类的实例时，</p>
+<ol>
+<li>如果我们通过new来创建类实例，这就会增加创建类的复杂度和创建过程与客户代码复杂的耦合度。</li>
+<li>如果采用工厂模式来创建这样的实例对象的话，随着产品类的不断增加，导致子类的数量不断增多，也导致了相应工厂类的增加，维护的代码维度增加了，因为有产品和工厂两个维度了，反而增加了系统复杂程度，所以在这里使用工厂模式来封装类创建过程并不合适。</li>
+<li>由于每个类实例都是相同的（类型相同），但是每个实例的状态参数会有不同，如果状态数值也相同就没意义了，有一个这样的对象就可以了。</li>
+<li>当我们需要多个相同的类实例时，可以通过对原来对象拷贝一份来完成创建，这个思路正是原型模式的实现方式。</li>
+</ol>
+<h2 id="定义">定义：</h2>
+<p>　　原型模式就是通过给出一个原型对象来指明所要创建的对象类型，然后用复制这个对象的方法来创建更多的同类型对象。</p>
+<h2 id="原型模式的两种类型">原型模式的两种类型：</h2>
+<p>　　object类的clone方法只会拷贝对象中基本的数据类型，对于数组、容器对象、引用对象等都不会拷贝，这就是浅拷贝。如果要实现深拷贝，必须将原型模式中的数组、容器对象、引用对象等另行拷贝。</p>
+<h2 id="深拷贝">深拷贝：</h2>
+<p>　　1、复制对象的基本数据类型的成员变量值。</p>
+<p>　　2、为所有引用类型的成员变量申请存储空间，并复制每个引用数据类型成员变量所引用的对象，直到该对象可达的所有对象。也就是说，对象进行深拷贝要对整个对象进行拷贝。</p>
+<p>　　3、深拷贝实现方式1：重写clone方法。</p>
+<p>　　4、深拷贝实现方式2：通过对象序列化。</p>
+<h2 id="原型模式的注意事项和细节">原型模式的注意事项和细节：</h2>
+<p>　　1、创建新的对象比较复杂时，可以利用原型模式简化对象的创建过程，同时也能够提高效率。</p>
+<p>　　2、不用重新初始化对象，而是动态地获取对象运行时的状态。</p>
+<p>　　3、如果原始对象发生变化（增加或减少属性），其它克隆对象也会发生相应的变化，无需修改代码。</p>
+<p>　　4、在实现深克隆的时候可能需要比较复杂的代码。　　　　</p>
+<p>　　5、使用原型模式复制不会调用类的构造方法。因为对象的复制是通过调用clone方法完成的，它直接在内存种复制数据，因此不会调用到类的构造方法。不但构造方法中的代码不会执行，甚至连访问权限都对原型模式无效。单例模式中，我们通过私有化构造函数来实现单例模式，但clone方法直接无视构造方法的权限，所以，单例模式与原型模式是冲突的。</p>
+<h2 id="原型模式的优点">原型模式的优点：</h2>
+<p>　　1、原型模式向客户隐藏了创建新实例的复杂性。</p>
+<p>　　2、原型模式允许动态增加或较少产品类。</p>
+<p>　　3、原型模式简化了实例的创建结构，工厂方法模式需要有一个与产品类等级结构相同的等级结构，而原型模式不需要这样。</p>
+<p>　　4、产品类不需要事先确定产品的等级结构，因为原型模式适用于任何的等级结构。</p>
+<h2 id="缺点">缺点：</h2>
+<p>　　1、需要为每一个类配备一个克隆方法，这对全新的类来说不是很难，但对已有的类进行改造时，需要修改源码，即违反了<a href="https://www.cnblogs.com/az4215/p/11489712.html">OCP原则</a>。</p>
+<h2 id="eg">eg：</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Prototype</span>
+{
+<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+    string str;
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    Prototype(string s)
+    {
+        str <span style="color:#f92672">=</span> s;
+    }
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">show</span>()
+    {
+        cout <span style="color:#f92672">&lt;&lt;</span> str <span style="color:#f92672">&lt;&lt;</span> endl;
+    }
+    <span style="color:#66d9ef">virtual</span> Prototype <span style="color:#f92672">*</span><span style="color:#a6e22e">clone</span>() <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+};
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConcretePrototype1</span> <span style="color:#f92672">:</span><span style="color:#66d9ef">public</span> Prototype
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    ConcretePrototype1(string s) <span style="color:#f92672">:</span>Prototype(s)
+    {}
+    ConcretePrototype1(){}
+    <span style="color:#66d9ef">virtual</span> Prototype <span style="color:#f92672">*</span><span style="color:#a6e22e">clone</span>()
+    {
+        ConcretePrototype1 <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ConcretePrototype1();
+        <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>;
+        <span style="color:#66d9ef">return</span> p;
+    }
+};
+ 
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConcretePrototype2</span> <span style="color:#f92672">:</span><span style="color:#66d9ef">public</span> Prototype
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    ConcretePrototype2(string s) <span style="color:#f92672">:</span>Prototype(s)
+    {}
+    ConcretePrototype2(){}
+    <span style="color:#66d9ef">virtual</span> Prototype <span style="color:#f92672">*</span><span style="color:#a6e22e">clone</span>()
+    {
+        ConcretePrototype2 <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ConcretePrototype2();
+        <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>;
+        <span style="color:#66d9ef">return</span> p;
+    }
+};
+
+<span style="color:#75715e">//use
+</span><span style="color:#75715e"></span>
+    ConcretePrototype1 <span style="color:#f92672">*</span>test <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ConcretePrototype1(<span style="color:#e6db74">&#34;小李&#34;</span>);
+    ConcretePrototype2 <span style="color:#f92672">*</span>test2 <span style="color:#f92672">=</span> (ConcretePrototype2 <span style="color:#f92672">*</span>)test<span style="color:#f92672">-&gt;</span>clone();
+    test<span style="color:#f92672">-&gt;</span>show();
+    test2<span style="color:#f92672">-&gt;</span>show();
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Jiang . </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/c&#43;&#43;/">
+                    #c&#43;&#43;</a></span>
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/design-patterns/">
+                    #Design Patterns</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://jfy0o0.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" class="prev" rel="prev" title="Design Patterns - 创建型模式 - 抽象工厂模式"><i class="iconfont icon-left"></i>&nbsp;Design Patterns - 创建型模式 - 抽象工厂模式</a>
+         
+        
+        <a href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" class="next" rel="next" title="Design Patterns - 创建型模式 - 单例模式">Design Patterns - 创建型模式 - 单例模式&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://jfy0o0.github.io">Jiang .</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

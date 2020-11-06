@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Jiang .">
+  
+  
+  
+  <link rel="prev" href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F/" />
+  <link rel="next" href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/" />
+  <link rel="canonical" href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Design Patterns - 行为型模式 - 观察者模式 | LeaveIt
+       
+  </title>
+  <meta name="title" content="Design Patterns - 行为型模式 - 观察者模式 | LeaveIt">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/jfy0o0.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Design Patterns - 行为型模式 - 观察者模式",
+    "headline" : "Design Patterns - 行为型模式 - 观察者模式",
+    "description" : "观察者模式： 　指多个对象间存在一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。\n观察者模式的角色：  抽象目标（Subject）：也叫抽象目标类，它提供了一个用于保存观察者对象的聚集类和增加、删除观察者对象的方法，以及通知所有观察者的抽象方法。 具体目标（ConcreteSubject）：也叫具体目标类，它实现抽象目标中的通知方法，当具体主题的内部状态发生改变时，通知所有注册过的观察者对象。 抽象观察者（Observer）：它是一个抽象类或接口，它包含了一个更新自己的抽象方法，当接到具体主题的更改通知时被调用。 具体观察者（ConcreteObserver）：实现抽象观察者中定义的抽象方法，以便在得到目标的更改通知时更新自身的状态。  观察者模式的应用场景：  对象间存在一对多关系，一个对象的状态发生改变会影响其他对象。 当一个抽象模型有两个方面，其中一个方面依赖于另一方面时，可将这二者封装在独立的对象中以使它们可以各自独立地改变和复用。  优点： 观察者和被观察者是抽象耦合的；建立的一套触发机制。\n缺点：  如果一个被观察者对象有很多的直接和间接的观察者的话，将所有的观察者都通知到会花费很多时间。 如果在观察者和观察目标之间有循环依赖的话，观察目标会触发它们之间进行循环调用，可能导致系统崩溃。 观察者模式没有相应的机制让观察者知道所观察的目标对象是怎么发生变化的，而仅仅只是知道观察目标发生了变化。  eg： class Observer { public: Observer(); virtual ~Observer(); virtual void Update()=0; }; \/\/--------------------------------------------- class ConcreteObserver :public Observer{ public: ConcreteObserver(ConcreteSubject *sub,string name){ pSubject = sub; mName = name; } void Update(){ mObserverState = pSubject-\u0026gt;mSubjectState; cout \u0026lt;\u0026lt; \u0026#34;观察者\u0026#34; \u0026lt;\u0026lt; mName \u0026lt;\u0026lt; \u0026#34; 状态\u0026#34; \u0026lt;\u0026lt;mObserverState\u0026lt;\u0026lt;endl; } virtual ~ConcreteObserver(); ConcreteSubject* getSubject() { return pSubject; } void setSubject( ConcreteSubject* subject) { pSubject = subject; } private: string mName; string mObserverState; ConcreteSubject *pSubject; }; \/\/--------------------------------------------- class Subject { public: Subject(); virtual ~Subject(); void Attach(Observer* p){ observers.",
+    "inLanguage" : "en-us",
+    "author" : "Jiang",
+    "creator" : "Jiang",
+    "publisher": "Jiang",
+    "accountablePerson" : "Jiang",
+    "copyrightHolder" : "Jiang",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-11-06 15:22:11 \u002b0800 CST",
+    "dateModified" : "2020-11-06 15:22:11 \u002b0800 CST",
+    "url" : "https:\/\/jfy0o0.github.io\/2020\/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F\/",
+    "wordCount" : "161",
+    "keywords" : [ "c\u002b\u002b","Design Patterns", "LeaveIt"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">LeaveIt</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">LeaveIt</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Design Patterns - 行为型模式 - 观察者模式</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://jfy0o0.github.io" rel="author">Jiang</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-11-06 itemprop="datePublished">November 6, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://jfy0o0.github.io/categories/design-patterns/"> Design Patterns </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="观察者模式">观察者模式：</h1>
+<p>　　指多个对象间存在一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。</p>
+<h2 id="观察者模式的角色">观察者模式的角色：</h2>
+<ol>
+<li>抽象目标（Subject）：也叫抽象目标类，它提供了一个用于保存观察者对象的聚集类和增加、删除观察者对象的方法，以及通知所有观察者的抽象方法。</li>
+<li>具体目标（ConcreteSubject）：也叫具体目标类，它实现抽象目标中的通知方法，当具体主题的内部状态发生改变时，通知所有注册过的观察者对象。</li>
+<li>抽象观察者（Observer）：它是一个抽象类或接口，它包含了一个更新自己的抽象方法，当接到具体主题的更改通知时被调用。</li>
+<li>具体观察者（ConcreteObserver）：实现抽象观察者中定义的抽象方法，以便在得到目标的更改通知时更新自身的状态。</li>
+</ol>
+<h2 id="观察者模式的应用场景">观察者模式的应用场景：</h2>
+<ol>
+<li>对象间存在一对多关系，一个对象的状态发生改变会影响其他对象。</li>
+<li>当一个抽象模型有两个方面，其中一个方面依赖于另一方面时，可将这二者封装在独立的对象中以使它们可以各自独立地改变和复用。</li>
+</ol>
+<h2 id="优点">优点：</h2>
+<p>观察者和被观察者是抽象耦合的；建立的一套触发机制。</p>
+<h2 id="缺点">缺点：</h2>
+<ol>
+<li>如果一个被观察者对象有很多的直接和间接的观察者的话，将所有的观察者都通知到会花费很多时间。</li>
+<li>如果在观察者和观察目标之间有循环依赖的话，观察目标会触发它们之间进行循环调用，可能导致系统崩溃。</li>
+<li>观察者模式没有相应的机制让观察者知道所观察的目标对象是怎么发生变化的，而仅仅只是知道观察目标发生了变化。</li>
+</ol>
+<h2 id="eg">eg：</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Observer</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	Observer();
+	<span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>Observer();
+	<span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Update</span>()<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;
+};
+
+<span style="color:#75715e">//---------------------------------------------
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConcreteObserver</span> <span style="color:#f92672">:</span><span style="color:#66d9ef">public</span> Observer{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	ConcreteObserver(ConcreteSubject <span style="color:#f92672">*</span>sub,string name){
+		pSubject <span style="color:#f92672">=</span> sub;
+		mName <span style="color:#f92672">=</span> name;
+	}
+	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Update</span>(){
+		mObserverState <span style="color:#f92672">=</span> pSubject<span style="color:#f92672">-&gt;</span>mSubjectState;
+		cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;观察者&#34;</span> <span style="color:#f92672">&lt;&lt;</span> mName <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; 状态&#34;</span> <span style="color:#f92672">&lt;&lt;</span>mObserverState<span style="color:#f92672">&lt;&lt;</span>endl;
+	}
+	<span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>ConcreteObserver();
+ 
+	ConcreteSubject<span style="color:#f92672">*</span> <span style="color:#a6e22e">getSubject</span>()  {
+		<span style="color:#66d9ef">return</span> pSubject;
+	}
+ 
+	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setSubject</span>( ConcreteSubject<span style="color:#f92672">*</span> subject) {
+		pSubject <span style="color:#f92672">=</span> subject;
+	}
+ 
+<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+	string mName;
+	string mObserverState;
+	ConcreteSubject <span style="color:#f92672">*</span>pSubject;
+};
+<span style="color:#75715e">//---------------------------------------------
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Subject</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	Subject();
+	<span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>Subject();
+	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Attach</span>(Observer<span style="color:#f92672">*</span> p){
+		observers.push_back(p);
+	}
+	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Remove</span>(Observer<span style="color:#f92672">*</span> p){
+		observers.remove(p);
+	}
+	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Notify</span>(){
+		list <span style="color:#f92672">&lt;</span>Observer<span style="color:#f92672">*</span> <span style="color:#f92672">&gt;::</span>iterator it;
+		<span style="color:#66d9ef">for</span>(it <span style="color:#f92672">=</span> observers.begin();it<span style="color:#f92672">!=</span>observers.end();it<span style="color:#f92672">++</span>){
+			(<span style="color:#f92672">*</span>it)<span style="color:#f92672">-&gt;</span>Update();
+		}
+	}
+	list <span style="color:#f92672">&lt;</span>Observer<span style="color:#f92672">*</span> <span style="color:#f92672">&gt;</span> observers ;
+};
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConcreteSubject</span> <span style="color:#f92672">:</span><span style="color:#66d9ef">public</span> Subject{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	ConcreteSubject();
+	<span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>ConcreteSubject();
+ 
+	string <span style="color:#a6e22e">getSubjectState</span>() {
+		<span style="color:#66d9ef">return</span> mSubjectState;
+	}
+ 
+	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setSubjectState</span>(<span style="color:#66d9ef">const</span> string<span style="color:#f92672">&amp;</span> subjectState) {
+		mSubjectState <span style="color:#f92672">=</span> subjectState;
+	}
+ 
+	string mSubjectState;
+ 
+};
+
+<span style="color:#75715e">//---------------------------------------------
+</span><span style="color:#75715e">//use
+</span><span style="color:#75715e"></span>	ConcreteSubject <span style="color:#f92672">*</span> p <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ConcreteSubject();
+	p<span style="color:#f92672">-&gt;</span>Attach(<span style="color:#66d9ef">new</span> ConcreteObserver(p,<span style="color:#e6db74">&#34;X&#34;</span>));
+	p<span style="color:#f92672">-&gt;</span>Attach(<span style="color:#66d9ef">new</span> ConcreteObserver(p,<span style="color:#e6db74">&#34;Y&#34;</span>));
+	p<span style="color:#f92672">-&gt;</span>mSubjectState <span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ABC&#34;</span>;
+	p<span style="color:#f92672">-&gt;</span>Notify();
+
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Jiang . </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/c&#43;&#43;/">
+                    #c&#43;&#43;</a></span>
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/design-patterns/">
+                    #Design Patterns</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://jfy0o0.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F/" class="prev" rel="prev" title="Design Patterns - 行为型模式 - 职责链模式"><i class="iconfont icon-left"></i>&nbsp;Design Patterns - 行为型模式 - 职责链模式</a>
+         
+        
+        <a href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/" class="next" rel="next" title="Design Patterns - 行为型模式 - 状态模式">Design Patterns - 行为型模式 - 状态模式&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://jfy0o0.github.io">Jiang .</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

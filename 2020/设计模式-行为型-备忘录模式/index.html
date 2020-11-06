@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Jiang .">
+  
+  
+  
+  <link rel="prev" href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%A7%A3%E9%87%8A%E5%99%A8%E6%A8%A1%E5%BC%8F/" />
+  <link rel="next" href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F/" />
+  <link rel="canonical" href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Design Patterns - 行为型模式 - 备忘录模式 | LeaveIt
+       
+  </title>
+  <meta name="title" content="Design Patterns - 行为型模式 - 备忘录模式 | LeaveIt">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/jfy0o0.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Design Patterns - 行为型模式 - 备忘录模式",
+    "headline" : "Design Patterns - 行为型模式 - 备忘录模式",
+    "description" : "备忘录模式： 　后悔药来啦！！！备忘录模式在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态，以便在需要时能将该对象恢复到原先保存的状态。\n备忘录模式的角色：  发起人（Originator）：记录当前时刻的内部状态信息，提供创建备忘录和恢复备忘录数据的功能，实现其他业务功能，它可以访问备忘录里的所有信息。 备忘录（Memento）：负责存储发起人的内部状态，在需要的时候提供这些内部状态给发起人。 管理者（CareTaker）：对备忘录进行管理，提供保存与获取备忘录的功能，但其不能对备忘录的内容进行访问与修改。  优点：  给用户提供了一种可以恢复状态的机制，可以使用户能够比较方便地回到某个历史的状态。 实现了信息的封装，使得用户不需要关心状态的保存细节。  缺点： 消耗资源。如果类的成员变量过多，势必会占用比较大的资源，而且每一次保存都会消耗一定的内存。\n备忘录模式的应用场景：  　需要保存\/恢复数据的相关状态场景。 　提供一个可回滚的操作。  class STMemento { private: int iVitality; public: STMemento(){} STMemento(int iVitality) { this-\u0026gt;iVitality = iVitality; } int GetVitality() const { return this-\u0026gt;iVitality; } }; \/\/------------------------------------------------------- class STOriginator { private: int iVitality; string name; public: STOriginator(string strName, int iVit): iVitality(iVit), name(strName) { } STMemento* SaveState() { return new STMemento(iVitality); } void RecoverState(const STMemento* stMemento) { this-\u0026gt;iVitality = stMemento-\u0026gt;GetVitality(); } void SetVitality(int iVit) { this-\u0026gt;iVitality = iVit; } void Show() { cout\u0026lt;\u0026lt; \u0026#34;Name: \u0026#34;\u0026lt;\u0026lt; name\u0026lt;\u0026lt; endl; cout\u0026lt;\u0026lt; \u0026#34;Live: \u0026#34;\u0026lt;\u0026lt; iVitality\u0026lt;\u0026lt; endl; } }; \/\/------------------------------------------------------- class STCareTaker { private: vector\u0026lt;STMemento*\u0026gt; vecStMemento; public: void AddMemento(STMemento* stMemento) { vecStMemento.",
+    "inLanguage" : "en-us",
+    "author" : "Jiang",
+    "creator" : "Jiang",
+    "publisher": "Jiang",
+    "accountablePerson" : "Jiang",
+    "copyrightHolder" : "Jiang",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-11-06 15:47:53 \u002b0800 CST",
+    "dateModified" : "2020-11-06 15:47:53 \u002b0800 CST",
+    "url" : "https:\/\/jfy0o0.github.io\/2020\/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F\/",
+    "wordCount" : "154",
+    "keywords" : [ "c\u002b\u002b","Design Patterns", "LeaveIt"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">LeaveIt</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">LeaveIt</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Design Patterns - 行为型模式 - 备忘录模式</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://jfy0o0.github.io" rel="author">Jiang</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-11-06 itemprop="datePublished">November 6, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://jfy0o0.github.io/categories/design-patterns/"> Design Patterns </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="备忘录模式">备忘录模式：</h1>
+<p>　　后悔药来啦！！！备忘录模式在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态，以便在需要时能将该对象恢复到原先保存的状态。</p>
+<h2 id="备忘录模式的角色">备忘录模式的角色：</h2>
+<ol>
+<li>发起人（Originator）：记录当前时刻的内部状态信息，提供创建备忘录和恢复备忘录数据的功能，实现其他业务功能，它可以访问备忘录里的所有信息。</li>
+<li>备忘录（Memento）：负责存储发起人的内部状态，在需要的时候提供这些内部状态给发起人。</li>
+<li>管理者（CareTaker）：对备忘录进行管理，提供保存与获取备忘录的功能，但其不能对备忘录的内容进行访问与修改。</li>
+</ol>
+<h2 id="优点">优点：</h2>
+<ol>
+<li>给用户提供了一种可以恢复状态的机制，可以使用户能够比较方便地回到某个历史的状态。</li>
+<li>实现了信息的封装，使得用户不需要关心状态的保存细节。</li>
+</ol>
+<h2 id="缺点">缺点：</h2>
+<p>消耗资源。如果类的成员变量过多，势必会占用比较大的资源，而且每一次保存都会消耗一定的内存。</p>
+<h2 id="备忘录模式的应用场景">备忘录模式的应用场景：</h2>
+<ol>
+<li>　需要保存/恢复数据的相关状态场景。</li>
+<li>　提供一个可回滚的操作。</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">STMemento</span>
+{
+<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+        <span style="color:#66d9ef">int</span> iVitality;
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+        STMemento(){}
+        STMemento(<span style="color:#66d9ef">int</span> iVitality)
+        {
+                <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>iVitality <span style="color:#f92672">=</span> iVitality;
+        }
+
+        <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">GetVitality</span>() <span style="color:#66d9ef">const</span>
+        {
+                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>iVitality;
+        }
+};
+<span style="color:#75715e">//-------------------------------------------------------
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">STOriginator</span>
+{
+<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+        <span style="color:#66d9ef">int</span> iVitality;
+        string name;
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+        STOriginator(string strName, <span style="color:#66d9ef">int</span> iVit)<span style="color:#f92672">:</span> iVitality(iVit), name(strName)
+        {
+
+        }
+        STMemento<span style="color:#f92672">*</span> <span style="color:#a6e22e">SaveState</span>()
+        {
+                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> STMemento(iVitality);
+        }
+        <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">RecoverState</span>(<span style="color:#66d9ef">const</span> STMemento<span style="color:#f92672">*</span> stMemento)
+        {
+                <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>iVitality <span style="color:#f92672">=</span> stMemento<span style="color:#f92672">-&gt;</span>GetVitality();
+        }
+        <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">SetVitality</span>(<span style="color:#66d9ef">int</span> iVit)
+        {
+                <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>iVitality <span style="color:#f92672">=</span> iVit;
+        }
+        <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Show</span>()
+        {
+                cout<span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Name: &#34;</span><span style="color:#f92672">&lt;&lt;</span> name<span style="color:#f92672">&lt;&lt;</span> endl;
+                cout<span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Live: &#34;</span><span style="color:#f92672">&lt;&lt;</span> iVitality<span style="color:#f92672">&lt;&lt;</span> endl;
+        }
+};
+<span style="color:#75715e">//-------------------------------------------------------
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">STCareTaker</span>
+{
+<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+        vector<span style="color:#f92672">&lt;</span>STMemento<span style="color:#f92672">*&gt;</span> vecStMemento;
+
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+        <span style="color:#66d9ef">void</span> AddMemento(STMemento<span style="color:#f92672">*</span> stMemento)
+        {
+                vecStMemento.push_back(stMemento);
+        }
+
+        STMemento<span style="color:#f92672">*</span> <span style="color:#a6e22e">GetMemento</span>(<span style="color:#66d9ef">int</span> Iindex)
+        {
+                <span style="color:#66d9ef">if</span> (Iindex <span style="color:#f92672">&gt;=</span> vecStMemento.size())
+                        <span style="color:#66d9ef">return</span> NULL;
+                <span style="color:#66d9ef">else</span>
+                        <span style="color:#66d9ef">return</span> vecStMemento[Iindex];
+        }
+};
+<span style="color:#75715e">//-------------------------------------------------------
+</span><span style="color:#75715e">//use
+</span><span style="color:#75715e"></span>        STOriginator<span style="color:#f92672">*</span> pstOriginator <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> STOriginator(<span style="color:#e6db74">&#34;xxx&#34;</span>, <span style="color:#ae81ff">100</span>);
+        cout<span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;原始状态： &#34;</span><span style="color:#f92672">&lt;&lt;</span> endl;
+        pstOriginator<span style="color:#f92672">-&gt;</span>Show();
+
+        STCareTaker<span style="color:#f92672">*</span> pstCareTaker <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> STCareTaker();
+        pstCareTaker<span style="color:#f92672">-&gt;</span>AddMemento(pstOriginator<span style="color:#f92672">-&gt;</span>SaveState());
+
+        pstOriginator<span style="color:#f92672">-&gt;</span>SetVitality(<span style="color:#ae81ff">50</span>);
+        cout<span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;战斗后状态： &#34;</span><span style="color:#f92672">&lt;&lt;</span> endl;
+        pstOriginator<span style="color:#f92672">-&gt;</span>Show();
+
+        pstOriginator<span style="color:#f92672">-&gt;</span>RecoverState(pstCareTaker<span style="color:#f92672">-&gt;</span>GetMemento(<span style="color:#ae81ff">0</span>));
+        cout<span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;归档后状态： &#34;</span><span style="color:#f92672">&lt;&lt;</span> endl;
+        pstOriginator<span style="color:#f92672">-&gt;</span>Show();
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Jiang . </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/c&#43;&#43;/">
+                    #c&#43;&#43;</a></span>
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/design-patterns/">
+                    #Design Patterns</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://jfy0o0.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%A7%A3%E9%87%8A%E5%99%A8%E6%A8%A1%E5%BC%8F/" class="prev" rel="prev" title="Design Patterns - 行为型模式 - 解释器模式"><i class="iconfont icon-left"></i>&nbsp;Design Patterns - 行为型模式 - 解释器模式</a>
+         
+        
+        <a href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F/" class="next" rel="next" title="Design Patterns - 行为型模式 - 中介者模式">Design Patterns - 行为型模式 - 中介者模式&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://jfy0o0.github.io">Jiang .</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

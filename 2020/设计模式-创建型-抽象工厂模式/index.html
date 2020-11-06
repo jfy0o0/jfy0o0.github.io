@@ -10,7 +10,7 @@
   
   
   <link rel="prev" href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" />
-  
+  <link rel="next" href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/" />
   <link rel="canonical" href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -46,7 +46,7 @@
     "articleSection" : "posts",
     "name" : "Design Patterns - 创建型模式 - 抽象工厂模式",
     "headline" : "Design Patterns - 创建型模式 - 抽象工厂模式",
-    "description" : "抽象工厂模式 前一章节，我们介绍了简单工厂模式以及工厂方法模式，但是这两种模式都存在一定的局限性，只能生产某一类型下的某一种产品，如果需求变更，同类型下出现了不同的产品，比如芝士披萨不仅有口味上的不同，同时存在外观上的不同。这种时候，工厂模式显然不再满足要求，该怎么办呢？于是我们想到DIP原则，它不正是为了解决这种情况而存在的吗？接下来我们来介绍下抽象工厂模式：\n  抽象工厂模式定义了一个interface用于创建相关或有依赖关系的对象簇，而无需指明具体的类。\n  抽象工厂模式可以将简单工厂模式和工厂方法模式进行整合。\n  从设计层面来说，抽象工厂模式就是对简单工厂模式的改进（即进一步抽象化）\n  将工厂抽象成两层，抽象工厂和具体的实现工厂。\n  理解： 读过一些博主的博文以及评论，有一些理解还是蛮到位的：\n 抽象工厂比工厂方法复杂的多，它们的目的不同。工厂方法意在延迟加载，而抽象方法意在高内聚低耦合。 工厂方法模式的具体工厂类只能创建一个具体产品类的实例，而抽象工厂可以创建多个。  \/\/ 键盘 class KeyBoard { public: virtual void show() = 0; }; \/\/ 微软的键盘 class KeyBoardMicro : public KeyBoard { public: void show() { std::cout \u0026lt;\u0026lt; \u0026#34;微软的键盘\u0026#34; \u0026lt;\u0026lt; std::endl; } }; \/\/ 联想的键盘 class KeyBoardLenovo : public KeyBoard { public: void show() { std::cout \u0026lt;\u0026lt; \u0026#34;联想的键盘\u0026#34; \u0026lt;\u0026lt; std::endl; } }; \/\/----------------------------------------- class Factory { public: virtual KeyBoard * createKeyBoard() = 0; }; \/\/ 微软的工厂 class FactoryMicro : public Factory { public: KeyBoard * createKeyBoard() { return new KeyBoardMicro(); } }; \/\/ 联想的工厂 class FactoryLenovo : public Factory { public: KeyBoard * createKeyBoard() { return new KeyBoardLenovo(); } }; \/\/----------------------------------------- \/\/use \t\/\/ 抽象工厂模式 \tFactory * p = new FactoryMicro(); KeyBoard * pKeyBoard = p-\u0026gt;createKeyBoard(); pKeyBoard-\u0026gt;show(); ",
+    "description" : "抽象工厂模式 前一章节，我们介绍了简单工厂模式以及工厂方法模式，但是这两种模式都存在一定的局限性，只能生产某一类型下的某一种产品，如果需求变更，同类型下出现了不同的产品，比如芝士披萨不仅有口味上的不同，同时存在外观上的不同。这种时候，工厂模式显然不再满足要求，该怎么办呢？于是我们想到DIP原则，它不正是为了解决这种情况而存在的吗？接下来我们来介绍下抽象工厂模式：\n  抽象工厂模式定义了一个interface用于创建相关或有依赖关系的对象簇，而无需指明具体的类。\n  抽象工厂模式可以将简单工厂模式和工厂方法模式进行整合。\n  从设计层面来说，抽象工厂模式就是对简单工厂模式的改进（即进一步抽象化）\n  将工厂抽象成两层，抽象工厂和具体的实现工厂。\n  理解： 读过一些博主的博文以及评论，有一些理解还是蛮到位的：\n 抽象工厂比工厂方法复杂的多，它们的目的不同。工厂方法意在延迟加载，而抽象方法意在高内聚低耦合。 工厂方法模式的具体工厂类只能创建一个具体产品类的实例，而抽象工厂可以创建多个。  \/\/ 键盘 class KeyBoard { public: virtual void show() = 0; }; \/\/ 微软的键盘 class KeyBoardMicro : public KeyBoard { public: void show() { std::cout \u0026lt;\u0026lt; \u0026#34;微软的键盘\u0026#34; \u0026lt;\u0026lt; std::endl; } }; \/\/ 联想的键盘 class KeyBoardLenovo : public KeyBoard { public: void show() { std::cout \u0026lt;\u0026lt; \u0026#34;联想的键盘\u0026#34; \u0026lt;\u0026lt; std::endl; } }; class Mouse { public: virtual void show() = 0; }; \/\/ 微软的鼠标 class MouseMicro : public Mouse { public: void show() { std::cout \u0026lt;\u0026lt; \u0026#34;微软的鼠标\u0026#34; \u0026lt;\u0026lt; std::endl; } }; \/\/ 联想的鼠标 class MouseLenovo : public Mouse { public: void show() { std::cout \u0026lt;\u0026lt; \u0026#34;联想的鼠标\u0026#34; \u0026lt;\u0026lt; std::endl; } }; \/\/----------------------------------------- class Factory { public: virtual KeyBoard * createKeyBoard() = 0; virtual Mouse * createMouse() = 0; }; \/\/ 微软的工厂 class FactoryMicro : public Factory { public: KeyBoard * createKeyBoard() { return new KeyBoardMicro(); } Mouse * createMouse() { return new MouseMicro(); } }; \/\/ 联想的工厂 class FactoryLenovo : public Factory { public: KeyBoard * createKeyBoard() { return new KeyBoardLenovo(); } Mouse * createMouse() { return MouseLenovo(); } }; \/\/----------------------------------------- \/\/use \t\/\/ 抽象工厂模式 \tFactory * p = new FactoryMicro(); KeyBoard * pKeyBoard = p-\u0026gt;createKeyBoard(); pKeyBoard-\u0026gt;show(); auto pMouse = p-\u0026gt;createMouse(); pMouse-\u0026gt;show(); ",
     "inLanguage" : "en-us",
     "author" : "Jiang",
     "creator" : "Jiang",
@@ -57,7 +57,7 @@
     "datePublished": "2020-11-05 20:19:07 \u002b0800 CST",
     "dateModified" : "2020-11-05 20:19:07 \u002b0800 CST",
     "url" : "https:\/\/jfy0o0.github.io\/2020\/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F\/",
-    "wordCount" : "124",
+    "wordCount" : "198",
     "keywords" : [ "c\u002b\u002b","Design Patterns", "LeaveIt"]
 }
 </script>
@@ -192,11 +192,38 @@
 		std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;联想的键盘&#34;</span> <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
 	}
 };
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Mouse</span>
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	<span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> show() <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+};
+
+<span style="color:#75715e">// 微软的鼠标
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MouseMicro</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> Mouse
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	<span style="color:#66d9ef">void</span> show()
+	{
+		std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;微软的鼠标&#34;</span> <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+	}
+};
+<span style="color:#75715e">// 联想的鼠标
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MouseLenovo</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> Mouse
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	<span style="color:#66d9ef">void</span> show()
+	{
+		std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;联想的鼠标&#34;</span> <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+	}
+};
+
 <span style="color:#75715e">//-----------------------------------------
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Factory</span>
 {
 <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
 	<span style="color:#66d9ef">virtual</span> KeyBoard <span style="color:#f92672">*</span> createKeyBoard() <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    <span style="color:#66d9ef">virtual</span> Mouse <span style="color:#f92672">*</span> <span style="color:#a6e22e">createMouse</span>() <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
 };
 <span style="color:#75715e">// 微软的工厂
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FactoryMicro</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> Factory
@@ -206,6 +233,10 @@
 	{
 		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">KeyBoardMicro</span>();
 	}
+    Mouse <span style="color:#f92672">*</span> <span style="color:#a6e22e">createMouse</span>()
+    {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> MouseMicro();
+    }
 };
 <span style="color:#75715e">// 联想的工厂
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FactoryLenovo</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> Factory
@@ -215,6 +246,10 @@
 	{
 		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">KeyBoardLenovo</span>();
 	}
+    Mouse <span style="color:#f92672">*</span> <span style="color:#a6e22e">createMouse</span>()
+    {
+        <span style="color:#66d9ef">return</span> MouseLenovo();
+    }
 };
 <span style="color:#75715e">//-----------------------------------------
 </span><span style="color:#75715e">//use
@@ -222,6 +257,8 @@
 </span><span style="color:#75715e"></span>	Factory <span style="color:#f92672">*</span> p <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FactoryMicro();
 	KeyBoard <span style="color:#f92672">*</span> pKeyBoard <span style="color:#f92672">=</span> p<span style="color:#f92672">-&gt;</span>createKeyBoard();
 	pKeyBoard<span style="color:#f92672">-&gt;</span>show();
+	<span style="color:#66d9ef">auto</span> pMouse <span style="color:#f92672">=</span> p<span style="color:#f92672">-&gt;</span>createMouse();
+	pMouse<span style="color:#f92672">-&gt;</span>show();
 </code></pre></div>
     </div>
 
@@ -270,6 +307,8 @@
         
         <a href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" class="prev" rel="prev" title="Design Patterns - 创建型模式 - 工厂模式"><i class="iconfont icon-left"></i>&nbsp;Design Patterns - 创建型模式 - 工厂模式</a>
          
+        
+        <a href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/" class="next" rel="next" title="Design Patterns - 创建型模式 - 原型模式">Design Patterns - 创建型模式 - 原型模式&nbsp;<i class="iconfont icon-right"></i></a>
         
     </div>
 

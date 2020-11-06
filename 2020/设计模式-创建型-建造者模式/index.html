@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Jiang .">
+  
+  
+  
+  <link rel="prev" href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" />
+  <link rel="next" href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" />
+  <link rel="canonical" href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Design Patterns - 创建型模式 - 建造者模式 | LeaveIt
+       
+  </title>
+  <meta name="title" content="Design Patterns - 创建型模式 - 建造者模式 | LeaveIt">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/jfy0o0.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Design Patterns - 创建型模式 - 建造者模式",
+    "headline" : "Design Patterns - 创建型模式 - 建造者模式",
+    "description" : "建造者模式 引言： 　无论是在现实世界中还是在软件系统中，都存在一些复杂的对象，它们拥有多个组成部分，如汽车，它包括车轮、底盘、发动机、方向盘等各种部件。而对于大部分用户而言，无须知道这些部件的装配细节，也几乎不会使用单独某个部件，而是使用一辆完整的汽车。有的人说：抽象工厂模式不是用来生产产品的吗，我们使用它来解决不是可以了吗？貌似有一定的道理，但是你有没有考虑到了安装细节，每辆汽车的零部件安装细节可能是不同的。抽象工厂模式实现对产品家族的创建，一个产品家族是这样的一系列产品：具有不同分类维度的产品组合，采用抽象工厂模式不需要关心构建过程，只关心什么产品由什么工厂生产即可。那怎么办呢？于是，建造者模式应运而生。\n介绍： 　建造者模式又叫生成器模式，是一种对象构建模式。它可以将复杂对象的建造过程抽象出来（抽象类别），使这个抽象过程的不同实现方法可以构造出不同表现（属性）的对象。\n　建造者模式是一步一步创建一个复杂的对象，它允许用户只通过指定复杂对象的类型和内容就可以构建它们，用户不需要知道内部的具体构造细节。\n建造者模式有四个角色：  Product（产品）：一个具体的产品对象。（也可以使用抽象工厂模式来进行细分） Builder（抽象建造者）：创建一个Product对象的各个部件指定的接口。 ConcreteBuilder（具体建造者）：实现接口，构建和装配各个部件。 Diretor（指挥者）：构建一个使用Builder接口的对象。它主要是用于创建一个复杂的对象。它主要有两个作用，一是：隔离客户与对象的生产过程，二是：负责控制产品对象的生产过程。  建造者模式的优点：  客户端不必知道产品内部组成的细节，将产品本身与产品的创建过程解耦，使得相同的创建过程可以创建不同的产品对象。 每一个具体建造者都相对独立，而与其他的具体建造者无关，因此可以很方便地替换具体建造者或增加新的具体建造者，用户使用不同的具体建造者即可得到不同的产品对象 。 可以更加精细地控制产品的创建过程。将复杂产品的创建步骤分解在不同的方法中，使得创建过程更加清晰，也更方便使用程序来控制创建过程。 增加新的具体建造者无须修改原有类库的代码，指挥者类针对抽象建造者类编程，系统扩展方便，符合OCP原则。  建造模式的缺点：  产品之间差异性很大的情况： 建造者模式所创建的产品一般具有较多的共同点，其组成部分相似，如果产品之间的差异性很大，则不适合使用建造者模式，因此其使用范围受到一定的限制。 产品内部变化很复杂的情况： 如果产品的内部变化复杂，可能会导致需要定义很多具体建造者类来实现这种变化，导致系统变得很庞大。  eg： class Product { public: Product(); virtual ~Product(); void Add(string part){ mParts.push_back(part); } void Show(){ list \u0026lt;string\u0026gt;::iterator iter; for(iter = mParts.begin();iter!= mParts.end();iter\u002b\u002b){ cout \u0026lt;\u0026lt; *iter \u0026lt;\u0026lt;\u0026#34; \u0026#34;\u0026lt;\u0026lt;endl; } } list \u0026lt;string\u0026gt; mParts ; }; \/\/-------------------------------------- class Builder { public: Builder(); virtual ~Builder(); virtual void BuildPartA() = 0; virtual void BuildPartB() = 0; virtual Product* GetResult() = 0; }; class ConcreteBuilder1 :public Builder{ public: ConcreteBuilder1(){ pPro = new Product; }; virtual ~ConcreteBuilder1(); void BuildPartA(){ pPro-\u0026gt;Add(\u0026#34;Part A\u0026#34;); } void BuildPartB(){ pPro-\u0026gt;Add(\u0026#34;Part B\u0026#34;); } Product* GetResult(){ return pPro; } private: Product *pPro; }; class ConcreteBuilder2 :public Builder{ public: ConcreteBuilder2(){ pPro =new Product(); } virtual ~ConcreteBuilder2(); void BuildPartA(){ pPro-\u0026gt;Add(\u0026#34;Part X\u0026#34;); } void BuildPartB(){ pPro-\u0026gt;Add(\u0026#34;Part Y\u0026#34;); } Product* GetResult(){ return pPro; } private: Product *pPro; }; \/\/-------------------------------------- class Director { public: Director(); virtual ~Director(); void Construct(Builder *build){ \/\/告诉指挥者，需要什么样的小人 \tbuild-\u0026gt;BuildPartA();\/\/根据用户的选择建造小人 \tbuild-\u0026gt;BuildPartB(); } }; \/\/use \tDirector * d= new Director(); Builder* b1 =new ConcreteBuilder1(); Builder* b2 =new ConcreteBuilder2(); d-\u0026gt;Construct(b1); b1-\u0026gt;GetResult()-\u0026gt;show(); ",
+    "inLanguage" : "en-us",
+    "author" : "Jiang",
+    "creator" : "Jiang",
+    "publisher": "Jiang",
+    "accountablePerson" : "Jiang",
+    "copyrightHolder" : "Jiang",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-11-06 14:14:54 \u002b0800 CST",
+    "dateModified" : "2020-11-06 14:14:54 \u002b0800 CST",
+    "url" : "https:\/\/jfy0o0.github.io\/2020\/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F\/",
+    "wordCount" : "175",
+    "keywords" : [ "c\u002b\u002b","Design Patterns", "LeaveIt"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">LeaveIt</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">LeaveIt</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Design Patterns - 创建型模式 - 建造者模式</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://jfy0o0.github.io" rel="author">Jiang</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-11-06 itemprop="datePublished">November 6, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://jfy0o0.github.io/categories/design-patterns/"> Design Patterns </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="建造者模式">建造者模式</h1>
+<h2 id="引言">引言：</h2>
+<p>　　无论是在现实世界中还是在软件系统中，都存在一些复杂的对象，它们拥有多个组成部分，如汽车，它包括车轮、底盘、发动机、方向盘等各种部件。而对于大部分用户而言，无须知道这些部件的装配细节，也几乎不会使用单独某个部件，而是使用一辆完整的汽车。有的人说：抽象工厂模式不是用来生产产品的吗，我们使用它来解决不是可以了吗？貌似有一定的道理，但是你有没有考虑到了安装细节，每辆汽车的零部件安装细节可能是不同的。抽象工厂模式实现对产品家族的创建，一个产品家族是这样的一系列产品：具有不同分类维度的产品组合，采用抽象工厂模式不需要关心构建过程，只关心什么产品由什么工厂生产即可。那怎么办呢？于是，建造者模式应运而生。</p>
+<h2 id="介绍">介绍：</h2>
+<p>　　建造者模式又叫生成器模式，是一种对象构建模式。它可以将复杂对象的建造过程抽象出来（抽象类别），使这个抽象过程的不同实现方法可以构造出不同表现（属性）的对象。</p>
+<p>　　建造者模式是一步一步创建一个复杂的对象，它允许用户只通过指定复杂对象的类型和内容就可以构建它们，用户不需要知道内部的具体构造细节。</p>
+<h2 id="建造者模式有四个角色">建造者模式有四个角色：</h2>
+<ol>
+<li>Product（产品）：一个具体的产品对象。（也可以使用抽象工厂模式来进行细分）</li>
+<li>Builder（抽象建造者）：创建一个Product对象的各个部件指定的接口。</li>
+<li>ConcreteBuilder（具体建造者）：实现接口，构建和装配各个部件。</li>
+<li>Diretor（指挥者）：构建一个使用Builder接口的对象。它主要是用于创建一个复杂的对象。它主要有两个作用，一是：隔离客户与对象的生产过程，二是：负责控制产品对象的生产过程。</li>
+</ol>
+<h2 id="建造者模式的优点">建造者模式的优点：</h2>
+<ol>
+<li>客户端不必知道产品内部组成的细节，将产品本身与产品的创建过程解耦，使得相同的创建过程可以创建不同的产品对象。</li>
+<li>每一个具体建造者都相对独立，而与其他的具体建造者无关，因此可以很方便地替换具体建造者或增加新的具体建造者，用户使用不同的具体建造者即可得到不同的产品对象 。</li>
+<li>可以更加精细地控制产品的创建过程。将复杂产品的创建步骤分解在不同的方法中，使得创建过程更加清晰，也更方便使用程序来控制创建过程。</li>
+<li>增加新的具体建造者无须修改原有类库的代码，指挥者类针对抽象建造者类编程，系统扩展方便，符合OCP原则。</li>
+</ol>
+<h2 id="建造模式的缺点">建造模式的缺点：</h2>
+<ol>
+<li>产品之间差异性很大的情况： 建造者模式所创建的产品一般具有较多的共同点，其组成部分相似，如果产品之间的差异性很大，则不适合使用建造者模式，因此其使用范围受到一定的限制。</li>
+<li>产品内部变化很复杂的情况： 如果产品的内部变化复杂，可能会导致需要定义很多具体建造者类来实现这种变化，导致系统变得很庞大。</li>
+</ol>
+<h2 id="eg">eg：</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Product</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	Product();
+	<span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>Product();
+	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Add</span>(string part){
+		mParts.push_back(part);
+	}
+ 
+	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Show</span>(){
+		list <span style="color:#f92672">&lt;</span>string<span style="color:#f92672">&gt;::</span>iterator iter;
+		<span style="color:#66d9ef">for</span>(iter <span style="color:#f92672">=</span> mParts.begin();iter<span style="color:#f92672">!=</span> mParts.end();iter<span style="color:#f92672">++</span>){
+			cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#f92672">*</span>iter <span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34; &#34;</span><span style="color:#f92672">&lt;&lt;</span>endl;
+		}
+	}
+	list <span style="color:#f92672">&lt;</span>string<span style="color:#f92672">&gt;</span> mParts ;
+};
+<span style="color:#75715e">//--------------------------------------
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Builder</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	Builder();
+	<span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>Builder();
+	<span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">BuildPartA</span>() <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+	<span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">BuildPartB</span>() <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+ 
+	<span style="color:#66d9ef">virtual</span> Product<span style="color:#f92672">*</span> <span style="color:#a6e22e">GetResult</span>() <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+};
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConcreteBuilder1</span> <span style="color:#f92672">:</span><span style="color:#66d9ef">public</span> Builder{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	ConcreteBuilder1(){
+		pPro <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Product;
+	};
+	<span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>ConcreteBuilder1();
+ 
+	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">BuildPartA</span>(){
+		pPro<span style="color:#f92672">-&gt;</span>Add(<span style="color:#e6db74">&#34;Part A&#34;</span>);
+	}
+	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">BuildPartB</span>(){
+		pPro<span style="color:#f92672">-&gt;</span>Add(<span style="color:#e6db74">&#34;Part B&#34;</span>);
+	}
+	Product<span style="color:#f92672">*</span> <span style="color:#a6e22e">GetResult</span>(){
+		<span style="color:#66d9ef">return</span> pPro;
+	}
+<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+	Product <span style="color:#f92672">*</span>pPro;
+ 
+};
+ 
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConcreteBuilder2</span> <span style="color:#f92672">:</span><span style="color:#66d9ef">public</span> Builder{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	ConcreteBuilder2(){
+		pPro <span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> Product();
+	}
+	<span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>ConcreteBuilder2();
+ 
+	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">BuildPartA</span>(){
+		pPro<span style="color:#f92672">-&gt;</span>Add(<span style="color:#e6db74">&#34;Part X&#34;</span>);
+	}
+	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">BuildPartB</span>(){
+		pPro<span style="color:#f92672">-&gt;</span>Add(<span style="color:#e6db74">&#34;Part Y&#34;</span>);
+	}
+	Product<span style="color:#f92672">*</span> <span style="color:#a6e22e">GetResult</span>(){
+		<span style="color:#66d9ef">return</span> pPro;
+	}
+<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+	Product <span style="color:#f92672">*</span>pPro;
+};
+<span style="color:#75715e">//--------------------------------------
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Director</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	Director();
+	<span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>Director();
+	<span style="color:#66d9ef">void</span>  <span style="color:#a6e22e">Construct</span>(Builder <span style="color:#f92672">*</span>build){ <span style="color:#75715e">//告诉指挥者，需要什么样的小人
+</span><span style="color:#75715e"></span>		build<span style="color:#f92672">-&gt;</span>BuildPartA();<span style="color:#75715e">//根据用户的选择建造小人
+</span><span style="color:#75715e"></span>		build<span style="color:#f92672">-&gt;</span>BuildPartB();
+	}
+};
+
+<span style="color:#75715e">//use
+</span><span style="color:#75715e"></span>	Director <span style="color:#f92672">*</span> d<span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Director();
+	Builder<span style="color:#f92672">*</span> b1 <span style="color:#f92672">=</span><span style="color:#66d9ef">new</span>  ConcreteBuilder1();
+	Builder<span style="color:#f92672">*</span> b2 <span style="color:#f92672">=</span><span style="color:#66d9ef">new</span>  ConcreteBuilder2();
+	d<span style="color:#f92672">-&gt;</span>Construct(b1);
+	b1<span style="color:#f92672">-&gt;</span>GetResult()<span style="color:#f92672">-&gt;</span>show();
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Jiang . </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/c&#43;&#43;/">
+                    #c&#43;&#43;</a></span>
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/design-patterns/">
+                    #Design Patterns</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://jfy0o0.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" class="prev" rel="prev" title="Design Patterns - 创建型模式 - 单例模式"><i class="iconfont icon-left"></i>&nbsp;Design Patterns - 创建型模式 - 单例模式</a>
+         
+        
+        <a href="https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E5%9E%8B-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" class="next" rel="next" title="Design Patterns - 结构型模式 - 代理模式">Design Patterns - 结构型模式 - 代理模式&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://jfy0o0.github.io">Jiang .</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>
