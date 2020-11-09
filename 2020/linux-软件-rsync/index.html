@@ -10,7 +10,7 @@
   
   
   <link rel="prev" href="https://jfy0o0.github.io/2020/linux-%E8%BD%AF%E4%BB%B6-vsftpd/" />
-  
+  <link rel="next" href="https://jfy0o0.github.io/2020/cmake/" />
   <link rel="canonical" href="https://jfy0o0.github.io/2020/linux-%E8%BD%AF%E4%BB%B6-rsync/" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -57,7 +57,7 @@
     "datePublished": "2020-11-09 11:20:43 \u002b0800 CST",
     "dateModified" : "2020-11-09 11:20:43 \u002b0800 CST",
     "url" : "https:\/\/jfy0o0.github.io\/2020\/linux-%E8%BD%AF%E4%BB%B6-rsync\/",
-    "wordCount" : "352",
+    "wordCount" : "359",
     "keywords" : [ "Linux Soft", "Jiang . \u0027s blog"]
 }
 </script>
@@ -180,44 +180,44 @@
     --stats: 显示如何执行压缩和传输
     --delete：删除那些DST中有而SRC没有的文件，即删除DST中多余的文件；
     --delete-excluded 同样删除接收端那些被该选项指定排除的文件。
-	--delete-after 传输结束以后再删除。
-	--ignore-errors 及时出现IO错误也进行删除。
-	--max-delete<span style="color:#f92672">=</span>NUM 最多删除NUM个文件。
-	--partial 保留那些因故没有完全传输的文件，以是加快随后的再次传输。
-	--force 强制删除目录，即使不为空。
-	--numeric-ids 不将数字的用户和组id匹配为用户名和组名。
-	--timeout<span style="color:#f92672">=</span>time ip超时时间，单位为秒。
-	-I, --ignore-times 不跳过那些有同样的时间和长度的文件。
-	--size-only 当决定是否要备份文件时，仅仅察看文件大小而不考虑文件时间。
-	--modify-window<span style="color:#f92672">=</span>NUM 决定文件是否时间相同时使用的时间戳窗口，默认为0。
-	-T --temp-dir<span style="color:#f92672">=</span>DIR 在DIR中创建临时文件。
-	--exclude<span style="color:#f92672">=</span>PATTERN 指定排除不需要传输的文件模式。
-	--include<span style="color:#f92672">=</span>PATTERN 指定不排除而需要传输的文件模式。
-	--exclude-from<span style="color:#f92672">=</span>FILE 排除FILE中指定模式的文件。
-	--include-from<span style="color:#f92672">=</span>FILE 不排除FILE指定模式匹配的文件。
-	--version 打印版本信息。
-	--address 绑定到特定的地址。
-	--config<span style="color:#f92672">=</span>FILE 指定其他的配置文件，不使用默认的rsyncd.conf文件。
-	--port<span style="color:#f92672">=</span>PORT 指定其他的rsync服务端口。
-	--blocking-io 对远程shell使用阻塞IO。
-	--compare-dest<span style="color:#f92672">=</span>DIR 同样比较DIR中的文件来决定是否需要备份。
+    --delete-after 传输结束以后再删除。
+    --ignore-errors 及时出现IO错误也进行删除。
+    --max-delete<span style="color:#f92672">=</span>NUM 最多删除NUM个文件。
+    --partial 保留那些因故没有完全传输的文件，以是加快随后的再次传输。
+    --force 强制删除目录，即使不为空。
+    --numeric-ids 不将数字的用户和组id匹配为用户名和组名。
+    --timeout<span style="color:#f92672">=</span>time ip超时时间，单位为秒。
+    -I, --ignore-times 不跳过那些有同样的时间和长度的文件。
+    --size-only 当决定是否要备份文件时，仅仅察看文件大小而不考虑文件时间。
+    --modify-window<span style="color:#f92672">=</span>NUM 决定文件是否时间相同时使用的时间戳窗口，默认为0。
+    -T --temp-dir<span style="color:#f92672">=</span>DIR 在DIR中创建临时文件。
+    --exclude<span style="color:#f92672">=</span>PATTERN 指定排除不需要传输的文件模式。
+    --include<span style="color:#f92672">=</span>PATTERN 指定不排除而需要传输的文件模式。
+    --exclude-from<span style="color:#f92672">=</span>FILE 排除FILE中指定模式的文件。
+    --include-from<span style="color:#f92672">=</span>FILE 不排除FILE指定模式匹配的文件。
+    --version 打印版本信息。
+    --address 绑定到特定的地址。
+    --config<span style="color:#f92672">=</span>FILE 指定其他的配置文件，不使用默认的rsyncd.conf文件。
+    --port<span style="color:#f92672">=</span>PORT 指定其他的rsync服务端口。
+    --blocking-io 对远程shell使用阻塞IO。
+    --compare-dest<span style="color:#f92672">=</span>DIR 同样比较DIR中的文件来决定是否需要备份。
     --max-size  ：限制rsync传输的最大文件大小。可以使用单位后缀，还可以是一个小数值
     <span style="color:#f92672">(</span>例如：<span style="color:#e6db74">&#34;--max-size=1.5m&#34;</span><span style="color:#f92672">)</span>
-	--min-size  ：限制rsync传输的最小文件大小。这可以用于禁止传输小文件或那些垃圾文件。
-	--exclude   ：指定排除规则来排除不需要传输的文件。
-	--port      ：连接daemon时使用的端口号，默认为873端口。
-	--password-file：daemon模式时的密码文件，可以从中读取密码实现非交互式。注意，这不是远程shell认证的密码，而是rsync模块认证的密码。
-	-W --whole-file：rsync将不再使用增量传输，而是全量传输。在网络带宽高于磁盘带宽时，该选项比增量传输更高效。
-	--existing  ：要求只更新目标端已存在的文件，目标端还不存在的文件不传输。注意，使用相对路径时如果上层目录不存在也不会传输。
-	--ignore-existing：要求只更新目标端不存在的文件。和<span style="color:#e6db74">&#34;--existing&#34;</span>结合使用有特殊功能，见下文示例。
-	--remove-source-files：要求删除源端已经成功传输的文件。
+    --min-size  ：限制rsync传输的最小文件大小。这可以用于禁止传输小文件或那些垃圾文件。
+    --exclude   ：指定排除规则来排除不需要传输的文件。
+    --port      ：连接daemon时使用的端口号，默认为873端口。
+    --password-file：daemon模式时的密码文件，可以从中读取密码实现非交互式。注意，这不是远程shell认证的密码，而是rsync模块认证的密码。
+    -W --whole-file：rsync将不再使用增量传输，而是全量传输。在网络带宽高于磁盘带宽时，该选项比增量传输更高效。
+    --existing  ：要求只更新目标端已存在的文件，目标端还不存在的文件不传输。注意，使用相对路径时如果上层目录不存在也不会传输。
+    --ignore-existing：要求只更新目标端不存在的文件。和<span style="color:#e6db74">&#34;--existing&#34;</span>结合使用有特殊功能，见下文示例。
+    --remove-source-files：要求删除源端已经成功传输的文件。
 </code></pre></div><h2 id="使用">使用：</h2>
 <h3 id="1拷贝本地文件"><strong>1.拷贝本地文件</strong></h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">rsync -avz /home/feiyu/ /bak/
 </code></pre></div><h3 id="2将本地机器的内容拷贝到远程机器">2.将本地机器的内容拷贝到远程机器</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">rsync -avz /home/jfy/ 192.168.12.24:/home/jfy/
 </code></pre></div><h3 id="3将远程机器的内容拷贝到本地机器">3.将远程机器的内容拷贝到本地机器</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">rsync -av 192.168.12.24:/home/jfy/ /home/jfy/
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">rsync -avz 192.168.12.24:/home/jfy/ /home/jfy/
 </code></pre></div><ul>
 <li>注意：
 <ul>
@@ -229,7 +229,14 @@
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">rsync -r /mydata/data /backups/ : 会把目录data直接同步至/backups目录中
 rsync -r /mydata/data/ /backups/: 会把目录data/中的内容的同步至/backups目录中
 </code></pre></div><h2 id="配置rsync服务">配置rsync服务:</h2>
-<p>配置一个简单的rsync服务并不复杂，但是我们安装好rsync后，并没有发现配置文件，所以你需要手动建立一些配置文件。rsync可以经由xinetd启动daemon，或者作为一个独立进程启动daemon。如果把它作为一个独立进程来启动，只需要运行命令：rsync –daemon即可；但是我们一般将其作为超级守护进程使用。下面是安装步骤：</p>
+<p>配置一个简单的rsync服务并不复杂，但是我们安装好rsync后，并没有发现配置文件，所以你需要手动建立一些配置文件。rsync可以经由xinetd启动daemon，或者作为一个独立进程启动daemon。如果把它作为一个独立进程来启动，只需要运行命令：rsync –daemon即可；但是我们一般将其作为超级守护进程使用。</p>
+<h4 id="xinetd">xinetd:</h4>
+<ol>
+<li>独立启动的守护进程：stand-alone，每个特定服务都有单独的守护进程，这个处理单一服务的始终存在的进程就是独立启动的守护进程。</li>
+<li>超级守护进程：多个服务统一由一个进程管理，该进程可以管理多个服务。</li>
+<li>Xinetd:即extended internet daemon，是新一代的网络守护进程服务程序，又叫超级Internet服务器，常用来管理多种轻量级Internet服务。Xinetd提供类似于inetd+tcp_wrapper的功能，但是更加强大和安全。</li>
+</ol>
+<p>下面是安装步骤：</p>
 <h3 id="1安装并启动xinetd">1.安装并启动xinetd</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">yum -y install xinetd 
 </code></pre></div><h3 id="2-为rsync服务提供配置文件">2. 为rsync服务提供配置文件</h3>
@@ -274,21 +281,21 @@ secrets file <span style="color:#f92672">=</span> /etc/rsyncd.passwd	//验证密
  
 <span style="color:#f92672">[</span>root@localhost ~<span style="color:#f92672">]</span><span style="color:#75715e"># chmod 600 /etc/rsyncd.passwd     #权限必须为600</span>
 </code></pre></div><h3 id="4启动服务">4.启动服务</h3>
-<pre><code>[root@localhost ~]# service xinetd  start
-</code></pre><h3 id="5使用方法--后三种模式-">5.使用方法 ( 后三种模式 )</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">[root@localhost ~]<span style="color:#75715e"># service xinetd  start</span>
+</code></pre></div><h3 id="5使用方法--后三种模式-">5.使用方法 ( 后三种模式 )</h3>
 <ul>
 <li>从远程rsync服务器中拷贝文件到本地机。当SRC路径信息包含”::”分隔符时启动该模式。</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">rsync -av myuser@192.168.12.24::mydata /tmp/
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">rsync -avz myuser@192.168.12.24::mydata /tmp/
 <span style="color:#75715e">#myuser为rsync服务器的一个用户</span>
 </code></pre></div><ul>
 <li>从本地机器拷贝文件到远程rsync服务器中。当DST路径信息包含”::”分隔符时启动该模式。</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">rsync -av install.log.syslog  myuser@192.168.12.24::mydata 
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">rsync -avz install.log.syslog  myuser@192.168.12.24::mydata 
 </code></pre></div><ul>
 <li>列远程机的文件列表。这类似于rsync传输，不过只要在命令中省略掉本地机信息即可。</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">rsync -av myuser@192.168.12.24::mydata
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">rsync -avz myuser@192.168.12.24::mydata
 </code></pre></div><h2 id="扩展">扩展:</h2>
 <h3 id="ssh免密登录">ssh免密登录：</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ssh-keygen -t rsa  // ~/.ssh 生成密钥 生成的文件 id_rsa（私钥）、id_rsa.pub（公钥）
@@ -338,6 +345,8 @@ ssh-copy-id -p <span style="color:#ae81ff">822</span> jfy@192.168.12.24  //把�
         
         <a href="https://jfy0o0.github.io/2020/linux-%E8%BD%AF%E4%BB%B6-vsftpd/" class="prev" rel="prev" title="Linux Soft - vsftpd"><i class="iconfont icon-left"></i>&nbsp;Linux Soft - vsftpd</a>
          
+        
+        <a href="https://jfy0o0.github.io/2020/cmake/" class="next" rel="next" title="cmake">cmake&nbsp;<i class="iconfont icon-right"></i></a>
         
     </div>
 
