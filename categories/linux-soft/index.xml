@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux Soft on Jiang . &#39;s blog</title>
+    <link>https://jfy0o0.github.io/categories/linux-soft/</link>
+    <description>Recent content in Linux Soft on Jiang . &#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 09 Nov 2020 11:20:43 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/categories/linux-soft/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux Soft - rsync</title>
+      <link>https://jfy0o0.github.io/2020/linux-%E8%BD%AF%E4%BB%B6-rsync/</link>
+      <pubDate>Mon, 09 Nov 2020 11:20:43 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/linux-%E8%BD%AF%E4%BB%B6-rsync/</guid>
+      <description>rsync 用处： Rsync（remote synchronize）是一个远程数据同步工具，可通过LAN/WAN快速同步多台主机间的文件，也可以使用 Rsync 同步本地硬盘中的不同目录。
+ 在使用 rsync 进行远程同步时，可以使用两种方式：  远程 Shell方式（建议使用 ssh，用户验证由 ssh 负责） C/S 方式（即客户连接远程 rsync 服务器，用户验证由 rsync 服务器负责）。   rsync 被称为是一个文件同步的快速方法，主要是因为其在同步文件时会检查文件之间是否有差异，它只同步存在差异或者不存在的文件，但是首次同步时速度依然很慢。  参数： rsync有许多选项： -n: 在不确定命令是否能按意愿执行时，务必要事先测试；-n可以完成此功能； -v: --verbose，详细输出模式 -q: --quiet，静默模式 -c: --checksum，开启校验功能，强制对文件传输进行校验 -r: --recursive，递归复制； -a: --archives，归档，保留文件的原有属性,等同于&amp;#34;-rtopgDl&amp;#34;。 -p: --perms 保留文件的权限 -t: --times 保留文件的时间戳 -l: --links 保留文件的符号链接 -g: --group 保留文件的属组 -o: --owner 保留文件的属主 -D： --devices 保留设备文件 -H, --hard-links 保留硬链结; -S, --sparse 对稀疏文件进行特殊处理以节省DST的 空间; -e ssh: 表示使用ssh协议作承载 -z: 对文件压缩后传输 --progress：显示进度条 --stats: 显示如何执行压缩和传输 --delete：删除那些DST中有而SRC没有的文件，即删除DST中多余的文件； --delete-excluded 同样删除接收端那些被该选项指定排除的文件。 --delete-after 传输结束以后再删除。 --ignore-errors 及时出现IO错误也进行删除。 --max-delete=NUM 最多删除NUM个文件。 --partial 保留那些因故没有完全传输的文件，以是加快随后的再次传输。 --force 强制删除目录，即使不为空。 --numeric-ids 不将数字的用户和组id匹配为用户名和组名。 --timeout=time ip超时时间，单位为秒。 -I, --ignore-times 不跳过那些有同样的时间和长度的文件。 --size-only 当决定是否要备份文件时，仅仅察看文件大小而不考虑文件时间。 --modify-window=NUM 决定文件是否时间相同时使用的时间戳窗口，默认为0。 -T --temp-dir=DIR 在DIR中创建临时文件。 --exclude=PATTERN 指定排除不需要传输的文件模式。 --include=PATTERN 指定不排除而需要传输的文件模式。 --exclude-from=FILE 排除FILE中指定模式的文件。 --include-from=FILE 不排除FILE指定模式匹配的文件。 --version 打印版本信息。 --address 绑定到特定的地址。 --config=FILE 指定其他的配置文件，不使用默认的rsyncd.</description>
+    </item>
+    
+    <item>
+      <title>Linux Soft - vsftpd</title>
+      <link>https://jfy0o0.github.io/2020/linux-%E8%BD%AF%E4%BB%B6-vsftpd/</link>
+      <pubDate>Mon, 09 Nov 2020 11:07:56 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/linux-%E8%BD%AF%E4%BB%B6-vsftpd/</guid>
+      <description>vsftpd 服务：  启动ftp命令#service vsftpd start 停止ftp命令#service vsftpd stop 重启ftp命令#service vsftpd restart  配置文件： ftp的配置文件主要有三个，位于**/etc/vsftpd/**目录下，分别是：
+ ftpusers 该文件用来指定那些用户不能访问ftp服务器。 user_list 该文件用来指示的默认账户在默认情况下也不能访问ftp  是和vsftpd.conf中的userlist_enable和userlist_deny两个配置项紧密相关的，它可以有效，也可以无效，有效时它可以是一个黑名单，也可以是一个白名单！ 当userlist_enable=YES时，userlist_deny=YES时：user_list是一个黑名单，即：所有出现在名单中的用户都会被拒绝登入； 当userlist_enable=YES时，userlist_deny=NO时：user_list是一个白名单，即：只有出现在名单中的用户才会被准许登入(user_list之外的用户都被拒绝登入)；另外需要特别提醒的是：使用白名单后，匿名用户将无法登入！除非显式在user_list中加入一行：anonymous   vsftpd.conf vsftpd的主配置文件  匿名用户操作：   切换目录cd /etc/vsftpd/
+  修改vsftpd.conf文件vi vsftpd.conf
+  去掉以下两行前面的’#&amp;lsquo;号
+anon_upload_enable=YES anon_mkdir_write_enable=YES   非匿名用户操作： 修改vsftpd默认根目录： 如何修改 vsftpd 的默认根目录 /var/ftp/ 到另一个目录?
+  默认配置下，匿名用户登录 vsftpd 服务后的根目录是 /var/ftp/；
+  系统用户登录 vsftpd 服务后的根目录是系统用户的家目录。
+  若要修改登录 vsftpd 服务后的根目录，只要修改 /etc/vsftpd/vsftpd.conf 文件即可。</description>
+    </item>
+    
+  </channel>
+</rss>

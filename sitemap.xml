@@ -2,9 +2,9 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
     <url>
-      <loc>https://jfy0o0.github.io/tags/c&#43;&#43;/</loc>
+      <loc>https://jfy0o0.github.io/categories/</loc>
       
-      <lastmod>2020-11-09T10:31:19+08:00</lastmod>
+      <lastmod>2020-11-09T11:20:43+08:00</lastmod>
       
       
       
@@ -12,7 +12,77 @@
     </url>
   
     <url>
-      <loc>https://jfy0o0.github.io/categories/</loc>
+      <loc>https://jfy0o0.github.io/</loc>
+      
+      <lastmod>2020-11-09T11:20:43+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://jfy0o0.github.io/tags/linux-soft/</loc>
+      
+      <lastmod>2020-11-09T11:20:43+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://jfy0o0.github.io/categories/linux-soft/</loc>
+      
+      <lastmod>2020-11-09T11:20:43+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://jfy0o0.github.io/2020/linux-%E8%BD%AF%E4%BB%B6-rsync/</loc>
+      
+      <lastmod>2020-11-09T11:20:43+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://jfy0o0.github.io/posts/</loc>
+      
+      <lastmod>2020-11-09T11:20:43+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://jfy0o0.github.io/tags/</loc>
+      
+      <lastmod>2020-11-09T11:20:43+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://jfy0o0.github.io/2020/linux-%E8%BD%AF%E4%BB%B6-vsftpd/</loc>
+      
+      <lastmod>2020-11-09T11:07:56+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://jfy0o0.github.io/tags/c&#43;&#43;/</loc>
       
       <lastmod>2020-11-09T10:31:19+08:00</lastmod>
       
@@ -43,36 +113,6 @@
   
     <url>
       <loc>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F/</loc>
-      
-      <lastmod>2020-11-09T10:31:19+08:00</lastmod>
-      
-      
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://jfy0o0.github.io/</loc>
-      
-      <lastmod>2020-11-09T10:31:19+08:00</lastmod>
-      
-      
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://jfy0o0.github.io/posts/</loc>
-      
-      <lastmod>2020-11-09T10:31:19+08:00</lastmod>
-      
-      
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://jfy0o0.github.io/tags/</loc>
       
       <lastmod>2020-11-09T10:31:19+08:00</lastmod>
       
@@ -482,129 +522,9 @@
     </url>
   
     <url>
-      <loc>https://jfy0o0.github.io/2014/creating-a-new-theme/</loc>
-      
-      <lastmod>2014-09-28T00:00:00+00:00</lastmod>
-      
-      
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://jfy0o0.github.io/tags/hugo/</loc>
-      
-      <lastmod>2014-09-28T00:00:00+00:00</lastmod>
-      
-      
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://jfy0o0.github.io/tags/theme/</loc>
-      
-      <lastmod>2014-09-28T00:00:00+00:00</lastmod>
-      
-      
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://jfy0o0.github.io/categories/uncategorized/</loc>
-      
-      <lastmod>2014-09-28T00:00:00+00:00</lastmod>
-      
-      
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://jfy0o0.github.io/2014/goisforlovers/</loc>
-      
-      <lastmod>2014-07-28T00:00:00+00:00</lastmod>
-      
-      
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://jfy0o0.github.io/tags/development/</loc>
-      
-      <lastmod>2014-07-28T00:00:00+00:00</lastmod>
-      
-      
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://jfy0o0.github.io/tags/go/</loc>
-      
-      <lastmod>2014-07-28T00:00:00+00:00</lastmod>
-      
-      
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://jfy0o0.github.io/tags/golang/</loc>
-      
-      <lastmod>2014-07-28T00:00:00+00:00</lastmod>
-      
-      
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://jfy0o0.github.io/tags/templates/</loc>
-      
-      <lastmod>2014-07-28T00:00:00+00:00</lastmod>
-      
-      
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://jfy0o0.github.io/tags/themes/</loc>
-      
-      <lastmod>2014-07-28T00:00:00+00:00</lastmod>
-      
-      
-      
-      
-    </url>
-  
-    <url>
       <loc>https://jfy0o0.github.io/about/</loc>
       
       <lastmod>2014-04-09T00:00:00+00:00</lastmod>
-      
-      
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://jfy0o0.github.io/2014/hugoisforlovers/</loc>
-      
-      <lastmod>2014-04-02T00:00:00+00:00</lastmod>
-      
-      
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://jfy0o0.github.io/2014/migrate-from-jekyll/</loc>
-      
-      <lastmod>2014-03-10T00:00:00+00:00</lastmod>
       
       
       
