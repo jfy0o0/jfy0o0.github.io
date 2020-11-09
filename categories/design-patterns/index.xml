@@ -6,7 +6,28 @@
     <description>Recent content in Design Patterns on LeaveIt</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Nov 2020 15:54:05 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/categories/design-patterns/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 09 Nov 2020 10:31:19 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/categories/design-patterns/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Design Patterns - 行为型模式 - 访问者模式</title>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Mon, 09 Nov 2020 10:31:19 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F/</guid>
+      <description>访问者模式： 　访问者模式的官方定义是这样的：
+ 表示一个作用于某对象结构中的各元素的操作，它使你可以在不改变各元素类的前提下定义作用于这些元素的新操作。 官方的东西总是晦涩难懂的，那么我们现在就来拆解一下：  首先&amp;quot;一个作用于某对象结构中的各元素的操作&amp;quot;，提到了三个东西：对象结构、元素、操作。 我们都学习过数据结构，数据结构中大家对数据的访问一般都是直接访问其地址。 在面向对象的设计中，我们一般也是将数据的访问操作放在类的内部，便于访问。 这种设计看似没有什么问题，但当我们想要采用不同方式访问数据或对象结构时就必须要对类进行修改，这样就违反了OCP原则。于是大家会想到将数据结构与操作分离开来，当问们需要添加访问操作的时候直接添加新的类，原来的代码不需要做任何改变，这也是后半句提到的&amp;quot;可以在不改变各元素类的前提下定义作用于这些元素的新操作&amp;quot;。    访问者模式的角色：  Visitor：接口或抽象类，定义了对每个Element访问的行为，它的参数就是被访问的元素，它的方法个数理论上与元素的个数是一样的，因此，访问者模式要求元素的类型要稳定，如果经常添加、移除元素类，必然会导致频繁地修改visitor接口，如果出现这种情况，则说明不适合使用该模式。 ConcreteVisitor：具体的访问者，它需要给出对每一个元素类访问时所产生的具体行为。 Element：元素接口或抽象类，它定义了一个接受访问者的方法（accept），其意思就是说每一个元素都可以被访问者访问。 ConcreteElement：具体的元素类，它提供接受访问的具体实现，而这个具体实现通常情况下是使用访问者提供的访问该元素类的方法。 ObjectStructure：定义当中所提到的对象结构，对象结构是一个抽象表述，它内部管理了元素集合，并且可以迭代这些元素提供访问者访问。  优点：  各角色职责分离，符合单一职责原则。 具有优秀的扩展性，使得数据结构和作用于结构上的操作解耦，使得操作集合可以独立变化。 灵活性  缺点：  具体元素对访问者公布细节，违反了迪米特原则。 具体元素变更比较困难。 违反了依赖倒置原则，依赖了具体类，没有依赖抽象。  访问者模式的使用场景：  对象结构中对象对应的类很少改变，但经常需要在此对象结构上定义新的操作。 需要对一个对象结构中的对象进行很多不同的并且不相关的操作，而需要避免让这些操作&amp;quot;污染&amp;quot;这些对象的类，也不希望在增加新操作时修改这些类。　  eg: class Visitor { public: virtual void Visit( Element *element ){}; }; class Element { public: // Methods  virtual void Accept( Visitor *visitor ){}; }; //------------------------------------------------------- class Employee : public Element { public: string name; double income; int vacationDays; public : Employee( string name, double income, int vacationDays ) { this-&amp;gt;name = name; this-&amp;gt;income = income; this-&amp;gt;vacationDays = vacationDays; } void Accept( Visitor *visitor ) { visitor-&amp;gt;Visit( this ); } }; class IncomeVisitor : public Visitor { public: void Visit( Element *element ) { Employee *employee = ((Employee*)element); employee-&amp;gt;income *= 1.</description>
+    </item>
+    
+    <item>
+      <title>Design Patterns - 行为型模式 - 迭代器模式</title>
+      <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Mon, 09 Nov 2020 09:18:29 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F/</guid>
+      <description>迭代器模式: 　迭代器模式允许你访问一个数据项序列中的所有元素，而无须关心序列是什么类型（数组、链表、列表或任何其他类型）。它能有效地构建一个数据管道，经过一系列不同的转换或过滤后再从管道的另一端出来。迭代器模式就是提供一种遍历集合元素的统一接口，用一致的方法遍历集合元素，不需要知道集合对象的底层表示。
+迭代器模式的角色：  抽象迭代器（Iterator）：接口声明了遍历集合所需的操作（获取下一个元素、获取当前位置和重新开始迭代等）。 具体迭代器（ConcreteIterator）：实现遍历集合的一种特定算法。迭代器对象必须跟踪自身遍历的进度。这使得多个迭代器可以相互独立地遍历同一个集合。 抽象聚合（Aggregate）：接口声明一个或多个方法来获取与集合兼容的迭代器。返回方法的类型必须被声明为迭代器接口。 具体聚合（ConcreteAggregate）：会在客户端请求迭代器时返回一个特定的具体迭代器类实体。 客户端（Client）：通过集合和迭代器的接口与两者进行交互。 这样一来客户端无需与具体类进行耦合， 允许同一客户端代码使用各种不同的集合和迭代器。  迭代器模式适用性：  当集合背后为复杂的数据结构，且你希望对客户端隐藏其复杂性时（出于使用便利性或安全性的考虑），可以使用迭代器。 可以减少程序中重复的遍历代码。 如果你希望代码能够遍历不同的甚至是无法预知的数据结构，可以使用迭代器。  优点：  它支持以不同的方式遍历一个聚合对象。 迭代器简化了聚合类。 在同一个聚合上可以有多个遍历。 在迭代器模式中，增加新的聚合类和迭代器类都很方便，无须修改原有代码。符合OCP原则。  缺点： 由于迭代器模式将存储数据和遍历数据的职责分离，增加新的聚合类需要对应增加新的迭代器类，类的个数成对增加，这在一定程度上增加了系统的复杂性。
+eg: class Iterator { public: Iterator(){} virtual ~Iterator(){}; virtual string First() = 0; virtual string Next() = 0; virtual string GetCur() = 0; virtual bool IsEnd() = 0; }; class Aggregate { public: virtual int Count() = 0; virtual void Push(const string &amp;amp;strValue) = 0; virtual string POp(const int cnt) = 0; virtual Iterator* CreateIterator() = 0; }; //----------------------------------------------------- class ConcreteIterator : public Iterator { public: ConcreteIterator(Aggregate *p_aggregate):m_aggregate(p_aggregate),m_cnt(0){} string First() { return m_aggregate-&amp;gt;POp(0); } string Next() { string str; m_cnt++; if (m_cnt &amp;lt; m_aggregate-&amp;gt;Count()) { str = m_aggregate-&amp;gt;POp(m_cnt); } return str; } string GetCur() { return m_aggregate-&amp;gt;POp(m_cnt); } bool IsEnd() { return m_cnt &amp;gt;= m_aggregate-&amp;gt;Count() ?</description>
+    </item>
+    
     <item>
       <title>Design Patterns - 行为型模式 - 中介者模式</title>
       <link>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F/</link>
