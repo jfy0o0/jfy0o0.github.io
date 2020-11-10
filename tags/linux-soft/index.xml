@@ -6,7 +6,28 @@
     <description>Recent content in Linux Soft on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Nov 2020 11:20:43 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/linux-soft/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 10 Nov 2020 14:18:28 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/linux-soft/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux Soft - iptables</title>
+      <link>https://jfy0o0.github.io/2020/linux-%E8%BD%AF%E4%BB%B6-iptables/</link>
+      <pubDate>Tue, 10 Nov 2020 14:18:28 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/linux-%E8%BD%AF%E4%BB%B6-iptables/</guid>
+      <description>iptables iptables 是用来设置、维护和检查Linux内核]的IP包过滤规则的。
+ 可以定义不同的表，每个表都包含几个内部的链，也能包含用户定义的链。 每个链都是一个规则列表，对对应的包进行匹配：每条规则指定应当如何处理与之相匹配的包。 这被称作&amp;rsquo;target&#39;（目标），也可以跳向同一个表内的用户定义的链。  表  filter表：负责过滤功能，防火墙；内核模块：iptables_filter nat表：network address translation，网络地址转换功能；内核模块：iptable_nat mangle表：拆解报文，做出修改，并重新封装 的功能；iptable_mangle raw表：关闭nat表上启用的连接追踪机制；iptable_raw  流程 链的规则存放于哪些表中（从链到表的对应关系）：
+  PREROUTING 的规则可以存在于：raw表，mangle表，nat表。
+  INPUT 的规则可以存在于：mangle表，filter表，（centos7中还有nat表，centos6中没有）。
+  FORWARD 的规则可以存在于：mangle表，filter表。
+  OUTPUT 的规则可以存在于：raw表mangle表，nat表，filter表。
+  POSTROUTING 的规则可以存在于：mangle表，nat表。
+  表中的规则可以被哪些链使用（从表到链的对应关系）：
+  raw 表中的规则可以被哪些链使用：PREROUTING，OUTPUT
+  mangle 表中的规则可以被哪些链使用：PREROUTING，INPUT，FORWARD，OUTPUT，POSTROUTING
+  nat 表中的规则可以被哪些链使用：PREROUTING，OUTPUT，POSTROUTING（centos7中还有INPUT，centos6中没有）
+  filter 表中的规则可以被哪些链使用：INPUT，FORWARD，OUTPUT
+  处理动作  ACCEPT:允许数据包通过 DROP:直接丢弃数据包 REJECT:拒绝数据包通过 SNAT:源地址转换 MASQUERADE:SNAT的特殊形式，适用于动态的、临时会变的ip上 DNAT:目标地址转发 REDIRECT:在本机做端口映射 LOG:/var/log/messages记录日志信息，将数据包传递给下一条规则，除了记录以外，不操作  命令 iptables -t 表名 -L 查看对应表的所有规则，-t选项指定要操作的表，省略&amp;#34;-t 表名&amp;#34;时，默认表示操作filter表，-L表示列出规则，即查看规则。 iptables -t 表名 -L 链名 查看指定表的指定链中的规则。 iptables -t 表名 -v -L 查看指定表的所有规则，并且显示更详细的信息（更多字段），-v表示verbose，表示详细的，冗长的，当使用-v选项时，会显示出&amp;#34;计数器&amp;#34;的信息，由于上例中使用的选项都是短选项，所以一般简写为iptables -t 表名 -vL iptables -t 表名 -n -L 表示查看表的所有规则，并且在显示规则时，不对规则中的IP或者端口进行名称反解，-n选项表示不解析IP地址。 iptables --line-numbers -t 表名 -L 表示查看表的所有规则，并且显示规则的序号，--line-numbers选项表示显示规则的序号，注意，此选项为长选项，不能与其他短选项合并，不过此选项可以简写为--line，注意，简写后仍然是两条横杠，仍然是长选项。 iptables -t 表名 -v -x -L 表示查看表中的所有规则，并且显示更详细的信息(-v选项)，不过，计数器中的信息显示为精确的计数值，而不是显示为经过可读优化的计数值，-x选项表示显示计数器的精确值。 iptables --line -t filter -nvxL iptables --line -t filter -nvxL INPUT 增删改查 在指定表的指定链的尾部添加一条规则，-A选项表示在对应链的末尾添加规则，省略-t选项时，表示默认操作filter表中的规则 命令语法：iptables -t 表名 -A 链名 匹配条件 -j 动作 示例：iptables -t filter -A INPUT -s 192.</description>
+    </item>
+    
     <item>
       <title>Linux Soft - rsync</title>
       <link>https://jfy0o0.github.io/2020/linux-%E8%BD%AF%E4%BB%B6-rsync/</link>

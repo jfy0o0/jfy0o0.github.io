@@ -10,7 +10,7 @@
   
   
   <link rel="prev" href="https://jfy0o0.github.io/2020/linux-%E8%BD%AF%E4%BB%B6-rsync/" />
-  
+  <link rel="next" href="https://jfy0o0.github.io/2020/linux-%E8%BD%AF%E4%BB%B6-iptables/" />
   <link rel="canonical" href="https://jfy0o0.github.io/2020/cmake/" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -46,7 +46,7 @@
     "articleSection" : "posts",
     "name" : "cmake",
     "headline" : "cmake",
-    "description" : "cmake 1.指定 cmake 的最小版本 cmake_minimum_required(VERSION 3.4.1)这行命令是可选的，我们可以不写这句话，但在有些情况下，如果 CMakeLists.txt 文件中使用了一些高版本 cmake 特有的一些命令的时候，就需要加上这样一行，提醒用户升级到该版本之后再执行 cmake。\n2.设置项目名称 project(demo)这个命令不是强制性的，但最好都加上。它会引入两个变量 demo_BINARY_DIR 和 demo_SOURCE_DIR，同时，cmake 自动定义了两个等价的变量 PROJECT_BINARY_DIR 和 PROJECT_SOURCE_DIR。\n3.设置编译类型 add_executable(demo demo.cpp) # 生成可执行文件 add_library(common STATIC util.cpp) # 生成静态库 add_library(common SHARED util.cpp) # 生成动态库或共享库 #add_library 默认生成是静态库，通过以上命令生成文件名字， 4.指定编译包含的源文件 4.1 明确指定包含哪些源文件 add_library(demo demo.cpp test.cpp util.cpp)4.2 搜索所有的 cpp 文件 aux_source_directory(dir VAR) 发现一个目录下所有的源代码文件并将列表存储在一个变量中。 aux_source_directory(. SRC_LIST) # 搜索当前目录下的所有.cpp文件 add_library(demo ${SRC_LIST})4.3 自定义搜索规则 file(GLOB SRC_LIST \u0026#34;*.cpp\u0026#34; \u0026#34;protocol\/*.cpp\u0026#34;)add_library(demo ${SRC_LIST})#或者 file(GLOB SRC_LIST \u0026#34;*.cpp\u0026#34;)file(GLOB SRC_PROTOCOL_LIST \u0026#34;protocol\/*.cpp\u0026#34;)add_library(demo ${SRC_LIST} ${SRC_PROTOCOL_LIST})#或者 aux_source_directory(. SRC_LIST)aux_source_directory(protocol SRC_PROTOCOL_LIST)add_library(demo ${SRC_LIST} ${SRC_PROTOCOL_LIST})5.",
+    "description" : "build c\u002b\u002b project",
     "inLanguage" : "en-us",
     "author" : "Jiang",
     "creator" : "Jiang",
@@ -527,6 +527,8 @@ option 命令添加了一个 USE_MYMATH 选项，并且默认值为 ON 。根据
         
         <a href="https://jfy0o0.github.io/2020/linux-%E8%BD%AF%E4%BB%B6-rsync/" class="prev" rel="prev" title="Linux Soft - rsync"><i class="iconfont icon-left"></i>&nbsp;Linux Soft - rsync</a>
          
+        
+        <a href="https://jfy0o0.github.io/2020/linux-%E8%BD%AF%E4%BB%B6-iptables/" class="next" rel="next" title="Linux Soft - iptables">Linux Soft - iptables&nbsp;<i class="iconfont icon-right"></i></a>
         
     </div>
 
