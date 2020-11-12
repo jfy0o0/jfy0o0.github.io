@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Jiang .">
+  
+  
+  
+  <link rel="prev" href="https://jfy0o0.github.io/2020/boost-%E6%97%B6%E9%97%B4%E4%B8%8E%E6%97%A5%E6%9C%9F/" />
+  
+  <link rel="canonical" href="https://jfy0o0.github.io/2020/boost-%E5%AE%B9%E5%99%A8/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Boost - 容器 | Jiang . &#39;s blog
+       
+  </title>
+  <meta name="title" content="Boost - 容器 | Jiang . &#39;s blog">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/jfy0o0.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Boost - 容器",
+    "headline" : "Boost - 容器",
+    "description" : "boost-容器  array unordered_map、unordered_set bimap circular_buffer dynamic_bitset multi_array  array: array相当于是一个增加了STL容器接口的数组，但它不像vector等容器一样可以动态增长，如果需要动态变动array的容量可以使用boost::scoped_array。array适用与对运行速度要求很高的场合。C\u002b\u002b11中已支持array。\n用法： #include \u0026lt;boost\/array.hpp\u0026gt;#include \u0026lt;boost\/typeof\/typeof.hpp\u0026gt;int main() { array\u0026lt;int, 5\u0026gt; ary; array\u0026lt;int, 5\u0026gt; ary2 = { 1, 2, 3, 4, 5 };\/\/可以使用{}初始化array  ary = ary2;\/\/赋值  swap(ary, ary2)\/\/互换  ary.assign(0);\/\/所有元素赋值为0  ary[0] = 1;\/\/头元素  ary.back() = 10;\/\/尾元素  ary.at(5);\/\/使用at访问元素  int*p = ary.c_array();\/\/获得原始数组指针  int s = ary.size();\/\/获得数组中元素个数  sort(ary.begin(), ary.end());\/\/使用STL排序函数对其排序  for (BOOST_AUTO(pos, ary.begin()); pos != ary.end(); \u002b\u002bpos) \/\/遍历数组，使用BOOST_AUTO需要包含\u0026#34;boost\/typeof\/typeof.",
+    "inLanguage" : "en-us",
+    "author" : "Jiang",
+    "creator" : "Jiang",
+    "publisher": "Jiang",
+    "accountablePerson" : "Jiang",
+    "copyrightHolder" : "Jiang",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-11-12 10:23:27 \u002b0800 CST",
+    "dateModified" : "2020-11-12 10:23:27 \u002b0800 CST",
+    "url" : "https:\/\/jfy0o0.github.io\/2020\/boost-%E5%AE%B9%E5%99%A8\/",
+    "wordCount" : "415",
+    "keywords" : [ "c\u002b\u002b","Boost", "Jiang . \u0027s blog"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Boost - 容器</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://jfy0o0.github.io" rel="author">Jiang</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-11-12 itemprop="datePublished">November 12, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://jfy0o0.github.io/categories/boost/"> Boost </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="boost-容器">boost-容器</h1>
+<ol>
+<li>array</li>
+<li>unordered_map、unordered_set</li>
+<li>bimap</li>
+<li>circular_buffer</li>
+<li>dynamic_bitset</li>
+<li>multi_array</li>
+</ol>
+<h1 id="array">array:</h1>
+<p>array相当于是一个增加了STL容器接口的数组，但它不像vector等容器一样可以动态增长，如果需要动态变动array的容量可以使用boost::scoped_array。array适用与对运行速度要求很高的场合。C++11中已支持array。</p>
+<h2 id="用法">用法：</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;boost/array.hpp&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;boost/typeof/typeof.hpp&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+    array<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, <span style="color:#ae81ff">5</span><span style="color:#f92672">&gt;</span> ary;
+    array<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, <span style="color:#ae81ff">5</span><span style="color:#f92672">&gt;</span> ary2 <span style="color:#f92672">=</span> { <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span> };<span style="color:#75715e">//可以使用{}初始化array
+</span><span style="color:#75715e"></span>    ary <span style="color:#f92672">=</span> ary2;<span style="color:#75715e">//赋值
+</span><span style="color:#75715e"></span>    swap(ary, ary2)<span style="color:#75715e">//互换
+</span><span style="color:#75715e"></span>
+    ary.assign(<span style="color:#ae81ff">0</span>);<span style="color:#75715e">//所有元素赋值为0
+</span><span style="color:#75715e"></span>    ary[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#75715e">//头元素
+</span><span style="color:#75715e"></span>    ary.back() <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>;<span style="color:#75715e">//尾元素
+</span><span style="color:#75715e"></span>    ary.at(<span style="color:#ae81ff">5</span>);<span style="color:#75715e">//使用at访问元素
+</span><span style="color:#75715e"></span>
+
+    <span style="color:#66d9ef">int</span><span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> ary.c_array();<span style="color:#75715e">//获得原始数组指针
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> s <span style="color:#f92672">=</span> ary.size();<span style="color:#75715e">//获得数组中元素个数
+</span><span style="color:#75715e"></span>    sort(ary.begin(), ary.end());<span style="color:#75715e">//使用STL排序函数对其排序
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">for</span> (BOOST_AUTO(pos, ary.begin()); pos <span style="color:#f92672">!=</span> ary.end(); <span style="color:#f92672">++</span>pos)
+        <span style="color:#75715e">//遍历数组，使用BOOST_AUTO需要包含&#34;boost/typeof/typeof.hpp&#34;头文件
+</span><span style="color:#75715e"></span>    {
+        <span style="color:#66d9ef">int</span> iNum;
+        iNum <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>pos;
+    }
+}
+
+</code></pre></div><h1 id="unordered_mapunordered_set-"><strong>unordered_map、unordered_set</strong> :</h1>
+<ul>
+<li>unordered_map和unordered_set都是散列容器（hash container）</li>
+<li>他们的查询和修改性能都优于map和set。</li>
+<li>unordered_map中的元素是乱序的，map则默认按照键key从小到大排序存储。</li>
+<li>C++11中已支持unordered_map和unordered_set，且其用法与map, set相同。</li>
+<li>对于自定义类型的key，map需要在自定义类型中重载&lt; 或者使用函数对象类，如下所示：</li>
+</ul>
+<h2 id="用法-1">用法：</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Data</span>
+{
+    <span style="color:#66d9ef">int</span> num;
+    <span style="color:#66d9ef">bool</span> <span style="color:#66d9ef">operator</span> <span style="color:#f92672">&lt;</span> (Data <span style="color:#66d9ef">const</span><span style="color:#f92672">&amp;</span> A) <span style="color:#66d9ef">const</span>
+    {
+        <span style="color:#66d9ef">return</span> num <span style="color:#f92672">&lt;</span> A.num;
+    }
+};
+
+map<span style="color:#f92672">&lt;</span>Data, <span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> m;
+</code></pre></div><p>如果unordered_map的key是自定义类型的话，需要添加两个函数对象类，一个用来计算哈希值，一个用来比较值是否相同，如下所示：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unordered_map&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>unordered_map;
+<span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>pair;
+
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;boost\functional\hash.hpp&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Data</span>
+{
+    <span style="color:#66d9ef">int</span> x;
+    <span style="color:#66d9ef">int</span> y;
+};
+
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">HashValue</span>
+{
+    size_t <span style="color:#a6e22e">operator</span>()(<span style="color:#66d9ef">const</span> Data<span style="color:#f92672">&amp;</span> p)<span style="color:#66d9ef">const</span>
+    {
+        size_t seed <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+        boost<span style="color:#f92672">::</span>hash_combine(seed, p.x);
+        boost<span style="color:#f92672">::</span>hash_combine(seed, p.y);
+        <span style="color:#66d9ef">return</span> seed;
+    }
+};
+
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">IfEqual</span>
+{
+    <span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">operator</span>()(<span style="color:#66d9ef">const</span> Data <span style="color:#f92672">&amp;</span>data1, <span style="color:#66d9ef">const</span> Data <span style="color:#f92672">&amp;</span>data2) <span style="color:#66d9ef">const</span>
+    {
+        <span style="color:#66d9ef">return</span> (data1.x <span style="color:#f92672">==</span> data2.y <span style="color:#f92672">&amp;&amp;</span> data1.y <span style="color:#f92672">==</span> data2.y);
+    }
+};
+
+unordered_map<span style="color:#f92672">&lt;</span>Data, <span style="color:#66d9ef">int</span>, HashValue, IfEqual<span style="color:#f92672">&gt;</span> m;
+</code></pre></div><p>或者实现hash_value（）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">dpi_five_tuple</span>
+{
+    <span style="color:#66d9ef">uint32_t</span> sip;
+    <span style="color:#66d9ef">uint32_t</span> dip;
+    <span style="color:#66d9ef">uint16_t</span> sport;
+    <span style="color:#66d9ef">uint16_t</span> dport;
+    <span style="color:#66d9ef">uint8_t</span> protocol;
+    <span style="color:#66d9ef">bool</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">==</span>(<span style="color:#66d9ef">const</span> dpi_five_tuple <span style="color:#f92672">&amp;</span>fiveTuple) <span style="color:#66d9ef">const</span>
+    {
+        <span style="color:#66d9ef">if</span> ((sip <span style="color:#f92672">==</span> fiveTuple.sip) <span style="color:#f92672">&amp;&amp;</span> (dip <span style="color:#f92672">==</span> fiveTuple.dip)
+        <span style="color:#f92672">&amp;&amp;</span> (sport <span style="color:#f92672">==</span> fiveTuple.sport) <span style="color:#f92672">&amp;&amp;</span> (dport <span style="color:#f92672">==</span> fiveTuple.dport) 
+        <span style="color:#f92672">&amp;&amp;</span> (protocol <span style="color:#f92672">==</span> fiveTuple.protocol))
+        {
+            <span style="color:#66d9ef">return</span> true;
+        }
+        <span style="color:#66d9ef">return</span> (sip <span style="color:#f92672">==</span> fiveTuple.dip) <span style="color:#f92672">&amp;&amp;</span> (dip <span style="color:#f92672">==</span> fiveTuple.sip) 
+        <span style="color:#f92672">&amp;&amp;</span> (sport <span style="color:#f92672">==</span> fiveTuple.dport) <span style="color:#f92672">&amp;&amp;</span> (dport <span style="color:#f92672">==</span> fiveTuple.sport) 
+        <span style="color:#f92672">&amp;&amp;</span> (protocol <span style="color:#f92672">==</span> fiveTuple.protocol);
+    }
+    
+    <span style="color:#75715e">// unordered map
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> std<span style="color:#f92672">::</span>size_t hash_value(<span style="color:#66d9ef">const</span> dpi_five_tuple <span style="color:#f92672">&amp;</span>fiveTuple)
+{
+    <span style="color:#66d9ef">return</span> ((<span style="color:#66d9ef">uint64_t</span>(fiveTuple.sip <span style="color:#f92672">&amp;</span> fiveTuple.dport) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">32</span>) 
+    <span style="color:#f92672">+</span> (<span style="color:#66d9ef">uint64_t</span>(fiveTuple.dip <span style="color:#f92672">&amp;</span> fiveTuple.sport) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">32</span>)) <span style="color:#f92672">&amp;</span>
+           fiveTuple.protocol;
+}
+</code></pre></div><p>boost中的<strong>hash</strong>类可以计算int、float、string等类型的哈希值，如下所示，hash_combin()函数可以获得两个哈希值的合并值。C++11中也提供了hash类来计算哈希值，不过经我实验，boost与C++11获取相同的一个int值的hash值不同，不知是不是二者使用的hash算法不同导致的还是怎么回事</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">    <span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;boost\functional\hash.hpp&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+
+    size_t hashValue1 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, hashValue2 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+
+    hashValue1 <span style="color:#f92672">=</span> boost<span style="color:#f92672">::</span>hash<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>()(<span style="color:#ae81ff">28</span>);
+
+    boost<span style="color:#f92672">::</span>hash<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> HashObj;
+    hashValue2 <span style="color:#f92672">=</span> HashObj(<span style="color:#ae81ff">28</span>);
+</code></pre></div><h1 id="bimap">bimap：</h1>
+<ul>
+<li>map是单向的（key—&gt;value）关联容器，bimap则可以提供双向映射。</li>
+<li>bimap有两个视图，左视图和右视图，分别用成员变量left和right访问，相当于两个不同方向的map，其用法与map基本一致。</li>
+<li>由于是双向映射，所以bimap里不仅元素的key不能相同，value也不能相同。</li>
+</ul>
+<h2 id="用法-2">用法：</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">bimap<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, std<span style="color:#f92672">::</span>string<span style="color:#f92672">&gt;</span> bmCity;
+    <span style="color:#66d9ef">typedef</span> bimap<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, std<span style="color:#f92672">::</span>string<span style="color:#f92672">&gt;::</span>value_type bimap_value;<span style="color:#75715e">//map元素类型为pair（使用make_pair()来生成），bimap元素类型为value_type
+</span><span style="color:#75715e"></span>
+    bmCity.insert(bimap_value(<span style="color:#ae81ff">10</span>, <span style="color:#e6db74">&#34;北京&#34;</span>));
+    bmCity.insert(bimap_value(<span style="color:#ae81ff">20</span>, <span style="color:#e6db74">&#34;上海&#34;</span>));
+    bmCity.insert(bimap_value(<span style="color:#ae81ff">30</span>, <span style="color:#e6db74">&#34;广州&#34;</span>));
+    bmCity.insert(bimap_value(<span style="color:#ae81ff">40</span>, <span style="color:#e6db74">&#34;北京&#34;</span>));
+
+    <span style="color:#75715e">/*正常作为map使用*/</span>
+    bimap<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, std<span style="color:#f92672">::</span>string<span style="color:#f92672">&gt;::</span>left_map<span style="color:#f92672">::</span>const_iterator iter, iter_end;
+    iter <span style="color:#f92672">=</span> bmCity.left.begin();
+    iter_end <span style="color:#f92672">=</span> bmCity.left.end();
+    <span style="color:#66d9ef">for</span> (; iter <span style="color:#f92672">!=</span> iter_end; iter<span style="color:#f92672">++</span>)<span style="color:#75715e">//遍历
+</span><span style="color:#75715e"></span>    {
+        cout <span style="color:#f92672">&lt;&lt;</span> iter<span style="color:#f92672">-&gt;</span>first <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;--&gt;&#34;</span> <span style="color:#f92672">&lt;&lt;</span> iter<span style="color:#f92672">-&gt;</span>second <span style="color:#f92672">&lt;&lt;</span> endl;
+    }
+    iter <span style="color:#f92672">=</span> bmCity.left.find(<span style="color:#ae81ff">20</span>);<span style="color:#75715e">//通过key索引value
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (iter <span style="color:#f92672">!=</span> iter_end)
+        cout <span style="color:#f92672">&lt;&lt;</span> iter<span style="color:#f92672">-&gt;</span>second <span style="color:#f92672">&lt;&lt;</span> endl;
+
+    <span style="color:#75715e">/*将value作为key，key为value*/</span>
+    bimap<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, std<span style="color:#f92672">::</span>string<span style="color:#f92672">&gt;::</span>right_map<span style="color:#f92672">::</span>const_iterator iter_right, iter_end_right;
+    iter_right <span style="color:#f92672">=</span> bmCity.right.begin();
+    iter_end_right <span style="color:#f92672">=</span> bmCity.right.end();
+    <span style="color:#66d9ef">for</span> (; iter_right <span style="color:#f92672">!=</span> iter_end_right; iter_right<span style="color:#f92672">++</span>)<span style="color:#75715e">//遍历
+</span><span style="color:#75715e"></span>    {
+        cout <span style="color:#f92672">&lt;&lt;</span> iter_right<span style="color:#f92672">-&gt;</span>first <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;--&gt;&#34;</span> <span style="color:#f92672">&lt;&lt;</span> iter_right<span style="color:#f92672">-&gt;</span>second <span style="color:#f92672">&lt;&lt;</span> endl;
+    }
+    iter_right <span style="color:#f92672">=</span> bmCity.right.find(<span style="color:#e6db74">&#34;上海&#34;</span>);<span style="color:#75715e">//通过value索引key
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (iter_right <span style="color:#f92672">!=</span> iter_end_right)
+        cout <span style="color:#f92672">&lt;&lt;</span> iter_right<span style="color:#f92672">-&gt;</span>second <span style="color:#f92672">&lt;&lt;</span> endl;
+</code></pre></div><h1 id="circular_buffer">circular_buffer：</h1>
+<p>circular_buffer实现了一个循环容器，故其大小是固定的，当达到末尾时自动循环使用容器的另一端空间</p>
+<h2 id="使用">使用：</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;boost\circular_buffer.hpp&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;boost\typeof\typeof.hpp&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> boost;
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+    circular_buffer<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> cb(<span style="color:#ae81ff">5</span>);<span style="color:#75715e">//定义大小为5的循环容器
+</span><span style="color:#75715e"></span>    cb.push_back(<span style="color:#ae81ff">1</span>);
+    cb.push_front(<span style="color:#ae81ff">0</span>);
+
+    BOOST_AUTO(pos, cb.begin());<span style="color:#75715e">//需包含&#34;boost\typeof\typeof.hpp&#34;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> (; pos <span style="color:#f92672">!=</span> cb.end(); pos<span style="color:#f92672">++</span>)<span style="color:#75715e">//遍历循环容器，仅会输出0, 1
+</span><span style="color:#75715e"></span>        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#f92672">*</span>pos <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;, &#34;</span> ;
+    
+    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#f92672">*</span>(pos) <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;<span style="color:#75715e">//迭代器到达end()，继续输出的话会报错！
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">return</span> getchar();
+}
+</code></pre></div><h1 id="dynamic_bitset">dynamic_bitset:</h1>
+<p>dynamic_bitset类似与STL的bitset，但它可以动态改变长度。dynamic_bitset不是容器 ，不支持迭代器和assign库等STL操作。所需头文件：&ldquo;boost/dynamic_bitset.hpp&rdquo;。</p>
+<h1 id="multi_array">multi_array:</h1>
+<p>multi_array是多维容器，相当于vector&lt; vector<!-- raw HTML omitted --> &gt;这种效果，但操作更方便。</p>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Jiang . </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://jfy0o0.github.io/2020/boost-%E5%AE%B9%E5%99%A8/>https://jfy0o0.github.io/2020/boost-%E5%AE%B9%E5%99%A8/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/c&#43;&#43;/">
+                    #c&#43;&#43;</a></span>
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/boost/">
+                    #Boost</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://jfy0o0.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://jfy0o0.github.io/2020/boost-%E6%97%B6%E9%97%B4%E4%B8%8E%E6%97%A5%E6%9C%9F/" class="prev" rel="prev" title="Boost - 时间与日期"><i class="iconfont icon-left"></i>&nbsp;Boost - 时间与日期</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://jfy0o0.github.io">Jiang .</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

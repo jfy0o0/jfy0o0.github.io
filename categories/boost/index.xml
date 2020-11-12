@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Boost on Jiang . &#39;s blog</title>
+    <link>https://jfy0o0.github.io/categories/boost/</link>
+    <description>Recent content in Boost on Jiang . &#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 12 Nov 2020 10:23:27 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/categories/boost/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Boost - 容器</title>
+      <link>https://jfy0o0.github.io/2020/boost-%E5%AE%B9%E5%99%A8/</link>
+      <pubDate>Thu, 12 Nov 2020 10:23:27 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/boost-%E5%AE%B9%E5%99%A8/</guid>
+      <description>boost-容器  array unordered_map、unordered_set bimap circular_buffer dynamic_bitset multi_array  array: array相当于是一个增加了STL容器接口的数组，但它不像vector等容器一样可以动态增长，如果需要动态变动array的容量可以使用boost::scoped_array。array适用与对运行速度要求很高的场合。C++11中已支持array。
+用法： #include &amp;lt;boost/array.hpp&amp;gt;#include &amp;lt;boost/typeof/typeof.hpp&amp;gt;int main() { array&amp;lt;int, 5&amp;gt; ary; array&amp;lt;int, 5&amp;gt; ary2 = { 1, 2, 3, 4, 5 };//可以使用{}初始化array  ary = ary2;//赋值  swap(ary, ary2)//互换  ary.assign(0);//所有元素赋值为0  ary[0] = 1;//头元素  ary.back() = 10;//尾元素  ary.at(5);//使用at访问元素  int*p = ary.c_array();//获得原始数组指针  int s = ary.size();//获得数组中元素个数  sort(ary.begin(), ary.end());//使用STL排序函数对其排序  for (BOOST_AUTO(pos, ary.begin()); pos != ary.end(); ++pos) //遍历数组，使用BOOST_AUTO需要包含&amp;#34;boost/typeof/typeof.</description>
+    </item>
+    
+    <item>
+      <title>Boost - 时间与日期</title>
+      <link>https://jfy0o0.github.io/2020/boost-%E6%97%B6%E9%97%B4%E4%B8%8E%E6%97%A5%E6%9C%9F/</link>
+      <pubDate>Tue, 10 Nov 2020 19:38:42 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/boost-%E6%97%B6%E9%97%B4%E4%B8%8E%E6%97%A5%E6%9C%9F/</guid>
+      <description>boost - 时间与日期 boost-timer： timer类可以测量时间的流逝，是一个小型计时器。
+使用： #include &amp;lt;boost/timer.hpp&amp;gt;int main() { boost::timer t; //声明时即计时  cout &amp;lt;&amp;lt; t.elapsed_max() &amp;lt;&amp;lt; endl; //可度量最大时间 ，小时单位  cout &amp;lt;&amp;lt; t.elapsed_min() &amp;lt;&amp;lt; endl; //可度量最小时间 ，秒单位  for(int i = 0;i&amp;lt;1000000000;i++); cout &amp;lt;&amp;lt; t.elapsed() &amp;lt;&amp;lt; endl; //输出流逝的时间 （cpu占用的时间） } boost-progress_timer: 继承自timer析构时自动输出时间，省去手动调elapsed()，
+使用： #include &amp;lt;boost/progress.hpp&amp;gt;int main() { boost::progress_timer t; cout &amp;lt;&amp;lt; t.elapsed_max() &amp;lt;&amp;lt; endl; cout &amp;lt;&amp;lt; t.elapsed_min() &amp;lt;&amp;lt; endl; } boost-progress_display: 表示进度
+使用： boost::progress_display pd(10000000); for(int i = 0;i&amp;lt;10000000;i++) { ++pd; } </description>
+    </item>
+    
+    <item>
+      <title>Boost - 数据类型</title>
+      <link>https://jfy0o0.github.io/2020/boost-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</link>
+      <pubDate>Tue, 10 Nov 2020 19:03:32 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/boost-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</guid>
+      <description>Boost - 数据类型   auto
+  decltype
+  any
+  tuple
+  variant
+  auto： auto是C++11中的关键字，它可以通过类型推导自动得到变量或对象的类型，需要注意的是auto会忽略引用，因为引用其实就代表原对象：
+用法1： auto x = 1; 用法2： for(auto &amp;amp;x : arr) decltype: 如果我们希望从表达式中推断出要定义变量的类型，但却不想用表达式的值去初始化变量，那么可以使用decltype，需要注意的是如果decltype使用的变量加上一个括号的话那么decltype会返回对应的引用类型：
+用法： int func(int i) { return i; } decltype(func(0)) num = 100; //num是int类型，不会调用func()  int i = 100; decltype((i)) d = num; //d是int引用类型，其指向num any： any功能与auto类似，二者不同之处在于：
+  auto是一个类似int、double、string的C++关键字，它不是一个类，所以没有成员函数可调用，直接把他当做int、double、string这种关键字来使用。
+  any是一个类，只能通过any_cast&amp;lt;&amp;gt;获得any的实际内部值，而不能像auto定义的对象那样直接使用它。
+  any也可以用来存储任意类型元素，如int、double、string、vector或自定义类型。它能够存储任意类型的原因是其构造函数和赋值函数opeartor=是模板函数，可以接收任意类型。
+  any不是一个模板类，所以定义元素的时候不必使用&amp;lt;&amp;gt;，如any a = 10;</description>
+    </item>
+    
+    <item>
+      <title>Boost - 断言</title>
+      <link>https://jfy0o0.github.io/2020/boost-%E6%96%AD%E8%A8%80/</link>
+      <pubDate>Tue, 10 Nov 2020 18:47:52 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/boost-%E6%96%AD%E8%A8%80/</guid>
+      <description>boost - 断言   标准assert宏的原型声明在&amp;lt;assert.h&amp;gt;中，其作用是如果它的测试条件为假，则调用abort()终止程序执行，程序退出的时候会弹出一个错误提示框，并向控制台输出所在文件及行号。
+  assert()只针对debug版本，在Release版本中assert()是无效的。
+  使用建议： 每个assert只检验一个条件,因为同时检验多个条件时,如果断言失败,无法直观的判断是哪个条件失败。
+简易使用： BOOST_ASSERT_MSG(false,&amp;#34;assert msg&amp;#34;); boost - 扩展： boost中的BOOST_ASSERT有两点扩展功能:
+ 可以通过定义BOOST_DISABLE_ASSERTS使在debug版本中也能停用BOOST_ASSERT()。 可以通过定义BOOST_ENABLE_ASSERT_HANDLER使断言出错的时候调用自定义的函数：  如果定义了 BOOST_ENABLE_ASSERT_HANDLER，  BOOST_ASSERT失败则会调用::boost::assertion_failed()， boost / assert.hpp中只声明了assertion_failed(), 可以自己定义它， 它有4个参数, 分别是出错表达式串, 函数名, 文件名, 行号。   如果未定义BOOST_ENABLE_ASSERT_HANDLER，则会调用标准的assert().    eg： #define BOOST_ENABLE_ASSERT_HANDLER #include &amp;#34;boost/assert.hpp&amp;#34; namespace boost { void assertion_failed(char const * expr, char const * function, char const * file, long line) { //todo  } } int main() { BOOST_ASSERT(false); return 0; } </description>
+    </item>
+    
+  </channel>
+</rss>

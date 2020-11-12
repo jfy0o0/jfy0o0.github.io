@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Jiang .">
+  
+  
+  
+  <link rel="prev" href="https://jfy0o0.github.io/2020/linux-%E8%BD%AF%E4%BB%B6-iptables/" />
+  <link rel="next" href="https://jfy0o0.github.io/2020/boost-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" />
+  <link rel="canonical" href="https://jfy0o0.github.io/2020/boost-%E6%96%AD%E8%A8%80/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Boost - 断言 | Jiang . &#39;s blog
+       
+  </title>
+  <meta name="title" content="Boost - 断言 | Jiang . &#39;s blog">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/jfy0o0.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Boost - 断言",
+    "headline" : "Boost - 断言",
+    "description" : "boost - 断言   标准assert宏的原型声明在\u0026lt;assert.h\u0026gt;中，其作用是如果它的测试条件为假，则调用abort()终止程序执行，程序退出的时候会弹出一个错误提示框，并向控制台输出所在文件及行号。\n  assert()只针对debug版本，在Release版本中assert()是无效的。\n  使用建议： 每个assert只检验一个条件,因为同时检验多个条件时,如果断言失败,无法直观的判断是哪个条件失败。\n简易使用： BOOST_ASSERT_MSG(false,\u0026#34;assert msg\u0026#34;); boost - 扩展： boost中的BOOST_ASSERT有两点扩展功能:\n 可以通过定义BOOST_DISABLE_ASSERTS使在debug版本中也能停用BOOST_ASSERT()。 可以通过定义BOOST_ENABLE_ASSERT_HANDLER使断言出错的时候调用自定义的函数：  如果定义了 BOOST_ENABLE_ASSERT_HANDLER，  BOOST_ASSERT失败则会调用::boost::assertion_failed()， boost \/ assert.hpp中只声明了assertion_failed(), 可以自己定义它， 它有4个参数, 分别是出错表达式串, 函数名, 文件名, 行号。   如果未定义BOOST_ENABLE_ASSERT_HANDLER，则会调用标准的assert().    eg： #define BOOST_ENABLE_ASSERT_HANDLER #include \u0026#34;boost\/assert.hpp\u0026#34; namespace boost { void assertion_failed(char const * expr, char const * function, char const * file, long line) { \/\/todo  } } int main() { BOOST_ASSERT(false); return 0; } ",
+    "inLanguage" : "en-us",
+    "author" : "Jiang",
+    "creator" : "Jiang",
+    "publisher": "Jiang",
+    "accountablePerson" : "Jiang",
+    "copyrightHolder" : "Jiang",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-11-10 18:47:52 \u002b0800 CST",
+    "dateModified" : "2020-11-10 18:47:52 \u002b0800 CST",
+    "url" : "https:\/\/jfy0o0.github.io\/2020\/boost-%E6%96%AD%E8%A8%80\/",
+    "wordCount" : "63",
+    "keywords" : [ "c\u002b\u002b","Boost", "Jiang . \u0027s blog"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Boost - 断言</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://jfy0o0.github.io" rel="author">Jiang</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-11-10 itemprop="datePublished">November 10, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://jfy0o0.github.io/categories/boost/"> Boost </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="boost---断言">boost - 断言</h1>
+<ul>
+<li>
+<p>标准assert宏的原型声明在&lt;assert.h&gt;中，其作用是如果它的测试条件为假，则调用abort()终止程序执行，程序退出的时候会弹出一个错误提示框，并向控制台输出所在文件及行号。</p>
+</li>
+<li>
+<p>assert()只针对debug版本，在Release版本中assert()是无效的。</p>
+</li>
+</ul>
+<h2 id="使用建议">使用建议：</h2>
+<p>每个assert只检验一个条件,因为同时检验多个条件时,如果断言失败,无法直观的判断是哪个条件失败。</p>
+<h2 id="简易使用">简易使用：</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">BOOST_ASSERT_MSG(false,<span style="color:#e6db74">&#34;assert msg&#34;</span>);
+</code></pre></div><h2 id="boost---扩展">boost - 扩展：</h2>
+<p>boost中的BOOST_ASSERT有两点扩展功能:</p>
+<ol>
+<li>可以通过定义BOOST_DISABLE_ASSERTS使在debug版本中也能停用BOOST_ASSERT()。</li>
+<li>可以通过定义BOOST_ENABLE_ASSERT_HANDLER使断言出错的时候调用自定义的函数：
+<ul>
+<li>如果定义了 BOOST_ENABLE_ASSERT_HANDLER，
+<ul>
+<li>BOOST_ASSERT失败则会调用::boost::assertion_failed()，</li>
+<li>boost / assert.hpp中只声明了assertion_failed(), 可以自己定义它，</li>
+<li>它有4个参数, 分别是出错表达式串, 函数名, 文件名, 行号。</li>
+</ul>
+</li>
+<li>如果未定义BOOST_ENABLE_ASSERT_HANDLER，则会调用标准的assert().</li>
+</ul>
+</li>
+</ol>
+<h2 id="eg">eg：</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#define BOOST_ENABLE_ASSERT_HANDLER
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;boost/assert.hpp&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">namespace</span> boost
+{
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">assertion_failed</span>(<span style="color:#66d9ef">char</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">*</span> expr, <span style="color:#66d9ef">char</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">*</span> function, 
+                          <span style="color:#66d9ef">char</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">*</span> file, <span style="color:#66d9ef">long</span> line)
+    {
+        <span style="color:#75715e">//todo
+</span><span style="color:#75715e"></span>    }
+}
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+    BOOST_ASSERT(false);
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Jiang . </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://jfy0o0.github.io/2020/boost-%E6%96%AD%E8%A8%80/>https://jfy0o0.github.io/2020/boost-%E6%96%AD%E8%A8%80/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/c&#43;&#43;/">
+                    #c&#43;&#43;</a></span>
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/boost/">
+                    #Boost</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://jfy0o0.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://jfy0o0.github.io/2020/linux-%E8%BD%AF%E4%BB%B6-iptables/" class="prev" rel="prev" title="Linux Soft - iptables"><i class="iconfont icon-left"></i>&nbsp;Linux Soft - iptables</a>
+         
+        
+        <a href="https://jfy0o0.github.io/2020/boost-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" class="next" rel="next" title="Boost - 数据类型">Boost - 数据类型&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://jfy0o0.github.io">Jiang .</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>
