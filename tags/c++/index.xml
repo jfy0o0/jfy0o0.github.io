@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>c&#43;&#43; on Jiang . &#39;s blog</title>
+    <title>C&#43;&#43; on Jiang . &#39;s blog</title>
     <link>https://jfy0o0.github.io/tags/c&#43;&#43;/</link>
-    <description>Recent content in c&#43;&#43; on Jiang . &#39;s blog</description>
+    <description>Recent content in C&#43;&#43; on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 12 Nov 2020 15:54:13 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>C&#43;&#43; - 运算符重载小技巧</title>
-      <link>https://jfy0o0.github.io/2020/c-%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%E5%B0%8F%E6%8A%80%E5%B7%A7/</link>
+      <link>https://jfy0o0.github.io/2020/%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%E5%B0%8F%E6%8A%80%E5%B7%A7/</link>
       <pubDate>Thu, 12 Nov 2020 15:54:13 +0800</pubDate>
       
-      <guid>https://jfy0o0.github.io/2020/c-%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%E5%B0%8F%E6%8A%80%E5%B7%A7/</guid>
+      <guid>https://jfy0o0.github.io/2020/%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%E5%B0%8F%E6%8A%80%E5%B7%A7/</guid>
       <description>c++ - 运算符重载小技巧 重载 () ： 多次调用(),然后再调用print()
 class A{ public: A operator()(int a) { cout &amp;lt;&amp;lt; a &amp;lt;&amp;lt;endl; return *this; } void print() { cout &amp;lt;&amp;lt; &amp;#34;hello&amp;#34;&amp;lt;&amp;lt;endl; } }; int main() { A a; a(54)(434).print(); //54 	//434 	//hello } 重载 ++ ： ++ 运算符，还可分为前缀 ++ 和后缀 ++ 运算符。
 class Length { private: int len_inches; public: //前缀++的声明  Length operator++ ()； //后缀++的声明  Length operator++ (int)； }; 重载前缀++运算符: C++允许重载前缀运算符，以使表达式 ++b 能递增 b 的长度值，并返回结果对象。该运算符可以作为成员函数来重载，这使得它的单个形参是隐含的， 所以重载运算符不需要形参。</description>
@@ -75,10 +75,10 @@ class Length { private: int len_inches; public: //前缀++的声明  Length oper
     
     <item>
       <title>C&#43;&#43; - cmake</title>
-      <link>https://jfy0o0.github.io/2020/c-cmake/</link>
+      <link>https://jfy0o0.github.io/2020/cmake/</link>
       <pubDate>Mon, 09 Nov 2020 13:47:22 +0800</pubDate>
       
-      <guid>https://jfy0o0.github.io/2020/c-cmake/</guid>
+      <guid>https://jfy0o0.github.io/2020/cmake/</guid>
       <description>cmake 1.指定 cmake 的最小版本 cmake_minimum_required(VERSION 3.4.1)这行命令是可选的，我们可以不写这句话，但在有些情况下，如果 CMakeLists.txt 文件中使用了一些高版本 cmake 特有的一些命令的时候，就需要加上这样一行，提醒用户升级到该版本之后再执行 cmake。
 2.设置项目名称 project(demo)这个命令不是强制性的，但最好都加上。它会引入两个变量 demo_BINARY_DIR 和 demo_SOURCE_DIR，同时，cmake 自动定义了两个等价的变量 PROJECT_BINARY_DIR 和 PROJECT_SOURCE_DIR。
 3.设置编译类型 add_executable(demo demo.cpp) # 生成可执行文件 add_library(common STATIC util.cpp) # 生成静态库 add_library(common SHARED util.cpp) # 生成动态库或共享库 #add_library 默认生成是静态库，通过以上命令生成文件名字， 4.指定编译包含的源文件 4.1 明确指定包含哪些源文件 add_library(demo demo.cpp test.cpp util.cpp)4.2 搜索所有的 cpp 文件 aux_source_directory(dir VAR) 发现一个目录下所有的源代码文件并将列表存储在一个变量中。 aux_source_directory(. SRC_LIST) # 搜索当前目录下的所有.cpp文件 add_library(demo ${SRC_LIST})4.3 自定义搜索规则 file(GLOB SRC_LIST &amp;#34;*.cpp&amp;#34; &amp;#34;protocol/*.cpp&amp;#34;)add_library(demo ${SRC_LIST})#或者 file(GLOB SRC_LIST &amp;#34;*.cpp&amp;#34;)file(GLOB SRC_PROTOCOL_LIST &amp;#34;protocol/*.cpp&amp;#34;)add_library(demo ${SRC_LIST} ${SRC_PROTOCOL_LIST})#或者 aux_source_directory(. SRC_LIST)aux_source_directory(protocol SRC_PROTOCOL_LIST)add_library(demo ${SRC_LIST} ${SRC_PROTOCOL_LIST})5.</description>
