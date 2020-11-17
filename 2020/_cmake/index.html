@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Jiang .">
+  
+  
+  
+  <link rel="prev" href="https://jfy0o0.github.io/2020/linux-%E8%BD%AF%E4%BB%B6-rsync/" />
+  <link rel="next" href="https://jfy0o0.github.io/2020/linux-%E8%BD%AF%E4%BB%B6-iptables/" />
+  <link rel="canonical" href="https://jfy0o0.github.io/2020/_cmake/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           C&#43;&#43; - cmake | Jiang . &#39;s blog
+       
+  </title>
+  <meta name="title" content="C&#43;&#43; - cmake | Jiang . &#39;s blog">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/jfy0o0.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "C\u002b\u002b - cmake",
+    "headline" : "C\u002b\u002b - cmake",
+    "description" : "build c\u002b\u002b project",
+    "inLanguage" : "en-us",
+    "author" : "Jiang",
+    "creator" : "Jiang",
+    "publisher": "Jiang",
+    "accountablePerson" : "Jiang",
+    "copyrightHolder" : "Jiang",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-11-09 13:47:22 \u002b0800 CST",
+    "dateModified" : "2020-11-09 13:47:22 \u002b0800 CST",
+    "url" : "https:\/\/jfy0o0.github.io\/2020\/_cmake\/",
+    "wordCount" : "631",
+    "keywords" : [ "C\u002b\u002b", "Jiang . \u0027s blog"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">C&#43;&#43; - cmake</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://jfy0o0.github.io" rel="author">Jiang</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-11-09 itemprop="datePublished">November 9, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://jfy0o0.github.io/categories/c&#43;&#43;/"> C&#43;&#43; </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="cmake">cmake</h1>
+<h1 id="1指定-cmake-的最小版本">1.指定 cmake 的最小版本</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">cmake_minimum_required(<span style="color:#e6db74">VERSION</span> <span style="color:#e6db74">3.4.1</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>这行命令是可选的，我们可以不写这句话，但在有些情况下，如果 CMakeLists.txt 文件中使用了一些高版本 cmake 特有的一些命令的时候，就需要加上这样一行，提醒用户升级到该版本之后再执行 cmake。</p>
+<h1 id="2设置项目名称">2.设置项目名称</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">project(<span style="color:#e6db74">demo</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>这个命令不是强制性的，但最好都加上。它会引入两个变量 demo_BINARY_DIR 和 demo_SOURCE_DIR，同时，cmake 自动定义了两个等价的变量 PROJECT_BINARY_DIR 和 PROJECT_SOURCE_DIR。</p>
+<h1 id="3设置编译类型">3.设置编译类型</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">add_executable(<span style="color:#e6db74">demo</span> <span style="color:#e6db74">demo.cpp</span>) <span style="color:#75715e"># 生成可执行文件
+</span><span style="color:#75715e"></span>add_library(<span style="color:#e6db74">common</span> <span style="color:#e6db74">STATIC</span> <span style="color:#e6db74">util.cpp</span>) <span style="color:#75715e"># 生成静态库
+</span><span style="color:#75715e"></span>add_library(<span style="color:#e6db74">common</span> <span style="color:#e6db74">SHARED</span> <span style="color:#e6db74">util.cpp</span>) <span style="color:#75715e"># 生成动态库或共享库
+</span><span style="color:#75715e">#add_library 默认生成是静态库，通过以上命令生成文件名字，
+</span></code></pre></div><h1 id="4指定编译包含的源文件">4.指定编译包含的源文件</h1>
+<h2 id="41-明确指定包含哪些源文件">4.1 明确指定包含哪些源文件</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">add_library(<span style="color:#e6db74">demo</span> <span style="color:#e6db74">demo.cpp</span> <span style="color:#e6db74">test.cpp</span> <span style="color:#e6db74">util.cpp</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h2 id="42-搜索所有的-cpp-文件">4.2 搜索所有的 cpp 文件</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">aux_source_directory(<span style="color:#e6db74">dir</span> <span style="color:#e6db74">VAR</span>) <span style="color:#960050;background-color:#1e0010">发现一个目录下所有的源代码文件并将列表存储在一个变量中。
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>aux_source_directory(<span style="color:#e6db74">.</span> <span style="color:#e6db74">SRC_LIST</span>) <span style="color:#75715e"># 搜索当前目录下的所有.cpp文件
+</span><span style="color:#75715e"></span>add_library(<span style="color:#e6db74">demo</span> <span style="color:#f92672">${</span>SRC_LIST<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h2 id="43-自定义搜索规则">4.3 自定义搜索规则</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">file(<span style="color:#e6db74">GLOB</span> <span style="color:#e6db74">SRC_LIST</span> <span style="color:#e6db74">&#34;*.cpp&#34;</span> <span style="color:#e6db74">&#34;protocol/*.cpp&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>add_library(<span style="color:#e6db74">demo</span> <span style="color:#f92672">${</span>SRC_LIST<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#或者
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>file(<span style="color:#e6db74">GLOB</span> <span style="color:#e6db74">SRC_LIST</span> <span style="color:#e6db74">&#34;*.cpp&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>file(<span style="color:#e6db74">GLOB</span> <span style="color:#e6db74">SRC_PROTOCOL_LIST</span> <span style="color:#e6db74">&#34;protocol/*.cpp&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>add_library(<span style="color:#e6db74">demo</span> <span style="color:#f92672">${</span>SRC_LIST<span style="color:#f92672">}</span> <span style="color:#f92672">${</span>SRC_PROTOCOL_LIST<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#或者
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>aux_source_directory(<span style="color:#e6db74">.</span> <span style="color:#e6db74">SRC_LIST</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>aux_source_directory(<span style="color:#e6db74">protocol</span> <span style="color:#e6db74">SRC_PROTOCOL_LIST</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>add_library(<span style="color:#e6db74">demo</span> <span style="color:#f92672">${</span>SRC_LIST<span style="color:#f92672">}</span> <span style="color:#f92672">${</span>SRC_PROTOCOL_LIST<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h1 id="5查找指定的库文件">5.查找指定的库文件</h1>
+<p>find_library(VAR name path)查找到指定的预编译库，并将它的路径存储在变量中。
+默认的搜索路径为 cmake 包含的系统库，因此如果是 NDK 的公共库只需要指定库的 name 即可。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake"> find_library( <span style="color:#75715e"># Sets the name of the path variable.
+</span><span style="color:#75715e"></span>              <span style="color:#e6db74">log-lib</span>
+              <span style="color:#75715e"># Specifies the name of the NDK library that
+</span><span style="color:#75715e"></span>          	  <span style="color:#75715e"># you want CMake to locate.
+</span><span style="color:#75715e"></span>              <span style="color:#e6db74">log</span> )<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>类似的命令还有 find_file()、find_path()、find_program()、find_package()。</p>
+<h1 id="6设置包含的目录">6.设置包含的目录</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">include_directories(
+ <span style="color:#f92672">${</span>CMAKE_CURRENT_SOURCE_DIR<span style="color:#f92672">}</span>
+ <span style="color:#f92672">${</span>CMAKE_CURRENT_BINARY_DIR<span style="color:#f92672">}</span>
+ <span style="color:#f92672">${</span>CMAKE_CURRENT_SOURCE_DIR<span style="color:#f92672">}</span><span style="color:#e6db74">/include</span>
+)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>Linux 下还可以通过如下方式设置包含的目录</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">set(<span style="color:#e6db74">CMAKE_CXX_FLAGS</span> <span style="color:#e6db74">&#34;${CMAKE_CXX_FLAGS} -I${CMAKE_CURRENT_SOURCE_DIR}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h1 id="7设置链接库搜索目录">7.设置链接库搜索目录</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">link_directories(
+ <span style="color:#f92672">${</span>CMAKE_CURRENT_SOURCE_DIR<span style="color:#f92672">}</span><span style="color:#e6db74">/libs</span>
+)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>Linux 下还可以通过如下方式设置包含的目录</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">set(<span style="color:#e6db74">CMAKE_CXX_FLAGS</span> <span style="color:#e6db74">&#34;${CMAKE_CXX_FLAGS} -L${CMAKE_CURRENT_SOURCE_DIR}/libs&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h1 id="8设置-target-需要链接的库">8.设置 target 需要链接的库</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">target_link_libraries( <span style="color:#75715e"># 目标库
+</span><span style="color:#75715e"></span>                    <span style="color:#e6db74">demo</span>
+
+<span style="color:#75715e">#目标库需要链接的库
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#log-lib 是上面 find_library 指定的变量名
+</span><span style="color:#75715e"></span>
+                <span style="color:#f92672">${</span>log-lib<span style="color:#f92672">}</span> )<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>在 Windows 下，系统会根据链接库目录，搜索xxx.lib 文件，Linux 下会搜索 xxx.so 或者 xxx.a 文件，如果都存在会优先链接动态库（so 后缀）。</p>
+<h2 id="81-指定链接动态库或静态库">8.1 指定链接动态库或静态库</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">target_link_libraries(<span style="color:#e6db74">demo</span> <span style="color:#e6db74">libface.a</span>) <span style="color:#75715e"># 链接libface.a
+</span><span style="color:#75715e"></span>target_link_libraries(<span style="color:#e6db74">demo</span> <span style="color:#e6db74">libface.so</span>) <span style="color:#75715e"># 链接libface.so
+</span></code></pre></div><h2 id="82-指定全路径">8.2 指定全路径</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">target_link_libraries(<span style="color:#e6db74">demo</span> <span style="color:#f92672">${</span>CMAKE_CURRENT_SOURCE_DIR<span style="color:#f92672">}</span><span style="color:#e6db74">/libs/libface.a</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>target_link_libraries(<span style="color:#e6db74">demo</span> <span style="color:#f92672">${</span>CMAKE_CURRENT_SOURCE_DIR<span style="color:#f92672">}</span><span style="color:#e6db74">/libs/libface.so</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h2 id="83-指定链接多个库">8.3 指定链接多个库</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">target_link_libraries(<span style="color:#e6db74">demo</span>
+    <span style="color:#f92672">${</span>CMAKE_CURRENT_SOURCE_DIR<span style="color:#f92672">}</span><span style="color:#e6db74">/libs/libface.a</span>
+    <span style="color:#e6db74">boost_system.a</span>
+    <span style="color:#e6db74">boost_thread</span>
+    <span style="color:#e6db74">pthread</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h1 id="9设置变量">9.设置变量</h1>
+<h2 id="91-set-直接设置变量的值">9.1 set 直接设置变量的值</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">set(<span style="color:#e6db74">SRC_LIST</span> <span style="color:#e6db74">main.cpp</span> <span style="color:#e6db74">test.cpp</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>add_executable(<span style="color:#e6db74">demo</span> <span style="color:#f92672">${</span>SRC_LIST<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h2 id="92-set-追加设置变量的值">9.2 set 追加设置变量的值</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">set(<span style="color:#e6db74">SRC_LIST</span> <span style="color:#e6db74">main.cpp</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>set(<span style="color:#e6db74">SRC_LIST</span> <span style="color:#f92672">${</span>SRC_LIST<span style="color:#f92672">}</span> <span style="color:#e6db74">test.cpp</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>add_executable(<span style="color:#e6db74">demo</span> <span style="color:#f92672">${</span>SRC_LIST<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h2 id="93-list-追加或者删除变量的值">9.3 list 追加或者删除变量的值</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">set(<span style="color:#e6db74">SRC_LIST</span> <span style="color:#e6db74">main.cpp</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>list(<span style="color:#e6db74">APPEND</span> <span style="color:#e6db74">SRC_LIST</span> <span style="color:#e6db74">test.cpp</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>list(<span style="color:#e6db74">REMOVE_ITEM</span> <span style="color:#e6db74">SRC_LIST</span> <span style="color:#e6db74">main.cpp</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>add_executable(<span style="color:#e6db74">demo</span> <span style="color:#f92672">${</span>SRC_LIST<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h1 id="预定义变量">预定义变量</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">PROJECT_SOURCE_DIR<span style="color:#960050;background-color:#1e0010">：</span>工程的根目录
+PROJECT_BINARY_DIR<span style="color:#960050;background-color:#1e0010">：</span>运行 cmake 命令的目录<span style="color:#960050;background-color:#1e0010">，</span>通常是 ${PROJECT_SOURCE_DIR}/build
+PROJECT_NAME<span style="color:#960050;background-color:#1e0010">：</span>返回通过 project 命令定义的项目名称
+CMAKE_CURRENT_SOURCE_DIR<span style="color:#960050;background-color:#1e0010">：</span>当前处理的 CMakeLists.txt 所在的路径
+CMAKE_CURRENT_BINARY_DIR<span style="color:#960050;background-color:#1e0010">：</span>target 编译目录
+CMAKE_CURRENT_LIST_DIR<span style="color:#960050;background-color:#1e0010">：</span>CMakeLists.txt 的完整路径
+CMAKE_CURRENT_LIST_LINE<span style="color:#960050;background-color:#1e0010">：</span>当前所在的行
+CMAKE_MODULE_PATH<span style="color:#960050;background-color:#1e0010">：</span>定义自己的 cmake 模块所在的路径<span style="color:#960050;background-color:#1e0010">，</span>SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)<span style="color:#960050;background-color:#1e0010">，</span>然后可以用INCLUDE命令来调用自己的模块
+EXECUTABLE_OUTPUT_PATH<span style="color:#960050;background-color:#1e0010">：</span>重新定义目标二进制可执行文件的存放位置
+LIBRARY_OUTPUT_PATH<span style="color:#960050;background-color:#1e0010">：</span>重新定义目标链接库文件的存放位置
+</code></pre></div><h1 id="添加编译参数">添加编译参数</h1>
+<p>1，ADD_DEFINITIONS 向C/C++编译器添加-D定义，比如: ADD_DEFINITIONS(-DENABLE_DEBUG  -DABC)，参数之间用空格分割。 如果你的代码中定义了#ifdef ENABLE_DEBUG #endif，这个代码块就会生效。 如果要添加其他的编译器开关，可以通过CMAKE_C_FLAGS变量和CMAKE_CXX_FLAGS变 量设置。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">add_definitions(<span style="color:#e6db74">-std=c++11</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>add_definitions(<span style="color:#e6db74">&#34;-Wall -g&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h1 id="环境变量">环境变量</h1>
+<p>使用环境变量</p>
+<pre><code> $ENV{Name}
+</code></pre><p>写入环境变量</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake"> set(<span style="color:#e6db74">ENV{Name}</span> <span style="color:#e6db74">value</span>) <span style="color:#75715e"># 这里没有“$”符号
+</span></code></pre></div><h1 id="系统信息">系统信息</h1>
+<ul>
+<li>­CMAKE_MAJOR_VERSION：cmake 主版本号，比如 3.4.1 中的 3</li>
+<li>CMAKE_MINOR_VERSION：cmake 次版本号，比如 3.4.1 中的 4</li>
+<li>CMAKE_PATCH_VERSION：cmake 补丁等级，比如 3.4.1 中的 1</li>
+<li>CMAKE_SYSTEM：系统名称，比如 Linux-­2.6.22</li>
+<li>CMAKE_SYSTEM_NAME：不包含版本的系统名，比如 Linux</li>
+<li>CMAKE_SYSTEM_VERSION：系统版本，比如 2.6.22</li>
+<li>­CMAKE_SYSTEM_PROCESSOR：处理器名称，比如 i686</li>
+<li>UNIX：在所有的类 UNIX 平台下该值为 TRUE，包括 OS X 和 cygwin</li>
+<li>WIN32：在所有的 win32 平台下该值为 TRUE，包括 cygwin</li>
+</ul>
+<h1 id="主要开关选项">主要开关选项</h1>
+<ul>
+<li>BUILD_SHARED_LIBS：这个开关用来控制默认的库编译方式，如果不进行设置，使用 add_library 又没有指定库类型的情况下，默认编译生成的库都是静态库。如果 set(BUILD_SHARED_LIBS ON) 后，默认生成的为动态库</li>
+<li>CMAKE_C_FLAGS：设置 C 编译选项，也可以通过指令 add_definitions() 添加</li>
+<li>CMAKE_CXX_FLAGS：设置 C++ 编译选项，也可以通过指令 add_definitions() 添加</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">add_definitions(<span style="color:#e6db74">-DENABLE_DEBUG</span> <span style="color:#e6db74">-DABC</span>) <span style="color:#75715e"># 参数之间用空格分隔
+</span></code></pre></div><h1 id="项目示例">项目示例</h1>
+<h2 id="简单项目单个源文件">简单项目（单个源文件）</h2>
+<p>一个经典的 C 程序，如何通过 cmake 来编译呢？</p>
+<h3 id="11-新建文件-mainc">1.1 新建文件 main.c</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+    printf(<span style="color:#e6db74">&#34;Hello World!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><h3 id="12-新建文件-cmakeliststxt">1.2 新建文件 CMakeLists.txt</h3>
+<p>（命名必须是 CMakeLists.txt，注意大小写和不要漏字母）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">project(<span style="color:#e6db74">HELLO</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>add_executable(<span style="color:#e6db74">hello</span> <span style="color:#e6db74">main.c</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h3 id="13-编译和运行">1.3 编译和运行</h3>
+<p>新建一个 build 文件夹，目录情况如下：</p>
+<p>为什么要新建一个 build 文件夹？
+一般我们采用 cmake 的 out-of-source 方式来构建（即生成的中间产物和源代码分离），这样做可以让生成的文件和源文件不会弄混，且目录结构看起来也会清晰明了。所以推荐使用这种方式，至于这个文件夹的命名并无限制，我们习惯命名为 build。</p>
+<h2 id="复杂项目多个目录多个源文件多个项目">复杂项目（多个目录，多个源文件，多个项目）</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">./demo
+	|
+	+---CMakeLists.txt
+	|
+	+---main.cc
+	|
+	+---math/
+		|
+		+--Cmakelists.txt
+		|
+		+--MathFunctions.cc
+		|
+		+--MathFunctions.h
+</code></pre></div><h3 id="demo-根目录下的-cmakeliststxt-文件如下">demo 根目录下的 CMakeLists.txt 文件如下：</h3>
+<p>unctions ${DIR_LIB_SRCS})</p>
+<p>demo 根目录下的 CMakeLists.txt 文件如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">cmake_minimum_required (<span style="color:#e6db74">VERSION</span> <span style="color:#e6db74">2.8</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>project(<span style="color:#e6db74">demo</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>aux_source_directory(<span style="color:#e6db74">.</span> <span style="color:#e6db74">DIR_SRCS</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#添加math子目录
+</span><span style="color:#75715e"></span>add_subdirectory(<span style="color:#e6db74">math</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#指定生成目标
+</span><span style="color:#75715e"></span>add_executable(<span style="color:#e6db74">demo</span> <span style="color:#f92672">${</span>DIR_SRCS<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#添加链接库
+</span><span style="color:#75715e"></span>target_link_libraries(<span style="color:#e6db74">demo</span> <span style="color:#e6db74">MathFunctions</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h3 id="math-目录下的-cmakeliststxt-文件如下">math 目录下的 CMakeLists.txt 文件如下：</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">aux_source_directory(<span style="color:#e6db74">.</span> <span style="color:#e6db74">DIR_LIB_SRCS</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#生成链接库
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>add_library(<span style="color:#e6db74">MathFunctions</span> <span style="color:#f92672">${</span>DIR_LIB_SRCS<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h2 id="自定义编译选项">自定义编译选项</h2>
+<p>cmake 允许为项目增加编译选项，从而可以根据用户的环境和需求选择最合适的编译方案。
+例如，可以将 MathFunctions 库设为一个可选的库，如果该选项为 ON ，就使用该库定义的数学函数来进行运算，否则就调用标准库中的数学函数库。
+修改根目录下的 CMakeLists.txt 文件如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake"><span style="color:#75715e">#CMake 最低版本号要求
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>cmake_minimum_required (<span style="color:#e6db74">VERSION</span> <span style="color:#e6db74">2.8</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#项目信息
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>project (<span style="color:#e6db74">Demo</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#加入一个配置头文件，用于处理 CMake 对源码的设置
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>configure_file (
+    <span style="color:#e6db74">&#34;${PROJECT_SOURCE_DIR}/config.h.in&#34;</span>
+    <span style="color:#e6db74">&#34;${PROJECT_BINARY_DIR}/config.h&#34;</span>
+    )<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#是否使用自己的 MathFunctions 库
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>option (<span style="color:#e6db74">USE_MYMATH</span>
+        <span style="color:#e6db74">&#34;Use provided math implementation&#34;</span> <span style="color:#e6db74">ON</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#是否加入 MathFunctions 库
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>if (<span style="color:#e6db74">USE_MYMATH</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    include_directories (<span style="color:#e6db74">&#34;${PROJECT_SOURCE_DIR}/math&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    add_subdirectory (<span style="color:#e6db74">math</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    set (<span style="color:#e6db74">EXTRA_LIBS</span> <span style="color:#f92672">${</span>EXTRA_LIBS<span style="color:#f92672">}</span> <span style="color:#e6db74">MathFunctions</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>endif (<span style="color:#e6db74">USE_MYMATH</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#查找当前目录下的所有源文件
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#并将名称保存到 DIR_SRCS 变量
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>aux_source_directory(<span style="color:#e6db74">.</span> <span style="color:#e6db74">DIR_SRCS</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#指定生成目标
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>add_executable(<span style="color:#e6db74">Demo</span> <span style="color:#f92672">${</span>DIR_SRCS<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>target_link_libraries (<span style="color:#e6db74">Demo</span> <span style="color:#f92672">${</span>EXTRA_LIBS<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>configure_file 命令用于加入一个配置头文件 config.h ，这个文件由 cmake 从 config.h.in 生成，通过这样的机制，将可以通过预定义一些参数和变量来控制代码的生成。
+option 命令添加了一个 USE_MYMATH 选项，并且默认值为 ON 。根据 USE_MYMATH 变量的值来决定是否使用我们自己编写的 MathFunctions 库。
+修改 main.cc 文件，让其根据 USE_MYMATH 的预定义值来决定是否调用标准库还是MathFunctions 库：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;config.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#ifdef USE_MYMATH
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;math/MathFunctions.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#else
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;math.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#endif
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[])
+{
+    <span style="color:#66d9ef">if</span> (argc <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>){
+        printf(<span style="color:#e6db74">&#34;Usage: %s base exponent </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, argv[<span style="color:#ae81ff">0</span>]);
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+    }
+    <span style="color:#66d9ef">double</span> base <span style="color:#f92672">=</span> atof(argv[<span style="color:#ae81ff">1</span>]);
+    <span style="color:#66d9ef">int</span> exponent <span style="color:#f92672">=</span> atoi(argv[<span style="color:#ae81ff">2</span>]);
+
+<span style="color:#75715e">#ifdef USE_MYMATH
+</span><span style="color:#75715e"></span>    printf(<span style="color:#e6db74">&#34;Now we use our own Math library. </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+    <span style="color:#66d9ef">double</span> result <span style="color:#f92672">=</span> power(base, exponent);
+<span style="color:#75715e">#else
+</span><span style="color:#75715e"></span>    printf(<span style="color:#e6db74">&#34;Now we use the standard library. </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+    <span style="color:#66d9ef">double</span> result <span style="color:#f92672">=</span> pow(base, exponent);
+<span style="color:#75715e">#endif
+</span><span style="color:#75715e"></span>    printf(<span style="color:#e6db74">&#34;%g ^ %d is %g</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, base, exponent, result);
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>编写 config.h.in 文件
+注意 main.cc 的第一行，这里引用了一个 config.h 文件，这个文件预定义了 USE_MYMATH 的值。但我们并不直接编写这个文件，为了方便从 CMakeLists.txt 中导入配置，我们编写一个 config.h.in 文件，内容如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake"><span style="color:#75715e">#cmakedefine USE_MYMATH
+</span></code></pre></div><p>这样 cmake 会自动根据 CMakeLists.txt 配置文件中的设置自动生成 config.h 文件。</p>
+<h1 id="完整实例">完整实例</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">--app/
+	--main.cpp
+--cmake-build-debug
+--CMakeLists.txt
+--hello/
+	--CMakeLists.txt
+	--include/
+		hello.h
+	--src/
+		hello.cpp
+--world/
+	--CMakeLists.txt
+	--include/
+		world.h
+	--src/
+		world.cpp
+</code></pre></div><h2 id="hellocmakeliststxt">hello/CMakeLists.txt</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">include_directories(<span style="color:#e6db74">./include</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>set(<span style="color:#e6db74">DIR_SRCS</span> <span style="color:#e6db74">./src/hello.c</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>add_library(<span style="color:#e6db74">hello</span> <span style="color:#e6db74">SHARED</span> <span style="color:#f92672">${</span>DIR_SRCS<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>hello.h</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#ifndef HELLOWORLD_HELLO_H
+</span><span style="color:#75715e">#define HELLOWORLD_HELLO_H
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">extern</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">hello</span>(<span style="color:#66d9ef">void</span>);
+
+<span style="color:#75715e">#endif </span><span style="color:#75715e">//HELLOWORLD_HELLO_H
+</span></code></pre></div><p>hello.c</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;hello.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">hello</span>()
+{
+    printf(<span style="color:#e6db74">&#34;hello.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+}
+</code></pre></div><h2 id="worldcmakeliststxt">world/CMakeLists.txt</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">include_directories(<span style="color:#e6db74">./include</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>set(<span style="color:#e6db74">DIR_SRCS</span> <span style="color:#e6db74">./src/world.c</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>add_library(<span style="color:#e6db74">world</span> <span style="color:#e6db74">SHARED</span> <span style="color:#f92672">${</span>DIR_SRCS<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>world.h</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#ifndef HELLOWORLD_WORLD_H
+</span><span style="color:#75715e">#define HELLOWORLD_WORLD_H
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">extern</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">world</span>(<span style="color:#66d9ef">void</span>);
+
+<span style="color:#75715e">#endif </span><span style="color:#75715e">//HELLOWORLD_WORLD_H
+</span></code></pre></div><p>world.cpp</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;world.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">world</span>()
+{
+    printf(<span style="color:#e6db74">&#34;world.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+}
+</code></pre></div><h2 id="cmakeliststxt">CMakeLists.txt</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">cmake_minimum_required(<span style="color:#e6db74">VERSION</span> <span style="color:#e6db74">3.5</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>project(<span style="color:#e6db74">HelloWorld</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>set(<span style="color:#e6db74">CMAKE_C_STANDARD</span> <span style="color:#e6db74">99</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>include_directories(<span style="color:#e6db74">hello/include</span> <span style="color:#e6db74">world/include</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>set(<span style="color:#e6db74">DIR_SRCS</span> <span style="color:#e6db74">./app/main.c</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>add_subdirectory(<span style="color:#e6db74">hello</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>add_subdirectory(<span style="color:#e6db74">world</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>add_executable(<span style="color:#e6db74">HelloWorld</span> <span style="color:#f92672">${</span>DIR_SRCS<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>target_link_libraries(<span style="color:#e6db74">HelloWorld</span> <span style="color:#e6db74">hello</span> <span style="color:#e6db74">world</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>main.cpp</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;hello.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;world.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+    hello();
+    world();
+
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Jiang . </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://jfy0o0.github.io/2020/_cmake/>https://jfy0o0.github.io/2020/_cmake/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/c&#43;&#43;/">
+                    #C&#43;&#43;</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://jfy0o0.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://jfy0o0.github.io/2020/linux-%E8%BD%AF%E4%BB%B6-rsync/" class="prev" rel="prev" title="Linux Soft - rsync"><i class="iconfont icon-left"></i>&nbsp;Linux Soft - rsync</a>
+         
+        
+        <a href="https://jfy0o0.github.io/2020/linux-%E8%BD%AF%E4%BB%B6-iptables/" class="next" rel="next" title="Linux Soft - iptables">Linux Soft - iptables&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://jfy0o0.github.io">Jiang .</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>
