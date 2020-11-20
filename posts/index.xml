@@ -6,9 +6,68 @@
     <description>Recent content in Posts on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Nov 2020 13:54:52 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 20 Nov 2020 10:28:40 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>同步、异步、阻塞、非阻塞</title>
+      <title>Linux - 进程通信 - 共享内存</title>
+      <link>https://jfy0o0.github.io/2020/linux-%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1-%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/</link>
+      <pubDate>Fri, 20 Nov 2020 10:28:40 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/linux-%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1-%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/</guid>
+      <description>共享内存 共享内存是 Unix下的多进程之间的通信方法,这种方法通常用于一个程序的多进程间通信，实际上多个程序间也可以通过共享内存来传递信息。
+特点  所谓共享内存就是使得多个进程可以访问同一块内存空间，是最快的可用IPC形式。 是针对其他通信机制运行效率较低而设计的。 但内部没有共享内存互斥访问机制，所以往往与其它通信机制，如信号量结合使用，来达到进程间的同步及互斥。  声明 #include &amp;lt;sys/types.h&amp;gt;#include &amp;lt;sys/ipc.h&amp;gt;#include &amp;lt;sys/shm.h&amp;gt;/* fname：指定的文件名（已经存在的文件名），一般使用当前目录，如：&amp;#34;.&amp;#34; id：id是子序号。虽然是int类型，但是只使用8bits(1-255)。 在一般的UNIX实现中，是将文件的索引节点号取出，前面加上子序号得到key_t的返回值。 如:指定文件的索引节点号为65538，换算成16进制为0x010002，而你指定的ID值为38， 换算成16进制为0x26，则最后的key_t返回值为0x26010002。 查询文件索引节点号的方法是： ls -i 当删除重建文件后，索引节点号由操作系统根据当时文件系统的使用情况分配， 因此与原来不同，所以得到的索引节点号也不同。 */ key_t ftok( const char * fname, int id ); /* -key 0(IPC_PRIVATE)：会建立新共享内存对象 大于0的32位整数：视参数shmflg来确定操作。通常要求此值来源于ftok返回的IPC键值 -size 大于0的整数：新建的共享内存大小，以字节为单位 0：只获取共享内存时指定为0 -shmflg 0：取共享内存标识符，若不存在则函数会报错 IPC_CREAT：当shmflg&amp;amp;IPC_CREAT为真时，如果内核中不存在键值与key相等的共享内存，则新建一个共享内存；如果存在这样的共享内存，返回此共享内存的标识符 IPC_CREAT|IPC_EXCL：如果内核中不存在键值与key相等的共享内存，则新建一个共享内存；如果存在这样的共享内存则报错 使用时需要与IPC对象存取权限（如0600）进行|运算来确定信号量集的存取权限 -函数返回值 成功：返回共享内存的标识符 出错：-1，错误原因存于error中 -错误代码 EINVAL：参数size小于SHMMIN或大于SHMMAX EEXIST：预建立key所指的共享内存，但已经存在 EIDRM：参数key所指的共享内存已经删除 ENOSPC：超过了系统允许建立的共享内存的最大值(SHMALL) ENOENT：参数key所指的共享内存不存在，而参数shmflg未设IPC_CREAT位 EACCES：没有权限 ENOMEM：核心内存不足 */ int shmget(key_t key, size_t size, int shmflg); /* shmid：共享内存标识符 cmd IPC_STAT：得到共享内存的状态，把共享内存的shmid_ds结构复制到buf中 IPC_SET：改变共享内存的状态，把buf所指的shmid_ds结构中的uid、gid、mode复制到共享内存的shmid_ds结构内 IPC_RMID：删除这片共享内存 buf：共享内存管理结构体。具体说明参见共享内存内核结构定义部分 函数返回值 成功：0 出错：-1，错误原因存于error中 错误代码 EACCESS：参数cmd为IPC_STAT，确无权限读取该共享内存 EFAULT：参数buf指向无效的内存地址 EIDRM：标识符为shmid的共享内存已被删除 EINVAL：无效的参数cmd或shmid EPERM：参数cmd为IPC_SET或IPC_RMID，却无足够的权限执行 */ int shmctl(int shmid, int cmd, struct shmid_ds *buf) 例子： 写端： #include &amp;lt;stdio.</description>
+    </item>
+    
+    <item>
+      <title>Linux - 进程通信 - 信号</title>
+      <link>https://jfy0o0.github.io/2020/linux-%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1-%E4%BF%A1%E5%8F%B7/</link>
+      <pubDate>Fri, 20 Nov 2020 10:10:16 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/linux-%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1-%E4%BF%A1%E5%8F%B7/</guid>
+      <description>信号  信号是在软件层次上对中断机制的一种模拟，是一种异步通信方式 信号可以直接进行用户空间进程和内核进程之间的交互，内核进程也可以利用它来通知用户空间进程发生了哪些系统事件。 如果该进程当前并未处于执行态，则该信号就由内核保存起来，直到该进程恢复执行再传递给它；如果一个信号被进程设置为阻塞，则该信号的传递被延迟，直到其阻塞被取消时才被传递给进程。  响应 用户进程对信号的响应方式：
+ 忽略信号：对信号不做任何处理，但是有两个信号不能忽略：即SIGKILL及SIGSTOP。 捕捉信号：定义信号处理函数，当信号发生时，执行相应的处理函数。 执行缺省操作：Linux对每种信号都规定了默认操作  种类：  SIGINT：ctrl+c 终止信号 SIGQUIT：ctrl+\ 终止信号 SIGTSTP:ctrl+z 暂停信号 SIGALRM：闹钟信号 收到此信号后定时结束，结束进程 SIGCHLD：子进程状态改变，父进程收到信号 SIGKILL：杀死信号  声明 /* 功能：信号发送 -参数：pid：指定进程 -sig：要发送的信号 -返回值：成功 0；失败 -1 */ int kill(pid_t pid, int sig); /* 功能：进程向自己发送信号 -参数：sig：信号 -返回值：成功 0；失败 -1 */ int raise(int sig); /* 功能：在进程中设置一个定时器 -参数：seconds：定时时间，单位为秒 -返回值：如果调用此alarm()前，进程中已经设置了闹钟时间，则返回上一个闹钟时间的剩余时间，否则返回0。 */ unsigned int alarm(unsigned int seconds) 注意：一个进程只能有一个闹钟时间。如果在调用alarm时已设置过闹钟时间，则之前的闹钟时间被新值所代替 //功能：用于将调用进程挂起直到收到信号为止。 int pause(void); /* 功能：信号处理函数 参数： -signum：要处理的信号//不能是SIGKILL和SIGSTOP -handler：SIG_IGN：忽略该信号。 -SIG_DFL：采用系统默认方式处理信号。 自定义的信号处理函数指针 返回值：成功：设置之前的信号处理方式；失败：SIG_ERR */ void (*signal(int signum, void (*handler)(int)))(int); //　或者： 　typedef void (*sighandler_t)(int); sighandler_t signal(int signum, sighandler_t handler); //给自己发送异常终止信号，（6.</description>
+    </item>
+    
+    <item>
+      <title>Linux - 进程通信 - 消息队列</title>
+      <link>https://jfy0o0.github.io/2020/linux-%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1-%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/</link>
+      <pubDate>Fri, 20 Nov 2020 09:52:58 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/linux-%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1-%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/</guid>
+      <description>消息队列  消息队列实质为内核地址空间中的内部链表，在Linux中各个进程之间传递内容 消息顺序的发送到队列中，以不同的方式从队列中获取，消息队列可以用IPC标识符唯一地进行标识。 消息队列由IPC标识符进行区别，队列与队列之间是相互独立的。 每个消息队列中的消息，又构成一个独立的链表。  声明 #include &amp;lt;sys/types.h&amp;gt;#include &amp;lt;sys/ipc.h&amp;gt;#include &amp;lt;sys/msg.h&amp;gt;/* 用于创建一个新的消息队列，或者访问一个现有的队列。 -key：为键值，由ftok（）函数生成。 -msgflg： IPC_CREAT:内核中不存在该队列，则创建它； IPC_EXCL:当与IPC_CREAT一起使用时，如果队列早已存在则将出错。 */ int msgget ( key_t key ,int msgflg); /* 用于向一个队列传递消息。 -msqid：队列标识符，是由前面调用msgget（）获得的返回值。 -msgp：指向消息缓冲区。 -msgsz：消息缓冲区的大小。 -msgflag： 可以设置为0，表示忽略 可以设置为IPC_NOWAIT：如果消息队列已经满了，则不会写入消息队列。若没有写，则调用进程将被中断，直到可以写消息为止。 */ int msgsnd (int msqid, const void *msgp, size_t msgsz , int msgflag); /* 用于在消息队列上执行接收操作 -msqid：队列标识符，是由前面调用msgget（）获得的返回值。 -msgp：指向消息缓冲区。 -msgsz：消息缓冲区的大小。 -mtype:指定要从队列中获取的消息类型。 -msgflag: 若设置为IPC_NOWAIT作为一个标志传送给该函数，而队列没有消息，则会返回ENOMSG。否则进程将被阻塞。 如果在等待消息的时候队列被删除，则返回EIDRM。 如果进程阻塞并等待消息的到来时捕获到了一个信号，则返回EINTR。 */ int msgrcv (int msqid, void *msgp, size_t msgsz , long msgtyp ,int msgflag); /* 向内核发送一个cmd命令，内核根据此来判断进行何种操作。 -msqid：队列标识符，是由前面调用msgget（）获得的返回值。 -cmd: IPC_STAT:把msgid_ds结构中的数据设置为消息队列的当前关联值，即用消息队列的当前关联值覆盖msgid_ds的值。 IPC_SET：把消息列队的当前关联值设置为msgid_ds结构中给出的值 IPC_RMID：删除消息队列 */ int msgclt (int msqid, int cmd, struct msqid_ds *buf); struct msgbuf { __syscall_slong_t mtype;	/* type of received/sent message */ char mtext[1];	/* text of the message */ }; 例子 发端： #include &amp;lt;unistd.</description>
+    </item>
+    
+    <item>
+      <title>Linux - 进程通信 - 信号量</title>
+      <link>https://jfy0o0.github.io/2020/linux-%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1-%E4%BF%A1%E5%8F%B7%E9%87%8F/</link>
+      <pubDate>Fri, 20 Nov 2020 09:45:22 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/linux-%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1-%E4%BF%A1%E5%8F%B7%E9%87%8F/</guid>
+      <description>信号量  信号量是一种计数器 生产者消费者的典型使用  声明 #include &amp;lt;sys/types.h&amp;gt;#include &amp;lt;sys/ipc.h&amp;gt;#include &amp;lt;sys/sem.h&amp;gt;/* 用于创建一个新的信号量集合 - key:ftok()生成的键值 - nsems:指定在新的集合中创建信号量的数目 - semflsg:打开信号量的方式 */ int semget (key_t key ,int nsems , int semflg); /* 对信号量的P、V操作 - sembuf：将要在信号量上执行的操作 - nsops：操作个数 */ int semop (int semid,struct sembuf *sops,unsigned nsops); /* 用于在信号量集合上执行控制操作。 */ int semctl (int semid,int semnum,int cmd,...); 例子： #include &amp;lt;iostream&amp;gt;#include &amp;lt;cstdio&amp;gt; using namespace std; #include &amp;lt;sys/types.h&amp;gt;#include &amp;lt;sys/ipc.h&amp;gt;#include &amp;lt;sys/sem.h&amp;gt; union semun { int val; struct semid_ds *buf; unsigned short *array; }arg; int CreateSem(key_t key,int value){ union semun sem; int semid ; sem.</description>
+    </item>
+    
+    <item>
+      <title>Linux - 进程通信 - 有名管道</title>
+      <link>https://jfy0o0.github.io/2020/linux-%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1-%E6%9C%89%E5%90%8D%E7%AE%A1%E9%81%93/</link>
+      <pubDate>Fri, 20 Nov 2020 09:36:37 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/linux-%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1-%E6%9C%89%E5%90%8D%E7%AE%A1%E9%81%93/</guid>
+      <description>命名管道的基本概念  命名管道与前篇文章中的半双工管道非常相似 在文件系统中命名管道是以设备特殊文件的形式存在的 不同的进程可以通过命名管道共享数据，与普通管道不同的是可与无血缘关系的进程进行通信。  声明 #include &amp;lt;sys/types.h&amp;gt;#include &amp;lt;sys/stat.h&amp;gt;int mkfifo (consta char* pathname , mode_t mode); 例子 写端： #include &amp;lt;stdio.h&amp;gt;#include &amp;lt;unistd.h&amp;gt;#include &amp;lt;fcntl.h&amp;gt;#include &amp;lt;stdlib.h&amp;gt;#include &amp;lt;cstring&amp;gt;#include &amp;lt;iostream&amp;gt;using namespace std; int main(int argc , char **argv){ int wfd = open(&amp;#34;mypipe&amp;#34;,O_WDONLY); if( wfd &amp;lt; 0 ){ printf( &amp;#34;open failed &amp;#34; ); return -1; } int ret = mkfifo (&amp;#34;mypipe&amp;#34; , 0664); if( ret &amp;lt; 0){ printf ( &amp;#34;mkfifo failed&amp;#34; ); return -1; } while(1){ char buf[1024]; cin &amp;gt;&amp;gt; buf; ret = write(wfd , buf ,sizeof (buf)); if(ret &amp;gt;= 0 ){ printf( &amp;#34; buf: %s&amp;#34;,buf ); } } close (wfd); return 0; } 读端： #include &amp;lt;stdio.</description>
+    </item>
+    
+    <item>
+      <title>Linux - 进程通信 - 匿名管道</title>
+      <link>https://jfy0o0.github.io/2020/linux-%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1-%E5%8C%BF%E5%90%8D%E7%AE%A1%E9%81%93/</link>
+      <pubDate>Fri, 20 Nov 2020 09:25:44 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/linux-%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1-%E5%8C%BF%E5%90%8D%E7%AE%A1%E9%81%93/</guid>
+      <description>管道 管道是一种古老的IPC通信形式。它有两个特点：
+ 半双工，即不能同时在两个方向上传输数据。有的系统可能支持全双工。 只能在父子进程间。经典的形式就是管道由父进程创建，进程fork子进程之后，就可以在父子进程之间使用了。 进程创建管道，每次创建两个文件描述符来操作管道。 其中一个对管道进行写，另一个对管道进行读操作。  声明 使用popen函数和pclose函数结合来执行系统命令，就用到了管道，它们声明如下：
+FILE *popen(const char *command,const char *type); int pclose(FILE *stream); #include &amp;lt;unistd.h&amp;gt;int pipe(int filedes[2]);  filedes是一个文件描述符的数组，用于保存管道返回的两个文件描述符。 下标为0是为了读操作而创建打开的，下标为1是为了写操作而创建打开的。 执行成功返回0；失败返回1；  例子 我们看一个简单的使用管道的例子，这里使用了pipe函数来创建管道：
+#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;unistd.h&amp;gt;#include &amp;lt;sys/types.h&amp;gt;#define MAX_LEN 128 int main() { /*0为读，1为写*/ int fd[2] = {0}; //描述符  pid_t pid = 0; char line[MAX_LEN] = {0}; int n = 0; /*创建管道，需要传入两个文件描述符*/ if(pipe(fd) &amp;lt; 0) { perror(&amp;#34;create pipe failed\n&amp;#34;); return -1; } /*fork子进程*/ if((pid = fork()) &amp;lt; 0) { perror(&amp;#34;fork failed\n&amp;#34;); return -1; } /*父进程*/ else if(pid &amp;gt; 0) { /*关闭管道的写描述符*/ close(fd[1]); /*从管道读取数据*/ n = read(fd[0],line,MAX_LEN); printf(&amp;#34;read %d bytes from pipe :%s\n&amp;#34;,n,line); } /*子进程*/ else { /*关闭管道的读描述符*/ close(fd[0]); /*向管道写入数据*/ write(fd[1],&amp;#34;www.</description>
+    </item>
+    
+    <item>
+      <title>Other - 同步、异步、阻塞、非阻塞</title>
       <link>https://jfy0o0.github.io/2020/%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/</link>
       <pubDate>Tue, 17 Nov 2020 13:54:52 +0800</pubDate>
       
