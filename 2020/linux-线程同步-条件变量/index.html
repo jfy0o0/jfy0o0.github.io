@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Jiang .">
+  
+  
+  
+  <link rel="prev" href="https://jfy0o0.github.io/2020/linux-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5-%E8%AF%BB%E5%86%99%E9%94%81/" />
+  
+  <link rel="canonical" href="https://jfy0o0.github.io/2020/linux-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5-%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Linux - 线程同步 - 条件变量 | Jiang . &#39;s blog
+       
+  </title>
+  <meta name="title" content="Linux - 线程同步 - 条件变量 | Jiang . &#39;s blog">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/jfy0o0.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Linux - 线程同步 - 条件变量",
+    "headline" : "Linux - 线程同步 - 条件变量",
+    "description" : "条件变量 条件变量是利用线程间共享全局变量进行同步的一种机制。\n条件变量上的基本操作有：\n 触发条件(当条件变为 true 时)； 等待条件，挂起线程直到其他线程触发条件。  声明 \/\/初始化条件变量　\/\/尽管POSIX标准中为条件变量定义了属性，但在Linux中没有实现，因此cond_attr值通常为NULL，且被忽略。 int pthread_cond_init(pthread_cond_t *cond,pthread_condattr_t *cond_attr); \/\/无条件等待 int pthread_cond_wait(pthread_cond_t *cond,pthread_mutex_t *mutex); \/\/计时等待 int pthread_cond_timewait(pthread_cond_t *cond,pthread_mutex *mutex,const timespec *abstime); \/* 无论哪种等待方式，都必须和一个互斥锁配合，以防止多个线程同时请求（用 pthread_cond_wait() 或 pthread_cond_timedwait() 请求）竞争条件（Race Condition）。 mutex互斥锁必须是普通锁（PTHREAD_MUTEX_TIMED_NP）或者适应锁（PTHREAD_MUTEX_ADAPTIVE_NP）， 且在调用pthread_cond_wait()前必须由本线程加锁（pthread_mutex_lock()）， 而在更新条件等待队列以前，mutex保持锁定状态，并在线程挂起进入等待前解锁。 在条件满足从而离开pthread_cond_wait()之前，mutex将被重新加锁，以与进入pthread_cond_wait()前的加锁动作对应。 *\/ \/\/激活一个等待该条件的线程（存在多个等待线程时按入队顺序激活其中一个 int pthread_cond_signal(pthread_cond_t *cond); \/\/激活所有等待线程 int pthread_cond_broadcast(pthread_cond_t *cond); \/\/销毁条件变量 int pthread_cond_destroy(pthread_cond_t *cond); 说明：  pthread_cond_wait  自动解锁互斥量(如同执行了pthread_unlock_mutex)，并等待条件变量触发。 这时线程挂起，不占用CPU时间，直到条件变量被触发（变量为ture）。 在调用 pthread_cond_wait之前，应用程序必须加锁互斥量。 pthread_cond_wait函数返回前，自动重新对互斥量加锁(如同执行了pthread_lock_mutex)。 就是说 使用这个函数会自动解锁 ，在满足条件的时候自动加锁   互斥量的解锁和在条件变量上挂起都是自动进行的。  因此，在条件变量被触发前，如果所有的线程都要对互斥量加锁，这种机制可保证在线程加锁互斥量和进入等待条件变量期间，条件变量不被触发。 条件变量要和互斥量相联结，以避免出现条件竞争——个线程预备等待一个条件变量，当它在真正进入等待之前，另一个线程恰好触发了该条件（条件满足信号有可能在测试条件和调用pthread_cond_wait函数（block）之间被发出，从而造成无限制的等待）。   条件变量函数不是异步信号安全的，不应当在信号处理程序中进行调用。  特别要注意，如果在信号处理程序中调用 pthread_cond_signal 或 pthread_cond_boardcast 函数，可能导致调用线程死锁    例子 #include \u0026lt;pthread.",
+    "inLanguage" : "en-us",
+    "author" : "Jiang",
+    "creator" : "Jiang",
+    "publisher": "Jiang",
+    "accountablePerson" : "Jiang",
+    "copyrightHolder" : "Jiang",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-11-20 16:50:06 \u002b0800 CST",
+    "dateModified" : "2020-11-20 16:50:06 \u002b0800 CST",
+    "url" : "https:\/\/jfy0o0.github.io\/2020\/linux-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5-%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F\/",
+    "wordCount" : "251",
+    "keywords" : [ "Linux", "Jiang . \u0027s blog"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Linux - 线程同步 - 条件变量</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://jfy0o0.github.io" rel="author">Jiang</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-11-20 itemprop="datePublished">November 20, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://jfy0o0.github.io/categories/linux/"> Linux </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="条件变量">条件变量</h1>
+<p>条件变量是利用线程间共享全局变量进行同步的一种机制。</p>
+<p>条件变量上的基本操作有：</p>
+<ul>
+<li>触发条件(当条件变为 true 时)；</li>
+<li>等待条件，挂起线程直到其他线程触发条件。</li>
+</ul>
+<h1 id="声明">声明</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">//初始化条件变量　
+</span><span style="color:#75715e">//尽管POSIX标准中为条件变量定义了属性，但在Linux中没有实现，因此cond_attr值通常为NULL，且被忽略。
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">pthread_cond_init</span>(pthread_cond_t <span style="color:#f92672">*</span>cond,pthread_condattr_t <span style="color:#f92672">*</span>cond_attr);
+
+<span style="color:#75715e">//无条件等待
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">pthread_cond_wait</span>(pthread_cond_t <span style="color:#f92672">*</span>cond,pthread_mutex_t <span style="color:#f92672">*</span>mutex);
+
+<span style="color:#75715e">//计时等待
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">pthread_cond_timewait</span>(pthread_cond_t <span style="color:#f92672">*</span>cond,pthread_mutex <span style="color:#f92672">*</span>mutex,<span style="color:#66d9ef">const</span> timespec <span style="color:#f92672">*</span>abstime);
+<span style="color:#75715e">/*
+</span><span style="color:#75715e">无论哪种等待方式，都必须和一个互斥锁配合，以防止多个线程同时请求（用 pthread_cond_wait() 或 pthread_cond_timedwait() 请求）竞争条件（Race Condition）。
+</span><span style="color:#75715e">mutex互斥锁必须是普通锁（PTHREAD_MUTEX_TIMED_NP）或者适应锁（PTHREAD_MUTEX_ADAPTIVE_NP），
+</span><span style="color:#75715e">且在调用pthread_cond_wait()前必须由本线程加锁（pthread_mutex_lock()），
+</span><span style="color:#75715e">而在更新条件等待队列以前，mutex保持锁定状态，并在线程挂起进入等待前解锁。
+</span><span style="color:#75715e">在条件满足从而离开pthread_cond_wait()之前，mutex将被重新加锁，以与进入pthread_cond_wait()前的加锁动作对应。
+</span><span style="color:#75715e">*/</span>
+
+<span style="color:#75715e">//激活一个等待该条件的线程（存在多个等待线程时按入队顺序激活其中一个
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">pthread_cond_signal</span>(pthread_cond_t <span style="color:#f92672">*</span>cond);
+
+<span style="color:#75715e">//激活所有等待线程
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">pthread_cond_broadcast</span>(pthread_cond_t <span style="color:#f92672">*</span>cond);
+
+<span style="color:#75715e">//销毁条件变量
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">pthread_cond_destroy</span>(pthread_cond_t <span style="color:#f92672">*</span>cond);
+</code></pre></div><h1 id="说明">说明：</h1>
+<ul>
+<li>pthread_cond_wait
+<ul>
+<li>自动解锁互斥量(如同执行了pthread_unlock_mutex)，并等待条件变量触发。</li>
+<li>这时线程挂起，不占用CPU时间，直到条件变量被触发（变量为ture）。</li>
+<li>在调用 pthread_cond_wait之前，应用程序必须加锁互斥量。</li>
+<li>pthread_cond_wait函数返回前，自动重新对互斥量加锁(如同执行了pthread_lock_mutex)。</li>
+<li>就是说 使用这个函数会自动解锁 ，在满足条件的时候自动加锁</li>
+</ul>
+</li>
+<li>互斥量的解锁和在条件变量上挂起都是自动进行的。
+<ul>
+<li>因此，在条件变量被触发前，如果所有的线程都要对互斥量加锁，这种机制可保证在线程加锁互斥量和进入等待条件变量期间，条件变量不被触发。</li>
+<li>条件变量要和互斥量相联结，以避免出现条件竞争——个线程预备等待一个条件变量，当它在真正进入等待之前，另一个线程恰好触发了该条件（条件满足信号有可能在测试条件和调用pthread_cond_wait函数（block）之间被发出，从而造成无限制的等待）。</li>
+</ul>
+</li>
+<li>条件变量函数不是异步信号安全的，不应当在信号处理程序中进行调用。
+<ul>
+<li>特别要注意，如果在信号处理程序中调用 pthread_cond_signal 或 pthread_cond_boardcast 函数，可能导致调用线程死锁</li>
+</ul>
+</li>
+</ul>
+<h1 id="例子">例子</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;pthread.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;stdio.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;stdlib.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">static</span> pthread_mutex_t mtx <span style="color:#f92672">=</span> PTHREAD_MUTEX_INITIALIZER;
+<span style="color:#66d9ef">static</span> pthread_cond_t cond <span style="color:#f92672">=</span> PTHREAD_COND_INITIALIZER;
+
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">node</span>
+{
+    <span style="color:#66d9ef">int</span> n_number;
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">node</span> <span style="color:#f92672">*</span>n_next;
+}<span style="color:#f92672">*</span>head <span style="color:#f92672">=</span> NULL;
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">cleanup_handler</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>arg)
+{
+    printf(<span style="color:#e6db74">&#34;Cleanup handler of second thread.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+    free(arg);
+    (<span style="color:#66d9ef">void</span>)pthread_mutex_unlock(<span style="color:#f92672">&amp;</span>mtx);
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">thread_func</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>arg)
+{
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">node</span> <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> NULL;
+    pthread_cleanup_push(cleanup_handler, p);
+
+    <span style="color:#66d9ef">while</span> (<span style="color:#ae81ff">1</span>) {
+        <span style="color:#75715e">// 这个mutex主要是用来保证pthread_cond_wait的并发性。
+</span><span style="color:#75715e"></span>        pthread_mutex_lock(<span style="color:#f92672">&amp;</span>mtx);
+        <span style="color:#66d9ef">while</span> (head <span style="color:#f92672">==</span> NULL) {
+            <span style="color:#75715e">/* 这个while要特别说明一下，单个pthread_cond_wait功能很完善，为何
+</span><span style="color:#75715e">            * 这里要有一个while (head == NULL)呢？因为pthread_cond_wait里的线
+</span><span style="color:#75715e">            * 程可能会被意外唤醒，如果这个时候head != NULL，则不是我们想要的情况。
+</span><span style="color:#75715e">            * 这个时候，应该让线程继续进入pthread_cond_wait
+</span><span style="color:#75715e">            * pthread_cond_wait会先解除之前的pthread_mutex_lock锁定的mtx，
+</span><span style="color:#75715e">            * 然后阻塞在等待对列里休眠，直到再次被唤醒（大多数情况下是等待的条件成立
+</span><span style="color:#75715e">            * 而被唤醒，唤醒后，该进程会先锁定先pthread_mutex_lock(&amp;mtx);，再读取资源
+</span><span style="color:#75715e">            * 用这个流程是比较清楚的。*/</span>
+
+            pthread_cond_wait(<span style="color:#f92672">&amp;</span>cond, <span style="color:#f92672">&amp;</span>mtx);
+            p <span style="color:#f92672">=</span> head;
+            head <span style="color:#f92672">=</span> head<span style="color:#f92672">-&gt;</span>n_next;
+            printf(<span style="color:#e6db74">&#34;Got %d from front of queue</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, p<span style="color:#f92672">-&gt;</span>n_number);
+            free(p);
+        }
+        pthread_mutex_unlock(<span style="color:#f92672">&amp;</span>mtx); <span style="color:#75715e">// 临界区数据操作完毕，释放互斥锁。
+</span><span style="color:#75715e"></span>    }
+    pthread_cleanup_pop(<span style="color:#ae81ff">0</span>);
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
+{
+    pthread_t tid;
+    <span style="color:#66d9ef">int</span> i;
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">node</span> <span style="color:#f92672">*</span>p;
+
+    <span style="color:#75715e">/* 子线程会一直等待资源，类似生产者和消费者，但是这里的消费者可以是多个消费者，
+</span><span style="color:#75715e">    * 而不仅仅支持普通的单个消费者，这个模型虽然简单，但是很强大。*/</span>
+    pthread_create(<span style="color:#f92672">&amp;</span>tid, NULL, thread_func, NULL);
+    sleep(<span style="color:#ae81ff">1</span>);
+    <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span>; i<span style="color:#f92672">++</span>)
+    {
+        p <span style="color:#f92672">=</span> (<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">node</span><span style="color:#f92672">*</span>)malloc(<span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">node</span>));
+        p<span style="color:#f92672">-&gt;</span>n_number <span style="color:#f92672">=</span> i;
+        pthread_mutex_lock(<span style="color:#f92672">&amp;</span>mtx); <span style="color:#75715e">// 需要操作head这个临界资源，先加锁。
+</span><span style="color:#75715e"></span>        p<span style="color:#f92672">-&gt;</span>n_next <span style="color:#f92672">=</span> head;
+        head <span style="color:#f92672">=</span> p;
+        pthread_cond_signal(<span style="color:#f92672">&amp;</span>cond);
+        pthread_mutex_unlock(<span style="color:#f92672">&amp;</span>mtx); <span style="color:#75715e">//解锁
+</span><span style="color:#75715e"></span>
+        sleep(<span style="color:#ae81ff">1</span>);
+    }
+
+    printf(<span style="color:#e6db74">&#34;thread 1 wanna end the line.So cancel thread 2.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+
+    <span style="color:#75715e">/* 关于pthread_cancel，有一点额外的说明，它是从外部终止子线程，子线程会在最近的取消点，
+</span><span style="color:#75715e">    * 退出线程，而在我们的代码里，最近的取消点肯定就是pthread_cond_wait()了。*/</span>
+
+    pthread_cancel(tid);
+    pthread_join(tid, NULL);
+
+    printf(<span style="color:#e6db74">&#34;All done -- exiting</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Jiang . </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://jfy0o0.github.io/2020/linux-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5-%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F/>https://jfy0o0.github.io/2020/linux-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5-%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/linux/">
+                    #Linux</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://jfy0o0.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://jfy0o0.github.io/2020/linux-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5-%E8%AF%BB%E5%86%99%E9%94%81/" class="prev" rel="prev" title="Linux - 线程同步 - 读写锁"><i class="iconfont icon-left"></i>&nbsp;Linux - 线程同步 - 读写锁</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://jfy0o0.github.io">Jiang .</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>
