@@ -1,18 +1,53 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>C&#43;&#43; on Jiang . &#39;s blog</title>
+    <title>c&#43;&#43; on Jiang . &#39;s blog</title>
     <link>https://jfy0o0.github.io/tags/c&#43;&#43;/</link>
-    <description>Recent content in C&#43;&#43; on Jiang . &#39;s blog</description>
+    <description>Recent content in c&#43;&#43; on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Nov 2020 15:54:13 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 10 Dec 2020 11:34:01 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C&#43;&#43; - cast用法</title>
+      <link>https://jfy0o0.github.io/2020/cpp_cast%E7%94%A8%E6%B3%95/</link>
+      <pubDate>Thu, 10 Dec 2020 11:34:01 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/cpp_cast%E7%94%A8%E6%B3%95/</guid>
+      <description>static_cast static_cast&amp;lt; new_type &amp;gt;(expression)  相当于传统的C语言里的强制转换 把expression转换为new_type类型 编译时检查，用于非多态的转换，可以转换指针及其他 没有运行时类型检查来保证转换的安全性  用法  用于类层次结构中基类（父类）和派生类（子类）之间指针或引用的转换。  进行上行转换（把派生类的指针或引用转换成基类表示）是安全的； 进行下行转换（把基类指针或引用转换成派生类表示）时，由于没有动态类型检查，所以是不安全的。   用于基本数据类型之间的转换，如把int转换成char，把int转换成enum。 把空指针转换成目标类型的空指针。 把任何类型的表达式转换成void类型。 static_cast不能转换掉expression的const、volatile、或者__unaligned属性  例子 char a = &amp;#39;a&amp;#39;; int b = static_cast&amp;lt;int&amp;gt;(a);//正确，将char型数据转换成int型数据  double *c = new double; void *d = static_cast&amp;lt;void*&amp;gt;(c);//正确，将double指针转换成void指针  int e = 10; const int f = static_cast&amp;lt;const int&amp;gt;(e);//正确，将int型数据转换成const int型数据  const int g = 20; int *h = static_cast&amp;lt;int*&amp;gt;(&amp;amp;g);//编译错误，static_cast不能转换掉g的const属性  class Base {}; class Derived : public Base {} Base* pB = new Base(); if(Derived* pD = static_cast&amp;lt;Derived*&amp;gt;(pB)) {}//下行转换是不安全的(坚决抵制这种方法)  Derived* pD = new Derived(); if(Base* pB = static_cast&amp;lt;Base*&amp;gt;(pD)) {}//上行转换是安全的 dynamic_cast dynamic_cast&amp;lt; type* &amp;gt;(e) //type必须是一个类类型且必须是一个有效的指针 dynamic_cast&amp;lt; type&amp;amp; &amp;gt;(e) //type必须是一个类类型且必须是一个左值 dynamic_cast&amp;lt; type&amp;amp;&amp;amp; &amp;gt;(e) //type必须是一个类类型且必须是一个右值 e的类型必须符合以下三个条件中的任何一个：</description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43; - new的三种用法</title>
+      <link>https://jfy0o0.github.io/2020/cpp_new%E7%9A%84%E4%B8%89%E7%A7%8D%E7%94%A8%E6%B3%95/</link>
+      <pubDate>Fri, 04 Dec 2020 10:19:49 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/cpp_new%E7%9A%84%E4%B8%89%E7%A7%8D%E7%94%A8%E6%B3%95/</guid>
+      <description>new用法总结 new可以说是个
+ 一个关键字， 一个运算符 可以被重载。  new operator 这个就是平时最经常用的new，用法如下程序所示：
+class A { public: A(int i) :a(i){} private: int a; }; int main() { A* example = new A(1); } 说明 new operator实际上执行了以下三个步骤：
+ 调用operator new分配内存（后面要说的第二种new），  如果类本身定义了operator new，那么会调用类自己的operator new，而不是全局的； 如果未定义，则是全局的   调用A的构造函数A::A(int)； 返回相应的指针  operator new operator new不调用构造函数，而仅仅分配内存，
+有两个版本，
+ 前者抛出异常 后者当失败时不抛出异常，而是直接返回：  void* operator new (std::size_t size); void* operator new (std::size_t size, const std::nothrow_t&amp;amp; nothrow_value) noexcept; class A { public: A(int i) :a(i){} void* operator new(size_t size) { cout &amp;lt;&amp;lt; &amp;#34;call A::operator new&amp;#34; &amp;lt;&amp;lt; endl; return malloc(size); } void operator delete(void* p) { cout &amp;lt;&amp;lt; &amp;#34;call A::operator delete&amp;#34; &amp;lt;&amp;lt; endl; return free(p); } void* operator new(size_t size, const nothrow_t&amp;amp; nothrow_value) noexcept { cout &amp;lt;&amp;lt; &amp;#34;call A::operator new (noexcept)&amp;#34; &amp;lt;&amp;lt; endl; return malloc(size); } void operator delete(void* p, const nothrow_t&amp;amp; nothrow_value) noexcept { cout &amp;lt;&amp;lt; &amp;#34;call A::operator delete (noexcept)&amp;#34; &amp;lt;&amp;lt; endl; free(p); } private: int a; }; int main() { A* example1 = new A(1); delete example1; A* example2 = new(nothrow) A(2); delete example2; } placement new placement new仅在一个已经分配好的内存指针上调用构造函数，基本形式如下：</description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43; - 使用技巧</title>
+      <link>https://jfy0o0.github.io/2020/cpp_%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</link>
+      <pubDate>Thu, 03 Dec 2020 18:44:42 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/cpp_%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</guid>
+      <description>变长数组 特点：
+ 变长 空间合理  eg: struct MutableLenArray { int count; char p[0]; }; 宏的妙用 1. “#”符号把一个符号直接转换为字符串，例如：
+#define TO_STRING(x) #x const char *str = TO_STRING( test ); ##符号会连接两个符号，从而产生新的符号(词法层次)，例如：
+#define SIGN( x ) INT_##x int SIGN( 1 ); //宏被展开后将成为：int INT_1; 2. 变参宏 #define LOG( format, ... ) printf( format, __VA_ARGS__ ) LOG( &amp;#34;%s %d&amp;#34;, str, count );  VA_ARGS是系统预定义宏，被自动替换为参数列表。 经常需要进行输出格式化，重定义时，可以用到以上技巧。  不定参 模板实现： template&amp;lt;typename... T&amp;gt; void func(T... args) { for (auto x : {args.</description>
+    </item>
+    
     <item>
       <title>C&#43;&#43; - 运算符重载小技巧</title>
-      <link>https://jfy0o0.github.io/2020/_%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%E5%B0%8F%E6%8A%80%E5%B7%A7/</link>
+      <link>https://jfy0o0.github.io/2020/cpp_%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%E5%B0%8F%E6%8A%80%E5%B7%A7/</link>
       <pubDate>Thu, 12 Nov 2020 15:54:13 +0800</pubDate>
       
-      <guid>https://jfy0o0.github.io/2020/_%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%E5%B0%8F%E6%8A%80%E5%B7%A7/</guid>
+      <guid>https://jfy0o0.github.io/2020/cpp_%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%E5%B0%8F%E6%8A%80%E5%B7%A7/</guid>
       <description>c++ - 运算符重载小技巧 重载 () ： 多次调用(),然后再调用print()
 class A{ public: A operator()(int a) { cout &amp;lt;&amp;lt; a &amp;lt;&amp;lt;endl; return *this; } void print() { cout &amp;lt;&amp;lt; &amp;#34;hello&amp;#34;&amp;lt;&amp;lt;endl; } }; int main() { A a; a(54)(434).print(); //54 	//434 	//hello } 重载 ++ ： ++ 运算符，还可分为前缀 ++ 和后缀 ++ 运算符。
 class Length { private: int len_inches; public: //前缀++的声明  Length operator++ ()； //后缀++的声明  Length operator++ (int)； }; 重载前缀++运算符: C++允许重载前缀运算符，以使表达式 ++b 能递增 b 的长度值，并返回结果对象。该运算符可以作为成员函数来重载，这使得它的单个形参是隐含的， 所以重载运算符不需要形参。</description>
@@ -75,10 +110,10 @@ class Length { private: int len_inches; public: //前缀++的声明  Length oper
     
     <item>
       <title>C&#43;&#43; - cmake</title>
-      <link>https://jfy0o0.github.io/2020/_cmake/</link>
+      <link>https://jfy0o0.github.io/2020/cpp_cmake/</link>
       <pubDate>Mon, 09 Nov 2020 13:47:22 +0800</pubDate>
       
-      <guid>https://jfy0o0.github.io/2020/_cmake/</guid>
+      <guid>https://jfy0o0.github.io/2020/cpp_cmake/</guid>
       <description>cmake 1.指定 cmake 的最小版本 cmake_minimum_required(VERSION 3.4.1)这行命令是可选的，我们可以不写这句话，但在有些情况下，如果 CMakeLists.txt 文件中使用了一些高版本 cmake 特有的一些命令的时候，就需要加上这样一行，提醒用户升级到该版本之后再执行 cmake。
 2.设置项目名称 project(demo)这个命令不是强制性的，但最好都加上。它会引入两个变量 demo_BINARY_DIR 和 demo_SOURCE_DIR，同时，cmake 自动定义了两个等价的变量 PROJECT_BINARY_DIR 和 PROJECT_SOURCE_DIR。
 3.设置编译类型 add_executable(demo demo.cpp) # 生成可执行文件 add_library(common STATIC util.cpp) # 生成静态库 add_library(common SHARED util.cpp) # 生成动态库或共享库 #add_library 默认生成是静态库，通过以上命令生成文件名字， 4.指定编译包含的源文件 4.1 明确指定包含哪些源文件 add_library(demo demo.cpp test.cpp util.cpp)4.2 搜索所有的 cpp 文件 aux_source_directory(dir VAR) 发现一个目录下所有的源代码文件并将列表存储在一个变量中。 aux_source_directory(. SRC_LIST) # 搜索当前目录下的所有.cpp文件 add_library(demo ${SRC_LIST})4.3 自定义搜索规则 file(GLOB SRC_LIST &amp;#34;*.cpp&amp;#34; &amp;#34;protocol/*.cpp&amp;#34;)add_library(demo ${SRC_LIST})#或者 file(GLOB SRC_LIST &amp;#34;*.cpp&amp;#34;)file(GLOB SRC_PROTOCOL_LIST &amp;#34;protocol/*.cpp&amp;#34;)add_library(demo ${SRC_LIST} ${SRC_PROTOCOL_LIST})#或者 aux_source_directory(. SRC_LIST)aux_source_directory(protocol SRC_PROTOCOL_LIST)add_library(demo ${SRC_LIST} ${SRC_PROTOCOL_LIST})5.</description>
@@ -144,7 +179,7 @@ eg: //抽象同事类 class Colleague { protected : Mediator *mediator; public: 
       
       <guid>https://jfy0o0.github.io/2020/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F/</guid>
       <description>命令模式： 　将请求封装成对象，以便使用不同的请求、日志、队列等来参数化其他对象。命令模式也支持撤销操作。
-命令模式的角色：  传递命令对象（Invoker）：是请求的发送者，它通常拥有很多的命令对象，并通过访问命令对象来执行相关请求，它不直接访问接收者。 抽象命令接口（Command）：声明执行命令的接口，拥有执行命令的抽象方法execute()。 具体的命令对象（ConcreteCommand）：是抽象命令类的具体实现类，它拥有接收者对象，并通过调用接收者的功能来完成命令要执行的操作。 接受者对象（Receiver）：执行命令功能的相关操作，是具体命令对象业务的真正实现者。 客户端对象（Client）：创建具体命令的对象并且设置命令对象的接受者。  优点：  　1）降低系统的耦合度。命令模式能将调用操作的对象与实现该操作的对象解耦。 　2）增加或删除命令非常方便。采用命令模式增加与删除命令不会影响其他类，它满足OCP原则，对扩展比较灵活。 　3）可以实现宏命令。命令模式可以与组合模式结合，将多个命令装配成一个组合命令，即宏命令。 　4）方便实现 Undo 和 Redo 操作。命令模式可以与备忘录模式结合，实现命令的撤销与恢复。  缺点： 可能产生大量的具体命令类。
+命令模式的角色：  传递命令对象（Invoker）：是请求的发送者，它通常拥有很多的命令对象，并通过访问命令对象来执行相关请求，它不直接访问接收者。 抽象命令接口（Command）：声明执行命令的接口，拥有执行命令的抽象方法execute()。 具体的命令对象（ConcreteCommand）：是抽象命令类的具体实现类，它拥有接收者对象，并通过调用接收者的功能来完成命令要执行的操作。 接受者对象（Receiver）：执行命令功能的相关操作，是具体命令对象业务的真正实现者。 客户端对象（Client）：创建具体命令的对象并且设置命令对象的接受者。  优点：  　降低系统的耦合度。命令模式能将调用操作的对象与实现该操作的对象解耦。 　增加或删除命令非常方便。采用命令模式增加与删除命令不会影响其他类，它满足OCP原则，对扩展比较灵活。 　可以实现宏命令。命令模式可以与组合模式结合，将多个命令装配成一个组合命令，即宏命令。 　方便实现 Undo 和 Redo 操作。命令模式可以与备忘录模式结合，实现命令的撤销与恢复。  缺点： 可能产生大量的具体命令类。
 适用环境：  使用命令模式作为“CallBack”在面向对象系统中的替代。“CallBack”讲的便是先将一个函数登记上，然后在以后调用此函数。 需要在不同的时间指定请求、将请求排队。一个命令对象和原先的请求发出者可以有不同的生命期。换言之，原先的请求发出者可能已经不在了，而命令对象本身仍然是活动的。这时命令的接收者可以是在本地，也可以在网络的另外一个地址。命令对象可以在串形化之后传送到另外一台机器上去。 系统需要支持命令的撤消(undo)。命令对象可以把状态存储起来，等到客户端需要撤销命令所产生的效果时，可以调用undo()方法，把命令所产生的效果撤销掉。命令对象还可以提供redo()方法，以供客户端在需要时，再重新实施命令效果。 如果一个系统要将系统中所有的数据更新到日志里，以便在系统崩溃时，可以根据日志里读回所有的数据更新命令，重新调用Execute()方法一条一条执行这些命令，从而恢复系统在崩溃前所做的数据更新。  区别： 命令模式与策略模式的区别：  命令模式与策略模式都封装了变化，但命令模式封装的是请求的变化，而策略模式封装的是算法的变化。 命令模式可以抽象化成策略模式。策略模式较简单，而命令模式比较复杂。策略模式聚焦的是对相同请求更换解决方案的灵活性；而命令模式聚焦的是对多请求变化的封装以及对相同请求不同的请求形式解决方法的可复用性。  eg： class Barbecuer { public: void BakeMutton(){cout&amp;lt;&amp;lt;&amp;#34;Bake mutton&amp;#34;&amp;lt;&amp;lt;endl;} void BakeChickenWing(){cout&amp;lt;&amp;lt;&amp;#34;Bake ChickenWing&amp;#34;&amp;lt;&amp;lt;endl;} }; //----------------------------------------------  /*抽象命令类：是执行具体操作的接口*/ class Command { public: Command(){} Command(Barbecuer *receiver):p_receiver(receiver){} virtual void ExecuteCommand() = 0; //执行命令  protected: Barbecuer *p_receiver; }; /*具体命令类:烤羊肉串命令*/ class BakeMuttonCommand:public Command { public: BakeMuttonCommand(Barbecuer *receiver){p_receiver = receiver;} void ExecuteCommand(){p_receiver-&amp;gt;BakeMutton();} }; /*具体命令类:烤鸡翅串命令*/ class BakeChickenWingCommand:public Command { public: BakeChickenWingCommand(Barbecuer *receiver){p_receiver = receiver;} void ExecuteCommand() {p_receiver-&amp;gt;BakeChickenWing();} }; //----------------------------------------------  /*服务员类*/ class Waiter { public: void SetOrder(Command *command) { p_commandList.</description>
     </item>
     

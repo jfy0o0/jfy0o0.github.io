@@ -6,7 +6,21 @@
     <description>Recent content in Other on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Nov 2020 13:54:52 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/categories/other/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 04 Dec 2020 09:27:19 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/categories/other/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Other - 对象池</title>
+      <link>https://jfy0o0.github.io/2020/%E5%AF%B9%E8%B1%A1%E6%B1%A0/</link>
+      <pubDate>Fri, 04 Dec 2020 09:27:19 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/%E5%AF%B9%E8%B1%A1%E6%B1%A0/</guid>
+      <description>对象池  对象池是一种空间换时间的技术，  对象被预先创建并初始化后放入对象池中， 对象提供者就能利用已有的对象来处理请求，并在不需要时归还给池子而非直接销毁   它减少对象频繁创建所占用的内存 空间和初始化时间  原理 描述一个对象池有两个很重要的参数，
+  对象池的类型，
+  对象池可以获得对象的数量
+   对象池的实现和内存池的实现原理很像：  都是一开始申请大内存空间， 然后把大内存分配成小内存空间，当需要使用的时候直接分配使用，不在向系统申请内存空间，也不直接释放内存空间。 使用完之后都是放回池子里   不同的地方在内存池有一个映射数组，在使用时负责快速定位合适的内存池（一个内存池可以有很多内存块大小不同的池子） 但是每一个类型的对象只对应一个对象池，并自己管理自己的对象池。不同类型的对象池是相互独立的存在  优点  减少频繁创建和销毁对象带来的成本，实现对象的缓存和复用 提高了获取对象的响应速度，对实时性要求较高的程序有很大帮助 一定程度上减少了垃圾回收机制（GC）的压力  缺点  1、很难设定对象池的大小，如果太小则不起作用，过大又会占用内存资源过高 2、并发环境中, 多个线程可能(同时)需要获取池中对象, 进而需要在堆数据结构上进行同步或者因为锁竞争而产生阻塞, 这种开销要比创建销毁对象的开销高数百倍; 3、由于池中对象的数量有限, 势必成为一个可伸缩性瓶颈; 4、所谓的脏对象就是指的是当对象被放回对象池后，还保留着刚刚被客户端调用时生成的数据。  脏对象可能带来两个问题   脏对象持有上次使用的引用，导致内存泄漏等问题。
+  脏对象如果下一次使用时没有做清理，可能影响程序的处理数据。
+  什么条件下使用对象池  资源受限的, 不需要可伸缩性的环境: cpu性能不够强劲, 内存比较紧张, 垃圾收集, 内存抖动会造成比较大的影响, 需要提高内存管理效率,响应性比吞吐量更为重要; 数量受限的, 比如数据库连接; 创建对象的成本比较大，并且创建比较频繁。比如线程的创建代价比较大，于是就有了常用的线程池。  实现   在一部分内存空间（池子）中事先实例化好固定数量的对象，</description>
+    </item>
+    
     <item>
       <title>Other - 同步、异步、阻塞、非阻塞</title>
       <link>https://jfy0o0.github.io/2020/%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/</link>
