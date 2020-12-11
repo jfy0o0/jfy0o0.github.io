@@ -6,7 +6,27 @@
     <description>Recent content in Posts on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 10 Dec 2020 11:34:01 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 11 Dec 2020 09:57:19 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Algorithm - 七大查找算法</title>
+      <link>https://jfy0o0.github.io/2020/algorithm-%E4%B8%83%E5%A4%A7%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Fri, 11 Dec 2020 09:57:19 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/algorithm-%E4%B8%83%E5%A4%A7%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/</guid>
+      <description>顺序 说明： 顺序查找适用于存储结构为顺序存储或链式存储的线性表。
+基本思想： ​ 顺序查找也称为线形查找，属于无序查找算法。从数据结构线性表的一端开始，顺序扫描，依次将扫描到的结点关键字与给定K值进行比较，若相等则表示查找成功，若扫描结束仍旧没有找到关键字等于K的结点，则表示查找失败。
+代码 #include&amp;lt;iostream&amp;gt;using namespace std; int SequenceSearch(int a[], int value, int n) { int i; for (i = 0; i&amp;lt;n; i++) if (a[i] == value) return i; return -1; } int main() { int a[] = { 2, 3, 5, 8, 6, 7, 9, 0 }; int key, index; int n = sizeof(a) / sizeof(a[0]); cout &amp;lt;&amp;lt; &amp;#34;请输入待查找的值：&amp;#34; &amp;lt;&amp;lt; endl; cin &amp;gt;&amp;gt; key; index = SequenceSearch(a, key, n); if (index &amp;gt;= 0) { cout &amp;lt;&amp;lt; &amp;#34;找到了&amp;#34; &amp;lt;&amp;lt; endl; } else { cout &amp;lt;&amp;lt; &amp;#34;没找到&amp;#34; &amp;lt;&amp;lt; endl; } system(&amp;#34;pause&amp;#34;); return 0; 二分 说明： 元素必须有序方能使用，无序则要先进行排序。</description>
+    </item>
+    
+    <item>
+      <title>Algorithm - 十大排序算法</title>
+      <link>https://jfy0o0.github.io/2020/algorithm_%E5%8D%81%E5%A4%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Fri, 11 Dec 2020 09:25:20 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/algorithm_%E5%8D%81%E5%A4%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</guid>
+      <description>冒泡 步骤  从头开始，每次比较两元素，若大者在前，则交换两元素，直至数组末尾，此时最大元素为数组最后的元素； 重复以上步骤，从头开始至上一轮比较的末尾元素；  性质  稳定算法；  代码 // 冒泡排序 void bubbleSort(vector&amp;lt;int&amp;gt;&amp;amp; array) { for (size_t i = 0; i &amp;lt; array.size(); i++) { // 当前轮是否发生过交换事件标志位，若未发生交换，则表明列表已有序。  bool isExchanged = false; for (size_t j = 0; j &amp;lt; array.size() - i - 1; j++) { if (array[j] &amp;gt; array[j + 1]) { int temp = array[j]; array[j] = array[j + 1]; array[j + 1] = temp; isExchanged = true; } } if (!</description>
+    </item>
+    
     <item>
       <title>C&#43;&#43; - cast用法</title>
       <link>https://jfy0o0.github.io/2020/cpp_cast%E7%94%A8%E6%B3%95/</link>
@@ -32,10 +52,10 @@ class A { public: A(int i) :a(i){} private: int a; }; int main() { A* example = 
     
     <item>
       <title>Other - 对象池</title>
-      <link>https://jfy0o0.github.io/2020/%E5%AF%B9%E8%B1%A1%E6%B1%A0/</link>
+      <link>https://jfy0o0.github.io/2020/other-%E5%AF%B9%E8%B1%A1%E6%B1%A0/</link>
       <pubDate>Fri, 04 Dec 2020 09:27:19 +0800</pubDate>
       
-      <guid>https://jfy0o0.github.io/2020/%E5%AF%B9%E8%B1%A1%E6%B1%A0/</guid>
+      <guid>https://jfy0o0.github.io/2020/other-%E5%AF%B9%E8%B1%A1%E6%B1%A0/</guid>
       <description>对象池  对象池是一种空间换时间的技术，  对象被预先创建并初始化后放入对象池中， 对象提供者就能利用已有的对象来处理请求，并在不需要时归还给池子而非直接销毁   它减少对象频繁创建所占用的内存 空间和初始化时间  原理 描述一个对象池有两个很重要的参数，
   对象池的类型，
   对象池可以获得对象的数量
@@ -158,10 +178,10 @@ FILE *popen(const char *command,const char *type); int pclose(FILE *stream); #in
     
     <item>
       <title>Other - 同步、异步、阻塞、非阻塞</title>
-      <link>https://jfy0o0.github.io/2020/%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/</link>
+      <link>https://jfy0o0.github.io/2020/other-%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/</link>
       <pubDate>Tue, 17 Nov 2020 13:54:52 +0800</pubDate>
       
-      <guid>https://jfy0o0.github.io/2020/%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/</guid>
+      <guid>https://jfy0o0.github.io/2020/other-%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/</guid>
       <description>1.同步与异步 同步和异步关注的是消息通信机制
 指被调用者
 同步  就是在发出一个调用时，在没有得到结果之前，该调用就不返回。 但是一旦调用返回，就得到返回值了。 换句话说，就是由调用者主动等待这个调用的结果。  异步  调用在发出之后，这个调用就直接返回了，所以没有返回结果。 换句话说，当一个异步过程调用发出后，调用者不会立刻得到结果。 而是在调用发出后，被调用者通过状态、通知来通知调用者，或通过回调函数处理这个调用。  例子： 你打电话问书店老板有没有《分布式系统》这本书，

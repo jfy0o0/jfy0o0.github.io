@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Algorithm on Jiang . &#39;s blog</title>
+    <link>https://jfy0o0.github.io/tags/algorithm/</link>
+    <description>Recent content in Algorithm on Jiang . &#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 11 Dec 2020 09:57:19 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Algorithm - 七大查找算法</title>
+      <link>https://jfy0o0.github.io/2020/algorithm-%E4%B8%83%E5%A4%A7%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Fri, 11 Dec 2020 09:57:19 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/algorithm-%E4%B8%83%E5%A4%A7%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/</guid>
+      <description>顺序 说明： 顺序查找适用于存储结构为顺序存储或链式存储的线性表。
+基本思想： ​ 顺序查找也称为线形查找，属于无序查找算法。从数据结构线性表的一端开始，顺序扫描，依次将扫描到的结点关键字与给定K值进行比较，若相等则表示查找成功，若扫描结束仍旧没有找到关键字等于K的结点，则表示查找失败。
+代码 #include&amp;lt;iostream&amp;gt;using namespace std; int SequenceSearch(int a[], int value, int n) { int i; for (i = 0; i&amp;lt;n; i++) if (a[i] == value) return i; return -1; } int main() { int a[] = { 2, 3, 5, 8, 6, 7, 9, 0 }; int key, index; int n = sizeof(a) / sizeof(a[0]); cout &amp;lt;&amp;lt; &amp;#34;请输入待查找的值：&amp;#34; &amp;lt;&amp;lt; endl; cin &amp;gt;&amp;gt; key; index = SequenceSearch(a, key, n); if (index &amp;gt;= 0) { cout &amp;lt;&amp;lt; &amp;#34;找到了&amp;#34; &amp;lt;&amp;lt; endl; } else { cout &amp;lt;&amp;lt; &amp;#34;没找到&amp;#34; &amp;lt;&amp;lt; endl; } system(&amp;#34;pause&amp;#34;); return 0; 二分 说明： 元素必须有序方能使用，无序则要先进行排序。</description>
+    </item>
+    
+    <item>
+      <title>Algorithm - 十大排序算法</title>
+      <link>https://jfy0o0.github.io/2020/algorithm_%E5%8D%81%E5%A4%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Fri, 11 Dec 2020 09:25:20 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/algorithm_%E5%8D%81%E5%A4%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</guid>
+      <description>冒泡 步骤  从头开始，每次比较两元素，若大者在前，则交换两元素，直至数组末尾，此时最大元素为数组最后的元素； 重复以上步骤，从头开始至上一轮比较的末尾元素；  性质  稳定算法；  代码 // 冒泡排序 void bubbleSort(vector&amp;lt;int&amp;gt;&amp;amp; array) { for (size_t i = 0; i &amp;lt; array.size(); i++) { // 当前轮是否发生过交换事件标志位，若未发生交换，则表明列表已有序。  bool isExchanged = false; for (size_t j = 0; j &amp;lt; array.size() - i - 1; j++) { if (array[j] &amp;gt; array[j + 1]) { int temp = array[j]; array[j] = array[j + 1]; array[j + 1] = temp; isExchanged = true; } } if (!</description>
+    </item>
+    
+  </channel>
+</rss>

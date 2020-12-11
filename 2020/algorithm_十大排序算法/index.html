@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Jiang .">
+  
+  
+  
+  <link rel="prev" href="https://jfy0o0.github.io/2020/cpp_cast%E7%94%A8%E6%B3%95/" />
+  <link rel="next" href="https://jfy0o0.github.io/2020/algorithm-%E4%B8%83%E5%A4%A7%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/" />
+  <link rel="canonical" href="https://jfy0o0.github.io/2020/algorithm_%E5%8D%81%E5%A4%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Algorithm - 十大排序算法 | Jiang . &#39;s blog
+       
+  </title>
+  <meta name="title" content="Algorithm - 十大排序算法 | Jiang . &#39;s blog">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/jfy0o0.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Algorithm - 十大排序算法",
+    "headline" : "Algorithm - 十大排序算法",
+    "description" : "冒泡 步骤  从头开始，每次比较两元素，若大者在前，则交换两元素，直至数组末尾，此时最大元素为数组最后的元素； 重复以上步骤，从头开始至上一轮比较的末尾元素；  性质  稳定算法；  代码 \/\/ 冒泡排序 void bubbleSort(vector\u0026lt;int\u0026gt;\u0026amp; array) { for (size_t i = 0; i \u0026lt; array.size(); i\u002b\u002b) { \/\/ 当前轮是否发生过交换事件标志位，若未发生交换，则表明列表已有序。  bool isExchanged = false; for (size_t j = 0; j \u0026lt; array.size() - i - 1; j\u002b\u002b) { if (array[j] \u0026gt; array[j \u002b 1]) { int temp = array[j]; array[j] = array[j \u002b 1]; array[j \u002b 1] = temp; isExchanged = true; } } if (!",
+    "inLanguage" : "en-us",
+    "author" : "Jiang",
+    "creator" : "Jiang",
+    "publisher": "Jiang",
+    "accountablePerson" : "Jiang",
+    "copyrightHolder" : "Jiang",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-12-11 09:25:20 \u002b0800 CST",
+    "dateModified" : "2020-12-11 09:25:20 \u002b0800 CST",
+    "url" : "https:\/\/jfy0o0.github.io\/2020\/algorithm_%E5%8D%81%E5%A4%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95\/",
+    "wordCount" : "1226",
+    "keywords" : [ "Algorithm", "Jiang . \u0027s blog"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Algorithm - 十大排序算法</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://jfy0o0.github.io" rel="author">Jiang</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-12-11 itemprop="datePublished">December 11, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://jfy0o0.github.io/categories/algorithm/"> Algorithm </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="冒泡">冒泡</h1>
+<h2 id="步骤">步骤</h2>
+<ul>
+<li>从头开始，每次比较两元素，若大者在前，则交换两元素，直至数组末尾，此时最大元素为数组最后的元素；</li>
+<li>重复以上步骤，从头开始至上一轮比较的末尾元素；</li>
+</ul>
+<h2 id="性质">性质</h2>
+<ul>
+<li>稳定算法；</li>
+</ul>
+<h2 id="代码">代码</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">// 冒泡排序
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">bubbleSort</span>(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> array) {
+    <span style="color:#66d9ef">for</span> (size_t i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> array.size(); i<span style="color:#f92672">++</span>) {
+        <span style="color:#75715e">// 当前轮是否发生过交换事件标志位，若未发生交换，则表明列表已有序。
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">bool</span> isExchanged <span style="color:#f92672">=</span> false;
+        <span style="color:#66d9ef">for</span> (size_t j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; j <span style="color:#f92672">&lt;</span> array.size() <span style="color:#f92672">-</span> i <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>; j<span style="color:#f92672">++</span>) {
+            <span style="color:#66d9ef">if</span> (array[j] <span style="color:#f92672">&gt;</span> array[j <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>]) {
+                <span style="color:#66d9ef">int</span> temp <span style="color:#f92672">=</span> array[j];
+                array[j] <span style="color:#f92672">=</span> array[j <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>];
+                array[j <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> temp;
+                isExchanged <span style="color:#f92672">=</span> true;
+            }
+        }
+        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>isExchanged){
+            <span style="color:#66d9ef">break</span>;
+        }
+    }
+}
+</code></pre></div><h1 id="选择">选择</h1>
+<h2 id="步骤-1">步骤</h2>
+<ul>
+<li>搜索整个列表，找出最小项，若此项不为第1项，则与第1项交换位置；</li>
+<li>重复上述步骤，每次搜索未被排序的剩余列表，并将最小元素与已排序段的后一位交换，直至列表所有元素均被排序；</li>
+</ul>
+<h2 id="性质-1">性质</h2>
+<ul>
+<li>不稳定算法；</li>
+</ul>
+<h2 id="代码-1">代码</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">// 选择排序
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">selectSort</span>(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> array){
+    <span style="color:#66d9ef">for</span> (size_t i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> array.size(); i<span style="color:#f92672">++</span>){
+        size_t minIndex <span style="color:#f92672">=</span> i;
+        <span style="color:#66d9ef">for</span> (size_t j <span style="color:#f92672">=</span> i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>; j <span style="color:#f92672">&lt;</span> array.size(); j<span style="color:#f92672">++</span>){
+            <span style="color:#66d9ef">if</span> (array[minIndex] <span style="color:#f92672">&gt;</span> array[j]){
+                minIndex <span style="color:#f92672">=</span> j;
+            }
+        }
+        <span style="color:#66d9ef">if</span> (minIndex <span style="color:#f92672">!=</span> i){
+            swap(array[i], array[minIndex]);
+        }
+    }
+}
+</code></pre></div><h1 id="插入">插入</h1>
+<h2 id="步骤-2">步骤</h2>
+<ul>
+<li>将第一个元素看作有序序列，后续元素当作无需序列，依次将无序序列元素插入有序序列当中；</li>
+</ul>
+<h2 id="性质-2">性质</h2>
+<ul>
+<li>稳定算法；</li>
+</ul>
+<h2 id="代码-2">代码</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">// 插入排序
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">insertionSort</span>(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> array){
+    <span style="color:#75715e">// i 代表无序序列首元素（无序序列前为有序序列）
+</span><span style="color:#75715e"></span>    size_t i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+    <span style="color:#66d9ef">while</span> (i <span style="color:#f92672">&lt;</span> array.size()){
+        size_t j <span style="color:#f92672">=</span> i <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>;
+        <span style="color:#66d9ef">int</span> itermToInsert <span style="color:#f92672">=</span> array[i];
+        <span style="color:#66d9ef">while</span> (j <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>){
+            <span style="color:#66d9ef">if</span> (array[j] <span style="color:#f92672">&gt;=</span> itermToInsert){
+                array[j <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> array[j];
+                j<span style="color:#f92672">--</span>;
+            }
+            <span style="color:#66d9ef">else</span>{
+                <span style="color:#66d9ef">break</span>;
+            }
+        }
+        array[j <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> itermToInsert;
+        i<span style="color:#f92672">++</span>;
+    }
+}
+</code></pre></div><h1 id="希尔">希尔</h1>
+<h2 id="步骤-3">步骤</h2>
+<ul>
+<li>选择一个增量序列，初始增量gap=length/2，后续元素依次为前一元素除2，直至gap=1；</li>
+<li>每轮以gap为步长，在列表上进行采样，将列表分为gap个小组，在每个小组内进行选择排序；</li>
+<li>重复第二步，直至gap=1；</li>
+</ul>
+<h2 id="性质-3">性质</h2>
+<ul>
+<li>不稳定算法；</li>
+</ul>
+<h2 id="代码-3">代码</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">// 希尔排序
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">shellSort</span>(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> array){
+    <span style="color:#66d9ef">int</span> n <span style="color:#f92672">=</span> array.size();
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> gap <span style="color:#f92672">=</span> n <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>; gap <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">1</span>; gap <span style="color:#f92672">/=</span> <span style="color:#ae81ff">2</span>){
+        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> gap; i <span style="color:#f92672">&lt;</span> n; i<span style="color:#f92672">++</span>){
+            <span style="color:#75715e">// 使用插入排序算法，将元素依次插入所在小组的已排序列表中
+</span><span style="color:#75715e"></span>            <span style="color:#75715e">// 待插入元素
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">int</span> itermToInsert <span style="color:#f92672">=</span> array[i];
+            <span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> i <span style="color:#f92672">-</span> gap;
+            <span style="color:#66d9ef">while</span> (j <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> array[j] <span style="color:#f92672">&gt;=</span> itermToInsert){
+                array[j <span style="color:#f92672">+</span> gap] <span style="color:#f92672">=</span> array[j];
+                j <span style="color:#f92672">-=</span> gap;
+            }
+            array[j <span style="color:#f92672">+</span> gap] <span style="color:#f92672">=</span> itermToInsert;
+        }
+    }
+}
+</code></pre></div><h1 id="归并">归并</h1>
+<h2 id="步骤-4">步骤</h2>
+<ul>
+<li>将列表从正中间分为两个子列表；</li>
+<li>按照第一步，递归拆分每个子列表，直至子列表最大长度为1；</li>
+<li>按照拆分层级，依次按大小合并各子列表，直至全部合并完成。</li>
+</ul>
+<h2 id="性质-4">性质</h2>
+<ul>
+<li>稳定算法；</li>
+</ul>
+<h2 id="代码-4">代码</h2>
+<p>递归实现</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">// 归并排序
+</span><span style="color:#75715e">// 合并两有序序列，两序列分别为array的0到mid部分和mid+1到末尾部分。
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">merge</span>(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> array, vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> copyArray, <span style="color:#66d9ef">int</span> left, <span style="color:#66d9ef">int</span> right) {
+	<span style="color:#66d9ef">int</span> mid <span style="color:#f92672">=</span> (left <span style="color:#f92672">+</span> right) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>;
+	<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> left, j <span style="color:#f92672">=</span> mid <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+	<span style="color:#66d9ef">while</span> (i <span style="color:#f92672">&lt;=</span> mid <span style="color:#f92672">||</span> j <span style="color:#f92672">&lt;=</span> right) {
+		<span style="color:#66d9ef">if</span> (i <span style="color:#f92672">&gt;</span> mid) {
+			copyArray[k] <span style="color:#f92672">=</span> array[j];
+			j<span style="color:#f92672">++</span>;
+		}
+		<span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (j <span style="color:#f92672">&gt;</span> right) {
+			copyArray[k] <span style="color:#f92672">=</span> array[i];
+			i<span style="color:#f92672">++</span>;
+		}
+		<span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (array[i] <span style="color:#f92672">&gt;</span> array[j]) {
+			copyArray[k] <span style="color:#f92672">=</span> array[j];
+			j<span style="color:#f92672">++</span>;
+		}
+		<span style="color:#66d9ef">else</span> {
+			copyArray[k] <span style="color:#f92672">=</span> array[i];
+			i<span style="color:#f92672">++</span>;
+		}
+
+		k<span style="color:#f92672">++</span>;
+	}
+
+	<span style="color:#66d9ef">for</span> (size_t i <span style="color:#f92672">=</span> left; i <span style="color:#f92672">&lt;=</span> right; i<span style="color:#f92672">++</span>) {
+		array[i] <span style="color:#f92672">=</span> copyArray[i <span style="color:#f92672">-</span> left];
+	}
+
+}
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">mergeSortHelp</span>(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> array, vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> copyArray, <span style="color:#66d9ef">int</span> left, <span style="color:#66d9ef">int</span> right) {
+	<span style="color:#66d9ef">if</span> (left <span style="color:#f92672">&lt;</span> right) {
+		<span style="color:#66d9ef">int</span> mid <span style="color:#f92672">=</span> (left <span style="color:#f92672">+</span> right) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>;
+		mergeSortHelp(array, copyArray, left, mid);
+		mergeSortHelp(array, copyArray, mid <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, right);
+		merge(array, copyArray, left, right);
+	}
+}
+<span style="color:#75715e">// 归并排序 递归实现
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">mergeSort</span>(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> array) {
+	vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> copyArray(array);
+	mergeSortHelp(array, copyArray, <span style="color:#ae81ff">0</span>, array.size() <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+}
+</code></pre></div><p>迭代实现</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">// 归并排序 迭代实现
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">mergeSortIteration</span>(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> array) {
+	vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> copyArray(array);
+	<span style="color:#66d9ef">int</span> left <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, right <span style="color:#f92672">=</span> array.size() <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>;
+	stack<span style="color:#f92672">&lt;</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&gt;</span> boundaries;
+	<span style="color:#66d9ef">while</span> (left <span style="color:#f92672">&lt;</span> right <span style="color:#f92672">||</span> <span style="color:#f92672">!</span>boundaries.empty()) {
+		<span style="color:#66d9ef">if</span> (left <span style="color:#f92672">&lt;</span> right) {
+			boundaries.push({ left, right });
+			right <span style="color:#f92672">=</span> (left <span style="color:#f92672">+</span> right) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>;
+		}
+		<span style="color:#66d9ef">else</span> {
+			vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> boundary <span style="color:#f92672">=</span> boundaries.top();
+			boundaries.pop();
+			left <span style="color:#f92672">=</span> boundary[<span style="color:#ae81ff">0</span>];
+			right <span style="color:#f92672">=</span> boundary[<span style="color:#ae81ff">1</span>];
+			merge(array, copyArray, left, right);
+
+			<span style="color:#66d9ef">if</span> (boundaries.empty()) {
+				<span style="color:#66d9ef">break</span>;
+			}
+			boundary <span style="color:#f92672">=</span> boundaries.top();
+			left <span style="color:#f92672">=</span> right <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+			right <span style="color:#f92672">=</span> boundary[<span style="color:#ae81ff">1</span>];
+		}
+	}
+}
+</code></pre></div><h1 id="排序">排序</h1>
+<h2 id="步骤-5">步骤</h2>
+<ul>
+<li>从列表中选出一个元素，作为“基准”pivot，基准一般随机选择，或采用最左端、最右端和中间位置3元素的中值；</li>
+<li>将小于基准的元素排在基准前面，大于基准的元素排在基准后面，此时基准元素所在位置即为其最终排序完成时的位置；</li>
+<li>以基准元素为界，将列表分为两个子列表；</li>
+<li>递归地对子列表重复上述操作。</li>
+</ul>
+<h2 id="性质-5">性质</h2>
+<ul>
+<li>不稳定算法；</li>
+<li>当数据量很小（N&lt;=20）时，快速排序效果不如插入排序，因为快速排序不稳定且有递归开销；</li>
+</ul>
+<h2 id="代码-5">代码</h2>
+<p>递归版：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#960050;background-color:#1e0010">递归版：</span>
+
+<span style="color:#75715e">// 快速排序（递归）
+</span><span style="color:#75715e">// 选则最左端、最右端和中间位置3元素的中值作为基准值，并将3元素排序，返回基准值
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> medianPovit(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> array, <span style="color:#66d9ef">int</span> left, <span style="color:#66d9ef">int</span> mid, <span style="color:#66d9ef">int</span> right){
+    <span style="color:#66d9ef">if</span> (array[left] <span style="color:#f92672">&gt;</span> array[mid]){
+        swap(array[mid], array[left]);
+    }
+    <span style="color:#66d9ef">if</span> (array[left] <span style="color:#f92672">&gt;</span> array[right]){
+        swap(array[left], array[right]);
+    }
+    <span style="color:#66d9ef">if</span> (array[mid] <span style="color:#f92672">&gt;</span> array[right]){
+        swap(array[mid], array[right]);
+    }
+    <span style="color:#66d9ef">return</span> array[mid];
+}
+<span style="color:#75715e">// 分区,返回基准索引
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">partition</span>(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> array, <span style="color:#66d9ef">int</span> left, <span style="color:#66d9ef">int</span> right) {
+    <span style="color:#75715e">// 中间位置索引
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> mid <span style="color:#f92672">=</span> (left <span style="color:#f92672">+</span> right) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>;
+    <span style="color:#75715e">// 基准值（此时基准值对应索引为mid）
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> povit <span style="color:#f92672">=</span> medianPovit(array, left, mid, right);
+    <span style="color:#75715e">// 将基准值与倒数第二个元素交换
+</span><span style="color:#75715e"></span>    array[mid] <span style="color:#f92672">=</span> array[right <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>];
+    array[right <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> povit;
+
+    <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> left, j <span style="color:#f92672">=</span> right <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>;
+    <span style="color:#66d9ef">while</span> (i <span style="color:#f92672">&lt;</span> j) {
+        <span style="color:#66d9ef">if</span> (array[i] <span style="color:#f92672">&lt;</span> povit) {
+            i<span style="color:#f92672">++</span>;
+        }
+        <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (array[j] <span style="color:#f92672">&gt;=</span> povit) {
+            j<span style="color:#f92672">--</span>;
+        }
+        <span style="color:#66d9ef">else</span> {
+            swap(array[i], array[j]);
+        }
+    }
+    <span style="color:#75715e">// 交换基准值和i位置元素
+</span><span style="color:#75715e"></span>    swap(array[i], array[right <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]);
+    <span style="color:#66d9ef">return</span> i;
+}
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">quickSortHelp</span>(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> array, <span style="color:#66d9ef">int</span> left, <span style="color:#66d9ef">int</span> right) {
+    <span style="color:#66d9ef">if</span> (left <span style="color:#f92672">&lt;</span> right) {
+        <span style="color:#66d9ef">int</span> pivotLoction <span style="color:#f92672">=</span> partition(array, left, right);
+        quickSortHelp(array, left, pivotLoction <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+        quickSortHelp(array, pivotLoction <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, right);
+    }
+}
+<span style="color:#75715e">// 快速排序
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">quickSort</span>(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> array) {
+    quickSortHelp(array, <span style="color:#ae81ff">0</span>, array.size() <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+}
+</code></pre></div><p>迭代版：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">// 快速排序 非递归(迭代版)
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">quickSortIteration</span>(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> array) {
+	stack<span style="color:#f92672">&lt;</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&gt;</span> boundaries;
+	<span style="color:#66d9ef">int</span> left <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, right <span style="color:#f92672">=</span> array.size() <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>;
+	<span style="color:#66d9ef">while</span> (left <span style="color:#f92672">&lt;</span> right <span style="color:#f92672">||</span> <span style="color:#f92672">!</span>boundaries.empty()) {
+		<span style="color:#66d9ef">if</span> (left <span style="color:#f92672">&gt;=</span> right) {
+			vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> boundary <span style="color:#f92672">=</span> boundaries.top();
+			boundaries.pop();
+			left <span style="color:#f92672">=</span> boundary[<span style="color:#ae81ff">0</span>];
+			right <span style="color:#f92672">=</span> boundary[<span style="color:#ae81ff">1</span>];
+		}
+		<span style="color:#66d9ef">int</span> pivotLoction <span style="color:#f92672">=</span> partition(array, left, right);
+		<span style="color:#66d9ef">if</span> (pivotLoction <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;</span> right) {
+			boundaries.push({ pivotLoction <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, right });
+		}
+		right <span style="color:#f92672">=</span> pivotLoction <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>;
+	}
+}
+</code></pre></div><h1 id="堆排序">堆排序</h1>
+<h2 id="步骤-6">步骤</h2>
+<ul>
+<li>
+<p>将数字转化为一个堆；</p>
+<blockquote>
+<p>堆是具有以下两属性的二叉树：</p>
+<p>（1）每个节点的值大于等于其子节点的值；</p>
+<p>（2）树完全平衡，即最底层叶子节点都位于左侧（完全），且左右子树高度相差不超过1（平衡）；</p>
+<p>因为，堆是完全平衡树，因此可以用数组直接表示：</p>
+<p>堆也被称为优先队列，具有先进先出的特性，在堆底插入元素，在堆顶取出元素。</p>
+</blockquote>
+</li>
+<li>
+<p>取出堆顶元素（最大元素），作为有序数数组末尾元素，并对二叉树进行调整使其满足堆的特性；</p>
+</li>
+<li>
+<p>重复上一步骤，依次取出堆顶元素，并插入到有序数组中，上一插入元素之前的位置，直到堆空为止；</p>
+</li>
+</ul>
+<h2 id="性质-6">性质</h2>
+<ul>
+<li>不稳定算法；</li>
+</ul>
+<h2 id="代码-6">代码</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">// 堆排序
+</span><span style="color:#75715e">// 调整堆，根元素沿树向下移动，直至其合适位置，first和last分别为堆顶和堆底在数组array中的索引
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">moveDown</span>(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> array, <span style="color:#66d9ef">int</span> first, <span style="color:#66d9ef">int</span> last){
+    <span style="color:#75715e">// first的左子节点索引
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> curIndex <span style="color:#f92672">=</span> first <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+    <span style="color:#66d9ef">while</span> (curIndex <span style="color:#f92672">&lt;=</span> last){
+        <span style="color:#75715e">// 若first有2子节点，令curIndex为其值最大子节点索引
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (curIndex <span style="color:#f92672">&lt;</span> last <span style="color:#f92672">&amp;&amp;</span> array[curIndex] <span style="color:#f92672">&lt;</span> array[curIndex <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>]){
+            curIndex<span style="color:#f92672">++</span>;
+        }
+        <span style="color:#75715e">// 若根节点值小于子节点值，则交换
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (array[first] <span style="color:#f92672">&lt;</span> array[curIndex]){
+            swap(array[first], array[curIndex]);
+            first <span style="color:#f92672">=</span> curIndex;
+            curIndex <span style="color:#f92672">=</span> first <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+        }
+        <span style="color:#66d9ef">else</span>{
+            <span style="color:#66d9ef">break</span>;
+        }
+    }
+}
+<span style="color:#75715e">// 用数组实现堆
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">buildHeap</span>(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> array){
+    <span style="color:#75715e">// 最后一个非叶节点的节点索引
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> array.size() <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>;
+    <span style="color:#66d9ef">while</span> (i <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>){
+        moveDown(array, i, array.size() <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+        i<span style="color:#f92672">--</span>;
+    }
+}
+<span style="color:#75715e">// 堆排序
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">heapSort</span>(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> array){
+    <span style="color:#75715e">// 生成堆
+</span><span style="color:#75715e"></span>    buildHeap(array);
+    <span style="color:#75715e">// 堆顶、底索引
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> first <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, last <span style="color:#f92672">=</span> array.size() <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>;
+    <span style="color:#66d9ef">while</span> (first <span style="color:#f92672">&lt;=</span> last){
+        swap(array[first], array[last]);
+        last<span style="color:#f92672">--</span>;
+        moveDown(array, first, last);
+    }
+}
+</code></pre></div><h1 id="计数排序">计数排序</h1>
+<h2 id="步骤-7">步骤</h2>
+<ul>
+<li>遍历待排序数组A，找出其最小值min和最大值max；</li>
+<li>创建一个长度为max-min+1的数组B，其所有元素初始化为0，数组首位对应数组A的min元素，索引为i位置对应A中值为min+i的元素；</li>
+<li>遍历数组A，在B中对应位置记录A中各元素出现的次数；</li>
+<li>遍历数组B，按照之前记录的出现次数，输出几次对应元素；</li>
+</ul>
+<h2 id="性质-7">性质</h2>
+<ul>
+<li>稳定排序算法；</li>
+<li>外部排序；</li>
+</ul>
+<h2 id="代码-7">代码</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">// 计数排序
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">countSort</span>(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> array){
+    <span style="color:#66d9ef">if</span> (array.empty()){
+        <span style="color:#66d9ef">return</span>;
+    }
+    <span style="color:#75715e">//找出最大最小值
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> min <span style="color:#f92672">=</span> array.front(),max <span style="color:#f92672">=</span> array.front();
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;</span> array.size(); i<span style="color:#f92672">++</span>){
+        <span style="color:#66d9ef">if</span> (min <span style="color:#f92672">&gt;</span> array[i]){
+            min <span style="color:#f92672">=</span> array[i];
+        }
+        <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (max <span style="color:#f92672">&lt;</span> array[i]){
+            max <span style="color:#f92672">=</span> array[i];
+        }
+    }
+
+    <span style="color:#75715e">// 记录各元素出现次数
+</span><span style="color:#75715e"></span>    vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> counts(max <span style="color:#f92672">-</span> min <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>);
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> array.size(); i<span style="color:#f92672">++</span>){
+        counts[array[i] <span style="color:#f92672">-</span> min]<span style="color:#f92672">++</span>;
+    }
+
+    <span style="color:#75715e">// 根据记录的次数输出对应元素
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> index <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; j <span style="color:#f92672">&lt;</span> counts.size(); j<span style="color:#f92672">++</span>){
+        <span style="color:#66d9ef">int</span> n <span style="color:#f92672">=</span> counts[j];
+        <span style="color:#66d9ef">while</span> (n<span style="color:#f92672">--</span>){
+            array[index] <span style="color:#f92672">=</span> j <span style="color:#f92672">+</span> min;
+            index<span style="color:#f92672">++</span>;
+        }
+    }
+}
+</code></pre></div><h1 id="桶排序">桶排序</h1>
+<h2 id="步骤-8">步骤</h2>
+<ul>
+<li>设置固定数量的空桶；</li>
+<li>找出待排序数组的最大值和最小值；</li>
+<li>根据最大最小值平均划分各桶对应的范围，并将待排序数组放入对应桶中；</li>
+<li>为每个不为空的桶中数据进行排序（例如，插入排序）；</li>
+<li>拼接不为空的桶中数据，得到排序后的结果。</li>
+</ul>
+<h2 id="特性">特性</h2>
+<ul>
+<li>稳定算法；</li>
+<li>常见排序算法中最快的一种；</li>
+<li>适用于小范围（最大值和最小值差值较小），独立均匀分布的数据；</li>
+<li>可以计算大批量数据，符合线性期望时间；</li>
+<li>外部排序方式，需额外耗费n个空间；</li>
+</ul>
+<h2 id="代码-8">代码</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">// 桶排序
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">bucketSort</span> (vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> array, <span style="color:#66d9ef">int</span> bucketCount){
+    <span style="color:#66d9ef">if</span> (array.empty()){
+        <span style="color:#66d9ef">return</span>;
+    }
+    <span style="color:#75715e">// 找出最大最小值
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> max <span style="color:#f92672">=</span> array.front(), min <span style="color:#f92672">=</span> array.front();
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;</span> array.size(); i<span style="color:#f92672">++</span>){
+        <span style="color:#66d9ef">if</span> (min <span style="color:#f92672">&gt;</span> array[i]){
+            min <span style="color:#f92672">=</span> array[i];
+        }
+        <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (max <span style="color:#f92672">&lt;</span> array[i]){
+            max <span style="color:#f92672">=</span> array[i];
+        }
+    }
+
+    <span style="color:#75715e">// 将待排序的各元素分入对应桶中
+</span><span style="color:#75715e"></span>    vector<span style="color:#f92672">&lt;</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&gt;</span> buckets(bucketCount);
+    <span style="color:#66d9ef">int</span> bucketSize <span style="color:#f92672">=</span> ceil((<span style="color:#66d9ef">double</span>)(max <span style="color:#f92672">-</span> min <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">/</span> bucketCount);
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> array.size(); i<span style="color:#f92672">++</span>){
+        <span style="color:#66d9ef">int</span> bucketIndex <span style="color:#f92672">=</span> (array[i] <span style="color:#f92672">-</span> min) <span style="color:#f92672">/</span> bucketSize;
+        buckets[bucketIndex].push_back(array[i]);
+    }
+
+    <span style="color:#75715e">// 对各桶中元素进行选择排序
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> index <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    <span style="color:#66d9ef">for</span> (vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> bucket : buckets){
+        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>bucket.empty()){
+            <span style="color:#75715e">// 使用选择排序算法对桶内元素进行排序
+</span><span style="color:#75715e"></span>            selectSort(bucket);
+            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> value : bucket){
+                array[index] <span style="color:#f92672">=</span> value;
+                index<span style="color:#f92672">++</span>;
+            }
+        }
+    }
+
+}
+<span style="color:#75715e">// 桶排序
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">bucketSort</span> (vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> array){
+    bucketSort (array, array.size() <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>);
+}
+</code></pre></div><h1 id="基数排序">基数排序</h1>
+<h2 id="步骤-9">步骤</h2>
+<ul>
+<li>
+<p>将各待比较元素数值统一数位长度，即对数位短者在前补零；</p>
+</li>
+<li>
+<p>根据个位数值大小，对数组进行排序；</p>
+</li>
+<li>
+<p>重复上一步骤，依次根据更高位数值进行排序，直至到达最高位；</p>
+<p><img src="https://images0.cnblogs.com/i/497634/201403/161837176365265.jpg" alt="img"></p>
+</li>
+</ul>
+<h2 id="特性-1">特性</h2>
+<ul>
+<li>稳定算法；</li>
+<li>适用于<strong>正整数</strong>数据（若包含负数，那么需要额外分开处理)；</li>
+<li>对于实数，需指定精度，才可使用此算法。</li>
+</ul>
+<h2 id="代码-9">代码</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">// 基数排序 （只适用于正数，此处不适用）
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">radixSort</span>(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> array){
+    <span style="color:#75715e">// 当前位数
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> curdigit <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>;
+    <span style="color:#75715e">// 当前位是否已超过最高为
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">bool</span> isOverHighest <span style="color:#f92672">=</span> false;
+    <span style="color:#66d9ef">while</span> (<span style="color:#f92672">!</span>isOverHighest){
+        isOverHighest <span style="color:#f92672">=</span> true;
+        <span style="color:#75715e">// 利用分桶的思想来实现按各位进行排序
+</span><span style="color:#75715e"></span>        vector<span style="color:#f92672">&lt;</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&gt;</span> buckets(<span style="color:#ae81ff">10</span>);
+        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> curVal : array){
+            <span style="color:#66d9ef">int</span> bucketIndex <span style="color:#f92672">=</span> curVal <span style="color:#f92672">%</span> curdigit <span style="color:#f92672">-</span> curVal <span style="color:#f92672">%</span> (curdigit <span style="color:#f92672">/</span> <span style="color:#ae81ff">10</span>);
+            buckets[bucketIndex].push_back(curVal);
+            <span style="color:#66d9ef">if</span> (isOverHighest <span style="color:#f92672">&amp;&amp;</span> curVal <span style="color:#f92672">/</span> curdigit){
+                isOverHighest <span style="color:#f92672">=</span> false;
+            }
+        }
+        <span style="color:#75715e">// 按照桶的顺序，将各桶内元素拼接起来
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">int</span> index <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+        <span style="color:#66d9ef">for</span> (vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> bucket : buckets){
+            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> value : bucket){
+                array[index] <span style="color:#f92672">=</span> value;
+                index<span style="color:#f92672">++</span>;
+            }
+        }
+        curdigit <span style="color:#f92672">*=</span> <span style="color:#ae81ff">10</span>;
+    }
+}
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Jiang . </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://jfy0o0.github.io/2020/algorithm_%E5%8D%81%E5%A4%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/>https://jfy0o0.github.io/2020/algorithm_%E5%8D%81%E5%A4%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/algorithm/">
+                    #Algorithm</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://jfy0o0.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://jfy0o0.github.io/2020/cpp_cast%E7%94%A8%E6%B3%95/" class="prev" rel="prev" title="C&#43;&#43; - cast用法"><i class="iconfont icon-left"></i>&nbsp;C&#43;&#43; - cast用法</a>
+         
+        
+        <a href="https://jfy0o0.github.io/2020/algorithm-%E4%B8%83%E5%A4%A7%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/" class="next" rel="next" title="Algorithm - 七大查找算法">Algorithm - 七大查找算法&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://jfy0o0.github.io">Jiang .</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>
