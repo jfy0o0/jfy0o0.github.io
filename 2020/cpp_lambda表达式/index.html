@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Jiang .">
+  
+  
+  
+  <link rel="prev" href="https://jfy0o0.github.io/2020/algorithm-%E4%B8%83%E5%A4%A7%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/" />
+  <link rel="next" href="https://jfy0o0.github.io/2020/cpp_stl_algorithm/" />
+  <link rel="canonical" href="https://jfy0o0.github.io/2020/cpp_lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           C&#43;&#43; - lambda表达式 | Jiang . &#39;s blog
+       
+  </title>
+  <meta name="title" content="C&#43;&#43; - lambda表达式 | Jiang . &#39;s blog">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/jfy0o0.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "C\u002b\u002b - lambda表达式",
+    "headline" : "C\u002b\u002b - lambda表达式",
+    "description" : "lambda 说明  lambda表达式 就是一个函数（匿名函数），也就是没有函数名的函数。 为什么不需要函数名呢，因为我们直接（一次性的）用它，嵌入式用的它，不需要其他地方调用它。 lambda表达式也叫闭包，闭就是封闭的意思，就是其他地方都不用他，包就是函数。 lambda表达式其实就是一个函数对象，他内部创建了一个重载()操作符的类。  简易入门 \/\/最简单的一个lambda表达式。 int main() { [] { }();\/\/[]代表lambda表达式的开始，{}代表函数体，什么都没有，()代表调用函数. } \/\/ []() {}(); \/\/ 加了一个()代表函数参数。什么参数都没有，就可以省略。 输出 int main() { [] { cout \u0026lt;\u0026lt; \u0026#34;Hello, World!\u0026#34;; }(); auto lam = [] { cout \u0026lt;\u0026lt; \u0026#34;Hello, World!\u0026#34;; }; lam(); } 返回值 \/\/ -\u0026gt; int ：代表返回int。  int main() { auto lam =[]() -\u0026gt; int { cout \u0026lt;\u0026lt; \u0026#34;Hello, World!\u0026#34;; return 1; }; auto ret = lam(); auto lam2 =[]() -\u0026gt; string { cout \u0026lt;\u0026lt; \u0026#34;Hello, World!",
+    "inLanguage" : "en-us",
+    "author" : "Jiang",
+    "creator" : "Jiang",
+    "publisher": "Jiang",
+    "accountablePerson" : "Jiang",
+    "copyrightHolder" : "Jiang",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-12-11 16:54:59 \u002b0800 CST",
+    "dateModified" : "2020-12-11 16:54:59 \u002b0800 CST",
+    "url" : "https:\/\/jfy0o0.github.io\/2020\/cpp_lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F\/",
+    "wordCount" : "266",
+    "keywords" : [ "C\u002b\u002b", "Jiang . \u0027s blog"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">C&#43;&#43; - lambda表达式</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://jfy0o0.github.io" rel="author">Jiang</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-12-11 itemprop="datePublished">December 11, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://jfy0o0.github.io/categories/c&#43;&#43;/"> C&#43;&#43; </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="lambda">lambda</h1>
+<h1 id="说明">说明</h1>
+<ul>
+<li>lambda表达式 就是一个函数（匿名函数），也就是没有函数名的函数。</li>
+<li>为什么不需要函数名呢，因为我们直接（一次性的）用它，嵌入式用的它，不需要其他地方调用它。</li>
+<li>lambda表达式也叫闭包，闭就是封闭的意思，就是其他地方都不用他，包就是函数。</li>
+<li>lambda表达式其实就是一个函数对象，他内部创建了一个重载()操作符的类。</li>
+</ul>
+<h1 id="简易入门">简易入门</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">//最简单的一个lambda表达式。
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+	[] 
+    {
+        
+    }();<span style="color:#75715e">//[]代表lambda表达式的开始，{}代表函数体，什么都没有，()代表调用函数.
+</span><span style="color:#75715e"></span>}
+
+<span style="color:#75715e">// []() {}(); 
+</span><span style="color:#75715e">// 加了一个()代表函数参数。什么参数都没有，就可以省略。
+</span></code></pre></div><h1 id="输出">输出</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+	 [] { cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Hello, World!&#34;</span>; }();
+    
+    <span style="color:#66d9ef">auto</span> lam <span style="color:#f92672">=</span> [] { cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Hello, World!&#34;</span>; };
+	lam();
+}
+</code></pre></div><h1 id="返回值">返回值</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">// -&gt; int ：代表返回int。
+</span><span style="color:#75715e"></span>
+ <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+	<span style="color:#66d9ef">auto</span> lam <span style="color:#f92672">=</span>[]() <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">int</span> { cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Hello, World!&#34;</span>; <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>; };
+    <span style="color:#66d9ef">auto</span> ret <span style="color:#f92672">=</span> lam();
+	<span style="color:#66d9ef">auto</span> lam2 <span style="color:#f92672">=</span>[]() <span style="color:#f92672">-&gt;</span> string { cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Hello, World!&#34;</span>; <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;test&#34;</span>; };
+    <span style="color:#66d9ef">auto</span> ret1 <span style="color:#f92672">=</span> lam2();
+}
+</code></pre></div><h1 id="捕捉变量">捕捉变量</h1>
+<p>捕捉变量是变量捕获才是成就lambda卓越的秘方。</p>
+<ul>
+<li>[] 不捕获任何变量</li>
+<li>[&amp;] 以引用方式捕获所有变量</li>
+<li>[=] 用值的方式捕获所有变量（可能被编译器优化为const &amp;)</li>
+<li>[=, &amp;foo] 以引用捕获foo, 但其余变量都靠值捕获</li>
+<li>[&amp;, foo] 以值捕获foo, 但其余变量都靠引用捕获</li>
+<li>[bar] 以值方式捕获bar; 不捕获其它变量</li>
+<li>[this] 捕获所在类的this指针</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">int</span> a<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>,b<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>,c<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>;
+<span style="color:#66d9ef">auto</span> lam2  <span style="color:#f92672">=</span>[<span style="color:#f92672">&amp;</span>,a](){ cout <span style="color:#f92672">&lt;&lt;</span> a<span style="color:#f92672">&lt;&lt;</span>b<span style="color:#f92672">&lt;&lt;</span>c<span style="color:#f92672">&lt;&lt;</span>endl;};<span style="color:#75715e">//b，c以引用捕获，a以值捕获。
+</span><span style="color:#75715e"></span>lam2();
+</code></pre></div><h1 id="搭配stl算法">搭配STL算法</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">vector<span style="color:#f92672">&lt;</span>string<span style="color:#f92672">&gt;</span> address{<span style="color:#e6db74">&#34;111&#34;</span>,<span style="color:#e6db74">&#34;222&#34;</span>,<span style="color:#e6db74">&#34;,333&#34;</span>,<span style="color:#e6db74">&#34;.org&#34;</span>,<span style="color:#e6db74">&#34;wwwtest.org&#34;</span>};
+for_each(address.begin(),address.end(),[](string<span style="color:#f92672">&amp;</span> str)
+         {
+             cout<span style="color:#f92672">&lt;&lt;</span>str<span style="color:#f92672">&lt;&lt;</span>endl;
+         });
+</code></pre></div><h1 id="搭配stdfunction">搭配std::function</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;vector&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;functional&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AddressBook</span>
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>string<span style="color:#f92672">&gt;</span> findMatchingAddresses (std<span style="color:#f92672">::</span>function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">bool</span> (<span style="color:#66d9ef">const</span> string<span style="color:#f92672">&amp;</span>)<span style="color:#f92672">&gt;</span> func)
+    {
+        std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>string<span style="color:#f92672">&gt;</span> results;
+        <span style="color:#66d9ef">for</span> ( <span style="color:#66d9ef">auto</span> itr <span style="color:#f92672">=</span> _addresses.begin(), end <span style="color:#f92672">=</span> _addresses.end(); itr <span style="color:#f92672">!=</span> end; <span style="color:#f92672">++</span>itr )
+        {
+            <span style="color:#75715e">// 调用传递到findMatchingAddresses的函数并检测是否匹配规则
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> ( func( <span style="color:#f92672">*</span>itr ) )
+            {
+                results.push_back( <span style="color:#f92672">*</span>itr );
+            }
+        }
+        <span style="color:#66d9ef">return</span> results;
+    }
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">SetAddress</span>(<span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>string<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span>address)
+    {
+        _addresses <span style="color:#f92672">=</span> address;
+    }
+<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>string<span style="color:#f92672">&gt;</span> _addresses;
+};
+
+AddressBook global_address_book;
+<span style="color:#75715e">//查找匹配名字的地址
+</span><span style="color:#75715e"></span>vector<span style="color:#f92672">&lt;</span>string<span style="color:#f92672">&gt;</span> findAddressesFromName (<span style="color:#66d9ef">const</span> string <span style="color:#f92672">&amp;</span>name)
+{
+    <span style="color:#66d9ef">return</span> global_address_book.findMatchingAddresses(
+                [<span style="color:#f92672">&amp;</span>] (<span style="color:#66d9ef">const</span> string<span style="color:#f92672">&amp;</span> addr)
+        {
+            <span style="color:#66d9ef">return</span> addr.find(name) <span style="color:#f92672">!=</span> string<span style="color:#f92672">::</span>npos; 
+        });
+}
+<span style="color:#75715e">//查找匹配长度的地址
+</span><span style="color:#75715e"></span>vector<span style="color:#f92672">&lt;</span>string<span style="color:#f92672">&gt;</span> findAddressesLen (<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> <span style="color:#f92672">&amp;</span>min_len)
+{
+    <span style="color:#66d9ef">return</span> global_address_book.findMatchingAddresses( [<span style="color:#f92672">&amp;</span>] (<span style="color:#66d9ef">const</span> string<span style="color:#f92672">&amp;</span> addr) { <span style="color:#66d9ef">return</span> addr.length() <span style="color:#f92672">&gt;=</span> min_len; } );
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{    
+    vector<span style="color:#f92672">&lt;</span>string<span style="color:#f92672">&gt;</span> address{
+        <span style="color:#e6db74">&#34;china chengdu&#34;</span>,<span style="color:#e6db74">&#34;china hunan&#34;</span>,<span style="color:#e6db74">&#34;taiwan taibei&#34;</span>,
+        <span style="color:#e6db74">&#34;american alaisjia&#34;</span>,<span style="color:#e6db74">&#34;riben dongjing&#34;</span>};
+    global_address_book.SetAddress(address);
+
+    <span style="color:#66d9ef">auto</span> ret <span style="color:#f92672">=</span> findAddressesFromName(<span style="color:#e6db74">&#34;china&#34;</span>);
+    for_each(ret.begin(),ret.end(),[](string <span style="color:#f92672">&amp;</span>i){cout<span style="color:#f92672">&lt;&lt;</span>i<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;,&#34;</span>;});
+    cout<span style="color:#f92672">&lt;&lt;</span>endl;
+
+    <span style="color:#66d9ef">auto</span> ret2 <span style="color:#f92672">=</span> findAddressesLen(<span style="color:#ae81ff">15</span>);
+    for_each(ret2.begin(),ret2.end(),[](string <span style="color:#f92672">&amp;</span>i){cout<span style="color:#f92672">&lt;&lt;</span>i<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;,&#34;</span>;});
+    cout<span style="color:#f92672">&lt;&lt;</span>endl;
+
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Jiang . </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://jfy0o0.github.io/2020/cpp_lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/>https://jfy0o0.github.io/2020/cpp_lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/c&#43;&#43;/">
+                    #C&#43;&#43;</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://jfy0o0.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://jfy0o0.github.io/2020/algorithm-%E4%B8%83%E5%A4%A7%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/" class="prev" rel="prev" title="Algorithm - 七大查找算法"><i class="iconfont icon-left"></i>&nbsp;Algorithm - 七大查找算法</a>
+         
+        
+        <a href="https://jfy0o0.github.io/2020/cpp_stl_algorithm/" class="next" rel="next" title="C&#43;&#43; - STL Algorithm">C&#43;&#43; - STL Algorithm&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://jfy0o0.github.io">Jiang .</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Jiang .">
+  
+  
+  
+  <link rel="prev" href="https://jfy0o0.github.io/2020/cpp_lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" />
+  
+  <link rel="canonical" href="https://jfy0o0.github.io/2020/cpp_stl_algorithm/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           C&#43;&#43; - STL Algorithm | Jiang . &#39;s blog
+       
+  </title>
+  <meta name="title" content="C&#43;&#43; - STL Algorithm | Jiang . &#39;s blog">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/jfy0o0.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "C\u002b\u002b - STL Algorithm",
+    "headline" : "C\u002b\u002b - STL Algorithm",
+    "description" : "非修改性序列操作（12个） 循环          对序列中的每个元素执行某操作 for_each()    查找          在序列中找出某个值的第一次出现的位置 find()   在序列中找出符合某谓词的第一个元素 find_if()   在序列中找出一子序列的最后一次出现的位置 find_end()   在序列中找出第一次出现指定值集中之值的位置 find_first_of()   在序列中找出相邻的一对值 adjacent_find()    计数          在序列中统计某个值出现的次数 count()   在序列中统计与某谓词匹配的次数 count_if()    比较          找出两个序列相异的第一个元素 mismatch()   两个序列中的对应元素都相同时为真 equal()    搜索          在序列中找出一子序列的第一次出现的位置 search()   在序列中找出一值的连续n次出现的位置 search_n()    修改性序列操作（27个） 复制          从序列的第一个元素起进行复制 copy()   从序列的最后一个元素起进行复制 copy_backward()    交换          交换两个元素 swap()   交换指定范围的元素 swap_ranges()   交换由迭代器所指的两个元素 iter_swap()    变换          将某操作应用于指定范围的每个元素 transform()    替换          用一个给定值替换一些值 replace()   替换满足谓词的一些元素 replace_if()   复制序列时用一给定值替换元素 replace_copy()   复制序列时替换满足谓词的元素 replace_copy_if()    填充          用一给定值取代所有元素 fill()   用一给定值取代前n个元素 fill_n()    生成          用一操作的结果取代所有元素 generate()   用一操作的结果取代前n个元素 generate_n()    删除          删除具有给定值的元素 remove()   删除满足谓词的元素 remove_if()   复制序列时删除具有给定值的元素 remove_copy()   复制序列时删除满足谓词的元素 remove_copy_if()    唯一          删除相邻的重复元素 unique()   复制序列时删除相邻的重复元素 unique_copy()    反转          反转元素的次序 reverse()   复制序列时反转元素的次序 reverse_copy()    环移          循环移动元素 rotate()   复制序列时循环移动元素 rotate_copy()    随机          采用均匀分布来随机移动元素 random_shuffle()    划分          将满足某谓词的元素都放到前面 partition()   将满足某谓词的元素都放到前面并维持原顺序 stable_partition()    序列排序及相关操作（27个） 排序          以很好的平均效率排序 sort()   排序，并维持相同元素的原有顺序 stable_sort()   将序列的前一部分排好序 partial_sort()   复制的同时将序列的前一部分排好序 partial_sort_copy()    第n个元素          将第n各元素放到它的正确位置 nth_element()    二分检索          找到大于等于某值的第一次出现 lower_bound()   找到大于某值的第一次出现 upper_bound()   找到（在不破坏顺序的前提下）可插入给定值的最大范围 equal_range()   在有序序列中确定给定元素是否存在 binary_search()    归并          归并两个有序序列 merge()   归并两个接续的有序序列 inplace_merge()    有序结构上的集合操作          一序列为另一序列的子序列时为真 includes()   构造两个集合的有序并集 set_union()   构造两个集合的有序交集 set_intersection()   构造两个集合的有序差集 set_difference()   构造两个集合的有序对称差集（并-交） set_symmetric_difference()    堆操作          向堆中加入元素 push_heap()   从堆中弹出元素 pop_heap()   从序列构造堆 make_heap()   给堆排序 sort_heap()    最大和最小          两个值中较小的 min()   两个值中较大的 max()   序列中的最小元素 min_element()   序列中的最大元素 max_element()    词典比较          两个序列按字典序的第一个在前 lexicographical_compare()    排列生成器          按字典序的下一个排列 next_permutation()   按字典序的前一个排列 prev_permutation()    函数对象类模板    函数对象类模板 成员函数 T operator ( const T \u0026amp; x, const T \u0026amp; y) 的功能     plus  return x \u002b y;   minus \u0026lt; \u0026gt; return x - y;   multiplies  return x * y;   divides  return x \/ y;   modulus  return x % y;        成员函数 bool operator( const T \u0026amp; x, const T \u0026amp; y) 的功能   equal_to  return x == y;   not_equal_to  return x!",
+    "inLanguage" : "en-us",
+    "author" : "Jiang",
+    "creator" : "Jiang",
+    "publisher": "Jiang",
+    "accountablePerson" : "Jiang",
+    "copyrightHolder" : "Jiang",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-12-12 08:47:21 \u002b0800 CST",
+    "dateModified" : "2020-12-12 08:47:21 \u002b0800 CST",
+    "url" : "https:\/\/jfy0o0.github.io\/2020\/cpp_stl_algorithm\/",
+    "wordCount" : "280",
+    "keywords" : [ "C\u002b\u002b", "Jiang . \u0027s blog"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">C&#43;&#43; - STL Algorithm</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://jfy0o0.github.io" rel="author">Jiang</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-12-12 itemprop="datePublished">December 12, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://jfy0o0.github.io/categories/c&#43;&#43;/"> C&#43;&#43; </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="非修改性序列操作12个">非修改性序列操作（12个）</h1>
+<h2 id="循环">循环</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>对序列中的每个元素执行某操作</td>
+<td>for_each()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="查找">查找</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>在序列中找出某个值的第一次出现的位置</td>
+<td>find()</td>
+</tr>
+<tr>
+<td>在序列中找出符合某谓词的第一个元素</td>
+<td>find_if()</td>
+</tr>
+<tr>
+<td>在序列中找出一子序列的最后一次出现的位置</td>
+<td>find_end()</td>
+</tr>
+<tr>
+<td>在序列中找出第一次出现指定值集中之值的位置</td>
+<td>find_first_of()</td>
+</tr>
+<tr>
+<td>在序列中找出相邻的一对值</td>
+<td>adjacent_find()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="计数">计数</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>在序列中统计某个值出现的次数</td>
+<td>count()</td>
+</tr>
+<tr>
+<td>在序列中统计与某谓词匹配的次数</td>
+<td>count_if()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="比较">比较</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>找出两个序列相异的第一个元素</td>
+<td>mismatch()</td>
+</tr>
+<tr>
+<td>两个序列中的对应元素都相同时为真</td>
+<td>equal()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="搜索">搜索</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>在序列中找出一子序列的第一次出现的位置</td>
+<td>search()</td>
+</tr>
+<tr>
+<td>在序列中找出一值的连续n次出现的位置</td>
+<td>search_n()</td>
+</tr>
+</tbody>
+</table>
+<h1 id="修改性序列操作27个">修改性序列操作（27个）</h1>
+<h2 id="复制">复制</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>从序列的第一个元素起进行复制</td>
+<td>copy()</td>
+</tr>
+<tr>
+<td>从序列的最后一个元素起进行复制</td>
+<td>copy_backward()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="交换">交换</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>交换两个元素</td>
+<td>swap()</td>
+</tr>
+<tr>
+<td>交换指定范围的元素</td>
+<td>swap_ranges()</td>
+</tr>
+<tr>
+<td>交换由迭代器所指的两个元素</td>
+<td>iter_swap()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="变换">变换</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>将某操作应用于指定范围的每个元素</td>
+<td>transform()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="替换">替换</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用一个给定值替换一些值</td>
+<td>replace()</td>
+</tr>
+<tr>
+<td>替换满足谓词的一些元素</td>
+<td>replace_if()</td>
+</tr>
+<tr>
+<td>复制序列时用一给定值替换元素</td>
+<td>replace_copy()</td>
+</tr>
+<tr>
+<td>复制序列时替换满足谓词的元素</td>
+<td>replace_copy_if()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="填充">填充</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用一给定值取代所有元素</td>
+<td>fill()</td>
+</tr>
+<tr>
+<td>用一给定值取代前n个元素</td>
+<td>fill_n()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="生成">生成</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用一操作的结果取代所有元素</td>
+<td>generate()</td>
+</tr>
+<tr>
+<td>用一操作的结果取代前n个元素</td>
+<td>generate_n()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="删除">删除</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>删除具有给定值的元素</td>
+<td>remove()</td>
+</tr>
+<tr>
+<td>删除满足谓词的元素</td>
+<td>remove_if()</td>
+</tr>
+<tr>
+<td>复制序列时删除具有给定值的元素</td>
+<td>remove_copy()</td>
+</tr>
+<tr>
+<td>复制序列时删除满足谓词的元素</td>
+<td>remove_copy_if()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="唯一">唯一</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>删除相邻的重复元素</td>
+<td>unique()</td>
+</tr>
+<tr>
+<td>复制序列时删除相邻的重复元素</td>
+<td>unique_copy()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="反转">反转</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>反转元素的次序</td>
+<td>reverse()</td>
+</tr>
+<tr>
+<td>复制序列时反转元素的次序</td>
+<td>reverse_copy()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="环移">环移</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>循环移动元素</td>
+<td>rotate()</td>
+</tr>
+<tr>
+<td>复制序列时循环移动元素</td>
+<td>rotate_copy()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="随机">随机</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>采用均匀分布来随机移动元素</td>
+<td>random_shuffle()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="划分">划分</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>将满足某谓词的元素都放到前面</td>
+<td>partition()</td>
+</tr>
+<tr>
+<td>将满足某谓词的元素都放到前面并维持原顺序</td>
+<td>stable_partition()</td>
+</tr>
+</tbody>
+</table>
+<h1 id="序列排序及相关操作27个">序列排序及相关操作（27个）</h1>
+<h2 id="排序">排序</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>以很好的平均效率排序</td>
+<td>sort()</td>
+</tr>
+<tr>
+<td>排序，并维持相同元素的原有顺序</td>
+<td>stable_sort()</td>
+</tr>
+<tr>
+<td>将序列的前一部分排好序</td>
+<td>partial_sort()</td>
+</tr>
+<tr>
+<td>复制的同时将序列的前一部分排好序</td>
+<td>partial_sort_copy()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="第n个元素">第n个元素</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>将第n各元素放到它的正确位置</td>
+<td>nth_element()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="二分检索">二分检索</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>找到大于等于某值的第一次出现</td>
+<td>lower_bound()</td>
+</tr>
+<tr>
+<td>找到大于某值的第一次出现</td>
+<td>upper_bound()</td>
+</tr>
+<tr>
+<td>找到（在不破坏顺序的前提下）可插入给定值的最大范围</td>
+<td>equal_range()</td>
+</tr>
+<tr>
+<td>在有序序列中确定给定元素是否存在</td>
+<td>binary_search()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="归并">归并</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>归并两个有序序列</td>
+<td>merge()</td>
+</tr>
+<tr>
+<td>归并两个接续的有序序列</td>
+<td>inplace_merge()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="有序结构上的集合操作">有序结构上的集合操作</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一序列为另一序列的子序列时为真</td>
+<td>includes()</td>
+</tr>
+<tr>
+<td>构造两个集合的有序并集</td>
+<td>set_union()</td>
+</tr>
+<tr>
+<td>构造两个集合的有序交集</td>
+<td>set_intersection()</td>
+</tr>
+<tr>
+<td>构造两个集合的有序差集</td>
+<td>set_difference()</td>
+</tr>
+<tr>
+<td>构造两个集合的有序对称差集（并-交）</td>
+<td>set_symmetric_difference()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="堆操作">堆操作</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>向堆中加入元素</td>
+<td>push_heap()</td>
+</tr>
+<tr>
+<td>从堆中弹出元素</td>
+<td>pop_heap()</td>
+</tr>
+<tr>
+<td>从序列构造堆</td>
+<td>make_heap()</td>
+</tr>
+<tr>
+<td>给堆排序</td>
+<td>sort_heap()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="最大和最小">最大和最小</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>两个值中较小的</td>
+<td>min()</td>
+</tr>
+<tr>
+<td>两个值中较大的</td>
+<td>max()</td>
+</tr>
+<tr>
+<td>序列中的最小元素</td>
+<td>min_element()</td>
+</tr>
+<tr>
+<td>序列中的最大元素</td>
+<td>max_element()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="词典比较">词典比较</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>两个序列按字典序的第一个在前</td>
+<td>lexicographical_compare()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="排列生成器">排列生成器</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>按字典序的下一个排列</td>
+<td>next_permutation()</td>
+</tr>
+<tr>
+<td>按字典序的前一个排列</td>
+<td>prev_permutation()</td>
+</tr>
+</tbody>
+</table>
+<h1 id="函数对象类模板">函数对象类模板</h1>
+<table>
+<thead>
+<tr>
+<th>函数对象类模板</th>
+<th>成员函数 T operator ( const T &amp; x, const T &amp; y) 的功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>plus <!-- raw HTML omitted --></td>
+<td>return x + y;</td>
+</tr>
+<tr>
+<td>minus &lt; &gt;</td>
+<td>return x - y;</td>
+</tr>
+<tr>
+<td>multiplies <!-- raw HTML omitted --></td>
+<td>return x * y;</td>
+</tr>
+<tr>
+<td>divides <!-- raw HTML omitted --></td>
+<td>return x / y;</td>
+</tr>
+<tr>
+<td>modulus <!-- raw HTML omitted --></td>
+<td>return x % y;</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><strong>成员函数 bool operator( const T &amp; x, const T &amp; y) 的功能</strong></td>
+</tr>
+<tr>
+<td>equal_to <!-- raw HTML omitted --></td>
+<td>return x == y;</td>
+</tr>
+<tr>
+<td>not_equal_to <!-- raw HTML omitted --></td>
+<td>return x! = y;</td>
+</tr>
+<tr>
+<td>greater <!-- raw HTML omitted --></td>
+<td>return x &gt; y;</td>
+</tr>
+<tr>
+<td>less <!-- raw HTML omitted --></td>
+<td>return x &lt; y;</td>
+</tr>
+<tr>
+<td>greater_equal <!-- raw HTML omitted --></td>
+<td>return x &gt; = y;</td>
+</tr>
+<tr>
+<td>less_equal <!-- raw HTML omitted --></td>
+<td>return x &lt;= y;</td>
+</tr>
+<tr>
+<td>logical_and <!-- raw HTML omitted --></td>
+<td>return x &amp;&amp; y;</td>
+</tr>
+<tr>
+<td>logical_or <!-- raw HTML omitted --></td>
+<td>return x || y;</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><strong>成员函数 T operator( const T &amp; x) 的功能</strong></td>
+</tr>
+<tr>
+<td>negate <!-- raw HTML omitted --></td>
+<td>return - x;</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><strong>成员函数 bool operator( const T &amp; x) 的功能</strong></td>
+</tr>
+<tr>
+<td>logical_not <!-- raw HTML omitted --></td>
+<td>return ! x;</td>
+</tr>
+</tbody>
+</table>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Jiang . </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://jfy0o0.github.io/2020/cpp_stl_algorithm/>https://jfy0o0.github.io/2020/cpp_stl_algorithm/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/c&#43;&#43;/">
+                    #C&#43;&#43;</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://jfy0o0.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://jfy0o0.github.io/2020/cpp_lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="prev" rel="prev" title="C&#43;&#43; - lambda表达式"><i class="iconfont icon-left"></i>&nbsp;C&#43;&#43; - lambda表达式</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://jfy0o0.github.io">Jiang .</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>
