@@ -46,7 +46,7 @@
     "articleSection" : "posts",
     "name" : "Boost - 时间与日期",
     "headline" : "Boost - 时间与日期",
-    "description" : "boost - 时间与日期 boost-timer： timer类可以测量时间的流逝，是一个小型计时器。\n使用： #include \u0026lt;boost\/timer.hpp\u0026gt;int main() { boost::timer t; \/\/声明时即计时  cout \u0026lt;\u0026lt; t.elapsed_max() \u0026lt;\u0026lt; endl; \/\/可度量最大时间 ，小时单位  cout \u0026lt;\u0026lt; t.elapsed_min() \u0026lt;\u0026lt; endl; \/\/可度量最小时间 ，秒单位  for(int i = 0;i\u0026lt;1000000000;i\u002b\u002b); cout \u0026lt;\u0026lt; t.elapsed() \u0026lt;\u0026lt; endl; \/\/输出流逝的时间 （cpu占用的时间） } boost-progress_timer: 继承自timer析构时自动输出时间，省去手动调elapsed()，\n使用： #include \u0026lt;boost\/progress.hpp\u0026gt;int main() { boost::progress_timer t; cout \u0026lt;\u0026lt; t.elapsed_max() \u0026lt;\u0026lt; endl; cout \u0026lt;\u0026lt; t.elapsed_min() \u0026lt;\u0026lt; endl; } boost-progress_display: 表示进度\n使用： boost::progress_display pd(10000000); for(int i = 0;i\u0026lt;10000000;i\u002b\u002b) { \u002b\u002bpd; } ",
+    "description" : "boost - 时间与日期 boost-timer： timer类可以测量时间的流逝，是一个小型计时器。\n使用： #include \u0026lt;boost\/timer.hpp\u0026gt;int main() { boost::timer t; \/\/声明时即计时  cout \u0026lt;\u0026lt; t.elapsed_max() \u0026lt;\u0026lt; endl; \/\/可度量最大时间 ，小时单位  cout \u0026lt;\u0026lt; t.elapsed_min() \u0026lt;\u0026lt; endl; \/\/可度量最小时间 ，秒单位  for(int i = 0;i\u0026lt;1000000000;i\u002b\u002b); cout \u0026lt;\u0026lt; t.elapsed() \u0026lt;\u0026lt; endl; \/\/输出流逝的时间 （cpu占用的时间） } boost-progress_timer: 继承自timer析构时自动输出时间，省去手动调elapsed()，\n使用： #include \u0026lt;boost\/progress.hpp\u0026gt;int main() { boost::progress_timer t; cout \u0026lt;\u0026lt; t.elapsed_max() \u0026lt;\u0026lt; endl; cout \u0026lt;\u0026lt; t.elapsed_min() \u0026lt;\u0026lt; endl; } boost-progress_display: 表示进度\n使用： boost::progress_display pd(10000000); for(int i = 0;i\u0026lt;10000000;i\u002b\u002b) { \u002b\u002bpd; } 时间长度类time_duration 说明  类似日期长度类date_duration有days、weeks、months、years这些常用类， time_duration也有几个子类：hours、minutes、seconds、millisec、microsec、nanosec，他们都支持流输入输出、比较操作、加减乘除运算。  使用 \/\/对象的定义  boost::posix_time::time_duration td(1, 10, 30, 1000); \/\/1小时10分钟30秒1毫秒  boost::posix_time::time_duration td1(1, 60, 60, 1000); \/\/2小时1分钟1毫秒，超出的时间会自动进位  boost::posix_time::time_duration td2 = boost::posix_time::duration_from_string(\u0026#34;1:10:30:001\u0026#34;); \/\/1小时10分钟30秒1毫秒  \/\/成员函数  assert(td.",
     "inLanguage" : "en-us",
     "author" : "Jiang",
     "creator" : "Jiang",
@@ -57,7 +57,7 @@
     "datePublished": "2020-11-10 19:38:42 \u002b0800 CST",
     "dateModified" : "2020-11-10 19:38:42 \u002b0800 CST",
     "url" : "https:\/\/jfy0o0.github.io\/2020\/boost-%E6%97%B6%E9%97%B4%E4%B8%8E%E6%97%A5%E6%9C%9F\/",
-    "wordCount" : "71",
+    "wordCount" : "377",
     "keywords" : [ "c\u002b\u002b","Boost", "Jiang . \u0027s blog"]
 }
 </script>
@@ -178,6 +178,107 @@
     {
         <span style="color:#f92672">++</span>pd;
     }
+</code></pre></div><h1 id="时间长度类time_duration"><strong>时间长度类time_duration</strong></h1>
+<h2 id="说明">说明</h2>
+<ul>
+<li>类似日期长度类date_duration有days、weeks、months、years这些常用类，</li>
+<li>time_duration也有几个子类：hours、minutes、seconds、millisec、microsec、nanosec，他们都支持流输入输出、比较操作、加减乘除运算。</li>
+</ul>
+<h2 id="使用-3">使用</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">//对象的定义
+</span><span style="color:#75715e"></span>    boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>time_duration td(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">30</span>, <span style="color:#ae81ff">1000</span>); <span style="color:#75715e">//1小时10分钟30秒1毫秒
+</span><span style="color:#75715e"></span>    boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>time_duration  td1(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">60</span>, <span style="color:#ae81ff">60</span>, <span style="color:#ae81ff">1000</span>); <span style="color:#75715e">//2小时1分钟1毫秒，超出的时间会自动进位
+</span><span style="color:#75715e"></span>    boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>time_duration td2 <span style="color:#f92672">=</span> boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>duration_from_string(<span style="color:#e6db74">&#34;1:10:30:001&#34;</span>);  <span style="color:#75715e">//1小时10分钟30秒1毫秒
+</span><span style="color:#75715e"></span>
+    <span style="color:#75715e">//成员函数
+</span><span style="color:#75715e"></span>    assert(td.hours() <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">&amp;&amp;</span> td.minutes() <span style="color:#f92672">==</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">&amp;&amp;</span> td.seconds() <span style="color:#f92672">==</span> <span style="color:#ae81ff">30</span>);
+    assert(td.total_seconds() <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3600</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">60</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">30</span>);
+    
+    <span style="color:#75715e">//获取字符串表示
+</span><span style="color:#75715e"></span>    cout <span style="color:#f92672">&lt;&lt;</span> boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>to_simple_string(td) <span style="color:#f92672">&lt;&lt;</span> endl; <span style="color:#75715e">//输出为 01:10:30.001000
+</span><span style="color:#75715e"></span>    cout <span style="color:#f92672">&lt;&lt;</span> boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>to_iso_string(td) <span style="color:#f92672">&lt;&lt;</span> endl; <span style="color:#75715e">//输出为 011030.001000
+</span><span style="color:#75715e"></span>
+    <span style="color:#75715e">//运算
+</span><span style="color:#75715e"></span>    boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>hours h(<span style="color:#ae81ff">1</span>);
+    boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>minutes m(<span style="color:#ae81ff">10</span>);
+    boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>seconds s(<span style="color:#ae81ff">30</span>);
+    boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>millisec ms(<span style="color:#ae81ff">1</span>);
+    boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>time_duration td3 <span style="color:#f92672">=</span> h <span style="color:#f92672">+</span> m <span style="color:#f92672">+</span> s <span style="color:#f92672">+</span> ms;
+    assert(td2 <span style="color:#f92672">==</span> td3);
+</code></pre></div><h1 id="时间点ptime"><strong>时间点ptime</strong></h1>
+<h2 id="说明-1">说明</h2>
+<ul>
+<li>创建ptime的方法是在其构造函数传入一个date和一个time_duration，不传入time_duration的话为0点，ptime支持流输入输出、比较操作、减法运算、与date_duration、time_duration的加减运算:</li>
+</ul>
+<h2 id="使用-4">使用</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">    <span style="color:#75715e">//对象的定义
+</span><span style="color:#75715e"></span>    boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>ptime p(boost<span style="color:#f92672">::</span>gregorian<span style="color:#f92672">::</span>date(<span style="color:#ae81ff">2010</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">5</span>)); <span style="color:#75715e">//2010年3月5号0点
+</span><span style="color:#75715e"></span>    boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>ptime p1(boost<span style="color:#f92672">::</span>gregorian<span style="color:#f92672">::</span>date(<span style="color:#ae81ff">2010</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">5</span>), boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>hours(<span style="color:#ae81ff">1</span>)); <span style="color:#75715e">//2010年3月5号1点
+</span><span style="color:#75715e"></span>    boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>ptime p2 <span style="color:#f92672">=</span> boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>time_from_string(<span style="color:#e6db74">&#34;2010-3-5 01:00:00&#34;</span>);
+    boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>ptime p3 <span style="color:#f92672">=</span> boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>from_iso_string(<span style="color:#e6db74">&#34;20100505T010000&#34;</span>);
+
+    <span style="color:#75715e">//获取当前时间
+</span><span style="color:#75715e"></span>    boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>ptime p4 <span style="color:#f92672">=</span> boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>second_clock<span style="color:#f92672">::</span>local_time(); <span style="color:#75715e">//本地时间，秒精度
+</span><span style="color:#75715e"></span>    cout <span style="color:#f92672">&lt;&lt;</span> p4 <span style="color:#f92672">&lt;&lt;</span> endl; <span style="color:#75715e">//可以直接输出ptime，2018-Apr-11 16:23:54
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//boost::posix_time::ptime p4 = boost::posix_time::microsec_clock::local_time(); //本地时间，微妙精度，2018-Apr-11 08:23:54.986535
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//boost::posix_time::ptime p4 = boost::posix_time::second_clock::universal_time(); //UTC时间，微妙精度
+</span><span style="color:#75715e"></span>
+    <span style="color:#75715e">//获取字符串表示
+</span><span style="color:#75715e"></span>    cout <span style="color:#f92672">&lt;&lt;</span> boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>to_iso_extended_string(p) <span style="color:#f92672">&lt;&lt;</span> endl; <span style="color:#75715e">//输出为2010-03-05T00:00:00
+</span><span style="color:#75715e"></span>    cout <span style="color:#f92672">&lt;&lt;</span> boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>to_iso_string(p) <span style="color:#f92672">&lt;&lt;</span> endl; <span style="color:#75715e">//输出为20100305T000000
+</span><span style="color:#75715e"></span>    cout <span style="color:#f92672">&lt;&lt;</span> boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>to_simple_string(p) <span style="color:#f92672">&lt;&lt;</span> endl; <span style="color:#75715e">//输出为2010-Mar-05 00:00:00
+</span></code></pre></div><p>ptime相当于date + time_duration，所以对于它的操作可以分解为对这两个部分的操作，可以通过两个成员函数date()和time_of_day()获得日期和时间段，然后分别处理，如：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>ptime p4(boost<span style="color:#f92672">::</span>gregorian<span style="color:#f92672">::</span>date(<span style="color:#ae81ff">2010</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">20</span>), 					boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>hours(<span style="color:#ae81ff">12</span>) <span style="color:#f92672">+</span> boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>minutes(<span style="color:#ae81ff">30</span>));
+    boost<span style="color:#f92672">::</span>gregorian<span style="color:#f92672">::</span>date d <span style="color:#f92672">=</span> p4.date(); <span style="color:#75715e">//获取date
+</span><span style="color:#75715e"></span>    boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>time_duration td4 <span style="color:#f92672">=</span> p4.time_of_day(); <span style="color:#75715e">//获取time_duration
+</span><span style="color:#75715e"></span>
+    assert(d.month() <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">&amp;&amp;</span> d.day() <span style="color:#f92672">==</span> <span style="color:#ae81ff">20</span>);
+    assert(td4.total_seconds() <span style="color:#f92672">==</span> <span style="color:#ae81ff">12</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3600</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">30</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">60</span>);
+
+    boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>ptime p5 <span style="color:#f92672">=</span> p4 <span style="color:#f92672">+</span> boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>hours(<span style="color:#ae81ff">3</span>);
+    assert(p4 <span style="color:#f92672">&lt;</span> p5);
+    assert(p5 <span style="color:#f92672">-</span> p4 <span style="color:#f92672">==</span> boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>hours(<span style="color:#ae81ff">3</span>));
+    p5 <span style="color:#f92672">+=</span> boost<span style="color:#f92672">::</span>gregorian<span style="color:#f92672">::</span>months(<span style="color:#ae81ff">1</span>);
+    
+    boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>ptime pTime <span style="color:#f92672">=</span> boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>second_clock<span style="color:#f92672">::</span>local_time();
+    std<span style="color:#f92672">::</span>string strDate <span style="color:#f92672">=</span> boost<span style="color:#f92672">::</span>gregorian<span style="color:#f92672">::</span>to_iso_extended_string(pTime.date()); <span style="color:#75715e">// 当前日期：2019-03-06
+</span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>string strTimeOfDay <span style="color:#f92672">=</span> boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>to_simple_string(pTime.time_of_day()); <span style="color:#75715e">// 当前时间：15:03:55
+</span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>string strTime <span style="color:#f92672">=</span> strDate <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;, &#34;</span> <span style="color:#f92672">+</span> strTimeOfDay; <span style="color:#75715e">// 当前日期和时间：2019-03-06, 15:03:55
+</span></code></pre></div><h1 id="高精度的timer"><strong>高精度的timer</strong></h1>
+<h2 id="说明-2">说明</h2>
+<p>boost::timer的精度只有毫秒，利用date_time库可以实现一个微妙级别的计时器：</p>
+<h2 id="使用-5">使用</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;boost\date_time\posix_time\posix_time.hpp&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> Clock <span style="color:#f92672">=</span> boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>microsec_clock<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">basic_ptimer</span>
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    basic_ptimer() { restart(); }
+    <span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>basic_ptimer(){}
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">void</span> restart() { _start_time <span style="color:#f92672">=</span> Clock<span style="color:#f92672">::</span>local_time(); }
+    <span style="color:#66d9ef">double</span> <span style="color:#a6e22e">elapsed</span>()
+    {
+        <span style="color:#66d9ef">return</span> (Clock<span style="color:#f92672">::</span>local_time() <span style="color:#f92672">-</span> _start_time).total_microseconds() <span style="color:#f92672">/</span> (<span style="color:#66d9ef">double</span>)(<span style="color:#ae81ff">1000</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1000</span>); 
+    } <span style="color:#75715e">//以秒为单位，精度为微秒
+</span><span style="color:#75715e"></span>    string <span style="color:#a6e22e">elapsed_s</span>() 
+    {
+        <span style="color:#66d9ef">return</span> boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>to_simple_string(Clock<span style="color:#f92672">::</span>local_time() <span style="color:#f92672">-</span> _start_time);
+    } <span style="color:#75715e">//格式为hh:mm:ss.ffffff，精度为微秒
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+    boost<span style="color:#f92672">::</span>posix_time<span style="color:#f92672">::</span>ptime _start_time;
+};
+<span style="color:#66d9ef">typedef</span> basic_ptimer<span style="color:#f92672">&lt;&gt;</span> ptimer;
+
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+    ptimer p2;
+    Sleep(<span style="color:#ae81ff">1000</span>);
+    printf(<span style="color:#e6db74">&#34;%.6f</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, p2.elapsed()); <span style="color:#75715e">//输出为1.001057
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//cout &lt;&lt; p2.elapsed_s() &lt;&lt; endl; //输出为00:00:01.001057
+</span><span style="color:#75715e"></span>}
 </code></pre></div>
     </div>
 

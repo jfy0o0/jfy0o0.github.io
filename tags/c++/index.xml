@@ -6,7 +6,26 @@
     <description>Recent content in c&#43;&#43; on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 15 Dec 2020 19:51:16 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 15 Dec 2020 20:19:51 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Boost - pool</title>
+      <link>https://jfy0o0.github.io/2020/boost-pool/</link>
+      <pubDate>Tue, 15 Dec 2020 20:19:51 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/boost-pool/</guid>
+      <description>内存池  boost的内存池实现了一个快速、紧凑的内存分配和管理器，使用它可以完全不用考虑delete释放问题。 常用的boost内存池有pool、object_pool、singleton_pool。  pool 说明  pool是一个简单的内存池类，它的模板类型通常使用默认的参数，构造函数的参数用来指定每次分配内存的大小，这个值可以通过成员get_requested_size()获得。 pool会根据需要自动向系统申请或归还使用的内存，在其析构的时候自动释放它持有的所有内存。常用的成员函数： malloc()：分配一块内存，返回类型为void*，内存分配失败返回NULL。 ordered_malloc()：分配一块内存并合并空闲块链表，不推荐使用该函数，因为其效率低。 is_from()：测试内存块是否属于本内存池。 free()：释放malloc()非配的内存，不建议调用该函数来手动释放内存，因为pool是自动管理内存分配的。 release_memory()：释放所有未被分配的内存。 purge_memory()：强制释放pool持有的所有内存。  使用 #include &amp;lt;iostream&amp;gt;using namespace std; #include &amp;#34;boost\pool\pool.hpp&amp;#34;using namespace boost; int main() { pool&amp;lt;&amp;gt; p1(sizeof(int)); int* p = (int*)p1.malloc(); //int *p = static_cast&amp;lt;int *&amp;gt;(p1.malloc()); 	BOOSTASSERT(p) *p = 10; cout &amp;lt;&amp;lt; *p &amp;lt;&amp;lt; endl; return 0; } object_pool 说明  object_pool是类实例的内存池，其模板类型的参数用来指定使用的类， 其成员construct()用来分配一个类的对象，destroy()用来释放一个已分配的对象，is_from()用来测试对象是否属于本内存池分配的。  需要注意的三点：
+ 默认情况下成员函数construct最多支持3个参数，可以对construct进行扩展以支持3个参数以上的构造函数，具体扩展方法可参见罗剑锋的《Boost程序库完全开发指南》一书。 object_pool的成员函数destroy()效率很低，如果需要频繁释放已分配的对象的话谨慎考虑object_pool。 object_pool还提供了malloc()和free()成员，其可以像pool那样来分配和释放内存块。  使用 #include &amp;lt;iostream&amp;gt;#include &amp;lt;string&amp;gt;using namespace std; #include &amp;#34;boost\pool\object_pool.</description>
+    </item>
+    
+    <item>
+      <title>Boost - filesystem</title>
+      <link>https://jfy0o0.github.io/2020/boost-filesystem/</link>
+      <pubDate>Tue, 15 Dec 2020 20:05:43 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/boost-filesystem/</guid>
+      <description>filesystem 说明  filesystem库是文件系统操作库，可以使用其中的basic_path类用来操作目录、文件，使用需要包含编译好的system库和filesystem库，我们一般不直接使用basic_path，而是使用typedef : path和wpath。 使用它需要包含&amp;quot;boost/filesystem.hpp&amp;quot;。  使用 boost::filesystem::path p1(&amp;#34;D:\\dir&amp;#34;); //windows下既可使用斜杠也可使用反斜杠（资源管理器地址栏中使用的就是反斜杠），又因为在c++中反斜杠是转义字符的标志，所以使用反斜杠的话还得再加一个反斜杠  boost::filesystem::path p2(&amp;#34;D:/dir/data.dat&amp;#34;); //windows下推荐使用正斜杠  boost::filesystem::path p3(&amp;#34;/user/dir&amp;#34;); //linux下使用正斜杠  boost::filesystem::path p4 = &amp;#34;./dir&amp;#34;; //path的构造函数没有声明为explicit，字符串可以隐式转换为path对象  p1 /= &amp;#34;child&amp;#34;; //path重载了 /=，其功能与成员append()相同。  cout &amp;lt;&amp;lt; p1 &amp;lt;&amp;lt; endl; //支持流输出操作，输出为&amp;#34;D:\dir\child&amp;#34;  if (p1 == p2); //支持比较操作  auto iter = p1.begin(); //支持迭代器来迭代其中的字符串  std::string strDir = p1.string(); //获取字符串（构造函数中传入的字符串为相对路径的话这里也是相对路径）  bool bRes = boost::filesystem::portable_posix_name(strDir); //判断是否符合posix文件命名规范  boost::filesystem::windows_name(strDir); //判断是否符合windows文件命名规范  boost::filesystem::portable_name(strDir); //相当于portable_posix_name() &amp;amp;&amp;amp; windows_name  boost::filesystem::native(strDir); //在windows下相当于windows_name，其它操作系统下只是简单的判断文件名不是空格且不含斜杠  boost::filesystem::path parentPath = p3.</description>
+    </item>
+    
     <item>
       <title>Boost - 同步</title>
       <link>https://jfy0o0.github.io/2020/boost-%E5%90%8C%E6%AD%A5/</link>
@@ -194,7 +213,7 @@ class Length { private: int len_inches; public: //前缀++的声明  Length oper
       <description>boost - 时间与日期 boost-timer： timer类可以测量时间的流逝，是一个小型计时器。
 使用： #include &amp;lt;boost/timer.hpp&amp;gt;int main() { boost::timer t; //声明时即计时  cout &amp;lt;&amp;lt; t.elapsed_max() &amp;lt;&amp;lt; endl; //可度量最大时间 ，小时单位  cout &amp;lt;&amp;lt; t.elapsed_min() &amp;lt;&amp;lt; endl; //可度量最小时间 ，秒单位  for(int i = 0;i&amp;lt;1000000000;i++); cout &amp;lt;&amp;lt; t.elapsed() &amp;lt;&amp;lt; endl; //输出流逝的时间 （cpu占用的时间） } boost-progress_timer: 继承自timer析构时自动输出时间，省去手动调elapsed()，
 使用： #include &amp;lt;boost/progress.hpp&amp;gt;int main() { boost::progress_timer t; cout &amp;lt;&amp;lt; t.elapsed_max() &amp;lt;&amp;lt; endl; cout &amp;lt;&amp;lt; t.elapsed_min() &amp;lt;&amp;lt; endl; } boost-progress_display: 表示进度
-使用： boost::progress_display pd(10000000); for(int i = 0;i&amp;lt;10000000;i++) { ++pd; } </description>
+使用： boost::progress_display pd(10000000); for(int i = 0;i&amp;lt;10000000;i++) { ++pd; } 时间长度类time_duration 说明  类似日期长度类date_duration有days、weeks、months、years这些常用类， time_duration也有几个子类：hours、minutes、seconds、millisec、microsec、nanosec，他们都支持流输入输出、比较操作、加减乘除运算。  使用 //对象的定义  boost::posix_time::time_duration td(1, 10, 30, 1000); //1小时10分钟30秒1毫秒  boost::posix_time::time_duration td1(1, 60, 60, 1000); //2小时1分钟1毫秒，超出的时间会自动进位  boost::posix_time::time_duration td2 = boost::posix_time::duration_from_string(&amp;#34;1:10:30:001&amp;#34;); //1小时10分钟30秒1毫秒  //成员函数  assert(td.</description>
     </item>
     
     <item>
