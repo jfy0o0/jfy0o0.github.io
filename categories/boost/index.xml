@@ -6,7 +6,111 @@
     <description>Recent content in Boost on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Nov 2020 10:23:27 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/categories/boost/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 15 Dec 2020 19:51:16 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/categories/boost/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Boost - 同步</title>
+      <link>https://jfy0o0.github.io/2020/boost-%E5%90%8C%E6%AD%A5/</link>
+      <pubDate>Tue, 15 Dec 2020 19:51:16 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/boost-%E5%90%8C%E6%AD%A5/</guid>
+      <description>互斥锁（互斥量） 说明  mutex是独占式的互斥锁。timed_mutex增加了超时功能。 成员函数：lock()用于锁定，try_lock()为非阻塞版本的锁定，unlock()用于解锁。timed_lock()只属于timed_mutex，它可以等待一定的时间，等待的时间可以是一个时间段，也可以是指定的时间。 使用方法：使用mutex必须配合try-catch块以保证解锁互斥量，eg：  使用 #include &amp;#34;boost\thread.hpp&amp;#34; int main() { boost::mutex mu; try { mu.lock(); cout &amp;lt;&amp;lt; &amp;#34;Need to be protected&amp;#34; &amp;lt;&amp;lt; endl; //io流是个共享资源，多线程内使用的话需要同步  mu.unlock(); } catch (...) { mu.unlock(); } return 0; } mutex还提供了一系列的RAII型的互斥锁，用于取消麻烦的try-catch块，它会在构造的时候锁定互斥量，析构时自动解锁，eg：
+#include &amp;#34;boost\thread.hpp&amp;#34; int main() { boost::mutex mu; boost::mutex::scoped_lock lock(mu); cout &amp;lt;&amp;lt; &amp;#34;Need to be protected&amp;#34; &amp;lt;&amp;lt; endl; //io流是个共享资源，多线程内使用的话需要同步  return 0; } 递归锁 说明 recursive_mutex是递归锁，可以多次锁定，相应的也要多次解锁。recursive_timed_mutex增加了超时功能。递归锁的使用接口跟互斥锁基本相同。
+读写锁 说明  shared_mutex是读写锁，提供了multiple-reader / single-writer功能。 读取锁定时我们使用shared_lock&amp;lt;shared_mutex&amp;gt;对象，写入锁定时我们使用unique_lock&amp;lt;shared_mutex&amp;gt;对象：  使用 boost::shared_mutex rw_mu; //read thread  { boost::shared_lock&amp;lt;boost::shared_mutex&amp;gt; sl(rw_mu); //读锁定  //.</description>
+    </item>
+    
+    <item>
+      <title>Boost - thread</title>
+      <link>https://jfy0o0.github.io/2020/boost-thread/</link>
+      <pubDate>Tue, 15 Dec 2020 19:44:34 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/boost-thread/</guid>
+      <description>thread 说明  静态函数this_thread::get_id()可以获得当前线程的线程ID。 静态函数thread::this_thread::sleep()可以让当前线程睡眠一段时间或到指定时间， 静态函数thread::hardware_concurrency()可以获得当前CPU的内核数量。 静态函数this_thread::yield()指示当前线程放弃时间片，允许其他线程运行。  简易使用 #include &amp;#34;boost\thread.hpp&amp;#34; void PrintThreadFunc(const int&amp;amp; n, const string&amp;amp; str) { cout &amp;lt;&amp;lt; str &amp;lt;&amp;lt; n &amp;lt;&amp;lt; endl; } int main() { int n1 = 1; string str1 = &amp;#34;hello&amp;#34;; boost::thread t1(PrintThreadFunc, ref(n1), ref(str1)); int n2 = 2; string str2 = &amp;#34;boost&amp;#34;; function&amp;lt;void()&amp;gt; fun = bind(PrintThreadFunc, ref(n2), ref(str2)); boost::thread t2(fun); t1.timed_join(boost::posix_time::seconds(1)); //最多等待1秒  t2.join(); //一直等待  return 0; } 中断线程 线程内部 void ThreadFun() try { //函数体 } catch (boost::thread_interrupted&amp;amp;) { //异常处理 } 线程外部 t.</description>
+    </item>
+    
+    <item>
+      <title>Boost - signals2</title>
+      <link>https://jfy0o0.github.io/2020/boost-signals2/</link>
+      <pubDate>Tue, 15 Dec 2020 19:40:22 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/boost-signals2/</guid>
+      <description>signals2 概念  插槽可以是函数指针、函数对象、bind表达式、function对象。调用signals的成员函数connect()来将插槽连接到信号上，相当于为信号注册一个处理的handler。对signal对象调用()即为产生一个信号（signal提供了operator()），从而导致连接的所有插槽被调用。产生信号即调用signal的operator()的返回值是一个optional类型的对象，可以使用解引用操作符*来获得真正的返回值，而且默认情况下，这个返回值是最后被调用的插槽的返回值。signal会把参数传递给所有连接的插槽。 就像function一样，signal也是一个模板类，第一个模板参数是插槽函数类型签名，除了第一个模板参数外其他的模板参数都有缺省值，所以可以只传入第一个参数。 signal::connect()的第一个参数为一个插槽，第二个参数为插入的位置，插入位置决定了插槽的调用顺序，默认值为at_back往后插入，at_front为往前插入，返回值是一个connection对象，可以这个对象来管理连接，如断开连接(disconnect)、测试连接(connected)等。 其它成员函数： num_slots()用来获得连接的插槽的个数，empty()用来判断连接的插槽数量是否为0。 combiner()用来获取合并器，set_combiner()用来设置合并器，不过一般是在signal构造函数中直接设置合并器。 disconnect()用来断开连接，disconnect_all_slots()用来断开所有连接的插槽，signal对象析构时会自动调用disconnect_all_slots()。  #include &amp;#34;boost/signals2.hpp&amp;#34; int slots1(int n) { int iRet = n * n; cout &amp;lt;&amp;lt; &amp;#34;slot1 called, return value: &amp;#34; &amp;lt;&amp;lt; iRet &amp;lt;&amp;lt; endl; return iRet; } int slots2(int n, int x) { int iRet = n * n * x; cout &amp;lt;&amp;lt; &amp;#34;slot2 called, return value: &amp;#34; &amp;lt;&amp;lt; iRet &amp;lt;&amp;lt; endl; return iRet; } int slots3(int n) { int iRet = n * n; cout &amp;lt;&amp;lt; &amp;#34;slot3 called, return value: &amp;#34; &amp;lt;&amp;lt; iRet &amp;lt;&amp;lt; endl; return iRet; } int slots4(int n) { int iRet = n * n; cout &amp;lt;&amp;lt; &amp;#34;slot4 called, return value: &amp;#34; &amp;lt;&amp;lt; iRet &amp;lt;&amp;lt; endl; return iRet; } int main() { boost::signals2::signal&amp;lt;int(int)&amp;gt; sig; //sig.</description>
+    </item>
+    
+    <item>
+      <title>Boost - function</title>
+      <link>https://jfy0o0.github.io/2020/boost-function/</link>
+      <pubDate>Tue, 15 Dec 2020 19:34:56 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/boost-function/</guid>
+      <description>function 概念  function是一个模板类，它就像一个包装了函数指针或函数对象的容器（只有一个元素）。 可以把它想象成一个泛化的函数指针，而且他非常适合代替函数指针，存储用于回调的函数。 如下定义了一个能够容纳void(int)类型的function对象： 使用function需要包含头文件&amp;quot;boost/function.hpp&amp;quot;，C++11已经支持function。  function&amp;lt;void(int)&amp;gt; funo; 一些成员函数：
+ target()：返回对象内部的可调用物Functor的指针，对象为空则返回NULL contains()：检测是否持有一个Functor。 clear()：将对象清空，与&amp;quot;= 0&amp;quot;效果相同。 empty()：测试对象是否为空，也可以在一个bool上下文中直接测试它是否为空。 operator==、operator!=：与一个函数或函数对象进行比较。 operator()：调用内部的可调用物，它也会将参数传给可调用物。  使用 int FuncName(int a, int b) { return a + b; } int main() { function&amp;lt;int(int, int)&amp;gt; funo; funo = FuncName; if (funo) { cout &amp;lt;&amp;lt; funo(3, 4) &amp;lt;&amp;lt; endl; } return 0; } 回调 void call_back_func(int i) { cout &amp;lt;&amp;lt; i &amp;lt;&amp;lt; endl; } class CTestClass { public: CTestClass(int i) :m_iNum(i) {} public: template&amp;lt;typename CallBack&amp;gt; void SetCallBack(CallBack f) { m_fFun = f; } void run() { if(m_fFun) m_fFun(m_iNum); } private: function&amp;lt;void(int)&amp;gt; m_fFun; int m_iNum; }; int main() { CTestClass dc(10); dc.</description>
+    </item>
+    
+    <item>
+      <title>Boost - bind</title>
+      <link>https://jfy0o0.github.io/2020/boost-bind/</link>
+      <pubDate>Tue, 15 Dec 2020 19:21:49 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/boost-bind/</guid>
+      <description>bind 概念  boost中的bind是bind1st/bind2nd的增强版，它也会返回一个函数对象，可以通过function来保存和调用。 bind()的第一个参数必须是一个可调用对象，比如函数、函数指针、函数对象，之后它最多接受九个参数。 占位符用来表示使用哪一个参数。boost中的bind位于头文件&amp;quot;boost/bind.hpp&amp;quot;中， c++11中已经增加了bind，头文件为，使用占位符的话需要其所在的命名空间：using namespace std::placeholders;  使用 绑定普通函数 #include &amp;lt;iostream&amp;gt;using namespace std; #include &amp;#34;boost/bind.hpp&amp;#34;#include &amp;#34;boost\function.hpp&amp;#34; void func1p(int num) { cout &amp;lt;&amp;lt; num &amp;lt;&amp;lt; endl; } void func3p(int a, int b, int c) { cout &amp;lt;&amp;lt; a &amp;lt;&amp;lt; endl &amp;lt;&amp;lt; b &amp;lt;&amp;lt; endl &amp;lt;&amp;lt; c &amp;lt;&amp;lt; endl; } int main() { int n = -1; //绑定变量n到func1p的参数：不用再传参；  boost::function&amp;lt;void()&amp;gt; fun = boost::bind(func1p, n); fun(); //输出-1  int x = 0, y = 5, z = 10; //绑定变量x到func3p的第一个参数：第一个参数直接使用x，不用传参；第二个参数使用实参列表的第一个参数；第三个参数使用实参列表的第二个参数  boost::function&amp;lt;void(int, int)&amp;gt; func = boost::bind(func3p, x, _1, _2); func(y, z); //输出0, 5, 10  //绑定变量y到func3p的第二个参数：第二个参数直接使用y，不用传参；第一个参数使用实参列表的第一个参数；第三个参数使用实参列表的第二个参数  func = boost::bind(func3p, _1, y, _2); func(x, z); //输出0, 5, 10  //绑定变量z到func3p的第三个参数：第三个参数直接使用z，不用传参；第一个参数使用实参列表的第一个参数；第二个参数使用实参列表的第二个参数  func = boost::bind(func3p, _1, _2, z); func(x, y); //输出0, 5, 10  return 0; } #include &amp;#34;boost/bind.</description>
+    </item>
+    
+    <item>
+      <title>Boost - ref</title>
+      <link>https://jfy0o0.github.io/2020/boost-ref/</link>
+      <pubDate>Tue, 15 Dec 2020 19:14:21 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/boost-ref/</guid>
+      <description>reference_wrapper 简介  reference_wrapper包含在ref库中，它是引用包装器类型，即其内部包装了引用。 成员函数get()、get_pointer()分别可以获得被包装的引用和其指针。使用需要包含头文件&amp;quot;boost/ref.hpp&amp;quot;。  eg #include &amp;#34;boost/ref.hpp&amp;#34;#include &amp;lt;cassert&amp;gt;int main() { int x = 5; boost::reference_wrapper&amp;lt;int&amp;gt; rw(x); rw.get() = 10; //获得引用  *rw.get_pointer() = 15; //获得指针  int n = rw; //隐式转换为int  assert(x == rw); //隐式转换为int  rw = 20; //错误！引用包装器不能作为左值  (int&amp;amp;)rw = 20; //显示转换为int&amp;amp;，这样可以作为左值  assert(x == 20); boost::reference_wrapper&amp;lt;int&amp;gt; rw2(rw); //拷贝构造  rw.get() = 25; assert(rw2.get() == 25);//rw2也是x的一个引用对象 	//在确实需要持有或者修改字符串的时候可以调用成员函数 to_string() 获得一个拷贝来保证安全  return 0; } ref 使用函数ref()和cref()可以很方便的构造reference_wrapper和const reference_wrapper对象，它们可以根据参数的类型推导出引用的类型。</description>
+    </item>
+    
+    <item>
+      <title>Boost - 实用工具</title>
+      <link>https://jfy0o0.github.io/2020/boost-%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/</link>
+      <pubDate>Tue, 15 Dec 2020 18:58:30 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/boost-%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/</guid>
+      <description>noncopyable 概念  让一个类从noncopyable继承可以实现禁止对象的复制，使用需要包含头文件&amp;quot;boost/noncopyable.hpp&amp;quot;或&amp;quot;boost/utility.hpp&amp;quot;。 noncopyable实际上是将类的拷贝构造函数和赋值操作符声明为了private来实现禁止对象的赋值。  optional 概念  optional类可以表示一个无意义的值， 比如以下代码，我们使用get_optional()查找xml上的一个节点，如果该节点不存在的话就会返回一个无效的optional对象，此时对象就是空的。  ptree pt; read_xml(&amp;#34;conf.xml&amp;#34;, pt); boost::optional&amp;lt;int&amp;gt; op = pt.get_optional&amp;lt;int&amp;gt;(&amp;#34;conf.gui&amp;#34;); if (op)//节点不存在则op为空  { int i = op.get(); } auto x = make_optional(5); auto y = make_optional&amp;lt;double&amp;gt;((*x &amp;gt; 10),1.0); 成员函数：
+  无参数或参数为boost::none的构造函数用来构造一个无效的对象。
+  如果构造函数中的参数是一个值的引用的话，那么optional中元素其实也是这个值的引用。
+  get()可以获得元素的引用，get_value_or()也可以获得元素的引用，如果对象是无效的话get_value_or()还可以设置一个默认的返回值，get_ptr()可以获得元素的指针。
+  提供了隐式bool类型转换以判断对象的有效性。
+  重载了operator*和operator-&amp;gt;，*运算可以获得元素的值，-&amp;gt;操作可以获得元素的指针。
+  支持==、!=、&amp;gt;等比较运算。
+  使用make_optional()来创建optional对象的话可以不用指定参数的类型，它可以根据参数来自动推导optional的类型。
+  BOOST_AUTO(x, boost::make_optional(5)); assert(*x == 5); in_place() 概念  optional要求参数具有拷贝语义， 因为它会使用参数值的临时拷贝， 如果参数是一个复杂的对象的话这种拷贝方式效率就会很慢， 我们可以使用boost库in_place_factory中的in_place()函数来就地创建对象，避免对参数值的临时拷贝，  使用 #include &amp;#34;boost/optional.</description>
+    </item>
+    
+    <item>
+      <title>Boost - 智能指针</title>
+      <link>https://jfy0o0.github.io/2020/boost-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/</link>
+      <pubDate>Tue, 15 Dec 2020 18:44:53 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/boost-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/</guid>
+      <description>智能指针 auto_ptr 概念  auto_ptr是C++标准中的智能指针，在指针退出作用域的时候自动释放指针指向的内存，即使是异常退出的时候。 auto_ptr实际上是一个对象，重载了operator*和operator-&amp;gt;，且提供了一些成员函数，比如使用成员get()可以获得对应类型的原始指针。 auto_pt的特点是可以对其进行复制和赋值，但同一时刻只能有一个auto_ptr管理指针。  使用 std::auto_ptr&amp;lt;int&amp;gt; ap1(new int(5)); cout &amp;lt;&amp;lt; *ap1 &amp;lt;&amp;lt; endl; int* p = ap1.get(); cout &amp;lt;&amp;lt; *p &amp;lt;&amp;lt; endl; std::auto_ptr&amp;lt;int&amp;gt; ap2(ap1);//ap1失去管理权，不再拥有指针，ap2得到管理权  assert(ap1.get() == 0);//get()获得的指针为空 scoped_ptr 概念  boost的scoped_ptr用法类似于auto_ptr，都不能用作容器的元素，不支持++、&amp;ndash;等指针算数操作。 scoped_ptr的特点是拷贝构造函数和赋值操作符都是私有的，所以scoped_ptr不能进行复制和赋值操作，保证了对对象的唯一管理权。  使用 boost::scoped_ptr&amp;lt;int&amp;gt; sp1(new int(10)); boost::scoped_ptr&amp;lt;int&amp;gt; sp2(sp1);//编译无法通过：不能转让sp1的管理权到sp2  boost::scoped_ptr&amp;lt;int&amp;gt; sp3(new int(30)); sp3 = sp1;//编译无法通过：不能转让sp1的管理权到sp3 scoped_array 使用 #include &amp;lt;boost/scoped_array.hpp&amp;gt;  int main() { boost::scoped_array&amp;lt;int&amp;gt; i(new int[2]); *i.get() = 1; i[1] = 2; i.reset(new int[3]); boost::scoped_array&amp;lt;Book&amp;gt; myBook(new Book[2]); myBook.</description>
+    </item>
+    
+    <item>
+      <title>Boost - 字符串转换</title>
+      <link>https://jfy0o0.github.io/2020/boost-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2/</link>
+      <pubDate>Tue, 15 Dec 2020 15:17:09 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/boost-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2/</guid>
+      <description>format  在字符串处理中少不了格式化字符串，C++中传统的格式化函数是C语言的sprintf，但它一个很大的问题就是不安全。 因此，在stl中引入了stringstream来实现安全格式化，但是stringstream却远不如sprintf来得直观。  eg //C风格的格式化字符串 	boost::format fmt = boost::format(&amp;#34;&amp;lt;%s&amp;gt; %s in the lower case&amp;#34;) % text % (is_all_lower? &amp;#34;is&amp;#34;: &amp;#34;is not&amp;#34;); string output = fmt.str(); //.net风格的格式化字符串 	boost::format fmt = boost::format(&amp;#34;&amp;lt;%1%&amp;gt; %2% in the lower case&amp;#34;) % text % (is_all_lower? &amp;#34;is&amp;#34;: &amp;#34;is not&amp;#34;); cout &amp;lt;&amp;lt; fmt &amp;lt;&amp;lt; endl; 格式化控制 //传统c语言风格  cout &amp;lt;&amp;lt; boost::format(&amp;#34;\n\n%s&amp;#34; &amp;#34;%1t 十进制 = [%d]\n&amp;#34; &amp;#34;%1t 格式化的十进制 = [%5d]\n&amp;#34; &amp;#34;%1t 格式化十进制，前补&amp;#39;0&amp;#39; = [%05d]\n&amp;#34; &amp;#34;%1t 十六进制 = [%x]\n&amp;#34; &amp;#34;%1t 八进制 = [%o]\n&amp;#34; &amp;#34;%1t 浮点 = [%f]\n&amp;#34; &amp;#34;%1t 格式化的浮点 = [%3.</description>
+    </item>
+    
+    <item>
+      <title>Boost - property_tree</title>
+      <link>https://jfy0o0.github.io/2020/boost-property_tree/</link>
+      <pubDate>Tue, 15 Dec 2020 15:07:28 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/boost-property_tree/</guid>
+      <description>property_tree   property_tree是一个保存了多个属性值的树形数据结构，可以用来解析xml、json、ini、info文件。
+  要使用property_tree和xml解析组件的话需要包含&amp;quot;boost/property_tree/ptree.hpp&amp;quot;和&amp;quot;boost/property_tree/xml_parser.hpp&amp;quot;。
+  我们一般使用property_tree中预定义好的typedef: ptree来处理数据。
+  xml 格式 &amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?&amp;gt; &amp;lt;conf&amp;gt; &amp;lt;gui&amp;gt;0&amp;lt;/gui&amp;gt; &amp;lt;theme&amp;gt;matrix&amp;lt;/theme&amp;gt; &amp;lt;urls&amp;gt; &amp;lt;url&amp;gt;http:://www.url1.com&amp;lt;/url&amp;gt; &amp;lt;url&amp;gt;http:://www.url2.com&amp;lt;/url&amp;gt; &amp;lt;url&amp;gt;http:://www.url3.com&amp;lt;/url&amp;gt; &amp;lt;url&amp;gt;&amp;lt;/url&amp;gt; &amp;lt;/urls&amp;gt; &amp;lt;clock_style&amp;gt;24.35&amp;lt;/clock_style&amp;gt; &amp;lt;/conf&amp;gt; 解析 #include &amp;lt;cstdio&amp;gt;#include &amp;lt;string&amp;gt;#include &amp;lt;iostream&amp;gt;using std::string; #include &amp;#34;boost/property_tree/ptree.hpp&amp;#34;#include &amp;#34;boost/property_tree/xml_parser.hpp&amp;#34;#include &amp;#34;boost/typeof/typeof.hpp&amp;#34;#include &amp;#34;boost/optional.hpp&amp;#34;using namespace boost::property_tree; int main() { ptree pt; read_xml(&amp;#34;conf.xml&amp;#34;, pt); boost::optional&amp;lt;int&amp;gt; op = pt.get_optional&amp;lt;int&amp;gt;(&amp;#34;conf.gui&amp;#34;); //使用get_optional()获得节点，不存在则op为空  if (op) { int i = op.get(); } string str1 = pt.get&amp;lt;string&amp;gt;(&amp;#34;conf.theme&amp;#34;, &amp;#34;&amp;#34;); //使用get()获得节点，不存在则返回&amp;#34;&amp;#34;  boost::optional&amp;lt;ptree&amp;amp;&amp;gt; child_null_test = pt.</description>
+    </item>
+    
     <item>
       <title>Boost - 容器</title>
       <link>https://jfy0o0.github.io/2020/boost-%E5%AE%B9%E5%99%A8/</link>
