@@ -10,7 +10,7 @@
   
   
   <link rel="prev" href="https://jfy0o0.github.io/2020/boost-%E5%AE%B9%E5%99%A8/" />
-  <link rel="next" href="https://jfy0o0.github.io/2020/other-%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/" />
+  <link rel="next" href="https://jfy0o0.github.io/2020/other-%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF/" />
   <link rel="canonical" href="https://jfy0o0.github.io/2020/cpp_%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%E5%B0%8F%E6%8A%80%E5%B7%A7/" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -46,7 +46,7 @@
     "articleSection" : "posts",
     "name" : "C\u002b\u002b - 运算符重载小技巧",
     "headline" : "C\u002b\u002b - 运算符重载小技巧",
-    "description" : "c\u002b\u002b - 运算符重载小技巧 重载 () ： 多次调用(),然后再调用print()\nclass A{ public: A operator()(int a) { cout \u0026lt;\u0026lt; a \u0026lt;\u0026lt;endl; return *this; } void print() { cout \u0026lt;\u0026lt; \u0026#34;hello\u0026#34;\u0026lt;\u0026lt;endl; } }; int main() { A a; a(54)(434).print(); \/\/54 \t\/\/434 \t\/\/hello } 重载 \u002b\u002b ： \u002b\u002b 运算符，还可分为前缀 \u002b\u002b 和后缀 \u002b\u002b 运算符。\nclass Length { private: int len_inches; public: \/\/前缀\u002b\u002b的声明  Length operator\u002b\u002b ()； \/\/后缀\u002b\u002b的声明  Length operator\u002b\u002b (int)； }; 重载前缀\u002b\u002b运算符: C\u002b\u002b允许重载前缀运算符，以使表达式 \u002b\u002bb 能递增 b 的长度值，并返回结果对象。该运算符可以作为成员函数来重载，这使得它的单个形参是隐含的， 所以重载运算符不需要形参。",
+    "description" : "c\u002b\u002b - 运算符重载小技巧 重载 () ： 多次调用(),然后再调用print()\nclass A{ public: A operator()(int a) { cout \u0026lt;\u0026lt; a \u0026lt;\u0026lt;endl; return *this; } void print() { cout \u0026lt;\u0026lt; \u0026#34;hello\u0026#34;\u0026lt;\u0026lt;endl; } }; int main() { A a; a(54)(434).print(); \/\/54 \t\/\/434 \t\/\/hello } 重载 \u002b\u002b ： \u002b\u002b 运算符，还可分为前缀 \u002b\u002b 和后缀 \u002b\u002b 运算符。\nclass Length { private: int len_inches; public: \/\/前缀\u002b\u002b的声明  Length operator\u002b\u002b (); \/\/后缀\u002b\u002b的声明  Length operator\u002b\u002b (int); }; 重载前缀\u002b\u002b运算符: C\u002b\u002b允许重载前缀运算符，以使表达式 \u002b\u002bb 能递增 b 的长度值，并返回结果对象。该运算符可以作为成员函数来重载，这使得它的单个形参是隐含的， 所以重载运算符不需要形参。",
     "inLanguage" : "en-us",
     "author" : "Jiang",
     "creator" : "Jiang",
@@ -178,9 +178,9 @@
         <span style="color:#66d9ef">int</span> len_inches;
     <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
         <span style="color:#75715e">//前缀++的声明
-</span><span style="color:#75715e"></span>        Length <span style="color:#66d9ef">operator</span><span style="color:#f92672">++</span> ()<span style="color:#960050;background-color:#1e0010">；</span>
+</span><span style="color:#75715e"></span>        Length <span style="color:#66d9ef">operator</span><span style="color:#f92672">++</span> ();
         <span style="color:#75715e">//后缀++的声明
-</span><span style="color:#75715e"></span>        Length <span style="color:#66d9ef">operator</span><span style="color:#f92672">++</span> (<span style="color:#66d9ef">int</span>)<span style="color:#960050;background-color:#1e0010">；</span>
+</span><span style="color:#75715e"></span>        Length <span style="color:#66d9ef">operator</span><span style="color:#f92672">++</span> (<span style="color:#66d9ef">int</span>);
 };
 </code></pre></div><h2 id="重载前缀运算符">重载前缀++运算符:</h2>
 <p>C++允许重载前缀运算符，以使表达式 ++b 能递增 b 的长度值，并返回结果对象。该运算符可以作为成员函数来重载，这使得它的单个形参是隐含的， 所以重载运算符不需要形参。</p>
@@ -244,7 +244,7 @@
         <a href="https://jfy0o0.github.io/2020/boost-%E5%AE%B9%E5%99%A8/" class="prev" rel="prev" title="Boost - 容器"><i class="iconfont icon-left"></i>&nbsp;Boost - 容器</a>
          
         
-        <a href="https://jfy0o0.github.io/2020/other-%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/" class="next" rel="next" title="Other - 同步、异步、阻塞、非阻塞">Other - 同步、异步、阻塞、非阻塞&nbsp;<i class="iconfont icon-right"></i></a>
+        <a href="https://jfy0o0.github.io/2020/other-%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF/" class="next" rel="next" title="Other - 大端、小端">Other - 大端、小端&nbsp;<i class="iconfont icon-right"></i></a>
         
     </div>
 

@@ -6,7 +6,44 @@
     <description>Recent content in C&#43;&#43; on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 12 Dec 2020 08:47:21 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/categories/c++/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 21 Dec 2020 18:45:25 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/categories/c++/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C&#43;&#43; - STL源码剖析 - traits技术</title>
+      <link>https://jfy0o0.github.io/2020/cpp_stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90-traits%E6%8A%80%E6%9C%AF/</link>
+      <pubDate>Mon, 21 Dec 2020 18:45:25 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/cpp_stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90-traits%E6%8A%80%E6%9C%AF/</guid>
+      <description>概念  之前已经介绍过迭代器，知道了不同的数据结构都有自己专属的迭代器，不同的迭代器也有不同的特性，由于算法的接口是统一的，通过迭代器的不同属性，算法自动选择正确的执行流程，在完全任务的同时，也尽可能提高算法的执行效率。 那算法如何获知迭代器的属性呢？这一光荣的任务就是traits完成的。 在STL实现中，traits编程技术得到大量的运用，它利用了“内嵌类型”的编程技巧与C++的template参数推导功能，弥补了C++类型识别方面的不足。 通过traits，算法可以原汁原味的将迭代器的属性萃取出来，帮助算法正确高效的运行。  引子 1.以迭代器所指对象的类型声明局部变量 下面是一个以迭代器为模板形参的函数模板：
+template&amp;lt;typename Iterator&amp;gt; void func(Iterator iter) { //函数体 } 假如现在算法中需要声明一个变量，而变量的类型是迭代器所指对象的类型，应该怎么处理呢？
+template&amp;lt;typename Iterator&amp;gt; void func(Iterator iter) { *Iterator var;//这样定义变量可以吗？ } 上面的代码是不可以通过编译的，虽然C++支持sizeof()，但是并不支持typeof()，就算是用到RTTI性质中的typeid()，获取到的也仅仅是类型的名字，因此不能直接用来声明变量。此时可以利用函数模板的参数类型推导机制解决问题，例如：
+template&amp;lt;typename Iterator, typename T&amp;gt; void func_impl(Iterator iter, T t) { T temp;//这里就解决了问题  //这里做原本func()的工作 } template&amp;lt;typename Iterator&amp;gt; void func(Iterator iter) { func_impl(iter, *iter);//func的工作全部都移到func_impl里面了 } int main(int argc, const char *argv[]) { int i; func(&amp;amp;i); }  函数func作为对外接口，实际的操作却由函数func_impl执行，通过函数func_impl的参数类型推导，获取到Iterator指向对象的类型T，从而解决了问题。  2.以迭代器所指对象的类型声明返回类型 ​ 现在通过函数模板的参数类型推导解决了函数体内声明变量的问题，但问题又来了，如果需要返回类型是迭代器所指对象的类型又可以怎样做呢？</description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43; - STL源码剖析 - 迭代器</title>
+      <link>https://jfy0o0.github.io/2020/cpp_stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90-%E8%BF%AD%E4%BB%A3%E5%99%A8/</link>
+      <pubDate>Mon, 21 Dec 2020 17:13:11 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/cpp_stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90-%E8%BF%AD%E4%BB%A3%E5%99%A8/</guid>
+      <description>迭代器作用  在设计模式中有一种模式叫迭代器模式，简单来说就是提供一种方法，在不需要暴露某个容器的内部表现形式情况下，使之能依次访问该容器中的各个元素， 这种设计思维在STL中得到了广泛的应用，是STL的关键所在，通过迭代器，容器和算法可以有机的粘合在一起，只要对算法给予不同的迭代器，就可以对不同容器进行相同的操作。 在这里提到了一个叫迭代器的东西，说得简单一点，就是一种指针，学习C和C++的同学肯定不会对指针感到陌生，这确实是个让我们又爱又恨的东西。 以下以算法find为例，展示了容器、算法和迭代器如何合作：  template&amp;lt;typename InputIterator, typename T&amp;gt; InputIterator find(InputIterator first, InputIterator last, const T &amp;amp;value) { while (first != last &amp;amp;&amp;amp; *frist != value) ++first; return first; } 迭代器是一种智能指针  它将指针进行了一层封装，既包含了原生指针的灵活和强大，也加上很多重要的特性，使其能发挥更大的作用以及能更好的使用。 迭代器对指针的一些基本操作如*、-&amp;gt;、++、==、!=、=进行了重载，使其具有了遍历复杂数据结构的能力，其遍历机制取决于所遍历的数据结构。 下面上一段代码，了解一下迭代器的“智能”：  对于不同的数据容器，以上Iterator类中的成员函数operator++的实现会各不相同，
+例如，对于数组的可能实现如下：
+//对于数组的实现 template&amp;lt;typename T&amp;gt; Iterator&amp;amp; operator++() { ++m_ptr; retrun *this; } 对于链表，它会有一个类似于next的成员函数用于获取下一个结点，其可能实现如下：
+//对于链表的实现 template&amp;lt;typename T&amp;gt; Iterator&amp;amp; operator++() { m_ptr = m_ptr-&amp;gt;next();//next()用于获取链表的下一个节点  return *this; } 不同的容器都有专属的迭代器 下面尝试实现一个自己的迭代器，由于迭代器的作用对象是容器，因此需要首先实现一个容器，下面代码展示了一个
+单向链表的实现： template&amp;lt;typename T&amp;gt; class ListItem { public: ListItem() { m_pNext = 0;} ListItem(T v, ListItem *p = 0) { m_value = v; m_pNext = p;} T Value() const { return m_value;} ListItem* Next() const { return m_pNext;} private: T m_value;	//存储的数据  ListItem* m_pNext;	//指向下一个ListItem的指针 }; template&amp;lt;typename T&amp;gt; class List { public: //从链表尾部插入元素  void Push(T value) { m_pTail = new ListItem&amp;lt;T&amp;gt;(value); m_pTail = m_pTail-&amp;gt;Next(); } //打印链表元素  void Print(std::ostream &amp;amp;os = std::cout) const {	for (ListItem&amp;lt;T&amp;gt; *ptr = m_pHead; ptr; ptr = ptr-&amp;gt;Next()) os&amp;lt;&amp;lt;ptr-&amp;gt;Value&amp;lt;&amp;lt;&amp;#34; &amp;#34;; os&amp;lt;&amp;lt;endl; } //返回链表头部指针  ListItem&amp;lt;T&amp;gt;* Begin() const { return m_pHead;} //返回链表尾部指针  ListItem&amp;lt;T&amp;gt;* End() const { return 0;} //其它成员函数  private： ListItem&amp;lt;T&amp;gt; *m_pHead; //指向链表头部的指针  ListItem&amp;lt;T&amp;gt; *m_pTail; //指向链表尾部的指针  long m_nSize; //链表长度 }; 迭代器实现： template&amp;lt;typename T&amp;gt; class ListIter { public: ListIter(T *p = 0) : m_ptr(p){} //解引用，即dereference  T&amp;amp; operator*() const { return *m_ptr;} //成员访问，即member access  T* operator-&amp;gt;() const { return m_ptr;} //前置++操作  ListIter&amp;amp; operator++() { m_ptr = m_ptr-&amp;gt;Next(); //暴露了ListItem的东西  return *this; } //后置++操作  ListIter operator++(int) { ListIter temp = *this; ++*this; return temp; } //判断两个ListIter是否指向相同的地址  bool opeartor==(const ListIter &amp;amp;arg) const { return arg.</description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43; - STL源码剖析 - 空间配置器</title>
+      <link>https://jfy0o0.github.io/2020/cpp_stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90-%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8/</link>
+      <pubDate>Mon, 21 Dec 2020 16:14:02 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/cpp_stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90-%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8/</guid>
+      <description>空间配置器 前言 在STL中，容器的定义中都带一个模板参数，如vector
+template &amp;lt;class T, class Alloc = alloc&amp;gt; class vector {...} 其中第二个参数就是该容器使用的空间配置器，其中缺省使用STL已经实现的空间配置器(alloc)，
+该配置器使用malloc/free等为vector分配内存。
+缺省的空间配置器  alloc定义了两级的空间配置器， 第一级是对malloc/free简单的封装。 而为了解决内存碎片的问题，跟进行内存管理，alloc实现的第二级的空间配置器。 第二级空间配置器在分配大块内存(大于128bytes)时，会直接调用第一级空间配置器， 而分配小于128bytes的内存时，则使用内存池跟free_list进行内存分配/管理。  第一级空间配置器  它可以设定一个处理内存不足的时候的处理函数(跟set_new_handler类似)。  class base_alloc { public: // 只是对malloc/free的简单封装  static void* allocate(size_t n) { void* res = malloc(n); if (0 == res) res = oom_malloc(n); return res; } static void* reallocate(void* p, size_t new_sz) { void* res = realloc(p, new_sz); if (0 == res) res = oom_realloc(p, new_sz); return res; } static void deallocate(void* p) { free(p); } // 用来设置内存不足时的处理函数 该函数参数跟返回值都是一个函数指针  // 一般会抛出异常/尝试回收内存  static void(*set_handler(void(*f)()))() { void(*old)() = _oom_handler; _oom_handler = f; return old; } private: // 用来处理内存不足的情况  static void* oom_malloc(size_t n) { void(*my_handler)(); void* res; for (;;) { my_handler = _oom_handler; if (0 == my_handler) { return NULL; } (*my_handler)(); if (res = malloc(n)) return res; } } // 用来处理内存不足的情况  static void* oom_realloc(void* p, size_t n) { void(*my_handler)(); void* res; for (;;) { my_handler = _oom_handler; if (0 == my_handler) { return NULL; } (*my_handler)(); if (res = reallocate(p, n)) return res; } } // 由用户设置，在内存不足的时候进行处理，由上面两个函数调用  static void(*_oom_handler)(); }; // 处理函数默认为0 void(*base_alloc::_oom_handler)() = 0; 第二级空间配置器  该配置器维护一个free_list，这是一个指针数组。 在分配内存的时候，补足8bytes的倍数，free_list数组中每个指针分别管理分配大小为8、16、24、32&amp;hellip;bytes的内存。 下图表示从二级空间配置器中分配内存时是如何维护free_list的(建议参考下面源码阅读)。 开始所有指针都为0，没有可分配的区块时(就是free_list[i]==0)会从内存池中分配内存(默认分配20个区块)插入到free_list[i]中。 然后改变free_list[i]的指向，指向下一个区块(free_list_link指向下一个区块，如果没有则为0)。  enum { _ALIGN = 8 }; // 对齐 enum { _MAX_BYTES = 128 }; // 区块大小上限 enum { _NFREELISTS = _MAX_BYTES / _ALIGN }; // free-list个数  class default_alloc { private: // 将bytes上调到8的倍数  static size_t ROUND_UP(size_t bytes) { return (bytes + _ALIGN - 1) &amp;amp; ~(_ALIGN - 1); } private: union obj { union obj* free_list_link; char client_data[1]; }; private: // 16个free-lists 各自管理分别为8,16,24.</description>
+    </item>
+    
     <item>
       <title>C&#43;&#43; - STL Algorithm</title>
       <link>https://jfy0o0.github.io/2020/cpp_stl_algorithm/</link>
@@ -68,7 +105,7 @@ class A { public: A(int i) :a(i){} private: int a; }; int main() { A* example = 
       <guid>https://jfy0o0.github.io/2020/cpp_%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%E5%B0%8F%E6%8A%80%E5%B7%A7/</guid>
       <description>c++ - 运算符重载小技巧 重载 () ： 多次调用(),然后再调用print()
 class A{ public: A operator()(int a) { cout &amp;lt;&amp;lt; a &amp;lt;&amp;lt;endl; return *this; } void print() { cout &amp;lt;&amp;lt; &amp;#34;hello&amp;#34;&amp;lt;&amp;lt;endl; } }; int main() { A a; a(54)(434).print(); //54 	//434 	//hello } 重载 ++ ： ++ 运算符，还可分为前缀 ++ 和后缀 ++ 运算符。
-class Length { private: int len_inches; public: //前缀++的声明  Length operator++ ()； //后缀++的声明  Length operator++ (int)； }; 重载前缀++运算符: C++允许重载前缀运算符，以使表达式 ++b 能递增 b 的长度值，并返回结果对象。该运算符可以作为成员函数来重载，这使得它的单个形参是隐含的， 所以重载运算符不需要形参。</description>
+class Length { private: int len_inches; public: //前缀++的声明  Length operator++ (); //后缀++的声明  Length operator++ (int); }; 重载前缀++运算符: C++允许重载前缀运算符，以使表达式 ++b 能递增 b 的长度值，并返回结果对象。该运算符可以作为成员函数来重载，这使得它的单个形参是隐含的， 所以重载运算符不需要形参。</description>
     </item>
     
     <item>
