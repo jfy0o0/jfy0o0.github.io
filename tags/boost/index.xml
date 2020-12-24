@@ -6,7 +6,16 @@
     <description>Recent content in Boost on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 23 Dec 2020 13:47:22 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/boost/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 24 Dec 2020 15:01:01 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/boost/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Boost - asio</title>
+      <link>https://jfy0o0.github.io/2020/boost-asio/</link>
+      <pubDate>Thu, 24 Dec 2020 15:01:01 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/boost-asio/</guid>
+      <description>asio  Boost.Asio是一个跨平台的C++库，主要用于网络和其他一些底层的I/O编程。 Boost.Asio成功的抽象了包括网络，串口、文件在内的同步和异步的I/O操作： Boost.Asio支持大多数操作系统，轻量可扩展的，目前网络部分支持TCP, UDP, IMCP，可以很方便的扩展自定义协议。  注意  把lambda表达式声明成类得成员变量 ，而不是一个局部变量。 虽然io_service拷贝handler以备异步调用，但是handler还引用了作为外部变量得自身，而io_service是不知道外部变量得，也就不会拷贝。 如果lambda表达式是一个函数内局部变量，那离开函数作用域 就会消失，io_service执行handler时候就会发生错误。  asio程序优雅的退出  Server对象还监听信号量，从而优雅的退出。 signal_set.async_wait(SignalHandler handler) void handler(const system::error_code&amp;amp;ec , int signal_number)  #include &amp;lt;cstdlib&amp;gt;#include &amp;lt;boost/asio.hpp&amp;gt;#include &amp;lt;boost/bind.hpp&amp;gt;#include &amp;lt;iostream&amp;gt; using namespace boost; using namespace boost::asio; using namespace std; class Server { public: Server(io_service &amp;amp; s) : io_(s), signals_(s) { signals_.add(SIGINT); signals_.add(SIGTERM); #if defined(SIGQUIT)  signals_.add(SIGQUIT); #endif  signals_.async_wait(boost::bind(&amp;amp;Server::stop, this)); } void run() { io_.run(); } private: void stop() { cout &amp;lt;&amp;lt; &amp;#34;x&amp;#34; &amp;lt;&amp;lt; endl; io_.</description>
+    </item>
+    
     <item>
       <title>Boost - log</title>
       <link>https://jfy0o0.github.io/2020/boost-log/</link>
