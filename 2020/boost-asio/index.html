@@ -10,7 +10,7 @@
   
   
   <link rel="prev" href="https://jfy0o0.github.io/2020/boost-log/" />
-  
+  <link rel="next" href="https://jfy0o0.github.io/2020/cpp_shared_ptr%E9%99%B7%E9%98%B1/" />
   <link rel="canonical" href="https://jfy0o0.github.io/2020/boost-asio/" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -57,7 +57,7 @@
     "datePublished": "2020-12-24 15:01:01 \u002b0800 CST",
     "dateModified" : "2020-12-24 15:01:01 \u002b0800 CST",
     "url" : "https:\/\/jfy0o0.github.io\/2020\/boost-asio\/",
-    "wordCount" : "268",
+    "wordCount" : "659",
     "keywords" : [ "c\u002b\u002b","Boost", "Jiang . \u0027s blog"]
 }
 </script>
@@ -289,7 +289,217 @@
 <li>可以把跟这个服务端口连接的socket ， boost::shared_ptr&lt; tcp::socket &gt; psocket(new tcp::socket(m_iosev)); 存起来</li>
 <li>在需要reset得时候 把vec&lt; socket &gt; 遍历关掉，再reset</li>
 </ul>
-<h1 id="其他">其他</h1>
+<h1 id="拓展服务端">拓展服务端：</h1>
+<h2 id="class-connection">class Connection:</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;vector&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;boost/asio.hpp&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;boost/enable_shared_from_this.hpp&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> boost;
+<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> boost<span style="color:#f92672">::</span>asio;
+<span style="color:#66d9ef">using</span> ip<span style="color:#f92672">::</span>tcp;
+<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<span style="color:#66d9ef">using</span> boost<span style="color:#f92672">::</span>system<span style="color:#f92672">::</span>error_code;
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConnectionsManager</span> ;
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Connection</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> boost<span style="color:#f92672">::</span>enable_shared_from_this<span style="color:#f92672">&lt;</span>Connection<span style="color:#f92672">&gt;</span>
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    Connection(io_service<span style="color:#f92672">&amp;</span> s, ConnectionsManager<span style="color:#f92672">&amp;</span> cons);
+
+    <span style="color:#f92672">~</span>Connection();
+
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">StartWork</span>();
+
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">CloseSocket</span>();
+
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">AfterReadChar</span>(boost<span style="color:#f92672">::</span>system<span style="color:#f92672">::</span>error_code <span style="color:#66d9ef">const</span><span style="color:#f92672">&amp;</span> ec,std<span style="color:#f92672">::</span>size_t len);
+
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    tcp<span style="color:#f92672">::</span>socket socket;
+
+<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+    vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">char</span><span style="color:#f92672">&gt;</span> read_buffer_;
+    ConnectionsManager<span style="color:#f92672">&amp;</span> cons_;
+};
+
+
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;boost/bind.hpp&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;Connection.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;ConnectionsManager.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+Connection<span style="color:#f92672">::</span>Connection(io_service <span style="color:#f92672">&amp;</span>s, ConnectionsManager <span style="color:#f92672">&amp;</span>cons)<span style="color:#f92672">:</span> socket(s), read_buffer_(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>), cons_(cons)
+{
+    cout <span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;Connection&#34;</span> <span style="color:#f92672">&lt;&lt;</span>endl;
+}
+
+Connection<span style="color:#f92672">::~</span>Connection()
+{
+    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;~Connection&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+}
+
+<span style="color:#66d9ef">void</span> Connection<span style="color:#f92672">::</span>StartWork()
+{
+
+    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;the new connection object is starting now.&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+    async_read(socket, buffer(read_buffer_),
+               boost<span style="color:#f92672">::</span>bind(<span style="color:#f92672">&amp;</span>Connection<span style="color:#f92672">::</span>AfterReadChar, shared_from_this(), _1,_2));
+}
+
+<span style="color:#66d9ef">void</span> Connection<span style="color:#f92672">::</span>CloseSocket()
+{
+    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;closing the socket&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+    socket.shutdown(tcp<span style="color:#f92672">::</span>socket<span style="color:#f92672">::</span>shutdown_both);
+    socket.close();
+}
+
+<span style="color:#66d9ef">void</span> Connection<span style="color:#f92672">::</span>AfterReadChar(boost<span style="color:#f92672">::</span>system<span style="color:#f92672">::</span>error_code <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span>ec,std<span style="color:#f92672">::</span>size_t len )
+{
+    <span style="color:#66d9ef">if</span> (ec) {
+        cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;ec message :&#34;</span><span style="color:#f92672">&lt;&lt;</span> ec.value()<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;---&#34;</span> <span style="color:#f92672">&lt;&lt;</span>ec.message() <span style="color:#f92672">&lt;&lt;</span>endl;
+        cons_.Remove(shared_from_this());
+        <span style="color:#66d9ef">return</span>;
+    }
+
+    <span style="color:#66d9ef">char</span> x <span style="color:#f92672">=</span> read_buffer_[<span style="color:#ae81ff">0</span>];
+    <span style="color:#66d9ef">if</span> (x <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;a&#39;</span>) {
+        cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;correct data received&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+        async_read(socket, buffer(read_buffer_),
+                   boost<span style="color:#f92672">::</span>bind(<span style="color:#f92672">&amp;</span>Connection<span style="color:#f92672">::</span>AfterReadChar, shared_from_this(), _1,_2));
+        CloseSocket();
+    } <span style="color:#66d9ef">else</span> {
+        cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;wrong data received, char is:&#34;</span> <span style="color:#f92672">&lt;&lt;</span> (<span style="color:#66d9ef">int</span>) x <span style="color:#f92672">&lt;&lt;</span> endl;
+        CloseSocket();
+        cons_.Remove(shared_from_this());
+    }
+}
+
+</code></pre></div><h2 id="class-connectionsmanager">class ConnectionsManager:</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;set&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;boost/shared_array.hpp&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> boost;
+
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;Connection.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConnectionsManager</span>
+{
+
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">void</span> Add(boost<span style="color:#f92672">::</span>shared_ptr<span style="color:#f92672">&lt;</span>Connection<span style="color:#f92672">&gt;&amp;</span> con);
+
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Remove</span>(boost<span style="color:#f92672">::</span>shared_ptr<span style="color:#f92672">&lt;</span>Connection<span style="color:#f92672">&gt;</span> con);
+
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">CloseAll</span>();
+
+<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+    set<span style="color:#f92672">&lt;</span>boost<span style="color:#f92672">::</span>shared_ptr<span style="color:#f92672">&lt;</span>Connection<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&gt;</span> values_;
+};
+
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;boost/bind.hpp&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;ConnectionsManager.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<span style="color:#66d9ef">void</span> ConnectionsManager<span style="color:#f92672">::</span>Add(boost<span style="color:#f92672">::</span>shared_ptr<span style="color:#f92672">&lt;</span>Connection<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span>con)
+{
+    values_.insert(con);
+    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;the number of connections is: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> values_.size() <span style="color:#f92672">&lt;&lt;</span> endl;
+}
+
+<span style="color:#66d9ef">void</span> ConnectionsManager<span style="color:#f92672">::</span>Remove(boost<span style="color:#f92672">::</span>shared_ptr<span style="color:#f92672">&lt;</span>Connection<span style="color:#f92672">&gt;</span> con)
+{
+    values_.erase(con);
+}
+
+<span style="color:#66d9ef">void</span> ConnectionsManager<span style="color:#f92672">::</span>CloseAll()
+{
+    for_each(values_.begin(), values_.end(), boost<span style="color:#f92672">::</span>bind(<span style="color:#f92672">&amp;</span>Connection<span style="color:#f92672">::</span>CloseSocket, _1));
+    values_.clear();
+}
+
+</code></pre></div><h2 id="class-server">class Server:</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;boost/asio.hpp&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;boost/bind.hpp&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;vector&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;Connection.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;ConnectionsManager.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> boost;
+<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> boost<span style="color:#f92672">::</span>asio;
+<span style="color:#66d9ef">using</span> ip<span style="color:#f92672">::</span>tcp;
+<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<span style="color:#66d9ef">using</span> boost<span style="color:#f92672">::</span>system<span style="color:#f92672">::</span>error_code;
+
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Server</span>
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+
+    Server(io_service <span style="color:#f92672">&amp;</span> s, tcp<span style="color:#f92672">::</span>endpoint <span style="color:#66d9ef">const</span><span style="color:#f92672">&amp;</span> listen_endpoint)
+            <span style="color:#f92672">:</span> io_(s), signals_(s), acceptor_(s, listen_endpoint) {
+        signals_.add(SIGINT);
+        signals_.add(SIGTERM);
+<span style="color:#75715e">#if defined(SIGQUIT)
+</span><span style="color:#75715e"></span>        signals_.add(SIGQUIT);
+<span style="color:#75715e">#endif
+</span><span style="color:#75715e"></span>        signals_.async_wait(boost<span style="color:#f92672">::</span>bind(<span style="color:#f92672">&amp;</span>Server<span style="color:#f92672">::</span>Stop, <span style="color:#66d9ef">this</span>));
+        boost<span style="color:#f92672">::</span>shared_ptr<span style="color:#f92672">&lt;</span>Connection<span style="color:#f92672">&gt;</span> c(<span style="color:#66d9ef">new</span> Connection(io_, cons_));
+
+        acceptor_.async_accept(c<span style="color:#f92672">-&gt;</span>socket,
+                               boost<span style="color:#f92672">::</span>bind(<span style="color:#f92672">&amp;</span>Server<span style="color:#f92672">::</span>AfterAccept, <span style="color:#66d9ef">this</span>, c, _1));
+    }
+
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Run</span>() {
+        io_.run();
+    }
+
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">AfterAccept</span>(boost<span style="color:#f92672">::</span>shared_ptr<span style="color:#f92672">&lt;</span>Connection<span style="color:#f92672">&gt;&amp;</span> c, boost<span style="color:#f92672">::</span>system<span style="color:#f92672">::</span>error_code <span style="color:#66d9ef">const</span><span style="color:#f92672">&amp;</span> ec) {
+        <span style="color:#75715e">// Check whether the server was stopped by a signal before this completion
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// handler had a chance to run.
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>acceptor_.is_open()) {
+            <span style="color:#66d9ef">return</span>;
+        }
+
+        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>ec) {
+            cons_.Add(c);
+            c<span style="color:#f92672">-&gt;</span>StartWork();
+            boost<span style="color:#f92672">::</span>shared_ptr<span style="color:#f92672">&lt;</span>Connection<span style="color:#f92672">&gt;</span> c2(<span style="color:#66d9ef">new</span> Connection(io_, cons_));
+            acceptor_.async_accept(c2<span style="color:#f92672">-&gt;</span>socket,
+                                   boost<span style="color:#f92672">::</span>bind(<span style="color:#f92672">&amp;</span>Server<span style="color:#f92672">::</span>AfterAccept, <span style="color:#66d9ef">this</span>, c2, _1));
+        }
+    }
+
+<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+
+    <span style="color:#66d9ef">void</span> Stop() {
+        cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;stopping&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+        acceptor_.close(); <span style="color:#75715e">//reject new conn
+</span><span style="color:#75715e"></span>        cons_.CloseAll();
+        io_.stop();
+    }
+
+<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+    io_service<span style="color:#f92672">&amp;</span> io_;
+    boost<span style="color:#f92672">::</span>asio<span style="color:#f92672">::</span>signal_set signals_;
+    tcp<span style="color:#f92672">::</span>acceptor acceptor_;
+    ConnectionsManager cons_;
+
+
+};
+</code></pre></div><h2 id="main">main:</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">    io_service s;
+    tcp<span style="color:#f92672">::</span>endpoint listen_endpoint(tcp<span style="color:#f92672">::</span>v4(), <span style="color:#ae81ff">8888</span>);
+
+    Server <span style="color:#a6e22e">server</span>(s, listen_endpoint);
+    server.Run();
+</code></pre></div><h1 id="其他">其他</h1>
 <ul>
 <li>可以io_service.run()可以在多个线程内执行 ，此时需要strand来wrap防止竞争，待续</li>
 </ul>
@@ -341,6 +551,8 @@
         
         <a href="https://jfy0o0.github.io/2020/boost-log/" class="prev" rel="prev" title="Boost - log"><i class="iconfont icon-left"></i>&nbsp;Boost - log</a>
          
+        
+        <a href="https://jfy0o0.github.io/2020/cpp_shared_ptr%E9%99%B7%E9%98%B1/" class="next" rel="next" title="C&#43;&#43; - shared_ptr陷阱">C&#43;&#43; - shared_ptr陷阱&nbsp;<i class="iconfont icon-right"></i></a>
         
     </div>
 
