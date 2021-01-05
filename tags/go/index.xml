@@ -1,34 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>go on LeaveIt</title>
+    <title>Go on Jiang . &#39;s blog</title>
     <link>https://jfy0o0.github.io/tags/go/</link>
-    <description>Recent content in go on LeaveIt</description>
+    <description>Recent content in Go on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 28 Jul 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 05 Jan 2021 16:41:46 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>(Hu)go Template Primer</title>
-      <link>https://jfy0o0.github.io/2014/goisforlovers/</link>
-      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
+      <title>Go - Go Module</title>
+      <link>https://jfy0o0.github.io/2021/go-go-module/</link>
+      <pubDate>Tue, 05 Jan 2021 16:41:46 +0800</pubDate>
       
-      <guid>https://jfy0o0.github.io/2014/goisforlovers/</guid>
-      <description>Hugo uses the excellent go html/template library for its template engine. It is an extremely lightweight engine that provides a very small amount of logic. In our experience that it is just the right amount of logic to be able to create a good static website. If you have used other template systems from different languages or frameworks you will find a lot of similarities in go templates.
-This document is a brief primer on using go templates.</description>
-    </item>
-    
-    <item>
-      <title>Getting Started with Hugo</title>
-      <link>https://jfy0o0.github.io/2014/hugoisforlovers/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://jfy0o0.github.io/2014/hugoisforlovers/</guid>
-      <description>Step 1. Install Hugo Goto hugo releases and download the appropriate version for your os and architecture.
-Save it somewhere specific as we will be using it in the next step.
-More complete instructions are available at installing hugo
-Step 2. Build the Docs Hugo has its own example site which happens to also be the documentation site you are reading right now.
-Follow the following steps:
- Clone the hugo repository Go into the repo Run hugo in server mode and build the docs Open your browser to http://localhost:1313  Corresponding pseudo commands:</description>
+      <guid>https://jfy0o0.github.io/2021/go-go-module/</guid>
+      <description>go mod 命令 go mod download 下载依赖的module到本地cache（默认为$GOPATH/pkg/mod目录） go mod edit 编辑go.mod文件 go mod graph 打印模块依赖图 go mod init 初始化当前文件夹, 创建go.mod文件 go mod tidy 增加缺少的module，删除无用的module go mod vendor 将依赖复制到vendor下 go mod verify 校验依赖 go mod why 解释为什么需要依 例子 module github.com/Q1mi/studygo/blogger go 1.12 require ( github.com/DeanThompson/ginpprof v0.0.0-20190408063150-3be636683586 github.com/gin-gonic/gin v1.4.0 github.com/go-sql-driver/mysql v1.4.1 github.com/jmoiron/sqlx v1.2.0 github.com/satori/go.uuid v1.2.0 google.golang.org/appengine v1.6.1 // indirect )  module用来定义包名 require用来定义依赖包及版本 indirect表示间接引用  依赖的版本 go mod支持语义化版本号，比如go get foo@v1.2.3，也可以跟git的分支或tag，比如go get foo@master，当然也可以跟git提交哈希，比如go get foo@e3702bed2。关于依赖的版本支持以下几种格式：</description>
     </item>
     
   </channel>

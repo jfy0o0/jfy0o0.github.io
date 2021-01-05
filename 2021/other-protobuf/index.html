@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Jiang .">
+  
+  
+  
+  <link rel="prev" href="https://jfy0o0.github.io/2020/cpp_shared_ptr%E9%99%B7%E9%98%B1/" />
+  <link rel="next" href="https://jfy0o0.github.io/2021/go-go-module/" />
+  <link rel="canonical" href="https://jfy0o0.github.io/2021/other-protobuf/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Other - protoBuf | Jiang . &#39;s blog
+       
+  </title>
+  <meta name="title" content="Other - protoBuf | Jiang . &#39;s blog">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/jfy0o0.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Other - protoBuf",
+    "headline" : "Other - protoBuf",
+    "description" : "ProtoBuf 定义  protocol buffers 是一种语言无关、平台无关、可扩展的序列化结构数据的方法，它可用于（数据）通信协议、数据存储等。 Protocol Buffers 是一种灵活，高效，自动化机制的结构数据序列化方法－可类比 XML，但是比 XML 更小（3 ~ 10倍）、更快（20 ~ 100倍）、更为简单。 你可以定义数据的结构，然后使用特殊生成的源代码轻松的在各种数据流中使用各种语言进行编写和读取结构数据。你甚至可以更新数据结构，而不破坏由旧数据结构编译的已部署程序。  特点 简单来讲， ProtoBuf 是结构数据序列化[1] 方法，可简单类比于 XML[2]，其具有以下特点：\n 语言无关、平台无关。即 ProtoBuf 支持 Java、C\u002b\u002b、Python 等多种语言，支持多个平台 高效。即比 XML 更小（3 ~ 10倍）、更快（20 ~ 100倍）、更为简单 扩展性、兼容性好。你可以更新数据结构，而不影响和破坏原有的旧程序  序列化[1]：将结构数据或对象转换成能够被存储和传输（例如网络传输）的格式，同时应当要保证这个序列化结果在之后（可能在另一个计算环境中）能够被重建回原来的结构数据或对象。\n类比于 XML[2]：这里主要指在数据通信和数据存储应用场景中序列化方面的类比，但个人认为 XML 作为一种扩展标记语言和 ProtoBuf 还是有着本质区别的。\n使用 对 ProtoBuf 的基本概念有了一定了解之后，我们来看看具体该如何使用 ProtoBuf。\n第一步，创建 .proto 文件，定义数据结构，如下例1所示： \/\/ 例1: 在 xxx.proto 文件中定义 Example1 message message Example1 { optional string stringVal = 1; optional bytes bytesVal = 2; message EmbeddedMessage { int32 int32Val = 1; string stringVal = 2; } optional EmbeddedMessage embeddedExample1 = 3; repeated int32 repeatedInt32Val = 4; repeated string repeatedStringVal = 5;}我们在上例中定义了一个名为 Example1 的 消息，语法很简单，message 关键字后跟上消息名称：",
+    "inLanguage" : "en-us",
+    "author" : "Jiang",
+    "creator" : "Jiang",
+    "publisher": "Jiang",
+    "accountablePerson" : "Jiang",
+    "copyrightHolder" : "Jiang",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-01-05 10:55:26 \u002b0800 CST",
+    "dateModified" : "2021-01-05 10:55:26 \u002b0800 CST",
+    "url" : "https:\/\/jfy0o0.github.io\/2021\/other-protobuf\/",
+    "wordCount" : "406",
+    "keywords" : [ "Other", "Jiang . \u0027s blog"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Other - protoBuf</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://jfy0o0.github.io" rel="author">Jiang</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2021-01-05 itemprop="datePublished">January 5, 2021</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://jfy0o0.github.io/categories/other/"> Other </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="protobuf">ProtoBuf</h1>
+<h1 id="定义">定义</h1>
+<ul>
+<li>protocol buffers 是一种语言无关、平台无关、可扩展的序列化结构数据的方法，它可用于（数据）通信协议、数据存储等。</li>
+<li>Protocol Buffers 是一种灵活，高效，自动化机制的结构数据序列化方法－可类比 XML，但是比 XML 更小（3 ~ 10倍）、更快（20 ~ 100倍）、更为简单。</li>
+<li>你可以定义数据的结构，然后使用特殊生成的源代码轻松的在各种数据流中使用各种语言进行编写和读取结构数据。你甚至可以更新数据结构，而不破坏由旧数据结构编译的已部署程序。</li>
+</ul>
+<h1 id="特点">特点</h1>
+<p>简单来讲， ProtoBuf 是结构数据<strong>序列化[1]</strong> 方法，可简单<strong>类比于 XML[2]</strong>，其具有以下特点：</p>
+<ul>
+<li><strong>语言无关、平台无关</strong>。即 ProtoBuf 支持 Java、C++、Python 等多种语言，支持多个平台</li>
+<li><strong>高效</strong>。即比 XML 更小（3 ~ 10倍）、更快（20 ~ 100倍）、更为简单</li>
+<li><strong>扩展性、兼容性好</strong>。你可以更新数据结构，而不影响和破坏原有的旧程序</li>
+</ul>
+<p><strong>序列化[1]</strong>：将<strong>结构数据</strong>或<strong>对象</strong>转换成<strong>能够被存储和传输（例如网络传输）的格式</strong>，同时应当要保证这个序列化结果在之后（可能在另一个计算环境中）能够被重建回原来的结构数据或对象。</p>
+<p><strong>类比于 XML[2]</strong>：这里主要指在数据通信和数据存储应用场景中序列化方面的类比，但个人认为 XML 作为一种扩展标记语言和 ProtoBuf 还是有着本质区别的。</p>
+<h1 id="使用">使用</h1>
+<p>对 ProtoBuf 的基本概念有了一定了解之后，我们来看看具体该如何使用 ProtoBuf。</p>
+<h2 id="第一步创建-proto-文件定义数据结构如下例1所示"><strong>第一步，创建 .proto 文件，定义数据结构，如下例1所示：</strong></h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-protobuf" data-lang="protobuf"><span style="color:#75715e">// 例1: 在 xxx.proto 文件中定义 Example1 message
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">message</span> <span style="color:#a6e22e">Example1</span> {<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">optional</span> <span style="color:#66d9ef">string</span> stringVal <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">optional</span> <span style="color:#66d9ef">bytes</span> bytesVal <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">message</span> <span style="color:#a6e22e">EmbeddedMessage</span> {<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>        <span style="color:#66d9ef">int32</span> int32Val <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>        <span style="color:#66d9ef">string</span> stringVal <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    }<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">optional</span> EmbeddedMessage embeddedExample1 <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">repeated</span> <span style="color:#66d9ef">int32</span> repeatedInt32Val <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">repeated</span> <span style="color:#66d9ef">string</span> repeatedStringVal <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>我们在上例中定义了一个名为 Example1 的 消息，语法很简单，message 关键字后跟上消息名称：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-protobuf" data-lang="protobuf"><span style="color:#66d9ef">message</span> <span style="color:#a6e22e">xxx</span> {<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>之后我们在其中定义了 message 具有的字段，形式为：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-protobuf" data-lang="protobuf"><span style="color:#66d9ef">message</span> <span style="color:#a6e22e">xxx</span> {<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#75715e">// 字段规则：required -&gt; 字段只能也必须出现 1 次
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// 字段规则：optional -&gt; 字段可出现 0 次或1次
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// 字段规则：repeated -&gt; 字段可出现任意多次（包括 0）
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// 类型：int32、int64、sint32、sint64、string、32-bit ....
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// 字段编号：0 ~ 536870911（除去 19000 到 19999 之间的数字）
+</span><span style="color:#75715e"></span>  <span style="color:#960050;background-color:#1e0010">字段规则</span> <span style="color:#960050;background-color:#1e0010">类型</span> <span style="color:#960050;background-color:#1e0010">名称</span> <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">字段编号</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>在上例中，我们定义了：</p>
+<ul>
+<li>类型 string，名为 stringVal 的 optional 可选字段，字段编号为 1，此字段可出现 0 或 1 次</li>
+<li>类型 bytes，名为 bytesVal 的 optional 可选字段，字段编号为 2，此字段可出现 0 或 1 次</li>
+<li>类型 EmbeddedMessage（自定义的内嵌 message 类型），名为 embeddedExample1 的 optional 可选字段，字段编号为 3，此字段可出现 0 或 1 次</li>
+<li>类型 int32，名为 repeatedInt32Val 的 repeated 可重复字段，字段编号为 4，此字段可出现 任意多次（包括 0）</li>
+<li>类型 string，名为 repeatedStringVal 的 repeated 可重复字段，字段编号为 5，此字段可出现 任意多次（包括 0）</li>
+</ul>
+<p>关于 proto2 定义 message 消息的更多语法细节，例如具有支持哪些类型，字段编号分配、import
+导入定义，reserved 保留字段等知识请参阅。</p>
+<h2 id="第二步protoc-编译-proto-文件生成读写接口"><strong>第二步，protoc 编译 .proto 文件生成读写接口</strong></h2>
+<p>我们在 .proto 文件中定义了数据结构，这些数据结构是面向开发者和业务程序的，并不面向存储和传输。</p>
+<p>当需要把这些数据进行存储或传输时，就需要将这些结构数据进行序列化、反序列化以及读写。那么如何实现呢？不用担心， ProtoBuf 将会为我们提供相应的接口代码。如何提供？答案就是通过 protoc 这个编译器。</p>
+<p>可通过如下命令生成相应的接口代码：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">// $SRC_DIR: .proto 所在的源目录
+</span><span style="color:#75715e">// --cpp_out: 生成 c++ 代码
+</span><span style="color:#75715e">// $DST_DIR: 生成代码的目标目录
+</span><span style="color:#75715e">// xxx.proto: 要针对哪个 proto 文件生成接口代码
+</span><span style="color:#75715e"></span>
+<span style="color:#a6e22e">protoc</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">I</span><span style="color:#f92672">=</span>$SRC_DIR <span style="color:#f92672">--</span><span style="color:#a6e22e">cpp_out</span><span style="color:#f92672">=</span>$DST_DIR $SRC_DIR<span style="color:#f92672">/</span><span style="color:#a6e22e">xxx</span><span style="color:#f92672">.</span><span style="color:#a6e22e">proto</span>
+</code></pre></div><p>最终生成的代码将提供类似如下的接口：</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/6009978-f3c7605cf9e5706d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600/format/webp" alt="img"></p>
+<p>例子-序列化和解析接口.png</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/6009978-ae5060fd2624b6a3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600/format/webp" alt="img"></p>
+<h2 id="第三步调用接口实现序列化反序列化以及读写"><strong>第三步，调用接口实现序列化、反序列化以及读写</strong></h2>
+<p>针对第一步中例1定义的 message，我们可以调用第二步中生成的接口，实现测试代码如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">//
+</span><span style="color:#75715e">// Created by yue on 18-7-21.
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e"></span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;fstream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;single_length_delimited_all.pb.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+    Example1 example1;
+    example1.set_stringval(<span style="color:#e6db74">&#34;hello,world&#34;</span>);
+    example1.set_bytesval(<span style="color:#e6db74">&#34;are you ok?&#34;</span>);
+
+    Example1_EmbeddedMessage <span style="color:#f92672">*</span>embeddedExample2 <span style="color:#f92672">=</span> new Example1_EmbeddedMessage();
+
+    embeddedExample2<span style="color:#f92672">-&gt;</span>set_int32val(<span style="color:#ae81ff">1</span>);
+    embeddedExample2<span style="color:#f92672">-&gt;</span>set_stringval(<span style="color:#e6db74">&#34;embeddedInfo&#34;</span>);
+    example1.set_allocated_embeddedexample1(embeddedExample2);
+
+    example1.add_repeatedint32val(<span style="color:#ae81ff">2</span>);
+    example1.add_repeatedint32val(<span style="color:#ae81ff">3</span>);
+    example1.add_repeatedstringval(<span style="color:#e6db74">&#34;repeated1&#34;</span>);
+    example1.add_repeatedstringval(<span style="color:#e6db74">&#34;repeated2&#34;</span>);
+
+    std<span style="color:#f92672">::</span>string filename <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;single_length_delimited_all_example1_val_result&#34;</span>;
+    std<span style="color:#f92672">::</span>fstream output(filename, std<span style="color:#f92672">::</span>ios<span style="color:#f92672">::</span>out <span style="color:#f92672">|</span> std<span style="color:#f92672">::</span>ios<span style="color:#f92672">::</span>trunc <span style="color:#f92672">|</span> std<span style="color:#f92672">::</span>ios<span style="color:#f92672">::</span>binary);
+    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>example1.SerializeToOstream(<span style="color:#f92672">&amp;</span>output)) {
+        std<span style="color:#f92672">::</span>cerr <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Failed to write example1.&#34;</span> <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+        exit(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+    }
+
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>其中的 single_length_delimited_all.* 为例子相关代码和文件。</p>
+<p>因为此系列文章重点在于深入 ProtoBuf 的编码、序列化、反射等原理</p>
+<h2 id="关于-protobuf-的一些思考">关于 ProtoBuf 的一些思考</h2>
+<p>官方文档以及网上很多文章提到 ProtoBuf 可类比 XML 或 JSON。</p>
+<p>那么 ProtoBuf 是否就等同于 XML 和 JSON 呢，它们是否具有完全相同的应用场景呢？</p>
+<p>个人认为如果要将 ProtoBuf、XML、JSON 三者放到一起去比较，应该区分两个维度。一个是<strong>数据结构化</strong>，一个是<strong>数据序列化</strong>。这里的数据结构化主要面向开发或业务层面，数据序列化面向通信或存储层面，当然数据序列化也需要“结构”和“格式”，所以这两者之间的区别主要在于面向领域和场景不同，一般要求和侧重点也会有所不同。数据结构化侧重人类可读性甚至有时会强调语义表达能力，而数据序列化侧重效率和压缩。</p>
+<p>从这两个维度，我们可以做出下面的一些思考。</p>
+<p>XML 作为一种扩展标记语言，JSON 作为源于 JS 的数据格式，都具有<strong>数据结构化</strong>的能力。</p>
+<p>例如 XML 可以衍生出 HTML （虽然 HTML 早于 XML，但从概念上讲，HTML 只是预定义标签的 XML），HTML 的作用是标记和表达万维网中资源的结构，以便浏览器更好的展示万维网资源，同时也要尽可能保证其人类可读以便开发人员进行编辑，这就是面向业务或开发层面的<strong>数据结构化</strong>。</p>
+<p>再如 XML 还可衍生出 RDF/RDFS，进一步表达语义网中资源的关系和语义，同样它强调<strong>数据结构化</strong>的能力和人类可读。</p>
+<p>JSON 也是同理，在很多场合更多的是体现了<strong>数据结构化</strong>的能力，例如作为交互接口的数据结构的表达。在 MongoDB 中采用 JSON 作为查询语句，也是在发挥其数据结构化的能力。</p>
+<p>当然，JSON、XML 同样也可以直接被用来<strong>数据序列化</strong>，实际上很多时候它们也是这么被使用的，例如直接采用 JSON、XML 进行网络通信传输，此时 JSON、XML 就成了一种序列化格式，它发挥了数据序列化的能力。但是经常这么被使用，不代表这么做就是合理。实际将 JSON、XML 直接作用数据序列化通常并不是最优选择，因为它们在速度、效率、空间上并不是最优。换句话说它们更适合数据结构化而非数据序列化。</p>
+<p>扯完 XML 和 JSON，我们来看看 ProtoBuf，同样的 ProtoBuf 也具有数据结构化的能力，其实也就是上面介绍的 message 定义。我们能够在 .proto 文件中，通过 message、import、内嵌 message 等语法来实现数据结构化，但是很容易能够看出，ProtoBuf 在数据结构化方面和 XML、JSON 相差较大，人类可读性较差，不适合上面提到的 XML、JSON 的一些应用场景。</p>
+<p>但是如果从数据序列化的角度你会发现 ProtoBuf 有着明显的优势，效率、速度、空间几乎全面占优，看完后面的 ProtoBuf 编码的文章，你更会了解 ProtoBuf 是如何极尽所能的压榨每一寸空间和性能，而其中的编码原理正是 ProtoBuf 的关键所在，message 的表达能力并不是 ProtoBuf 最关键的重点。所以可以看出 ProtoBuf 重点侧重于<strong>数据序列化</strong> 而非 <em>数据结构化</em>。</p>
+<p>最终对这些个人思考做一些小小的总结：</p>
+<ol>
+<li>XML、JSON、ProtoBuf 都具有<strong>数据结构化</strong>和<strong>数据序列化</strong>的能力</li>
+<li>XML、JSON 更注重<strong>数据结构化</strong>，关注人类可读性和语义表达能力。ProtoBuf 更注重<strong>数据序列化</strong>，关注效率、空间、速度，人类可读性差，语义表达能力不足（为保证极致的效率，会舍弃一部分元信息）</li>
+<li>ProtoBuf 的应用场景更为明确，XML、JSON 的应用场景更为丰富。</li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Jiang . </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://jfy0o0.github.io/2021/other-protobuf/>https://jfy0o0.github.io/2021/other-protobuf/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/other/">
+                    #Other</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://jfy0o0.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://jfy0o0.github.io/2020/cpp_shared_ptr%E9%99%B7%E9%98%B1/" class="prev" rel="prev" title="C&#43;&#43; - shared_ptr陷阱"><i class="iconfont icon-left"></i>&nbsp;C&#43;&#43; - shared_ptr陷阱</a>
+         
+        
+        <a href="https://jfy0o0.github.io/2021/go-go-module/" class="next" rel="next" title="Go - Go Module">Go - Go Module&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2021</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://jfy0o0.github.io">Jiang .</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

@@ -6,7 +6,20 @@
     <description>Recent content in Other on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 04 Dec 2020 09:27:19 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/categories/other/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 05 Jan 2021 10:55:26 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/categories/other/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Other - protoBuf</title>
+      <link>https://jfy0o0.github.io/2021/other-protobuf/</link>
+      <pubDate>Tue, 05 Jan 2021 10:55:26 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/other-protobuf/</guid>
+      <description>ProtoBuf 定义  protocol buffers 是一种语言无关、平台无关、可扩展的序列化结构数据的方法，它可用于（数据）通信协议、数据存储等。 Protocol Buffers 是一种灵活，高效，自动化机制的结构数据序列化方法－可类比 XML，但是比 XML 更小（3 ~ 10倍）、更快（20 ~ 100倍）、更为简单。 你可以定义数据的结构，然后使用特殊生成的源代码轻松的在各种数据流中使用各种语言进行编写和读取结构数据。你甚至可以更新数据结构，而不破坏由旧数据结构编译的已部署程序。  特点 简单来讲， ProtoBuf 是结构数据序列化[1] 方法，可简单类比于 XML[2]，其具有以下特点：
+ 语言无关、平台无关。即 ProtoBuf 支持 Java、C++、Python 等多种语言，支持多个平台 高效。即比 XML 更小（3 ~ 10倍）、更快（20 ~ 100倍）、更为简单 扩展性、兼容性好。你可以更新数据结构，而不影响和破坏原有的旧程序  序列化[1]：将结构数据或对象转换成能够被存储和传输（例如网络传输）的格式，同时应当要保证这个序列化结果在之后（可能在另一个计算环境中）能够被重建回原来的结构数据或对象。
+类比于 XML[2]：这里主要指在数据通信和数据存储应用场景中序列化方面的类比，但个人认为 XML 作为一种扩展标记语言和 ProtoBuf 还是有着本质区别的。
+使用 对 ProtoBuf 的基本概念有了一定了解之后，我们来看看具体该如何使用 ProtoBuf。
+第一步，创建 .proto 文件，定义数据结构，如下例1所示： // 例1: 在 xxx.proto 文件中定义 Example1 message message Example1 { optional string stringVal = 1; optional bytes bytesVal = 2; message EmbeddedMessage { int32 int32Val = 1; string stringVal = 2; } optional EmbeddedMessage embeddedExample1 = 3; repeated int32 repeatedInt32Val = 4; repeated string repeatedStringVal = 5;}我们在上例中定义了一个名为 Example1 的 消息，语法很简单，message 关键字后跟上消息名称：</description>
+    </item>
+    
     <item>
       <title>Other - 对象池</title>
       <link>https://jfy0o0.github.io/2020/other-%E5%AF%B9%E8%B1%A1%E6%B1%A0/</link>
