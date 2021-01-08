@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Jiang .">
+  
+  
+  
+  <link rel="prev" href="https://jfy0o0.github.io/2021/go-go-module/" />
+  
+  <link rel="canonical" href="https://jfy0o0.github.io/2021/other-%E5%86%85%E5%AD%98%E6%B1%A0/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Other - 内存池 | Jiang . &#39;s blog
+       
+  </title>
+  <meta name="title" content="Other - 内存池 | Jiang . &#39;s blog">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/jfy0o0.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Other - 内存池",
+    "headline" : "Other - 内存池",
+    "description" : "内存池 1. 内存池设计 1.1 目的 在给定的内存buffer上建立内存管理机制，根据用户需求从该buffer上分配内存或者将已经分配的内存释放回buffer中。\n1.2 要求 尽量减少内存碎片，平均效率高于C语言的malloc和free。\n1.3 设计思路  一个存储全部内存的容器 一个存储正在使用的内存的容器 一个存储未被使用的容器  实现 #include \u0026lt;functional\u0026gt;#include \u0026lt;set\u0026gt;#include \u0026lt;vector\u0026gt;#include \u0026lt;queue\u0026gt;#include \u0026lt;cstdlib\u0026gt;#include \u0026lt;cxxabi.h\u0026gt; template\u0026lt;typename T\u0026gt; class MemoryPool { public: MemoryPool(); MemoryPool(int max_size); virtual ~MemoryPool(); T *alloc(); void release(T *obj); void walkUsedMemList(std::function\u0026lt;void(T *)\u0026gt; func); private: static int ALLOC_STEP; int mMaxSize; int mCurrentSize; std::vector\u0026lt;T *\u0026gt; mAllMemList; std::queue\u0026lt;T *\u0026gt; mFreeMemList; std::set\u0026lt;T *\u0026gt; mUsedMemList; int newMemList(int size); }; template\u0026lt;class T\u0026gt; int MemoryPool\u0026lt;T\u0026gt;::ALLOC_STEP = 20; template\u0026lt;class T\u0026gt; MemoryPool\u0026lt;T\u0026gt;::MemoryPool() { this-\u0026gt;mCurrentSize = 0; this-\u0026gt;mMaxSize = 0; this-\u0026gt;newMemList(ALLOC_STEP); } template\u0026lt;class T\u0026gt; MemoryPool\u0026lt;T\u0026gt;::MemoryPool(int max_size) { this-\u0026gt;mCurrentSize = 0; this-\u0026gt;mMaxSize = max_size; this-\u0026gt;newMemList(ALLOC_STEP); } template\u0026lt;class T\u0026gt; MemoryPool\u0026lt;T\u0026gt;::~MemoryPool() { for_each (mAllMemList.",
+    "inLanguage" : "en-us",
+    "author" : "Jiang",
+    "creator" : "Jiang",
+    "publisher": "Jiang",
+    "accountablePerson" : "Jiang",
+    "copyrightHolder" : "Jiang",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-01-07 15:30:29 \u002b0800 CST",
+    "dateModified" : "2021-01-07 15:30:29 \u002b0800 CST",
+    "url" : "https:\/\/jfy0o0.github.io\/2021\/other-%E5%86%85%E5%AD%98%E6%B1%A0\/",
+    "wordCount" : "246",
+    "keywords" : [ "Other", "Jiang . \u0027s blog"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Other - 内存池</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://jfy0o0.github.io" rel="author">Jiang</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2021-01-07 itemprop="datePublished">January 7, 2021</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://jfy0o0.github.io/categories/other/"> Other </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="内存池">内存池</h1>
+<h2 id="1-内存池设计">1. 内存池设计</h2>
+<h3 id="11-目的">1.1 目的</h3>
+<p>在给定的内存buffer上建立内存管理机制，根据用户需求从该buffer上分配内存或者将已经分配的内存释放回buffer中。</p>
+<h3 id="12-要求">1.2 要求</h3>
+<p>尽量减少内存碎片，平均效率高于C语言的malloc和free。</p>
+<h3 id="13-设计思路">1.3 设计思路</h3>
+<ul>
+<li>一个存储全部内存的容器</li>
+<li>一个存储正在使用的内存的容器</li>
+<li>一个存储未被使用的容器</li>
+</ul>
+<h1 id="实现">实现</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;functional&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;set&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;vector&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;queue&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstdlib&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cxxabi.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MemoryPool</span>
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    MemoryPool();
+
+    MemoryPool(<span style="color:#66d9ef">int</span> max_size);
+
+    <span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>MemoryPool();
+
+    T <span style="color:#f92672">*</span><span style="color:#a6e22e">alloc</span>();
+
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">release</span>(T <span style="color:#f92672">*</span>obj);
+
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">walkUsedMemList</span>(std<span style="color:#f92672">::</span>function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span>(T <span style="color:#f92672">*</span>)<span style="color:#f92672">&gt;</span> func);
+
+<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> ALLOC_STEP;
+    <span style="color:#66d9ef">int</span> mMaxSize;
+    <span style="color:#66d9ef">int</span> mCurrentSize;
+
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>T <span style="color:#f92672">*&gt;</span> mAllMemList;
+    std<span style="color:#f92672">::</span>queue<span style="color:#f92672">&lt;</span>T <span style="color:#f92672">*&gt;</span> mFreeMemList;
+    std<span style="color:#f92672">::</span>set<span style="color:#f92672">&lt;</span>T <span style="color:#f92672">*&gt;</span> mUsedMemList;
+    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">newMemList</span>(<span style="color:#66d9ef">int</span> size);
+};
+
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">int</span> MemoryPool<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>ALLOC_STEP <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>;
+
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+MemoryPool<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>MemoryPool()
+{
+    <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>mCurrentSize <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>mMaxSize <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>newMemList(ALLOC_STEP);
+}
+
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+MemoryPool<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>MemoryPool(<span style="color:#66d9ef">int</span> max_size)
+{
+    <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>mCurrentSize <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>mMaxSize <span style="color:#f92672">=</span> max_size;
+    <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>newMemList(ALLOC_STEP);
+}
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+MemoryPool<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::~</span>MemoryPool()
+{
+    for_each (mAllMemList.begin(),mAllMemList.end(),[](T <span style="color:#f92672">*</span>mem_list)
+    {
+        free(mem_list);
+    });
+}
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">void</span> MemoryPool<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>walkUsedMemList(std<span style="color:#f92672">::</span>function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span>(T <span style="color:#f92672">*</span>)<span style="color:#f92672">&gt;</span> func)
+{
+    for_each(mUsedMemList.begin(),mUsedMemList.end(),[<span style="color:#f92672">&amp;</span>](T <span style="color:#f92672">*</span> mem)
+    {
+        func(mem);
+    });
+}
+
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">int</span> MemoryPool<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>newMemList(<span style="color:#66d9ef">int</span> size)
+{
+    <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>mMaxSize <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>)
+    {
+        <span style="color:#66d9ef">int</span> left <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>mMaxSize <span style="color:#f92672">-</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>mCurrentSize;
+        <span style="color:#66d9ef">if</span> (left <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+        size <span style="color:#f92672">=</span> size <span style="color:#f92672">&lt;</span> left <span style="color:#f92672">?</span> size : left;
+    }
+    T <span style="color:#f92672">*</span>new_objects <span style="color:#f92672">=</span> (T <span style="color:#f92672">*</span>) malloc(<span style="color:#66d9ef">sizeof</span>(T) <span style="color:#f92672">*</span> size);
+    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>new_objects)
+    {
+        printf(<span style="color:#e6db74">&#34;malloc failed! total size : %d </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, mCurrentSize);
+        exit(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+    }
+    mAllMemList.push_back(new_objects);
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> size; i<span style="color:#f92672">++</span>)
+    {
+        mFreeMemList.push(<span style="color:#f92672">&amp;</span>new_objects[i]);
+    }
+    <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>mCurrentSize <span style="color:#f92672">+=</span> size;
+
+    printf(<span style="color:#e6db74">&#34;pool add objs : %s pool , total size : %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, abi<span style="color:#f92672">::</span>__cxa_demangle(<span style="color:#66d9ef">typeid</span>(T).name(), <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>), mCurrentSize);
+    <span style="color:#66d9ef">return</span> size;
+}
+
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+T <span style="color:#f92672">*</span>MemoryPool<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>alloc()
+{
+    <span style="color:#66d9ef">if</span> (mFreeMemList.empty())
+    {
+        <span style="color:#66d9ef">if</span> (newMemList(ALLOC_STEP) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+        {
+            <span style="color:#66d9ef">return</span> NULL;
+        }
+    }
+    T <span style="color:#f92672">*</span>obj <span style="color:#f92672">=</span> mFreeMemList.front();
+    mUsedMemList.insert(obj);
+    mFreeMemList.pop();
+    <span style="color:#66d9ef">return</span> obj;
+}
+
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> MemoryPool<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>release(T <span style="color:#f92672">*</span>obj)
+{
+    <span style="color:#66d9ef">if</span>(mUsedMemList.erase(obj))
+    {
+        mFreeMemList.push(obj);
+    }
+}
+
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Jiang . </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://jfy0o0.github.io/2021/other-%E5%86%85%E5%AD%98%E6%B1%A0/>https://jfy0o0.github.io/2021/other-%E5%86%85%E5%AD%98%E6%B1%A0/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/other/">
+                    #Other</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://jfy0o0.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://jfy0o0.github.io/2021/go-go-module/" class="prev" rel="prev" title="Go - Go Module"><i class="iconfont icon-left"></i>&nbsp;Go - Go Module</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2021</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://jfy0o0.github.io">Jiang .</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>
