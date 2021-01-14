@@ -46,7 +46,7 @@
     "articleSection" : "posts",
     "name" : "Other - 内存池",
     "headline" : "Other - 内存池",
-    "description" : "内存池 1. 内存池设计 1.1 目的 在给定的内存buffer上建立内存管理机制，根据用户需求从该buffer上分配内存或者将已经分配的内存释放回buffer中。\n1.2 要求 尽量减少内存碎片，平均效率高于C语言的malloc和free。\n1.3 设计思路  一个存储全部内存的容器 一个存储正在使用的内存的容器 一个存储未被使用的容器  实现 #include \u0026lt;functional\u0026gt;#include \u0026lt;set\u0026gt;#include \u0026lt;vector\u0026gt;#include \u0026lt;queue\u0026gt;#include \u0026lt;cstdlib\u0026gt;#include \u0026lt;cxxabi.h\u0026gt; template\u0026lt;typename T\u0026gt; class MemoryPool { public: MemoryPool(); MemoryPool(int max_size); virtual ~MemoryPool(); T *alloc(); void release(T *obj); void walkUsedMemList(std::function\u0026lt;void(T *)\u0026gt; func); private: static int ALLOC_STEP; int mMaxSize; int mCurrentSize; std::vector\u0026lt;T *\u0026gt; mAllMemList; std::queue\u0026lt;T *\u0026gt; mFreeMemList; std::set\u0026lt;T *\u0026gt; mUsedMemList; int newMemList(int size); }; template\u0026lt;class T\u0026gt; int MemoryPool\u0026lt;T\u0026gt;::ALLOC_STEP = 20; template\u0026lt;class T\u0026gt; MemoryPool\u0026lt;T\u0026gt;::MemoryPool() { this-\u0026gt;mCurrentSize = 0; this-\u0026gt;mMaxSize = 0; this-\u0026gt;newMemList(ALLOC_STEP); } template\u0026lt;class T\u0026gt; MemoryPool\u0026lt;T\u0026gt;::MemoryPool(int max_size) { this-\u0026gt;mCurrentSize = 0; this-\u0026gt;mMaxSize = max_size; this-\u0026gt;newMemList(ALLOC_STEP); } template\u0026lt;class T\u0026gt; MemoryPool\u0026lt;T\u0026gt;::~MemoryPool() { for_each (mAllMemList.",
+    "description" : "内存池 1. 内存池设计 1.1 目的 在给定的内存buffer上建立内存管理机制，根据用户需求从该buffer上分配内存或者将已经分配的内存释放回buffer中。\n1.2 要求 尽量减少内存碎片，平均效率高于C语言的malloc和free。\n1.3 设计思路  一个存储全部内存的容器 一个存储正在使用的内存的容器 一个存储未被使用的容器  实现 #include \u0026lt;algorithm\u0026gt;#include \u0026lt;functional\u0026gt;#include \u0026lt;set\u0026gt;#include \u0026lt;vector\u0026gt;#include \u0026lt;queue\u0026gt;#include \u0026lt;cstdlib\u0026gt;#include \u0026lt;cxxabi.h\u0026gt; template\u0026lt;typename T\u0026gt; class MemoryPool { public: MemoryPool(); MemoryPool(int max_size); virtual ~MemoryPool(); T *alloc(); void release(T *obj); void walkUsedMemList(std::function\u0026lt;void(T *)\u0026gt; func); private: static int ALLOC_STEP; int mMaxSize; int mCurrentSize; std::queue\u0026lt;T *\u0026gt; mFreeMemList; std::set\u0026lt;T *\u0026gt; mUsedMemList; int newMemList(int size); }; template\u0026lt;class T\u0026gt; int MemoryPool\u0026lt;T\u0026gt;::ALLOC_STEP = 20; template\u0026lt;class T\u0026gt; MemoryPool\u0026lt;T\u0026gt;::MemoryPool() { this-\u0026gt;mCurrentSize = 0; this-\u0026gt;mMaxSize = 0; this-\u0026gt;newMemList(ALLOC_STEP); } template\u0026lt;class T\u0026gt; MemoryPool\u0026lt;T\u0026gt;::MemoryPool(int max_size) { this-\u0026gt;mCurrentSize = 0; this-\u0026gt;mMaxSize = max_size; this-\u0026gt;newMemList(ALLOC_STEP); } template\u0026lt;class T\u0026gt; MemoryPool\u0026lt;T\u0026gt;::~MemoryPool() { for_each(mUsedMemList.",
     "inLanguage" : "en-us",
     "author" : "Jiang",
     "creator" : "Jiang",
@@ -57,7 +57,7 @@
     "datePublished": "2021-01-07 15:30:29 \u002b0800 CST",
     "dateModified" : "2021-01-07 15:30:29 \u002b0800 CST",
     "url" : "https:\/\/jfy0o0.github.io\/2021\/other-%E5%86%85%E5%AD%98%E6%B1%A0\/",
-    "wordCount" : "246",
+    "wordCount" : "262",
     "keywords" : [ "Other", "Jiang . \u0027s blog"]
 }
 </script>
@@ -160,7 +160,8 @@
 </ul>
 <h1 id="实现">实现</h1>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;functional&gt;</span><span style="color:#75715e">
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;functional&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;set&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;vector&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;queue&gt;</span><span style="color:#75715e">
@@ -188,9 +189,9 @@
     <span style="color:#66d9ef">int</span> mMaxSize;
     <span style="color:#66d9ef">int</span> mCurrentSize;
 
-    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>T <span style="color:#f92672">*&gt;</span> mAllMemList;
     std<span style="color:#f92672">::</span>queue<span style="color:#f92672">&lt;</span>T <span style="color:#f92672">*&gt;</span> mFreeMemList;
     std<span style="color:#f92672">::</span>set<span style="color:#f92672">&lt;</span>T <span style="color:#f92672">*&gt;</span> mUsedMemList;
+
     <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">newMemList</span>(<span style="color:#66d9ef">int</span> size);
 };
 
@@ -212,18 +213,27 @@ MemoryPool<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&g
     <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>mMaxSize <span style="color:#f92672">=</span> max_size;
     <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>newMemList(ALLOC_STEP);
 }
+
 <span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
 MemoryPool<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::~</span>MemoryPool()
 {
-    for_each (mAllMemList.begin(),mAllMemList.end(),[](T <span style="color:#f92672">*</span>mem_list)
+    for_each(mUsedMemList.begin(), mUsedMemList.end(), [](T <span style="color:#f92672">*</span>mem_list)
     {
         free(mem_list);
     });
+
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> mFreeMemList.size(); <span style="color:#f92672">++</span>i)
+    {
+        <span style="color:#66d9ef">auto</span> mem <span style="color:#f92672">=</span> mFreeMemList.front();
+        free(mem);
+        mFreeMemList.pop();
+    }
 }
+
 <span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
 <span style="color:#66d9ef">void</span> MemoryPool<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>walkUsedMemList(std<span style="color:#f92672">::</span>function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span>(T <span style="color:#f92672">*</span>)<span style="color:#f92672">&gt;</span> func)
 {
-    for_each(mUsedMemList.begin(),mUsedMemList.end(),[<span style="color:#f92672">&amp;</span>](T <span style="color:#f92672">*</span> mem)
+    for_each(mUsedMemList.begin(), mUsedMemList.end(), [<span style="color:#f92672">&amp;</span>](T <span style="color:#f92672">*</span>mem)
     {
         func(mem);
     });
@@ -239,16 +249,16 @@ MemoryPool<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&g
             <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
         size <span style="color:#f92672">=</span> size <span style="color:#f92672">&lt;</span> left <span style="color:#f92672">?</span> size : left;
     }
-    T <span style="color:#f92672">*</span>new_objects <span style="color:#f92672">=</span> (T <span style="color:#f92672">*</span>) malloc(<span style="color:#66d9ef">sizeof</span>(T) <span style="color:#f92672">*</span> size);
-    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>new_objects)
-    {
-        printf(<span style="color:#e6db74">&#34;malloc failed! total size : %d </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, mCurrentSize);
-        exit(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
-    }
-    mAllMemList.push_back(new_objects);
+
     <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> size; i<span style="color:#f92672">++</span>)
     {
-        mFreeMemList.push(<span style="color:#f92672">&amp;</span>new_objects[i]);
+        T <span style="color:#f92672">*</span>new_objects <span style="color:#f92672">=</span> (T <span style="color:#f92672">*</span>) malloc(<span style="color:#66d9ef">sizeof</span>(T));
+        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>new_objects)
+        {
+            printf(<span style="color:#e6db74">&#34;malloc failed! total size : %d </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, mCurrentSize);
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+        }
+        mFreeMemList.push(new_objects);
     }
     <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>mCurrentSize <span style="color:#f92672">+=</span> size;
 
@@ -275,7 +285,7 @@ T <span style="color:#f92672">*</span>MemoryPool<span style="color:#f92672">&lt;
 <span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
 <span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> MemoryPool<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>release(T <span style="color:#f92672">*</span>obj)
 {
-    <span style="color:#66d9ef">if</span>(mUsedMemList.erase(obj))
+    <span style="color:#66d9ef">if</span> (mUsedMemList.erase(obj))
     {
         mFreeMemList.push(obj);
     }
