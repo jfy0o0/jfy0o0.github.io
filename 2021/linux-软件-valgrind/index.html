@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Jiang .">
+  
+  
+  
+  <link rel="prev" href="https://jfy0o0.github.io/2021/db-rdbms/" />
+  
+  <link rel="canonical" href="https://jfy0o0.github.io/2021/linux-%E8%BD%AF%E4%BB%B6-valgrind/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Linux Soft - valgrind | Jiang . &#39;s blog
+       
+  </title>
+  <meta name="title" content="Linux Soft - valgrind | Jiang . &#39;s blog">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/jfy0o0.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Linux Soft - valgrind",
+    "headline" : "Linux Soft - valgrind",
+    "description" : "valgrind  Valgrind是一个GPL的软件，用于Linux（For x86, amd64 and ppc32）程序的内存调试和代码剖析。 你可以在它的环境中运行你的程序来监视内存的使用情况，比如C 语言中的malloc和free或者 C\u002b\u002b中的new和 delete。 使用Valgrind的工具包，你可以自动的检测许多内存管理和线程的bug，避免花费太多的时间在bug寻找上，使得你的程序更加稳固。  功能 Valgrind工具包包含多个工具，如Memcheck,Cachegrind,Helgrind, Callgrind，Massif\n下面分别介绍个工具的作用\nMemcheck  使用未初始化的内存 (Use of uninitialised memory) 使用已经释放了的内存 (Reading\/writing memory after it has been free’d) 使用超过 malloc分配的内存空间(Reading\/writing off the end of malloc’d blocks) 对堆栈的非法访问 (Reading\/writing inappropriate areas on the stack) 申请的空间是否有释放 (Memory leaks – where pointers to malloc’d blocks are lost forever) malloc\/free\/new\/delete申请和释放内存的匹配(Mismatched use of malloc\/new\/new [] vs free\/delete\/delete []) src和dst的重叠(Overlapping src and dst pointers in memcpy() and related functions)  Callgrind  Callgrind收集程序运行时的一些数据，函数调用关系等信息，还可以有选择地进行cache模拟。 在运行结束时，它会把分析数据写入一个文件。callgrind_annotate可以把这个文件的内容转化成可读的形式。  Cachegrind  它模拟 CPU中的一级缓存I1,D1和L2二级缓存，能够精确地指出程序中 cache的丢失和命中。 如果需要，它还能够为我们提供cache丢失次数，内存引用次数，以及每行代码，每个函数，每个模块，整个程序产生的指令数。这对优化程序有很大的帮助。  Helgrind  它主要用来检查多线程程序中出现的竞争问题。 Helgrind寻找内存中被多个线程访问，而又没有一贯加锁的区域，这些区域往往是线程之间失去同步的地方，而且会导致难以发掘的错误。 Helgrind实现了名为” Eraser” 的竞争检测算法，并做了进一步改进，减少了报告错误的次数。  Massif  堆栈分析器，它能测量程序在堆栈中使用了多少内存，告诉我们堆块，堆管理块和栈的大小。 Massif能帮助我们减少内存的使用，在带有虚拟内存的现代系统中，它还能够加速我们程序的运行，减少程序停留在交换区中的几率。  应用 1、检查内存错误： 如果我们想用valgrind的内存检测工具，我们就要用如下方法调用：",
+    "inLanguage" : "en-us",
+    "author" : "Jiang",
+    "creator" : "Jiang",
+    "publisher": "Jiang",
+    "accountablePerson" : "Jiang",
+    "copyrightHolder" : "Jiang",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-01-22 08:51:12 \u002b0800 CST",
+    "dateModified" : "2021-01-22 08:51:12 \u002b0800 CST",
+    "url" : "https:\/\/jfy0o0.github.io\/2021\/linux-%E8%BD%AF%E4%BB%B6-valgrind\/",
+    "wordCount" : "262",
+    "keywords" : [ "Linux Soft", "Jiang . \u0027s blog"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Linux Soft - valgrind</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://jfy0o0.github.io" rel="author">Jiang</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2021-01-22 itemprop="datePublished">January 22, 2021</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://jfy0o0.github.io/categories/linux-soft/"> Linux Soft </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="valgrind">valgrind</h1>
+<ul>
+<li>Valgrind是一个GPL的软件，用于Linux（For x86, amd64 and ppc32）程序的内存调试和代码剖析。</li>
+<li>你可以在它的环境中运行你的程序来监视内存的使用情况，比如C 语言中的malloc和free或者 C++中的new和 delete。</li>
+<li>使用Valgrind的工具包，你可以自动的检测许多内存管理和线程的bug，避免花费太多的时间在bug寻找上，使得你的程序更加稳固。</li>
+</ul>
+<h1 id="功能">功能</h1>
+<p>Valgrind工具包包含多个工具，如Memcheck,Cachegrind,Helgrind, Callgrind，Massif</p>
+<p>下面分别介绍个工具的作用</p>
+<h2 id="memcheck">Memcheck</h2>
+<ul>
+<li>使用未初始化的内存 (Use of uninitialised memory)</li>
+<li>使用已经释放了的内存 (Reading/writing memory after it has been free’d)</li>
+<li>使用超过 malloc分配的内存空间(Reading/writing off the end of malloc’d blocks)</li>
+<li>对堆栈的非法访问 (Reading/writing inappropriate areas on the stack)</li>
+<li>申请的空间是否有释放 (Memory leaks – where pointers to malloc’d blocks are lost forever)</li>
+<li>malloc/free/new/delete申请和释放内存的匹配(Mismatched use of malloc/new/new [] vs free/delete/delete [])</li>
+<li>src和dst的重叠(Overlapping src and dst pointers in memcpy() and related functions)</li>
+</ul>
+<h2 id="callgrind">Callgrind</h2>
+<ul>
+<li>Callgrind收集程序运行时的一些数据，函数调用关系等信息，还可以有选择地进行cache模拟。</li>
+<li>在运行结束时，它会把分析数据写入一个文件。callgrind_annotate可以把这个文件的内容转化成可读的形式。</li>
+</ul>
+<h2 id="cachegrind">Cachegrind</h2>
+<ul>
+<li>它模拟 CPU中的一级缓存I1,D1和L2二级缓存，能够精确地指出程序中 cache的丢失和命中。</li>
+<li>如果需要，它还能够为我们提供cache丢失次数，内存引用次数，以及每行代码，每个函数，每个模块，整个程序产生的指令数。这对优化程序有很大的帮助。</li>
+</ul>
+<h2 id="helgrind">Helgrind</h2>
+<ul>
+<li>它主要用来检查多线程程序中出现的竞争问题。</li>
+<li>Helgrind寻找内存中被多个线程访问，而又没有一贯加锁的区域，这些区域往往是线程之间失去同步的地方，而且会导致难以发掘的错误。</li>
+<li>Helgrind实现了名为” Eraser” 的竞争检测算法，并做了进一步改进，减少了报告错误的次数。</li>
+</ul>
+<h2 id="massif">Massif</h2>
+<ul>
+<li>堆栈分析器，它能测量程序在堆栈中使用了多少内存，告诉我们堆块，堆管理块和栈的大小。</li>
+<li>Massif能帮助我们减少内存的使用，在带有虚拟内存的现代系统中，它还能够加速我们程序的运行，减少程序停留在交换区中的几率。</li>
+</ul>
+<h1 id="应用">应用</h1>
+<h2 id="1检查内存错误">1、检查内存错误：</h2>
+<p>如果我们想用valgrind的内存检测工具，我们就要用如下方法调用：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#valgrind --leak-check=full --show-reachable=yes --trace-children= yes  ./a.out</span>
+</code></pre></div><ul>
+<li>其中&ndash;leak-check=full指的是完全检查内存泄漏，</li>
+<li>&ndash;show-reachable=yes是显示内存泄漏的地点，</li>
+<li>&ndash;trace-children=yes是跟入子进程。</li>
+</ul>
+<p>如果您的程序是会正常退出的程序，那么当程序退出的时候valgrind自然会输出内存泄漏的信息。如果您的程序是个守护进程，那么也不要紧，我们 只要在别的终端下杀死memcheck进程（因为valgrind默认使用memcheck工具，就是默认参数—tools=memcheck）：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#killall memcheck</span>
+</code></pre></div><p>这样我们的程序（./a.out）就被kill了</p>
+<h2 id="2检查代码覆盖和性能瓶颈">2、检查代码覆盖和性能瓶颈：</h2>
+<p>我们调用valgrind的工具执行程序：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#valgrind --tool=callgrind ./sec_infod</span>
+</code></pre></div><p>会在当前路径下生成callgrind.out.pid（当前生产的是callgrind.out.19689），如果我们想结束程序，可以：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#killall callgrind</span>
+
+然后我们看一下结果：
+
+<span style="color:#75715e">#callgrind_annotate --auto=yes callgrind.out.19689  &gt;log</span>
+
+<span style="color:#75715e">#vim log</span>
+</code></pre></div><h1 id="用法">用法：</h1>
+<h2 id="概要用法">概要用法：</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">    valgrind <span style="color:#f92672">[[</span>valgrind<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>options<span style="color:#f92672">]]</span> <span style="color:#f92672">[</span>your-program<span style="color:#f92672">]</span> <span style="color:#f92672">[[</span>your-program-options<span style="color:#f92672">]]</span>
+</code></pre></div><p>一般像下面这样调用Valgrind:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">valgrind program args
+</code></pre></div><p>这样将在Valgrind使用Memcheck运行程序program(带有参数args)。内存检查执行一系列的内存检查功能，包括检测访问未初始化的内存，已经分配内存的错误使用(两次释放，释放后再访问，等等)并检查内存泄漏。</p>
+<p>可用&ndash;tool指定使用其它工具：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">valgrind --tool<span style="color:#f92672">=</span>toolname program args
+</code></pre></div><h2 id="可使用的工具如下">可使用的工具如下：</h2>
+<ul>
+<li>cachegrind是一个缓冲模拟器。它可以用来标出你的程序每一行执行的指令数和导致的缓冲不命中数。</li>
+<li>callgrind在cachegrind基础上添加调用追踪。它可以用来得到调用的次数以及每次函数调用的开销。作为对cachegrind的补充，callgrind可以分别标注各个线程，以及程序反汇编输出的每条指令的执行次数以及缓存未命中数。</li>
+<li>helgrind能够发现程序中潜在的条件竞争。</li>
+<li>lackey是一个示例程序，以其为模版可以创建你自己的工具。在程序结束后，它打印出一些基本的关于程序执行统计数据。</li>
+<li>massif是一个堆剖析器，它测量你的程序使用了多少堆内存。</li>
+<li>memcheck是一个细粒度的的内存检查器。</li>
+<li>none没有任何功能。它一般用于Valgrind的调试和基准测试。</li>
+</ul>
+<h2 id="基本选项这些选项对所有工具都有效">基本选项：这些选项对所有工具都有效。</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">Valgrind 命令介绍：
+
+用法: valgrind <span style="color:#f92672">[</span>options<span style="color:#f92672">]</span> prog-and-args
+<span style="color:#f92672">[</span>options<span style="color:#f92672">]</span>: 常用选项，适用于所有Valgrind工具
+
+    -tool<span style="color:#f92672">=</span>&lt;name&gt; 最常用的选项。运行 valgrind中名为toolname的工具。默认memcheck。
+
+        memcheck ------&gt; 这是valgrind应用最广泛的工具，一个重量级的内存检查器，能够发现开发中绝大多数内存错误使用情况，比如：使用未初始化的内存，使用已经释放了的内存，内存访问越界等。
+
+        callgrind ------&gt; 它主要用来检查程序中函数调用过程中出现的问题。
+
+        cachegrind ------&gt; 它主要用来检查程序中缓存使用出现的问题。
+
+        helgrind ------&gt; 它主要用来检查多线程程序中出现的竞争问题。
+
+        massif ------&gt; 它主要用来检查程序中堆栈使用中出现的问题。
+
+        extension ------&gt; 可以利用core提供的功能，自己编写特定的内存调试工具
+
+    -h –help 显示帮助信息。
+    -version 显示valgrind内核的版本，每个工具都有各自的版本。
+    -q –quiet 安静地运行，只打印错误信息。
+    -v –verbose 更详细的信息, 增加错误数统计。
+    -trace-children<span style="color:#f92672">=</span>no|yes 跟踪子线程? <span style="color:#f92672">[</span>no<span style="color:#f92672">]</span>
+    -track-fds<span style="color:#f92672">=</span>no|yes 跟踪打开的文件描述？<span style="color:#f92672">[</span>no<span style="color:#f92672">]</span>
+    -time-stamp<span style="color:#f92672">=</span>no|yes 增加时间戳到LOG信息? <span style="color:#f92672">[</span>no<span style="color:#f92672">]</span>
+    -log-fd<span style="color:#f92672">=</span>&lt;number&gt; 输出LOG到描述符文件 <span style="color:#f92672">[</span>2<span style="color:#f92672">=</span>stderr<span style="color:#f92672">]</span>
+    -log-file<span style="color:#f92672">=</span>&lt;file&gt; 将输出的信息写入到filename.PID的文件里，PID是运行程序的进行ID
+    -log-file-exactly<span style="color:#f92672">=</span>&lt;file&gt; 输出LOG信息到 file
+    -log-file-qualifier<span style="color:#f92672">=</span>&lt;VAR&gt; 取得环境变量的值来做为输出信息的文件名。 <span style="color:#f92672">[</span>none<span style="color:#f92672">]</span>
+    -log-socket<span style="color:#f92672">=</span>ipaddr:port 输出LOG到socket ，ipaddr:port
+
+LOG信息输出
+
+    -xml<span style="color:#f92672">=</span>yes 将信息以xml格式输出，只有memcheck可用
+    -num-callers<span style="color:#f92672">=</span>&lt;number&gt; show &lt;number&gt; callers in stack traces <span style="color:#f92672">[</span>12<span style="color:#f92672">]</span>
+    -error-limit<span style="color:#f92672">=</span>no|yes 如果太多错误，则停止显示新错误? <span style="color:#f92672">[</span>yes<span style="color:#f92672">]</span>
+    -error-exitcode<span style="color:#f92672">=</span>&lt;number&gt; 如果发现错误则返回错误代码 <span style="color:#f92672">[</span>0<span style="color:#f92672">=</span>disable<span style="color:#f92672">]</span>
+    -db-attach<span style="color:#f92672">=</span>no|yes 当出现错误，valgrind会自动启动调试器gdb。<span style="color:#f92672">[</span>no<span style="color:#f92672">]</span>
+    -db-command<span style="color:#f92672">=</span>&lt;command&gt; 启动调试器的命令行选项<span style="color:#f92672">[</span>gdb -nw %f %p<span style="color:#f92672">]</span>
+
+适用于Memcheck工具的相关选项：
+
+    -leak-check<span style="color:#f92672">=</span>no|summary|full 要求对leak给出详细信息? <span style="color:#f92672">[</span>summary<span style="color:#f92672">]</span>
+    -leak-resolution<span style="color:#f92672">=</span>low|med|high how much bt merging in leak check <span style="color:#f92672">[</span>low<span style="color:#f92672">]</span>
+    -show-reachable<span style="color:#f92672">=</span>no|yes show reachable blocks in leak check? <span style="color:#f92672">[</span>no<span style="color:#f92672">]</span>
+
+ 
+</code></pre></div><h1 id="ex">ex</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">valgrind --tool<span style="color:#f92672">=</span>memcheck --leak-check<span style="color:#f92672">=</span>full ./dpi_pro
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Jiang . </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://jfy0o0.github.io/2021/linux-%E8%BD%AF%E4%BB%B6-valgrind/>https://jfy0o0.github.io/2021/linux-%E8%BD%AF%E4%BB%B6-valgrind/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/linux-soft/">
+                    #Linux Soft</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://jfy0o0.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://jfy0o0.github.io/2021/db-rdbms/" class="prev" rel="prev" title="db - rdbms"><i class="iconfont icon-left"></i>&nbsp;db - rdbms</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2021</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://jfy0o0.github.io">Jiang .</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>
