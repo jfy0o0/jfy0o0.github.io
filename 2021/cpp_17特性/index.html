@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Jiang .">
+  
+  
+  
+  <link rel="prev" href="https://jfy0o0.github.io/2021/cpp_14%E7%89%B9%E6%80%A7/" />
+  <link rel="next" href="https://jfy0o0.github.io/2021/a/" />
+  <link rel="canonical" href="https://jfy0o0.github.io/2021/cpp_17%E7%89%B9%E6%80%A7/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           C&#43;&#43; - c&#43;&#43;17特性 | Jiang . &#39;s blog
+       
+  </title>
+  <meta name="title" content="C&#43;&#43; - c&#43;&#43;17特性 | Jiang . &#39;s blog">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/jfy0o0.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "C\u002b\u002b - c\u002b\u002b17特性",
+    "headline" : "C\u002b\u002b - c\u002b\u002b17特性",
+    "description" : "c\u002b\u002b17特性 1.关键字 1. auto关键字 从c\u002b\u002b11开始，auto关键字能够通过初始化器推导出变量的类型。在c\u002b\u002b14中，auto关键字的能力进一步提升，能够通过return语句推导出函数的返回类型。 使用auto关键字能够提高编码效率，同时能够简化重构流程。但是，C\u002b\u002b11中的auto推导，往往结果与预期的不同。\nc\u002b\u002b11 中为了支持统一初始化，引入了新的统一初始化语法，如下所示。\n\/\/ c\u002b\u002b11 auto x3{ 1, 2 }; \/\/ std::initializer_list\u0026lt;int\u0026gt; auto x4 = { 3 }; \/\/ decltype(x4) is std::initializer_list\u0026lt;int\u0026gt; auto x5{ 3 }; \/\/ std::initializer_list\u0026lt;int\u0026gt; 这三种方式初始化的变量，最终类型推导的结果都是 std::initializer_list ， 而不是我们认为的int。 这是因为 当用于auto声明变量的表达式是{}括起来的，推导的型别就会变成 std::initializer_list。\n在C\u002b\u002b17中，对auto表达式推导的规则进行了改变\n\/\/ c\u002b\u002b17 auto x3{ 1, 2 }; \/\/ error: not a single element auto x4 = { 3 }; \/\/ decltype(x4) is std::initializer_list\u0026lt;int\u0026gt; auto x5{ 3 }; \/\/ decltype(x5) is int 对比发现， auto x5{3}, 会直接将变量推导成 x5， 而 x3{1, 2} 这种方式也会编译失败。auto推导的规则变得更加直观。",
+    "inLanguage" : "en-us",
+    "author" : "Jiang",
+    "creator" : "Jiang",
+    "publisher": "Jiang",
+    "accountablePerson" : "Jiang",
+    "copyrightHolder" : "Jiang",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-01-28 17:05:27 \u002b0800 CST",
+    "dateModified" : "2021-01-28 17:05:27 \u002b0800 CST",
+    "url" : "https:\/\/jfy0o0.github.io\/2021\/cpp_17%E7%89%B9%E6%80%A7\/",
+    "wordCount" : "791",
+    "keywords" : [ "C\u002b\u002b", "Jiang . \u0027s blog"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">C&#43;&#43; - c&#43;&#43;17特性</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://jfy0o0.github.io" rel="author">Jiang</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2021-01-28 itemprop="datePublished">January 28, 2021</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://jfy0o0.github.io/categories/c&#43;&#43;/"> C&#43;&#43; </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="c17特性">c++17特性</h1>
+<h2 id="1关键字">1.关键字</h2>
+<h3 id="1-auto关键字">1. auto关键字</h3>
+<p>从c++11开始，auto关键字能够通过初始化器推导出变量的类型。在c++14中，auto关键字的能力进一步提升，能够通过return语句推导出函数的返回类型。 使用auto关键字能够提高编码效率，同时能够简化重构流程。但是，C++11中的auto推导，往往结果与预期的不同。</p>
+<p>c++11 中为了支持统一初始化，引入了新的统一初始化语法，如下所示。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">// c++11
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">auto</span> x3{ <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span> }; <span style="color:#75715e">// std::initializer_list&lt;int&gt;
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">auto</span> x4 <span style="color:#f92672">=</span> { <span style="color:#ae81ff">3</span> }; <span style="color:#75715e">// decltype(x4) is std::initializer_list&lt;int&gt;
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">auto</span> x5{ <span style="color:#ae81ff">3</span> };    <span style="color:#75715e">// std::initializer_list&lt;int&gt;
+</span></code></pre></div><p>这三种方式初始化的变量，最终类型推导的结果都是 std::initializer_list ， 而不是我们认为的int。 这是因为 当用于auto声明变量的表达式是{}括起来的，推导的型别就会变成 std::initializer_list。</p>
+<p>在C++17中，对auto表达式推导的规则进行了改变</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">// c++17
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">auto</span> x3{ <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span> }; <span style="color:#75715e">// error: not a single element
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">auto</span> x4 <span style="color:#f92672">=</span> { <span style="color:#ae81ff">3</span> }; <span style="color:#75715e">// decltype(x4) is std::initializer_list&lt;int&gt;
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">auto</span> x5{ <span style="color:#ae81ff">3</span> };    <span style="color:#75715e">// decltype(x5) is int
+</span></code></pre></div><p>对比发现， auto x5{3}, 会直接将变量推导成 x5， 而 x3{1, 2} 这种方式也会编译失败。auto推导的规则变得更加直观。</p>
+<h3 id="2-lambda表达式">2. lambda表达式</h3>
+<ul>
+<li>lambda也是c++11中引入的，在C++11中，lambda表达式只能用捕获this，this是当前对象的一个只读的引用。</li>
+<li>在C++17中，可以捕获*this, *this是当前对象的一个拷贝，捕获当前对象的拷贝，能够确保当前对象释放后， lambda表达式能安全的调用this中的变量和方法。</li>
+</ul>
+<h3 id="3-inline变量">3. inline变量</h3>
+<p>Inline 变量, inline变量可以让变量有多于一次的定义。C++17之前，我们定义全局变量， 总需要将变量定义在cpp文件中，然后在通过extern关键字来告诉编译器 这个变量已经在其他地方定义过了。 inline变量出现后，我们可以直接将全局变量定义在头文件中，而不用担心出现redefine的错误信息。</p>
+<h3 id="4constexpr">4.constexpr</h3>
+<p>扩展constexpr使用范围，可用于if语句中，也可用于lambda表达式中。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">bool</span> ok<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">constexpr</span> <span style="color:#66d9ef">void</span> foo()
+{
+ <span style="color:#75715e">//在编译期进行判断，if和else语句不生成代码
+</span><span style="color:#75715e"></span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">constexpr</span> (ok <span style="color:#f92672">==</span> true)
+ {
+  <span style="color:#75715e">//当ok为true时，下面的else块不生成汇编代码
+</span><span style="color:#75715e"></span>  std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;ok&#34;</span> <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+ }
+ <span style="color:#66d9ef">else</span>
+ {
+  <span style="color:#75715e">//当ok为false时，上面的if块不生成汇编代码
+</span><span style="color:#75715e"></span>  std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;not ok&#34;</span> <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+ }
+}
+  
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+ foo<span style="color:#f92672">&lt;</span>true<span style="color:#f92672">&gt;</span>();<span style="color:#75715e">//输出ok，并且汇编代码中只有std::cout &lt;&lt; &#34;ok&#34; &lt;&lt; std::endl;这一句
+</span><span style="color:#75715e"></span> foo<span style="color:#f92672">&lt;</span>false<span style="color:#f92672">&gt;</span>();<span style="color:#75715e">//输出not ok，并且汇编代码中只有std::cout &lt;&lt; &#34;not ok&#34; &lt;&lt; std::endl;这一句
+</span><span style="color:#75715e"></span> <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><h3 id="5static_assert">5.static_assert</h3>
+<p>扩展static_assert用法，静态断言的显示文本可选。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static_assert</span>(true, <span style="color:#e6db74">&#34;&#34;</span>);
+<span style="color:#66d9ef">static_assert</span>(true);<span style="color:#75715e">//c++17支持
+</span></code></pre></div><h2 id="2语法">2.语法</h2>
+<h3 id="1折叠表达式">1.折叠表达式</h3>
+<h3 id="2结构化绑定">2.结构化绑定</h3>
+<p>用一对包含一个或多个变量的中括号，表示结构化绑定，但是使用结构化绑定时，须用auto关键字，即绑定时声明变量</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">/*
+</span><span style="color:#75715e"> * 例子：多值返回
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">S</span>
+{
+ <span style="color:#66d9ef">double</span> num1;
+ <span style="color:#66d9ef">long</span> num2;
+};
+  
+S <span style="color:#a6e22e">foo</span>(<span style="color:#66d9ef">int</span> arg1, <span style="color:#66d9ef">double</span> arg2)
+{
+ <span style="color:#66d9ef">double</span> result1 <span style="color:#f92672">=</span> arg1 <span style="color:#f92672">*</span> arg2;
+ <span style="color:#66d9ef">long</span> result2 <span style="color:#f92672">=</span> arg2 <span style="color:#f92672">/</span> arg1;
+ <span style="color:#66d9ef">return</span> {result1, result2};<span style="color:#75715e">//返回结构体S对象
+</span><span style="color:#75715e"></span>};
+  
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+ <span style="color:#66d9ef">auto</span> [num1, num2] <span style="color:#f92672">=</span> foo(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">20.2</span>);<span style="color:#75715e">//自动推导num1为double，num2为long
+</span><span style="color:#75715e"></span> <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;list&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;map&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>  
+<span style="color:#75715e">/*
+</span><span style="color:#75715e"> * 例子：循环遍历
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T, <span style="color:#66d9ef">typename</span> U<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">MyStruct</span>
+{
+ T key;
+ U value;
+};
+  
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+ std<span style="color:#f92672">::</span>list<span style="color:#f92672">&lt;</span>MyStruct<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">double</span><span style="color:#f92672">&gt;&gt;</span> Container1;
+ std<span style="color:#f92672">::</span>map<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, MyStruct<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span>, <span style="color:#66d9ef">char</span><span style="color:#f92672">&gt;&gt;</span> Container2;
+ <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">auto</span> [key, value] <span style="color:#f92672">:</span> Container1)
+ {
+  <span style="color:#75715e">//key为int类型，value为double类型
+</span><span style="color:#75715e"></span> }
+ <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">auto</span> [key, value] <span style="color:#f92672">:</span> Container2)
+ {
+  <span style="color:#75715e">//key为int类型，value为MyStruct&lt;long long, char&gt;类型
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//value1为long long类型，value2为char类型
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">auto</span> [value1, value2] <span style="color:#f92672">=</span> value;
+ }
+ <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><h3 id="3-条件表达式中支持初始化语句">3. 条件表达式中支持初始化语句</h3>
+<p>c++17中支持在 if 或者switch 语句中进行初始化， 这个能力的出现能够让代码更加的简洁。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">// c++17之前
+</span><span style="color:#75715e"></span>map<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, string<span style="color:#f92672">&gt;</span> c <span style="color:#f92672">=</span> {{<span style="color:#ae81ff">1</span>,<span style="color:#e6db74">&#34;a&#34;</span>}};
+{
+    <span style="color:#66d9ef">auto</span> res <span style="color:#f92672">=</span> c.insert(make_pair(<span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#34;b&#34;</span>));
+    <span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span>res.second) {
+        cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;key 1 exist&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+    } <span style="color:#66d9ef">else</span> {
+        cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;insert success, value:&#34;</span> <span style="color:#f92672">&lt;&lt;</span> res.first<span style="color:#f92672">-&gt;</span>second <span style="color:#f92672">&lt;&lt;</span> endl;
+    }
+}
+</code></pre></div><p>上面的一段代码，由于res是一个临时变量，不想影响到后面的代码，所以用一对花括号限制了其作用域。但是如果使用c++17的语法， 在if条件中初始化res，则代码就会显得更加简洁</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">// c++17
+</span><span style="color:#75715e"></span>map<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, string<span style="color:#f92672">&gt;</span> c <span style="color:#f92672">=</span> {{<span style="color:#ae81ff">1</span>,<span style="color:#e6db74">&#34;a&#34;</span>}};
+<span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">auto</span> res <span style="color:#f92672">=</span> c.insert(make_pair(<span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#34;b&#34;</span>)); <span style="color:#f92672">!</span>res.second ) {
+    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;key 1 exist&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+} <span style="color:#66d9ef">else</span> {
+    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;insert success, value:&#34;</span> <span style="color:#f92672">&lt;&lt;</span> res.first<span style="color:#f92672">-&gt;</span>second <span style="color:#f92672">&lt;&lt;</span> endl;
+}
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">long</span> value<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">void</span> foo(<span style="color:#66d9ef">int</span> <span style="color:#f92672">&amp;</span>ok)
+{
+ <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">constexpr</span> (ok <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>; value <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>)
+ {
+  
+ }
+}
+  
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+ <span style="color:#66d9ef">int</span> num <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+ <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+ {
+  
+ }
+ foo<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">10</span><span style="color:#f92672">&gt;</span>(num);
+ <span style="color:#66d9ef">switch</span>(<span style="color:#66d9ef">int</span> k <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>; k)
+ {
+  <span style="color:#66d9ef">case</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">:</span><span style="color:#66d9ef">break</span>;
+  <span style="color:#66d9ef">case</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#66d9ef">break</span>;
+  <span style="color:#66d9ef">default</span><span style="color:#f92672">:</span><span style="color:#66d9ef">break</span>;
+ }
+ <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><h3 id="4-聚合初始化">4 聚合初始化</h3>
+<p>在初始化对象时，可用花括号进行对其成员进行赋值</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">MyStruct1</span>
+{
+ <span style="color:#66d9ef">int</span> a;
+ <span style="color:#66d9ef">int</span> b;
+};
+  
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">MyStruct2</span>
+{
+ <span style="color:#66d9ef">int</span> a;
+ MyStruct1 ms;
+};
+  
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+ MyStruct1 a{<span style="color:#ae81ff">10</span>};
+ MyStruct2 b{<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">20</span>};
+ MyStruct2 c{<span style="color:#ae81ff">1</span>, {}};
+ MyStruct2 d{{}, {}};
+ MyStruct2 e{{}, {<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>}};
+ <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><h3 id="5嵌套命名空间">5.嵌套命名空间</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">//传统写法
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">namespace</span> A
+{
+ <span style="color:#66d9ef">namespace</span> B
+ {
+  <span style="color:#66d9ef">namespace</span> C
+  {
+  
+  };
+ };
+};
+<span style="color:#75715e">//新写法
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">namespace</span> A<span style="color:#f92672">::</span>B<span style="color:#f92672">::</span>C
+{
+  
+};
+</code></pre></div><h2 id="3-宏">3 宏</h2>
+<h3 id="31-__has_include">3.1 __has_include</h3>
+<p>判断有没有包含某文件</p>
+<p>如：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+<span style="color:#75715e">#if __has_include(&lt;cstdio&gt;)
+</span><span style="color:#75715e"></span> printf(<span style="color:#e6db74">&#34;hehe&#34;</span>);
+<span style="color:#75715e">#endif
+</span><span style="color:#75715e">#if __has_include(&#34;iostream&#34;)
+</span><span style="color:#75715e"></span> std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;hehe&#34;</span> <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+<span style="color:#75715e">#endif
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><h2 id="4数据类型">4.数据类型</h2>
+<p>c++17的标准库也进行了扩充， 新增了下面几种数据类型：</p>
+<h3 id="1-stdvariant">1. std::variant</h3>
+<p>std::variant是类型安全的联合体，是一个加强版的 union，variant支持更加复杂的数据类型，例如map，string等等</p>
+<ul>
+<li>与C语言中传统的 union 类型相同的是，variant 也是联合(union)类型。即 variant 可以存放多种类型的数据，但任何时刻最多只能存放其中一种类型的数据。</li>
+<li>与C语言中传统的 union 类型所不同的是，variant 是可辨识的类型安全的联合(union)类型。即 variant 无须借助外力只需要通过查询自身就可辨别实际所存放数据的类型。</li>
+</ul>
+<p><code>v = variant&lt;int, double, std::string&gt;</code> ，则 v 是一个可存放 int, double, std::string 这三种类型数据的变体类型的对象。</p>
+<ul>
+<li>
+<p><code>v.index() </code>返回变体类型 v 实际所存放数据的类型的下标。</p>
+<p>变体中第1种类型下标为0，第2种类型下标为1，以此类推。</p>
+</li>
+<li>
+<p><code>std::holds_alternative&lt;T&gt;(v)</code> 可查询变体类型 v 是否存放了 T 类型的数据。</p>
+</li>
+<li>
+<p><code>std::get&lt;I&gt;(v)</code> 如果变体类型 v 存放的数据类型下标为 I，那么返回所存放的数据，否则报错。</p>
+<p><code>std::get_if&lt;I&gt;(&amp;v)</code> 如果变体类型 v 存放的数据类型下标为 I，那么返回所存放数据的指针，否则返回空指针。</p>
+</li>
+<li>
+<p><code>std::get&lt;T&gt;(v)</code> 如果变体类型 v 存放的数据类型为 T，那么返回所存放的数据，否则报错。</p>
+<p><code>std::get_if&lt;T&gt;(&amp;v)</code> 如果变体类型 v 存放的数据类型为 T，那么返回所存放数据的指针，否则返回空指针。</p>
+</li>
+</ul>
+<h3 id="2-stdoptional">2. std::optional</h3>
+<p>std::optional表示一个可能存在的值。 当我们通过函数创建一个对象时，通常使用通过函数返回错误码，而通过出参返回对象本身。 如果通过optional返回创建的实例，就会变得更加直观，</p>
+<p>std::optional 提供了下面几个方法：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">has_value()   <span style="color:#75715e">// 检查对象是否有值
+</span><span style="color:#75715e"></span>value()       <span style="color:#75715e">// 返回对象的值，值不存在时则抛出 std::bad_optional_access 异常
+</span><span style="color:#75715e"></span>value_or()    <span style="color:#75715e">// 值存在时返回值，不存在时返回默认值
+</span></code></pre></div><h3 id="3-stdany">3. std::any</h3>
+<p>一个类型安全的可以保存任何值的容器</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() { 
+ 
+     <span style="color:#75715e">//构造：
+</span><span style="color:#75715e"></span>     std<span style="color:#f92672">::</span>any s0, s1 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Bob&#34;</span>, s2 <span style="color:#f92672">=</span> string(<span style="color:#e6db74">&#34;Tom&#34;</span>), s3 <span style="color:#f92672">=</span> <span style="color:#ae81ff">3.14</span>;
+     assert(s0.type() <span style="color:#f92672">==</span> <span style="color:#66d9ef">typeid</span>(<span style="color:#66d9ef">void</span>));
+     assert(s1.type() <span style="color:#f92672">==</span> <span style="color:#66d9ef">typeid</span>(<span style="color:#66d9ef">char</span> <span style="color:#66d9ef">const</span><span style="color:#f92672">*</span>));
+     assert(s2.type() <span style="color:#f92672">==</span> <span style="color:#66d9ef">typeid</span>(string));
+     assert(s3.type() <span style="color:#f92672">==</span> <span style="color:#66d9ef">typeid</span>(<span style="color:#66d9ef">double</span>)); 
+ 
+     <span style="color:#75715e">//创建：
+</span><span style="color:#75715e"></span>     <span style="color:#66d9ef">auto</span> s <span style="color:#f92672">=</span> make_any<span style="color:#f92672">&lt;</span>A<span style="color:#f92672">&gt;</span>(<span style="color:#e6db74">&#34;Jim&#34;</span>,<span style="color:#ae81ff">10</span>); assert(s.has_value() <span style="color:#f92672">==</span> true);
+     any_cast<span style="color:#f92672">&lt;</span>A<span style="color:#f92672">&gt;</span>(s).print(); assert(any_cast<span style="color:#f92672">&lt;</span>A<span style="color:#f92672">&gt;</span>(s).age <span style="color:#f92672">==</span> <span style="color:#ae81ff">10</span>);
+  
+     <span style="color:#75715e">//修改：
+</span><span style="color:#75715e"></span>     s.emplace<span style="color:#f92672">&lt;</span>A<span style="color:#f92672">&gt;</span>(<span style="color:#e6db74">&#34;Bob&#34;</span>,<span style="color:#ae81ff">20</span>);  
+     any_cast<span style="color:#f92672">&lt;</span>A<span style="color:#f92672">&gt;</span>(s).print(); assert(any_cast<span style="color:#f92672">&lt;</span>A<span style="color:#f92672">&gt;</span>(s).age <span style="color:#f92672">==</span> <span style="color:#ae81ff">20</span>); 
+ 
+     <span style="color:#75715e">//清除：
+</span><span style="color:#75715e"></span>     s.reset(); assert(s.has_value() <span style="color:#f92672">==</span> false); 
+ 
+     s <span style="color:#f92672">=</span> s3;  
+     assert(any_cast<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">double</span><span style="color:#f92672">&gt;</span>(s) <span style="color:#f92672">==</span> <span style="color:#ae81ff">3.14</span>);
+     assert(<span style="color:#f92672">*</span>any_cast<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">double</span><span style="color:#f92672">&gt;</span>(<span style="color:#f92672">&amp;</span>s) <span style="color:#f92672">==</span> <span style="color:#ae81ff">3.14</span>);
+     assert(<span style="color:#f92672">*</span>s._Cast<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">double</span><span style="color:#f92672">&gt;</span>() <span style="color:#f92672">==</span> <span style="color:#ae81ff">3.14</span>); 
+ 
+     <span style="color:#66d9ef">try</span> {
+         s.reset();
+         <span style="color:#66d9ef">double</span> y<span style="color:#f92672">=</span>any_cast<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">double</span><span style="color:#f92672">&gt;</span>(s);       <span style="color:#75715e">//不存在值异常
+</span><span style="color:#75715e"></span>     }
+     <span style="color:#66d9ef">catch</span> (<span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>bad_any_cast<span style="color:#f92672">&amp;</span> e) {
+         cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;err=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> e.what() <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>;}<span style="color:#75715e">// err=bad any_cast
+</span><span style="color:#75715e"></span>  
+     vector<span style="color:#f92672">&lt;</span>any<span style="color:#f92672">&gt;</span> vec{ true, <span style="color:#ae81ff">2021</span>,string(<span style="color:#e6db74">&#34;beijing&#34;</span>), <span style="color:#ae81ff">3.14</span>,A{<span style="color:#e6db74">&#34;Tom&#34;</span>,<span style="color:#ae81ff">20</span>} };
+     s.swap(s3); assert(any_cast<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">double</span><span style="color:#f92672">&gt;</span>(s) <span style="color:#f92672">==</span> <span style="color:#ae81ff">3.14</span>);
+  
+ }
+
+</code></pre></div><h3 id="4-stdstring_view">4. std::string_view</h3>
+<ul>
+<li>string_view我最早使用的是boost版本的，c++17中的string_view 和 boost类似。 string_view可以理解成原始字符串一个只读引用。</li>
+<li>string_view 本身没有申请额外的内存来存储原始字符串的data， 仅仅保存了原始字符串地址和长度等信息。 在很多情况下，我们只是临时处理字符串，本不需要对原始字符串的一份拷贝。</li>
+<li>使用string_view可以减少不必要的内存拷贝，可以提高程序性能。相比使用字符串指针，string_view做了更好的封装。</li>
+<li>需要注意的是，string_view 由于没有原始字符串的所有权，使用string_view 一定要注意原始字符串的生命周期。 当原始的字符串已经销毁，则不能再调用string_view。</li>
+</ul>
+<h2 id="5filesystem">5.filesystem</h2>
+<h3 id="头文件及命名空间">头文件及命名空间</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;filesystem&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std<span style="color:#f92672">::</span>filesystem;
+</code></pre></div><h3 id="常用类">常用类：</h3>
+<p>path 类：说白了该类只是对字符串（路径）进行一些处理，这也是文件系统的基石。</p>
+<p>directory_entry 类：功如其名，文件入口，这个类才真正接触文件。</p>
+<p>directory_iterator 类：获取文件系统目录中文件的迭代器容器，其元素为 directory_entry对象（可用于遍历目录）</p>
+<p>file_status 类：用于获取和修改文件（或目录）的属性（需要了解C++11的强枚举类型（即枚举类））</p>
+<h3 id="使用方法">使用方法</h3>
+<p>\1. 需要有一个path对象为基础，如果需要修改路径，可以调用其成员函数进行修改（注意其实只是处理字符串）。</p>
+<p>2.需要获取文件信息需要通过path构造directory_entry，但需要path一定存在才能调用构造，所以需要实现调用exists(path .)函数确保目录存在才能构造directory_entry（注意文件入口中的exists无法判断）。</p>
+<p>3.若需遍历，则可以使用 directory_iterator，进行遍历</p>
+<h3 id="演示如下">演示如下：</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;filesystem&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std<span style="color:#f92672">::</span>filesystem;
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+	path str(<span style="color:#e6db74">&#34;C:</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">Windows&#34;</span>);
+	<span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>exists(str))		<span style="color:#75715e">//必须先检测目录是否存在才能使用文件入口.
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+	directory_entry entry(str);		<span style="color:#75715e">//文件入口
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> (entry.status().type() <span style="color:#f92672">==</span> file_type<span style="color:#f92672">::</span>directory)	<span style="color:#75715e">//这里用了C++11的强枚举类型
+</span><span style="color:#75715e"></span>		cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;该路径是一个目录&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+	directory_iterator list(str);	        <span style="color:#75715e">//文件入口容器
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">auto</span><span style="color:#f92672">&amp;</span> it:list) 
+		cout <span style="color:#f92672">&lt;&lt;</span> it.path().filename()<span style="color:#f92672">&lt;&lt;</span> endl;	<span style="color:#75715e">//通过文件入口（it）获取path对象，再得到path对象的文件名，将之输出
+</span><span style="color:#75715e"></span>	system(<span style="color:#e6db74">&#34;pause&#34;</span>);
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><h3 id="常用库函数">常用库函数</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> copy(<span style="color:#66d9ef">const</span> path<span style="color:#f92672">&amp;</span> from, <span style="color:#66d9ef">const</span> path<span style="color:#f92672">&amp;</span> to) <span style="color:#960050;background-color:#1e0010">：目录复制</span>
+
+path absolute(<span style="color:#66d9ef">const</span> path<span style="color:#f92672">&amp;</span> pval, <span style="color:#66d9ef">const</span> path<span style="color:#f92672">&amp;</span> base <span style="color:#f92672">=</span> current_path()) <span style="color:#960050;background-color:#1e0010">：获取相对于</span>base的绝对路径
+
+<span style="color:#66d9ef">bool</span> create_directory(<span style="color:#66d9ef">const</span> path<span style="color:#f92672">&amp;</span> pval) <span style="color:#960050;background-color:#1e0010">：当目录不存在时创建目录</span>
+
+<span style="color:#66d9ef">bool</span> create_directories(<span style="color:#66d9ef">const</span> path<span style="color:#f92672">&amp;</span> pval) <span style="color:#960050;background-color:#1e0010">：形如</span><span style="color:#f92672">/</span>a<span style="color:#f92672">/</span>b<span style="color:#f92672">/</span>c这样的<span style="color:#960050;background-color:#1e0010">，如果都不存在，创建目录结构</span>
+
+<span style="color:#66d9ef">bool</span> exists(<span style="color:#66d9ef">const</span> path<span style="color:#f92672">&amp;</span> pval) <span style="color:#960050;background-color:#1e0010">：用于判断</span>path是否存在
+
+uintmax_t file_size(<span style="color:#66d9ef">const</span> path<span style="color:#f92672">&amp;</span> pval) <span style="color:#960050;background-color:#1e0010">：返回目录的大小</span>
+
+file_time_type last_write_time(<span style="color:#66d9ef">const</span> path<span style="color:#f92672">&amp;</span> pval) <span style="color:#960050;background-color:#1e0010">：返回目录最后修改日期的</span>file_time_type对象
+
+<span style="color:#66d9ef">bool</span> remove(<span style="color:#66d9ef">const</span> path<span style="color:#f92672">&amp;</span> pval) <span style="color:#960050;background-color:#1e0010">：删除目录</span>
+
+uintmax_t remove_all(<span style="color:#66d9ef">const</span> path<span style="color:#f92672">&amp;</span> pval) <span style="color:#960050;background-color:#1e0010">：递归删除目录下所有文件，返回被成功删除的文件个数</span>
+
+<span style="color:#66d9ef">void</span> rename(<span style="color:#66d9ef">const</span> path<span style="color:#f92672">&amp;</span> from, <span style="color:#66d9ef">const</span> path<span style="color:#f92672">&amp;</span> to) <span style="color:#960050;background-color:#1e0010">：移动文件或者重命名</span>
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Jiang . </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://jfy0o0.github.io/2021/cpp_17%E7%89%B9%E6%80%A7/>https://jfy0o0.github.io/2021/cpp_17%E7%89%B9%E6%80%A7/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/c&#43;&#43;/">
+                    #C&#43;&#43;</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://jfy0o0.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://jfy0o0.github.io/2021/cpp_14%E7%89%B9%E6%80%A7/" class="prev" rel="prev" title="C&#43;&#43; - c&#43;&#43;14特性"><i class="iconfont icon-left"></i>&nbsp;C&#43;&#43; - c&#43;&#43;14特性</a>
+         
+        
+        <a href="https://jfy0o0.github.io/2021/a/" class="next" rel="next" title="A">A&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2021</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://jfy0o0.github.io">Jiang .</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

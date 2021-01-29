@@ -6,7 +6,45 @@
     <description>Recent content in C&#43;&#43; on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 24 Dec 2020 19:55:07 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/categories/c++/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 28 Jan 2021 17:05:27 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/categories/c++/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C&#43;&#43; - c&#43;&#43;17特性</title>
+      <link>https://jfy0o0.github.io/2021/cpp_17%E7%89%B9%E6%80%A7/</link>
+      <pubDate>Thu, 28 Jan 2021 17:05:27 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/cpp_17%E7%89%B9%E6%80%A7/</guid>
+      <description>c++17特性 1.关键字 1. auto关键字 从c++11开始，auto关键字能够通过初始化器推导出变量的类型。在c++14中，auto关键字的能力进一步提升，能够通过return语句推导出函数的返回类型。 使用auto关键字能够提高编码效率，同时能够简化重构流程。但是，C++11中的auto推导，往往结果与预期的不同。
+c++11 中为了支持统一初始化，引入了新的统一初始化语法，如下所示。
+// c++11 auto x3{ 1, 2 }; // std::initializer_list&amp;lt;int&amp;gt; auto x4 = { 3 }; // decltype(x4) is std::initializer_list&amp;lt;int&amp;gt; auto x5{ 3 }; // std::initializer_list&amp;lt;int&amp;gt; 这三种方式初始化的变量，最终类型推导的结果都是 std::initializer_list ， 而不是我们认为的int。 这是因为 当用于auto声明变量的表达式是{}括起来的，推导的型别就会变成 std::initializer_list。
+在C++17中，对auto表达式推导的规则进行了改变
+// c++17 auto x3{ 1, 2 }; // error: not a single element auto x4 = { 3 }; // decltype(x4) is std::initializer_list&amp;lt;int&amp;gt; auto x5{ 3 }; // decltype(x5) is int 对比发现， auto x5{3}, 会直接将变量推导成 x5， 而 x3{1, 2} 这种方式也会编译失败。auto推导的规则变得更加直观。</description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43; - c&#43;&#43;14特性</title>
+      <link>https://jfy0o0.github.io/2021/cpp_14%E7%89%B9%E6%80%A7/</link>
+      <pubDate>Thu, 28 Jan 2021 16:35:46 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/cpp_14%E7%89%B9%E6%80%A7/</guid>
+      <description>C++14 Lambda 函数 C++14 的泛型 Lambda 使编写如下语句成为可能：
+auto lambda = [](auto x， auto y) {return x + y;}; 而另一方面，C++11 要求 Lambda 参数使用具体的类型声明，比如：
+auto lambda = [](int x， int y) {return x + y;}; 此外，新标准中的 std::move 函数可用于捕获 Lambda 表达式中的变量，这是通过移动对象而非复制或引用对象实现的：
+std::unique_ptr ptr (new int (10)); auto lambda = [value = std::move (ptr)] {return *value;}; int a = 2; [a = sin(a)]() { cout &amp;lt;&amp;lt; cos(a) &amp;lt;&amp;lt; endl; //0.6143 	}(); cout &amp;lt;&amp;lt; a &amp;lt;&amp;lt; endl; //2 	cout &amp;lt;&amp;lt; cos(a) &amp;lt;&amp;lt; endl;//-0.</description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43; - c&#43;&#43;11特性</title>
+      <link>https://jfy0o0.github.io/2021/cpp_11%E7%89%B9%E6%80%A7/</link>
+      <pubDate>Thu, 28 Jan 2021 15:31:27 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/cpp_11%E7%89%B9%E6%80%A7/</guid>
+      <description>C++11 特性 1 变量和基本类型 1.1 long long 类型 扩展精度浮点数，10位有效数字
+1.2 列表初始化 初始化的几种不同形式，其中用花括号来初始化变量称为列表初始化；
+int i = 0; int i = {0}; int i{0}; int i(0);  需要注意的是，当用于内置类型的变量时，这种初始化形式有一个重要的特点： 如果我们使用初始化且初始值存在丢失信息的风险，则编译器报错；  long double ld = 3.1414141414; int a{ld}, b = {ld}; //报错 int c(ld), d = ld; //正确 1.3 nullptr 常量 int *p1 = nullptr; // 等价于int *p1 = 0; 1.4 constexpr 变量 将变量声明为constexpr类型以便由编译器来验证变量的值是否是一个常量表达式；
+声明为constexpr的变量一定是一个常量，而且必须用常量表达式来初始化，比如说下面的情况则是不正确的：
+int t = 10; constexpr int q = t + 20; cout &amp;lt;&amp;lt; &amp;#34;q&amp;#34; &amp;lt;&amp;lt; q &amp;lt;&amp;lt; endl; 需要将t声明为 const 才是正确的；</description>
+    </item>
+    
     <item>
       <title>C&#43;&#43; - shared_ptr陷阱</title>
       <link>https://jfy0o0.github.io/2020/cpp_shared_ptr%E9%99%B7%E9%98%B1/</link>

@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Jiang .">
+  
+  
+  
+  <link rel="prev" href="https://jfy0o0.github.io/2021/linux-%E8%BD%AF%E4%BB%B6-valgrind/" />
+  <link rel="next" href="https://jfy0o0.github.io/2021/cpp_14%E7%89%B9%E6%80%A7/" />
+  <link rel="canonical" href="https://jfy0o0.github.io/2021/cpp_11%E7%89%B9%E6%80%A7/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           C&#43;&#43; - c&#43;&#43;11特性 | Jiang . &#39;s blog
+       
+  </title>
+  <meta name="title" content="C&#43;&#43; - c&#43;&#43;11特性 | Jiang . &#39;s blog">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/jfy0o0.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "C\u002b\u002b - c\u002b\u002b11特性",
+    "headline" : "C\u002b\u002b - c\u002b\u002b11特性",
+    "description" : "C\u002b\u002b11 特性 1 变量和基本类型 1.1 long long 类型 扩展精度浮点数，10位有效数字\n1.2 列表初始化 初始化的几种不同形式，其中用花括号来初始化变量称为列表初始化；\nint i = 0; int i = {0}; int i{0}; int i(0);  需要注意的是，当用于内置类型的变量时，这种初始化形式有一个重要的特点： 如果我们使用初始化且初始值存在丢失信息的风险，则编译器报错；  long double ld = 3.1414141414; int a{ld}, b = {ld}; \/\/报错 int c(ld), d = ld; \/\/正确 1.3 nullptr 常量 int *p1 = nullptr; \/\/ 等价于int *p1 = 0; 1.4 constexpr 变量 将变量声明为constexpr类型以便由编译器来验证变量的值是否是一个常量表达式；\n声明为constexpr的变量一定是一个常量，而且必须用常量表达式来初始化，比如说下面的情况则是不正确的：\nint t = 10; constexpr int q = t \u002b 20; cout \u0026lt;\u0026lt; \u0026#34;q\u0026#34; \u0026lt;\u0026lt; q \u0026lt;\u0026lt; endl; 需要将t声明为 const 才是正确的；",
+    "inLanguage" : "en-us",
+    "author" : "Jiang",
+    "creator" : "Jiang",
+    "publisher": "Jiang",
+    "accountablePerson" : "Jiang",
+    "copyrightHolder" : "Jiang",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-01-28 15:31:27 \u002b0800 CST",
+    "dateModified" : "2021-01-28 15:31:27 \u002b0800 CST",
+    "url" : "https:\/\/jfy0o0.github.io\/2021\/cpp_11%E7%89%B9%E6%80%A7\/",
+    "wordCount" : "1850",
+    "keywords" : [ "C\u002b\u002b", "Jiang . \u0027s blog"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">C&#43;&#43; - c&#43;&#43;11特性</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://jfy0o0.github.io" rel="author">Jiang</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2021-01-28 itemprop="datePublished">January 28, 2021</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://jfy0o0.github.io/categories/c&#43;&#43;/"> C&#43;&#43; </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="c11-特性">C++11 特性</h1>
+<h2 id="1-变量和基本类型">1 变量和基本类型</h2>
+<h3 id="11-long-long-类型">1.1 long long 类型</h3>
+<p>扩展精度浮点数，10位有效数字</p>
+<h3 id="12-列表初始化">1.2 列表初始化</h3>
+<p>初始化的几种不同形式，其中用<strong>花括号</strong>来初始化变量称为列表初始化；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> {<span style="color:#ae81ff">0</span>};
+<span style="color:#66d9ef">int</span> i{<span style="color:#ae81ff">0</span>};
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">i</span>(<span style="color:#ae81ff">0</span>);
+</code></pre></div><ul>
+<li>需要注意的是，当用于内置类型的变量时，这种初始化形式有一个重要的特点：</li>
+<li>如果我们使用初始化且初始值存在丢失信息的风险，则编译器报错；</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">long</span> <span style="color:#66d9ef">double</span> ld <span style="color:#f92672">=</span> <span style="color:#ae81ff">3.1414141414</span>;
+<span style="color:#66d9ef">int</span> a{ld}, b <span style="color:#f92672">=</span> {ld}; <span style="color:#75715e">//报错
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">c</span>(ld), d <span style="color:#f92672">=</span> ld; <span style="color:#75715e">//正确
+</span></code></pre></div><h3 id="13-nullptr-常量">1.3 nullptr 常量</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>p1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">nullptr</span>; <span style="color:#75715e">// 等价于int *p1 = 0;
+</span></code></pre></div><h3 id="14-constexpr-变量">1.4 constexpr 变量</h3>
+<p>将变量声明为constexpr类型以便由编译器来验证变量的值是否是一个常量表达式；</p>
+<p>声明为constexpr的变量一定是一个常量，而且必须用常量表达式来初始化，比如说下面的情况则是不正确的：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">int</span> t <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>;
+<span style="color:#66d9ef">constexpr</span> <span style="color:#66d9ef">int</span> q <span style="color:#f92672">=</span> t <span style="color:#f92672">+</span> <span style="color:#ae81ff">20</span>;
+cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;q&#34;</span> <span style="color:#f92672">&lt;&lt;</span> q <span style="color:#f92672">&lt;&lt;</span> endl;
+</code></pre></div><p>需要将t声明为 <code>const</code> 才是正确的；</p>
+<p>一般来说，如果你认定变量是一个常量表达式，那就把它声明为constexpr类型；</p>
+<h3 id="15-类型别名声明">1.5 类型别名声明</h3>
+<p>使用类型别名可以使复杂的类型名字变得更简单明了，易于理解和使用；</p>
+<p>现在有两种方法可以用来定义类型别名，一种是 <code>typedef</code> ，另一种则是新标准中的 <code>using</code>；</p>
+<h3 id="16-auto-类型指示符">1.6 auto 类型指示符</h3>
+<p>auto让编译器通过初始值来推算变量的类型，所以，其定义的变量必须要有初始值；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+
+    <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> ci <span style="color:#f92672">=</span> i;
+
+    <span style="color:#66d9ef">auto</span> b <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>i; <span style="color:#75715e">// b是一个整形指针（整数的地址就是指向整数的指针）
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">auto</span> c <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>ci; <span style="color:#75715e">// c是一个指向整数常量的指针（对常量对象取地址是一种底层const）
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><h3 id="17-decltype-类型指示符">1.7 decltype 类型指示符</h3>
+<p>处理顶层const和引用的方式</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> ci <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, <span style="color:#f92672">&amp;</span>cj <span style="color:#f92672">=</span> ci;
+<span style="color:#66d9ef">decltype</span>(ci) x <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+<span style="color:#66d9ef">decltype</span>(cj) y <span style="color:#f92672">=</span> x;
+<span style="color:#66d9ef">decltype</span>(cj) z; <span style="color:#75715e">//报错，因为cj是一个引用，因此作为引用的 z 必须要进行初始化
+</span></code></pre></div><p>引用从来都是作为其所指对象的同义词出现，也就是根据其所指的对象决定，只有在decltype处是个例外；</p>
+<h3 id="18-类内初始化">1.8 类内初始化</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>
+{
+	<span style="color:#66d9ef">int</span> x{<span style="color:#ae81ff">0</span>}
+}
+</code></pre></div><h2 id="2-字符串向量和数组">2 字符串、向量和数组</h2>
+<h3 id="21-使用-auto-或-decltype-缩写类型">2.1 使用 auto 或 decltype 缩写类型</h3>
+<h3 id="22-范围-for-语句">2.2 范围 for 语句</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">string <span style="color:#a6e22e">str</span>(<span style="color:#e6db74">&#34;hello world&#34;</span>);
+<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">auto</span> c : str) {
+    cout <span style="color:#f92672">&lt;&lt;</span> c;
+}
+</code></pre></div><h3 id="23-定义vector对象的vector向量的向量">2.3 定义vector对象的vector（向量的向量）</h3>
+<p>编译器根据模版vector生成了三种不同的类型，分别是：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span><span style="color:#960050;background-color:#1e0010">，</span>vector<span style="color:#f92672">&lt;</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&gt;</span>, vector<span style="color:#f92672">&lt;</span>classname<span style="color:#f92672">&gt;</span>
+</code></pre></div><p>新的版本已经不需要再添加一个空格</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">vector<span style="color:#f92672">&lt;</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&gt;</span>
+</code></pre></div><h3 id="24-vector对象的列表初始化">2.4 vector对象的列表初始化</h3>
+<p>放在花括号里</p>
+<h3 id="25-容器的cbegin-和-cend-函数">2.5 容器的cbegin 和 cend 函数</h3>
+<h3 id="26-标准库begin-和-end-函数">2.6 标准库begin 和 end 函数</h3>
+<h3 id="27-使用auto和decltype简化声明">2.7 使用auto和decltype简化声明</h3>
+<h2 id="3-表达式">3 表达式</h2>
+<h3 id="31-除法的舍入规则">3.1 除法的舍入规则</h3>
+<p>新标准中，一律向0取整（直接切除小数部分）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">double</span> a <span style="color:#f92672">=</span> <span style="color:#ae81ff">12</span><span style="color:#f92672">/</span><span style="color:#ae81ff">5</span>;
+cout <span style="color:#f92672">&lt;&lt;</span> a <span style="color:#f92672">&lt;&lt;</span> endl;
+</code></pre></div><p>输出结果为2，删掉了小数部分；</p>
+<h3 id="32-用大括号包围的值列表赋值">3.2 用大括号包围的值列表赋值</h3>
+<h3 id="33-将sizeof用于类成员">3.3 将sizeof用于类成员</h3>
+<p>使用作用域运算符来获取类成员的大小是许可的；</p>
+<ul>
+<li>对数组执行sizeof运算得到整个数组所占空间的大小，等价于对数组中所有的元素各执行一次sizeof运算并将所得结果求和；</li>
+<li>对string对象或vector对象执行sizeof运算只返回该类型固定部分的大小，不会计算对象中的元素占用多少空间；</li>
+</ul>
+<h2 id="4-语句">4 语句</h2>
+<h3 id="41-范围for语句">4.1 范围for语句</h3>
+<h2 id="5-函数">5 函数</h2>
+<h3 id="51-标准库-initializer_list类">5.1 标准库 initializer_list类</h3>
+<p>可以处理不同数量实参的函数，<strong>前提是实参类型要相同</strong>；</p>
+<p>其提供的操作包括：</p>
+<ul>
+<li>默认初始化</li>
+<li>列表初始化</li>
+<li>拷贝对象</li>
+<li>size</li>
+<li>begin</li>
+<li>end</li>
+</ul>
+<h3 id="52-列表初始化返回值">5.2 列表初始化返回值</h3>
+<p>函数可以返回花括号包围的值的列表，如果列表为空，临时量执行初始化，否则，返回的值由函数的返回类型决定；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">vector<span style="color:#f92672">&lt;</span>string<span style="color:#f92672">&gt;</span> getAddress(<span style="color:#66d9ef">int</span> num) {
+    <span style="color:#66d9ef">if</span> (num <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+        <span style="color:#66d9ef">return</span> {};
+    }
+    <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#34;address1&#34;</span>, <span style="color:#e6db74">&#34;address2&#34;</span>, <span style="color:#e6db74">&#34;address3&#34;</span>};
+}
+</code></pre></div><h3 id="53-定义尾置返回类型">5.3 定义尾置返回类型</h3>
+<p>任何函数的定义都能够使用尾置来返回，最适用于返回类型比较复杂的情况；</p>
+<p>比如：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">// 返回类型为指针，该指针指向含有10个整数的数组
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">auto</span> <span style="color:#a6e22e">func</span>(<span style="color:#66d9ef">int</span> i) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">int</span>(<span style="color:#f92672">*</span>)[<span style="color:#ae81ff">10</span>] {
+    <span style="color:#66d9ef">int</span> arr[<span style="color:#ae81ff">10</span>] <span style="color:#f92672">=</span> {<span style="color:#ae81ff">0</span>};
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span>arr;
+}
+</code></pre></div><h3 id="54-使用decltype简化返回类型定义">5.4 使用decltype简化返回类型定义</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">int</span> odd[] <span style="color:#f92672">=</span> {<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">9</span>};
+<span style="color:#66d9ef">int</span> even[] <span style="color:#f92672">=</span> {<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">10</span>};
+
+<span style="color:#75715e">// 返回一个指针，指向数组
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">decltype</span>(odd) <span style="color:#f92672">*</span>getArr(<span style="color:#66d9ef">int</span> i) {
+    <span style="color:#66d9ef">return</span> (i <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">?</span> <span style="color:#f92672">&amp;</span>odd : <span style="color:#f92672">&amp;</span>even;
+}
+</code></pre></div><p>decltype并不会因为获取的是数组，则返回的是指针，还是需要在函数名前面加上 <code>*</code>；</p>
+<h3 id="55-constexpr函数">5.5 constexpr函数</h3>
+<p>是指能用于常量表达式的函数；</p>
+<p>需要遵从几项约定：</p>
+<ul>
+<li>函数的返回类型以及所有形参的类型都是字面值类型（只能用它的值来称呼它）；</li>
+<li>函数体中必须有且只有一条return语句（C++14不再做要求）；</li>
+<li>必须非virtual</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">constexpr</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">func2</span>() {
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">10</span>;
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">int</span> arr[func2() <span style="color:#f92672">+</span> <span style="color:#ae81ff">10</span>] <span style="color:#f92672">=</span> {<span style="color:#ae81ff">0</span>};
+
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><h2 id="6-类">6 类</h2>
+<h3 id="61-使用default生成默认构造函数">6.1 使用=default生成默认构造函数</h3>
+<p>如果实现了默认的构造函数，编译器则不会自动生成默认版本；可以通过使用关键字 <code>default</code> 来控制默认构造函数的生成，显示的指示编译器生成该函数的默认版本；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyClass</span>{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    MyClass()<span style="color:#f92672">=</span><span style="color:#66d9ef">default</span>;  <span style="color:#75715e">//同时提供默认版本和带参版本
+</span><span style="color:#75715e"></span>    MyClass(<span style="color:#66d9ef">int</span> i)<span style="color:#f92672">:</span>data(i){}
+<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">int</span> data;
+};
+</code></pre></div><p>比如说如果想要禁止使用拷贝构造函数，则使用关键字 <code>delete</code>；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyClass</span>
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    MyClass()<span style="color:#f92672">=</span><span style="color:#66d9ef">default</span>;
+    MyClass(<span style="color:#66d9ef">const</span> MyClass<span style="color:#f92672">&amp;</span> )<span style="color:#f92672">=</span><span style="color:#66d9ef">delete</span>;
+};
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+    MyClass my;
+    MyClass my2(my); <span style="color:#75715e">//报错
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>但需要注意的是，析构函数是不允许使用delete的，否则无法删除；</p>
+<h3 id="62-类对象成员的类内初始化">6.2 类对象成员的类内初始化</h3>
+<blockquote>
+<p>当提供一个类内初始值时，必须以符号＝或者花括号表示</p>
+</blockquote>
+<h3 id="63-委托构造函数">6.3 委托构造函数</h3>
+<p>一个委托构造函数使用它所属类的其它构造函数执行它自己的初始化过程，或者说它把它自己的一些（或者全部）指责<strong>委托</strong>给了其它构造函数；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyClass</span>
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    MyClass() <span style="color:#f92672">:</span> MyClass(<span style="color:#ae81ff">10</span>) {}
+    MyClass(<span style="color:#66d9ef">int</span> d) <span style="color:#f92672">:</span> data(d){}
+
+    <span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getData</span>() {<span style="color:#66d9ef">return</span> data;}
+<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">int</span> data;
+};
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+    MyClass my;
+    cout <span style="color:#f92672">&lt;&lt;</span> my.getData() <span style="color:#f92672">&lt;&lt;</span> endl;
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><h3 id="64-constexpr构造函数">6.4 constexpr构造函数</h3>
+<p>如果想要使得函数拥有编译时计算的能力，则使用关键字 <code>constexpr</code></p>
+<p>同样的编译时使用对象：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Square</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">constexpr</span> Square(<span style="color:#66d9ef">int</span> e) <span style="color:#f92672">:</span> edge(e){};
+    <span style="color:#66d9ef">constexpr</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getArea</span>() {<span style="color:#66d9ef">return</span> edge <span style="color:#f92672">*</span> edge;}
+<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">int</span> edge;
+};
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+    Square s(<span style="color:#ae81ff">10</span>);
+    cout <span style="color:#f92672">&lt;&lt;</span> s.getArea() <span style="color:#f92672">&lt;&lt;</span> endl;
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>如果成员函数标记为 <code>constexpr</code>，则默认其是内联函数，如果变量声明为
+<code>constexpr</code>，则默认其是 <code>const</code>；</p>
+<h2 id="7-io库">7 IO库</h2>
+<h3 id="71-用string对象处理文件名">7.1 用string对象处理文件名</h3>
+<p>新版本中增加了使用库类型string对象作为文件名，之前只能使用C风格的字符数组；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">ifstream <span style="color:#a6e22e">infile</span>(<span style="color:#e6db74">&#34;/hello.sh&#34;</span>);
+</code></pre></div><h2 id="8-顺序容器">8 顺序容器</h2>
+<p>补充：</p>
+<p>顺序容器的类型：</p>
+<table>
+<thead>
+<tr>
+<th>容器</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vector</td>
+<td><strong>可变大小数组</strong>。支持快速随机访问。在尾部之外的位置插入或者删除元素时可能很慢</td>
+</tr>
+<tr>
+<td>deque</td>
+<td><strong>双端队列</strong>。支持快速随机访问。在头尾位置插入／删除速度很快</td>
+</tr>
+<tr>
+<td>list</td>
+<td><strong>双向链表</strong>。只支持双向双向顺序访问。在list中任何位置进行插入／删除操作</td>
+</tr>
+<tr>
+<td>forward_list</td>
+<td><strong>单向链表</strong>。只支持单向顺序访问。在链表任何位置进行插入／删除操作都很快</td>
+</tr>
+<tr>
+<td>array</td>
+<td>固定大小数组。支持快速随即访问。不能添加或删除元素</td>
+</tr>
+<tr>
+<td>string</td>
+<td>与vector相似的容器，但专门用于保存字符（字符数组，封装了char而已）。随机访问速度快，在尾部插入、删除速度快</td>
+</tr>
+</tbody>
+</table>
+<p>总而言之，数组随机访问速度快，链表插入删除速度快；</p>
+<h3 id="81-array和forward_list容器">8.1 array和forward_list容器</h3>
+<ul>
+<li>
+<p><strong>array</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iterator&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;array&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>   
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+    <span style="color:#75715e">// 使用聚合初始化来构造
+</span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, <span style="color:#ae81ff">3</span><span style="color:#f92672">&gt;</span> a1{ {<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>} };    <span style="color:#75715e">// C++11中需要使用双重花括号（而14中不需要）
+</span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, <span style="color:#ae81ff">3</span><span style="color:#f92672">&gt;</span> a2 <span style="color:#f92672">=</span> {<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>}; <span style="color:#75715e">// 不再需要等号了
+</span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>string, <span style="color:#ae81ff">2</span><span style="color:#f92672">&gt;</span> a3 <span style="color:#f92672">=</span> { {std<span style="color:#f92672">::</span>string(<span style="color:#e6db74">&#34;a&#34;</span>), <span style="color:#e6db74">&#34;b&#34;</span>} };
+   
+    <span style="color:#75715e">// 支持基本的容器操作
+</span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>sort(a1.begin(), a1.end());
+    std<span style="color:#f92672">::</span>reverse_copy(a2.begin(), a2.end(), std<span style="color:#f92672">::</span>ostream_iterator<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>(std<span style="color:#f92672">::</span>cout, <span style="color:#e6db74">&#34; &#34;</span>));
+   
+    <span style="color:#75715e">// 支持范围for
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">auto</span><span style="color:#f92672">&amp;</span> s: a3)
+        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> s <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39; &#39;</span>;
+}
+</code></pre></div></li>
+<li>
+<p>forward_list</p>
+<p>和 <code>list</code> 的使用类似，就不贴代码了；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span>, <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Alloc</span> <span style="color:#f92672">=</span> allocator<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">forward_list</span>;
+</code></pre></div><p>Alloc，容器内部用来管理内存分配以及释放的内存分配器的类型，默认使用的是 <code>std::allocator&lt;T&gt;</code>，；</p>
+</li>
+</ul>
+<h3 id="82-容器的cbegin和cend函数">8.2 容器的cbegin和cend函数</h3>
+<p>返回的是const的迭代器，当不需要写访问时，应使用cbegin和cend；</p>
+<h3 id="83-容器的列表初始化">8.3 容器的列表初始化</h3>
+<h3 id="84-容器的非成员函数swap">8.4 容器的非成员函数swap</h3>
+<p>除了 <code>array</code> 外，swap不对任何元素进行拷贝、删除或者插入操作，因此可以保证常数时间内完成；swap 只是交换了容器内部数据结构，不会交换元素，因此，除<code>string</code> 外，指向容器的迭代器、引用和指针在 swap 操作后都不会失效；</p>
+<p>但是，array会真正的交换它们的元素。</p>
+<h3 id="85-容器insert成员的返回类型">8.5 容器insert成员的返回类型</h3>
+<p>在新标准下，接受元素个数或范围的insert版本返回的是－指向第一个新加入元素的迭代器；</p>
+<p>如果范围为空，不插入任何元素，<code>insert</code> 操作会将第一个参数返回；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+    list<span style="color:#f92672">&lt;</span>string<span style="color:#f92672">&gt;</span> lst;
+    <span style="color:#66d9ef">auto</span> itr <span style="color:#f92672">=</span> lst.begin();
+    string word;
+    <span style="color:#66d9ef">while</span> (cin <span style="color:#f92672">&gt;&gt;</span> word) {
+        itr <span style="color:#f92672">=</span> lst.insert(itr, word); <span style="color:#75715e">//等价于push_front
+</span><span style="color:#75715e"></span>    }
+
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><h3 id="86-容器的emplace成员">8.6 容器的emplace成员</h3>
+<p>当调用 <code>push</code> 或 <code>insert</code> 成员函数时，我们将元素类型的对象传递给它们，这些对象被拷贝到容器里面，但是，当我们调用一个 <code>emplace</code> 成员函数时，则是将函数传递给元素类型的构造函数，会使用这些参数在容器管理的内存中直接构造元素；包括三个函数：<code>emplace_front</code>，<code>emplace</code>，<code>emplace_back</code>，分别对应着 <code>push_front</code>，<code>insert</code>，<code>push_back</code> 为头部，指定位置，尾部；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyClass</span>
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    MyClass(<span style="color:#66d9ef">int</span> d) <span style="color:#f92672">:</span> data(d){}
+
+    <span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getData</span>() {<span style="color:#66d9ef">return</span> data;}
+<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">int</span> data;
+};
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+    vector<span style="color:#f92672">&lt;</span>MyClass<span style="color:#f92672">&gt;</span> mys;
+    mys.emplace_back(<span style="color:#ae81ff">10</span>);
+    mys.push_back(MyClass(<span style="color:#ae81ff">20</span>));
+
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">auto</span> itr <span style="color:#f92672">=</span> mys.begin(); itr <span style="color:#f92672">!=</span> mys.end(); itr<span style="color:#f92672">++</span>) {
+        cout <span style="color:#f92672">&lt;&lt;</span> (<span style="color:#f92672">*</span>itr).getData() <span style="color:#f92672">&lt;&lt;</span> endl;
+    }
+
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><h3 id="87-shrink_to_fit">8.7 shrink_to_fit</h3>
+<p>调用该函数要求 <code>deque</code>，<code>vector</code>，<code>string</code> 退回不需要的内存空间；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+
+    vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> nums;
+    nums.push_back(<span style="color:#ae81ff">10</span>);
+    nums.push_back(<span style="color:#ae81ff">10</span>);
+    nums.push_back(<span style="color:#ae81ff">10</span>);
+    nums.push_back(<span style="color:#ae81ff">10</span>);
+    nums.push_back(<span style="color:#ae81ff">10</span>);
+    cout <span style="color:#f92672">&lt;&lt;</span> nums.capacity() <span style="color:#f92672">&lt;&lt;</span> endl;
+    nums.shrink_to_fit();
+    cout <span style="color:#f92672">&lt;&lt;</span> nums.capacity() <span style="color:#f92672">&lt;&lt;</span> endl;
+
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>返回结果为8，5</p>
+<p>区别：</p>
+<ul>
+<li>reserve：预分配存储区大小，即capacity的值</li>
+<li>resize：容器大小，即size的值</li>
+</ul>
+<h3 id="89-string的数值转换函数">8.9 string的数值转换函数</h3>
+<p>新标准中，引入多个函数实现数值数据和标准库string之间的转换：</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>to_string(val)</td>
+<td>返回任意算术类型val的字符串</td>
+</tr>
+<tr>
+<td>stoi(s, p, b)</td>
+<td>int类型</td>
+</tr>
+<tr>
+<td>stol(s, p, b)</td>
+<td>long类型</td>
+</tr>
+<tr>
+<td>stoul(s, p, b)</td>
+<td>unsigned long类型</td>
+</tr>
+<tr>
+<td>stoll(s, p, b)</td>
+<td>long long类型</td>
+</tr>
+<tr>
+<td>stoull(s, p, b)</td>
+<td>unsigned long long类型</td>
+</tr>
+<tr>
+<td>stof(s, p, b)</td>
+<td>float类型</td>
+</tr>
+<tr>
+<td>stod(s, p, b)</td>
+<td>double类型</td>
+</tr>
+<tr>
+<td>stold(s, p, b)</td>
+<td>long double类型</td>
+</tr>
+</tbody>
+</table>
+<h2 id="9-泛型算法">9 泛型算法</h2>
+<h3 id="91-lambda表达式">9.1 lambda表达式</h3>
+<p>一个lambda具有一个返回类型、一个参数列表和一个函数体；</p>
+<pre><code>[capture list](parameter list) -&gt; return type { function body }
+</code></pre><h3 id="92-lambda表达式中的尾置返回类型">9.2 lambda表达式中的尾置返回类型</h3>
+<h3 id="93-标准库bind函数">9.3 标准库bind函数</h3>
+<pre><code>auto newCallable = bind(callable, arg_list);
+</code></pre><p>例子（绑定类成员函数）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;functional&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std<span style="color:#f92672">::</span>placeholders;
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyClass</span>
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	<span style="color:#66d9ef">void</span> fun1(<span style="color:#66d9ef">void</span>)
+	{
+		cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;void fun1(void)&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+	}
+	<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">fun2</span>(<span style="color:#66d9ef">int</span> i)
+	{
+		cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;int fun2(int i)&#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; i = &#34;</span> <span style="color:#f92672">&lt;&lt;</span> i <span style="color:#f92672">&lt;&lt;</span> endl;
+		<span style="color:#66d9ef">return</span> i;
+	}
+};
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+	MyClass my;
+	<span style="color:#75715e">//使用类对象绑定
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">auto</span> fun1 <span style="color:#f92672">=</span> bind(<span style="color:#f92672">&amp;</span>MyClass<span style="color:#f92672">::</span>fun1, my);
+	fun1();
+	MyClass <span style="color:#f92672">*</span>p;
+	<span style="color:#75715e">//使用类指针绑定，-1为占位符
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">auto</span> fun2 <span style="color:#f92672">=</span> bind(<span style="color:#f92672">&amp;</span>MyClass<span style="color:#f92672">::</span>fun2, p, _1);
+	<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> fun2(<span style="color:#ae81ff">1</span>);
+	cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;i = &#34;</span> <span style="color:#f92672">&lt;&lt;</span> i <span style="color:#f92672">&lt;&lt;</span> endl;
+	cin.get();
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><h2 id="10-关联容器">10. 关联容器</h2>
+<p>关联器类型</p>
+<ul>
+<li>map 关联数组，保存关键字－值对</li>
+<li>set 关键字即值，即只保存关键字的容器</li>
+<li>multimap 关键字可重复出现的map</li>
+<li>multiset 关键字可重复出现的set</li>
+<li>unordered_map 用哈希函数组织的map</li>
+<li>unordered_set 用哈希函数组织的set</li>
+<li>unordered_multimap 用哈希函数组织的map，关键字可重复</li>
+<li>unordered_multiset 用哈希函数组织的set，关键字可重复</li>
+</ul>
+<h3 id="101-关联容器的列表初始化">10.1 关联容器的列表初始化</h3>
+<p>和顺序容器差不多</p>
+<h3 id="102-列表初始化pair的返回类型">10.2 列表初始化pair的返回类型</h3>
+<h3 id="103-pair的列表初始化">10.3 pair的列表初始化</h3>
+<h3 id="104-无序容器">10.4 无序容器</h3>
+<p>包括4个无序关联容器（使用哈希函数和关键字类型的 == 运算符）</p>
+<ul>
+<li>unordered_map</li>
+<li>unordered_set</li>
+<li>unordered_multiset</li>
+<li>unordered_multimap</li>
+</ul>
+<h2 id="11-动态内存">11 动态内存</h2>
+<p>已总结，略</p>
+<h3 id="111-智能指针">11.1 智能指针</h3>
+<h3 id="112-shared_ptr类">11.2 shared_ptr类</h3>
+<h3 id="113-动态分配对象的列表初始化">11.3 动态分配对象的列表初始化</h3>
+<h3 id="114-auto和动态分配">11.4 auto和动态分配</h3>
+<h3 id="115-unique_ptr类">11.5 unique_ptr类</h3>
+<h3 id="116-weak_ptr类">11.6 weak_ptr类</h3>
+<h3 id="117-范围for语句不能应用于动态分配数组">11.7 范围for语句不能应用于动态分配数组</h3>
+<p>因为分配的内存并不是一个数组类型</p>
+<h3 id="118-动态分配数组的列表初始化">11.8 动态分配数组的列表初始化</h3>
+<p>可以对数组中的元素进行值初始化，方法是在大小之后跟一对括号；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>pia <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span>[<span style="color:#ae81ff">10</span>]; <span style="color:#75715e">//10个未初始化的int
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>pia2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span>[<span style="color:#ae81ff">10</span>](); <span style="color:#75715e">//10个初始化为0的int
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>pia3 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span>[<span style="color:#ae81ff">10</span>]{<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">10</span>};
+
+<span style="color:#66d9ef">delete</span> [] pia; <span style="color:#75715e">//释放
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">delete</span> [] pia2;
+<span style="color:#66d9ef">delete</span> [] pia3;
+</code></pre></div><h3 id="119-auto不能用于分配数组">11.9 auto不能用于分配数组</h3>
+<p>虽然我们用空括号对数组中元素进行值初始化，但不能在括号中给出初始化器，这意味着不能用auto分配数组；</p>
+<h3 id="1110-allocatorconstruct可使用任意构造函数">11.10 allocator::construct可使用任意构造函数</h3>
+<p>allocator分配的内存是未构造的，我们按需要在此内存中构造对象。在新标准库中，construct成员函数接受一个指针和零个或多个额外参数，在给定位置构造一个元素。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+    allocator<span style="color:#f92672">&lt;</span>string<span style="color:#f92672">&gt;</span> alloc;
+    string<span style="color:#f92672">*</span> str <span style="color:#f92672">=</span> alloc.allocate(<span style="color:#ae81ff">4</span>); <span style="color:#75715e">//分配10个未初始化的string
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">auto</span> itr <span style="color:#f92672">=</span> str;
+    alloc.construct(itr, <span style="color:#e6db74">&#34;chengdu&#34;</span>); <span style="color:#75715e">//chengdu
+</span><span style="color:#75715e"></span>    cout <span style="color:#f92672">&lt;&lt;</span> str[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&lt;&lt;</span> endl;
+    itr<span style="color:#f92672">++</span>;
+    alloc.construct(itr, <span style="color:#e6db74">&#34;beijing&#34;</span>); <span style="color:#75715e">//beijing
+</span><span style="color:#75715e"></span>    cout <span style="color:#f92672">&lt;&lt;</span> str[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">&lt;&lt;</span> endl;
+    itr<span style="color:#f92672">++</span>;
+    alloc.construct(itr, <span style="color:#ae81ff">10</span>, <span style="color:#e6db74">&#39;c&#39;</span>); <span style="color:#75715e">//10个c组成的字符串
+</span><span style="color:#75715e"></span>    cout <span style="color:#f92672">&lt;&lt;</span> str[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">&lt;&lt;</span> endl;
+    itr<span style="color:#f92672">++</span>;
+    alloc.construct(itr); <span style="color:#75715e">//空字符串
+</span><span style="color:#75715e"></span>    cout <span style="color:#f92672">&lt;&lt;</span> str[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">&lt;&lt;</span> endl;
+
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">4</span>; i<span style="color:#f92672">++</span>) {
+        cout <span style="color:#f92672">&lt;&lt;</span> str[i] <span style="color:#f92672">&lt;&lt;</span> endl;
+    }
+
+    <span style="color:#75715e">// 销毁
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">while</span> (itr <span style="color:#f92672">!=</span> str) {
+        alloc.destroy(itr<span style="color:#f92672">--</span>);
+    }
+
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>为了使用allocate返回的内存，我们必须用construct构造对象，使用未构造的内存，其行为是未定义的；我们只有对真正构造了的元素进行destroy操作；</p>
+<h2 id="12-拷贝控制">12 拷贝控制</h2>
+<h3 id="121-将default用于拷贝控制类对对象">12.1 将=default用于拷贝控制类对对象</h3>
+<p>可以类内或者类外修饰成员函数，如果是类内，合成的函数将隐式地声明未内联的，如果不希望这样，则在类外声明；</p>
+<p>我们只能对具有合成版本的成员函数使用=default（即，默认构造函数或拷贝控制成员）</p>
+<h3 id="122-使用delete用于拷贝控制成员">12.2 使用=delete用于拷贝控制成员</h3>
+<p>对于析构函数已删除的类型，不能定义该类型的变量或释放指向该类型动态分配的指针；</p>
+<h3 id="123-用移动类对象代替拷贝类对象">12.3 用移动类对象代替拷贝类对象</h3>
+<p>为了解决之前存在的性能问题，避免不必要的内存拷贝，新标准中有两种方法来替代拷贝函数：移动函数和 <code>move</code></p>
+<p>移动构造函数</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">A(A <span style="color:#f92672">&amp;&amp;</span> h) <span style="color:#f92672">:</span> a(h.a){
+    h.a <span style="color:#f92672">=</span> <span style="color:#66d9ef">nullptr</span>;
+}
+</code></pre></div><h3 id="124-右值引用">12.4 右值引用</h3>
+<p>右值引用就是必须绑定到右值的引用，通过 <code>&amp;&amp;</code> 来获得右值引用；</p>
+<p>右值引用就是必须绑定到右值的引用，通过 <code>&amp;&amp;</code> 来获得右值引用；</p>
+<h4 id="1241-区别左值和右值">12.4.1 区别左值和右值</h4>
+<ul>
+<li>左值：在赋值号左边，可以被赋值的值，可以取地址；</li>
+<li>右值：在赋值号右边，取出值赋给其他变量的值；</li>
+<li>左值引用：type &amp; 引用名 = 左值表达式</li>
+<li>右值引用：type &amp;&amp; 引用名 = 右值表达式</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"> <span style="color:#66d9ef">int</span> a <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#75715e">//2
+</span><span style="color:#75715e"></span> <span style="color:#66d9ef">int</span> b <span style="color:#f92672">=</span> a; <span style="color:#75715e">//1
+</span><span style="color:#75715e"></span> 
+</code></pre></div><p>一个对象被用作右值时，使用的是它的内容（值），比如1中的 <code>a</code> ，被当作左值时，使用的是它的地址，比如2中的 <code>a</code>，常规左值；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">int</span> i    <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;          <span style="color:#75715e">//i为常规左值
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> <span style="color:#f92672">&amp;</span>r   <span style="color:#f92672">=</span> i;          <span style="color:#75715e">//正确：r绑定到i上，r是一个引用
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> <span style="color:#f92672">&amp;&amp;</span>rr <span style="color:#f92672">=</span> i;          <span style="color:#75715e">//错误：不能将一个右值引用绑定到左值i上
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> <span style="color:#f92672">&amp;</span>r2  <span style="color:#f92672">=</span> i <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span>;      <span style="color:#75715e">//错误：等号右边是一个右值，但左值引用只能绑定到左值上
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> <span style="color:#f92672">&amp;&amp;</span>rr2 <span style="color:#f92672">=</span> i <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span>;     <span style="color:#75715e">//正确：右值引用绑定到右值上
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> <span style="color:#f92672">&amp;</span>r3 <span style="color:#f92672">=</span> i <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span>; <span style="color:#75715e">//正确：可以将一个const的左值引用绑定到右值上
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><ul>
+<li>返回左值引用的函数、赋值、下标、解引用和前置递增／递减运算符，都是返回左值的表达式的例子，我们可以将一个左值引用绑定到这类表达式的结果上；</li>
+<li>返回非引用类型的函数，连同算术、关系、位以及后置递增／递减运算符，都生成右值；我们不能将左值引用绑定到这类表达式上，但是我们可以将一个const的左值引用或者一个右值引用绑定到这类表达式之上；</li>
+</ul>
+<h3 id="125-标准库move函数">12.5 标准库move函数</h3>
+<blockquote>
+<p>我们可以销毁一个移后源对象，也可以赋予它新值，但不能使用一个移后源对象的值</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">// 移动构造函数，参数 &#34;arg.member&#34; 是左值
+</span><span style="color:#75715e"></span>A(A<span style="color:#f92672">&amp;&amp;</span> arg) <span style="color:#f92672">:</span> member(std<span style="color:#f92672">::</span>move(arg.member))
+{
+} 
+
+<span style="color:#75715e">// 移动赋值函数
+</span><span style="color:#75715e"></span>A<span style="color:#f92672">&amp;</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">=</span>(A<span style="color:#f92672">&amp;&amp;</span> other) {
+     member <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>move(other.member);
+     <span style="color:#66d9ef">return</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>;
+}
+</code></pre></div><h3 id="126-移动构造函数和移动赋值">12.6 移动构造函数和移动赋值</h3>
+<h3 id="127-移动构造函数通常是noexcept">12.7 移动构造函数通常是noexcept</h3>
+<p>如果需要通知标准库这是一个不会抛出异常的移动操作，可以在函数后面指明 <code>noexcept</code>，如果在一个构造函数中，<code>noexcept</code> 出现在参数列表和初始化列表开始的冒号之间；</p>
+<blockquote>
+<p>不抛出异常的移动构造函数和移动赋值运算符必须标记为noexcept</p>
+</blockquote>
+<h3 id="128-移动迭代器">12.8 移动迭代器</h3>
+<p>新标准中可以通过调用标准库的 <code>make_move_iterator</code> 函数将一个普通迭代器转换为一个<strong>移动迭代器</strong>，这样可以避免拷贝操作带来的性能问题；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;     // std::cout</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iterator&gt;     // std::make_move_iterator</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;vector&gt;       // std::vector</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;       // std::string</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;algorithm&gt;    // std::copy</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>string<span style="color:#f92672">&gt;</span> foo(<span style="color:#ae81ff">3</span>);
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>string<span style="color:#f92672">&gt;</span> bar{ <span style="color:#e6db74">&#34;one&#34;</span>,<span style="color:#e6db74">&#34;two&#34;</span>,<span style="color:#e6db74">&#34;three&#34;</span> };
+
+    std<span style="color:#f92672">::</span>copy(make_move_iterator(bar.begin()),
+        make_move_iterator(bar.end()),
+        foo.begin());
+
+    <span style="color:#75715e">// bar now contains unspecified values; clear it:
+</span><span style="color:#75715e"></span>    bar.clear();
+
+    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;foo:&#34;</span>;
+    <span style="color:#66d9ef">for</span> (std<span style="color:#f92672">::</span>string<span style="color:#f92672">&amp;</span> x : foo) std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39; &#39;</span> <span style="color:#f92672">&lt;&lt;</span> x;
+    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>;
+
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><h3 id="129-引用限定成员函数">12.9 引用限定成员函数</h3>
+<p>引用限定符可以是 <code>&amp;</code> 或者 <code>&amp;&amp;</code>，分别指出 <code>this</code> 可以指向一个左值或者右值，引用限定符只能用于成员函数，而且必须同时出现在函数的声明和定义中；</p>
+<p>可以在参数列表之后使用引用限定符来指定this对象的左值与右值属性;</p>
+<ul>
+<li>若引用限定符为&amp;,则表明this对象指向着左值对象;</li>
+<li>若引用限定符为&amp;&amp;,则表明this对象指向着右值对象；</li>
+</ul>
+<h2 id="13-重载运算与类型转换">13 重载运算与类型转换</h2>
+<h3 id="131-function类模版">13.1 function类模版</h3>
+<p>function模版提供一种通用、多态的函数封装。其实例可以对任何可调用的目标进行存储、赋值和调用操作，这些目标包括函数、lambda表达式、绑定表达式以及其它函数对象等；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;functional&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span> 
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Foo</span> {
+    Foo(<span style="color:#66d9ef">int</span> num) <span style="color:#f92672">:</span> num_(num) {}
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">print_add</span>(<span style="color:#66d9ef">int</span> i) <span style="color:#66d9ef">const</span> { std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> num_<span style="color:#f92672">+</span>i <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>; }
+    <span style="color:#66d9ef">int</span> num_;
+};
+ 
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">print_num</span>(<span style="color:#66d9ef">int</span> i)
+{
+    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> i <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>;
+}
+ 
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">PrintNum</span> {
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">operator</span>()(<span style="color:#66d9ef">int</span> i) <span style="color:#66d9ef">const</span>
+    {
+        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> i <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>;
+    }
+};
+ 
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+    <span style="color:#75715e">// 保存自由函数
+</span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span>(<span style="color:#66d9ef">int</span>)<span style="color:#f92672">&gt;</span> f_display <span style="color:#f92672">=</span> print_num;
+    f_display(<span style="color:#f92672">-</span><span style="color:#ae81ff">9</span>);
+ 
+    <span style="color:#75715e">// 保存 lambda 表达式
+</span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span>()<span style="color:#f92672">&gt;</span> f_display_42 <span style="color:#f92672">=</span> []() { print_num(<span style="color:#ae81ff">42</span>); };
+    f_display_42();
+ 
+    <span style="color:#75715e">// 保存 std::bind 的结果
+</span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span>()<span style="color:#f92672">&gt;</span> f_display_31337 <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>bind(print_num, <span style="color:#ae81ff">31337</span>);
+    f_display_31337();
+ 
+    <span style="color:#75715e">// 保存成员函数
+</span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span>(<span style="color:#66d9ef">const</span> Foo<span style="color:#f92672">&amp;</span>, <span style="color:#66d9ef">int</span>)<span style="color:#f92672">&gt;</span> f_add_display <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>Foo<span style="color:#f92672">::</span>print_add;
+    Foo foo(<span style="color:#ae81ff">314159</span>);
+    f_add_display(foo, <span style="color:#ae81ff">1</span>);
+ 
+    <span style="color:#75715e">// 保存成员函数和对象
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>placeholders<span style="color:#f92672">::</span>_1;
+    std<span style="color:#f92672">::</span>function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span>(<span style="color:#66d9ef">int</span>)<span style="color:#f92672">&gt;</span> f_add_display2<span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>bind( <span style="color:#f92672">&amp;</span>Foo<span style="color:#f92672">::</span>print_add, foo, _1 );
+    f_add_display2(<span style="color:#ae81ff">2</span>);
+ 
+    <span style="color:#75715e">// 保存成员函数和对象指针
+</span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span>(<span style="color:#66d9ef">int</span>)<span style="color:#f92672">&gt;</span> f_add_display3<span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>bind( <span style="color:#f92672">&amp;</span>Foo<span style="color:#f92672">::</span>print_add, <span style="color:#f92672">&amp;</span>foo, _1 );
+    f_add_display3(<span style="color:#ae81ff">3</span>);
+ 
+    <span style="color:#75715e">// 保存函数对象
+</span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span>(<span style="color:#66d9ef">int</span>)<span style="color:#f92672">&gt;</span> f_display_obj <span style="color:#f92672">=</span> PrintNum();
+    f_display_obj(<span style="color:#ae81ff">18</span>);
+}
+</code></pre></div><h3 id="132-explicit类型转换运算符">13.2 explicit类型转换运算符</h3>
+<p>用来防止由构造函数定义的隐式转换；</p>
+<p>看看构造函数的隐式转换，如果类的构造函数有一个参数，那么在编译的时候就会有一个缺省的转换操作，会将其参数转化成类的对象；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyClass</span>  
+{  
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>  
+MyClass( <span style="color:#66d9ef">int</span> num );  
+}  
+
+<span style="color:#75715e">// 编译器会将10转换成MyClass对象
+</span><span style="color:#75715e"></span>MyClass obj <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>; 
+</code></pre></div><p>避免这种自动转换的操作则需要 <code>explicit</code>：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyClass</span>  
+{  
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>  
+<span style="color:#66d9ef">explicit</span> MyClass( <span style="color:#66d9ef">int</span> num );  
+}  
+ 
+MyClass obj <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>; <span style="color:#75715e">//err,can&#39;t non-explict convert 
+</span></code></pre></div><p>其只能用在类内部的构造函数声明上，不能用在类外部的函数定义上；</p>
+<h2 id="14-面向对象程序设计">14 面向对象程序设计</h2>
+<h3 id="141-虚函数的override和final指示符">14.1 虚函数的override和final指示符</h3>
+<p><code>override</code> 可以帮助程序员的意图更加的清晰的同时让编译器可以为我们发现一些错误。其只能用于覆盖基类的<strong>虚函数</strong>；</p>
+<p><code>final</code> 使得任何尝试覆盖该函数的操作都将引发错误，并不特指虚函数；</p>
+<blockquote>
+<p>均出现在形参列表（包括任何const或者引用限定符）以及尾置返回类型之后</p>
+</blockquote>
+<h3 id="142-删除的拷贝控制和继承">14.2 删除的拷贝控制和继承</h3>
+<p>如果函数在基类中被定义为是删除的，则派生类对应的也是删除的；</p>
+<h3 id="143-继承的构造函数">14.3 继承的构造函数</h3>
+<p>委派和继承构造函数是由C++11引进为了减少构造函数重复代码而开发的两种不同的特性；</p>
+<p>a. 通过特殊的初始化列表语法，<strong>委派构造函数</strong>允许类的一个构造函数调用其它的构造函数</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">X<span style="color:#f92672">::</span>X(<span style="color:#66d9ef">const</span> string<span style="color:#f92672">&amp;</span> name) <span style="color:#f92672">:</span> name_(name) {
+  ...
+}
+
+X<span style="color:#f92672">::</span>X() <span style="color:#f92672">:</span> X(<span style="color:#e6db74">&#34;&#34;</span>) { }
+</code></pre></div><p>b. 继承构造函数允许派生类直接调用基类的构造函数，一如继承基类的其它成员函数，而无需重新声明，当基类拥有多个构造函数时这一功能尤其有用：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Base</span> {
+ <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+  Base();
+  Base(<span style="color:#66d9ef">int</span> n);
+  Base(<span style="color:#66d9ef">const</span> string<span style="color:#f92672">&amp;</span> s);
+  ...
+};
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Derived</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> Base {
+ <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+  <span style="color:#66d9ef">using</span> Base<span style="color:#f92672">::</span>Base;  <span style="color:#75715e">// Base&#39;s constructors are redeclared here.
+</span><span style="color:#75715e"></span>};
+</code></pre></div><p>using声明语句将令编译器产生代码，对于基类的每个构造函数，编译器都在派生类中生成一个形参列表完全相同的构造函数；如果派生类含有自己的数据成员，则这些成员将会被默认初始化；</p>
+<h2 id="15-模版与泛型编程">15 模版与泛型编程</h2>
+<h3 id="151-声明模版类型形参为友元">15.1 声明模版类型形参为友元</h3>
+<p>在新标准中，我们可以将模板类型参数声明为友元：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> Type<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Bar</span> {
+    <span style="color:#66d9ef">friend</span> Type; <span style="color:#75715e">//将访问权限授予用来实例化Bar的类型
+</span><span style="color:#75715e"></span>};
+</code></pre></div><p>此处我们将用来实例化Bar的类型声明为友元。因此，对于某个类型名Foo，<code>Foo</code> 将成 <code>Bar&lt;Foo&gt;</code> 的友元。</p>
+<h3 id="152-模版类型别名">15.2 模版类型别名</h3>
+<p>新标准中允许我们为模版定义一个类型别名：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">using</span> twin <span style="color:#f92672">=</span> pair<span style="color:#f92672">&lt;</span>T, T<span style="color:#f92672">&gt;</span>;
+twin<span style="color:#f92672">&lt;</span>string<span style="color:#f92672">&gt;</span> authors;
+</code></pre></div><p>其中，twin是一个 <code>pair&lt;T,T&gt;</code>；</p>
+<h3 id="153-模版函数的默认模版参数">15.3 模版函数的默认模版参数</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T, <span style="color:#66d9ef">typename</span> F <span style="color:#f92672">=</span> less<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;&gt;</span>
+<span style="color:#66d9ef">int</span> compare(<span style="color:#66d9ef">const</span> T <span style="color:#f92672">&amp;</span>v1, <span style="color:#66d9ef">const</span> T <span style="color:#f92672">&amp;</span>v2, F f<span style="color:#f92672">=</span> F()) {
+    <span style="color:#66d9ef">if</span> (f(v1, v2)) <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+    <span style="color:#66d9ef">if</span> (f(v2, v1)) <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>就像之前能为函数参数提供<strong>默认实参</strong>一样，compare有一个默认模版实参 <code>less&lt;T&gt;</code>和一个默认函数实参 <code>F()</code></p>
+<h3 id="154-实例化的显示控制">15.4 实例化的显示控制</h3>
+<p>显示实例化：在不发生函数调用的时候将<strong>函数模版实例化</strong>或者在不适用类模版的时候将<strong>类模版实例化</strong>，<strong>这可以避免实例化相同的模版所带来的额外开销</strong>；</p>
+<ul>
+<li>函数模版实例化</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">template函数返回类型 <span style="color:#960050;background-color:#1e0010">函数模板名</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">实际类型列表</span><span style="color:#f92672">&gt;</span><span style="color:#960050;background-color:#1e0010">（函数参数列表）</span>
+</code></pre></div><ul>
+<li>类模版实例化</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">template</span> <span style="color:#66d9ef">class</span> <span style="color:#960050;background-color:#1e0010">类模板名&lt;实际类型列表</span><span style="color:#f92672">&gt;</span>
+</code></pre></div><h3 id="155-模版函数与尾置返回类型">15.5 模版函数与尾置返回类型</h3>
+<p>例子：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">//尾置返回允许我们在参数列表之后声明返回类型
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">auto</span> func(T beg, T end) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">decltype</span>(<span style="color:#f92672">*</span>beg) {
+
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">*</span>beg; <span style="color:#75715e">//返回序列中一个元素的引用
+</span><span style="color:#75715e"></span>}
+</code></pre></div><h3 id="156-引用折叠规则">15.6 引用折叠规则</h3>
+<p>规则如下：</p>
+<ul>
+<li>所有右值引用折叠到右值引用上仍然是一个右值引用，比如（A&amp;&amp; &amp;&amp; 变成 A&amp;&amp;）</li>
+<li>所有的其它引用类型之间的折叠都将会变成左值引用，比如（A&amp; &amp;变成A&amp;，A&amp; &amp;&amp; 变成 A&amp;，A&amp;&amp; &amp; 变成 A&amp;）</li>
+</ul>
+<h3 id="157-用static_cast将左值转换为右值">15.7 用static_cast将左值转换为右值</h3>
+<p>可以通过类型转换 <code>static_cast&lt;Type&amp;&amp;&gt;</code> 来将返回右值引用；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">int</span> s<span style="color:#f92672">=</span><span style="color:#ae81ff">101</span>;
+
+<span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;&amp;</span> foo(){
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;&amp;&gt;</span>(s);
+} <span style="color:#75715e">//返回值为右值引用
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>foo();   <span style="color:#75715e">//右值引用作为右值，在赋值运算符的右侧
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;&amp;</span> j<span style="color:#f92672">=</span>foo(); <span style="color:#75715e">//j是具名引用。因此运算符右侧的右值引用作为左值
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span><span style="color:#f92672">*</span> p<span style="color:#f92672">=&amp;</span>j;     <span style="color:#75715e">//取得j的内存地址
+</span><span style="color:#75715e"></span>}
+</code></pre></div><h3 id="158-标准库forward函数">15.8 标准库forward函数</h3>
+<p>右值引用至少解决了两个问题：</p>
+<ol>
+<li>实现 <code>move</code> 语义</li>
+<li>完美转发</li>
+</ol>
+<h4 id="完美转发">完美转发</h4>
+<p>有的时候，我们需要将一个函数中某一组参数原封不动的传递给另一个函数，这里不仅仅需要<strong>参数的值</strong>不变，而且需要**参数的类型属性（左值／右值）**保持不变－完美转发；</p>
+<h4 id="使用forward">使用forward</h4>
+<ul>
+<li>原型：</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span> <span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">constexpr</span> T<span style="color:#f92672">&amp;&amp;</span> forward( <span style="color:#66d9ef">typename</span> std<span style="color:#f92672">::</span>remove_reference<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>type<span style="color:#f92672">&amp;</span> t );
+
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span> <span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">constexpr</span> T<span style="color:#f92672">&amp;&amp;</span> forward( <span style="color:#66d9ef">typename</span> std<span style="color:#f92672">::</span>remove_reference<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>type<span style="color:#f92672">&amp;&amp;</span> t );
+</code></pre></div><ul>
+<li>例子：</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;utility&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;memory&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    A(<span style="color:#66d9ef">int</span> <span style="color:#f92672">&amp;&amp;</span> n) { std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;rvalue constructor -&gt; n=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> n <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;}
+    A(<span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;</span> n) { std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;lvalue constructor -&gt; n=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> n <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;}
+};
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span>, <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">U</span><span style="color:#f92672">&gt;</span>
+std<span style="color:#f92672">::</span>unique_ptr<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> make_unique1(U<span style="color:#f92672">&amp;&amp;</span> u) {
+    <span style="color:#66d9ef">return</span> std<span style="color:#f92672">::</span>unique_ptr<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>(<span style="color:#66d9ef">new</span> T(std<span style="color:#f92672">::</span>forward<span style="color:#f92672">&lt;</span>U<span style="color:#f92672">&gt;</span>(u)));
+    <span style="color:#75715e">//return std::unique_ptr&lt;T&gt;(new T(u));
+</span><span style="color:#75715e"></span>}
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">24</span>;
+    <span style="color:#66d9ef">auto</span> p1 <span style="color:#f92672">=</span> make_unique1<span style="color:#f92672">&lt;</span>A<span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">666</span>); <span style="color:#75715e">// rvalue forwarding
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">auto</span> p2 <span style="color:#f92672">=</span> make_unique1<span style="color:#f92672">&lt;</span>A<span style="color:#f92672">&gt;</span>(i); <span style="color:#75715e">// lvalue forwarding
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">auto</span> p3 <span style="color:#f92672">=</span> make_unique1<span style="color:#f92672">&lt;</span>A<span style="color:#f92672">&gt;</span>(std<span style="color:#f92672">::</span>move(i)); <span style="color:#75715e">// rvalue forwarding
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>但是如果我们没有使用 <code>forward</code> 函数，结果则全部都调用的是 lvalue constructor；</p>
+<h3 id="159-可变参数模版与转发">15.9 可变参数模版与转发</h3>
+<p>右值引用＋完美转发＋可变参数模版实现下面这个函数；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">// args为右值引用，decltype用于返回值
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Function</span>, <span style="color:#66d9ef">class</span><span style="color:#960050;background-color:#1e0010">... </span><span style="color:#a6e22e">Args</span><span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">auto</span> FuncWrapper(Function <span style="color:#f92672">&amp;&amp;</span> f, Args <span style="color:#f92672">&amp;&amp;</span> ... args) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">decltype</span>(f(std<span style="color:#f92672">::</span>forward<span style="color:#f92672">&lt;</span>Args<span style="color:#f92672">&gt;</span>(args)...))
+{
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">f</span>(std<span style="color:#f92672">::</span>forward<span style="color:#f92672">&lt;</span>Args<span style="color:#f92672">&gt;</span>(args)...);
+}
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test0</span>()
+{
+    cout <span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;void&#34;</span><span style="color:#f92672">&lt;&lt;</span> endl;
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">test1</span>()
+{
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">test2</span>(<span style="color:#66d9ef">int</span> x)
+{
+    <span style="color:#66d9ef">return</span> x;
+}
+
+string <span style="color:#a6e22e">test3</span>(string s1, string s2)
+{
+    <span style="color:#66d9ef">return</span> s1 <span style="color:#f92672">+</span> s2;
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">int</span> num <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>;
+    <span style="color:#66d9ef">int</span> <span style="color:#f92672">&amp;&amp;</span> nnum <span style="color:#f92672">=</span> num <span style="color:#f92672">+</span> <span style="color:#ae81ff">10</span>;
+    <span style="color:#66d9ef">int</span> <span style="color:#f92672">&amp;</span> nnum2 <span style="color:#f92672">=</span> num;
+
+    FuncWrapper(test0);      <span style="color:#75715e">// 没有返回值，打印1
+</span><span style="color:#75715e"></span>    cout <span style="color:#f92672">&lt;&lt;</span> FuncWrapper(test1) <span style="color:#f92672">&lt;&lt;</span> endl;      <span style="color:#75715e">// 没有参数，有返回值，返回1
+</span><span style="color:#75715e"></span>    cout <span style="color:#f92672">&lt;&lt;</span> FuncWrapper(test2, <span style="color:#ae81ff">1</span>) <span style="color:#f92672">&lt;&lt;</span> endl;   <span style="color:#75715e">// 有参数，有返回值，返回1
+</span><span style="color:#75715e"></span>    cout <span style="color:#f92672">&lt;&lt;</span> FuncWrapper(test2, std<span style="color:#f92672">::</span>move(num)) <span style="color:#f92672">&lt;&lt;</span> endl;   <span style="color:#75715e">// 有参数，有返回值，返回左值10
+</span><span style="color:#75715e"></span>    cout <span style="color:#f92672">&lt;&lt;</span> FuncWrapper(test2, std<span style="color:#f92672">::</span>move(nnum2)) <span style="color:#f92672">&lt;&lt;</span> endl;   <span style="color:#75715e">// 有参数，有返回值，返回左值引用10
+</span><span style="color:#75715e"></span>    cout <span style="color:#f92672">&lt;&lt;</span> FuncWrapper(test2, nnum) <span style="color:#f92672">&lt;&lt;</span> endl;   <span style="color:#75715e">// 有参数，有返回值，返回右值引用20
+</span><span style="color:#75715e"></span>    cout <span style="color:#f92672">&lt;&lt;</span> FuncWrapper(test3, <span style="color:#e6db74">&#34;aa&#34;</span>, <span style="color:#e6db74">&#34;bb&#34;</span>) <span style="color:#f92672">&lt;&lt;</span> endl; <span style="color:#75715e">// 有参数，有返回值，返回&#34;aabb&#34;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Jiang . </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://jfy0o0.github.io/2021/cpp_11%E7%89%B9%E6%80%A7/>https://jfy0o0.github.io/2021/cpp_11%E7%89%B9%E6%80%A7/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/c&#43;&#43;/">
+                    #C&#43;&#43;</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://jfy0o0.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://jfy0o0.github.io/2021/linux-%E8%BD%AF%E4%BB%B6-valgrind/" class="prev" rel="prev" title="Linux Soft - valgrind"><i class="iconfont icon-left"></i>&nbsp;Linux Soft - valgrind</a>
+         
+        
+        <a href="https://jfy0o0.github.io/2021/cpp_14%E7%89%B9%E6%80%A7/" class="next" rel="next" title="C&#43;&#43; - c&#43;&#43;14特性">C&#43;&#43; - c&#43;&#43;14特性&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2021</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://jfy0o0.github.io">Jiang .</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>
