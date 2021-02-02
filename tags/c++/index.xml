@@ -6,7 +6,23 @@
     <description>Recent content in c&#43;&#43; on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 Jan 2021 17:05:27 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 29 Jan 2021 10:49:45 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C&#43;&#43; - openmp</title>
+      <link>https://jfy0o0.github.io/2021/cpp_openmp/</link>
+      <pubDate>Fri, 29 Jan 2021 10:49:45 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/cpp_openmp/</guid>
+      <description>openmp 并行开发
+标准并行模式执行代码的基本思想是，
+ 程序开始时只有一个主线程， 程序中的串行部分都由主线程执行， 并行的部分是通过派生其他线程来执行， 但是如果并行部分没有结束时是不会执行串行部分的  使用 1.头文件 #include &amp;lt;omp.h&amp;gt; 2.cmake add_link_options(-fopenmp)add_executable(test main.cpp)FIND_PACKAGE(OpenMP REQUIRED)if (OPENMP_FOUND) message(&amp;#34;OPENMP FOUND&amp;#34;) set(CMAKE_C_FLAGS &amp;#34;${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}&amp;#34;) set(CMAKE_CXX_FLAGS &amp;#34;${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}&amp;#34;)endif ()指令格式 在C++中，OpenMP的指令格式为：
+＃pragma omp 指令 [子句[子句]…] **例如： **
+#pragma omp parallel private(i, j) parallel 就是指令， private是子句
+1. OpenMP的指令 OpenMP的指令有以下一些：（常用的已标黑）
+ parallel，用在一个代码段之前，表示这段代码将被多个线程并行执行 for，用于for循环之前，将循环分配到多个线程中并行执行，必须保证每次循环之间无相关性。 parallel for， parallel 和 for语句的结合，也是用在一个for循环之前，表示for循环的代码将被多个线程并行执行。 sections，用在可能会被并行执行的代码段之前 parallel sections，parallel和sections两个语句的结合 critical，用在一段代码临界区之前 single，用在一段只被单个线程执行的代码段之前，表示后面的代码段将被单线程执行。 flush， barrier，用于并行区内代码的线程同步，所有线程执行到barrier时要停止，直到所有线程都执行到barrier时才继续往下执行。 atomic，用于指定一块内存区域被制动更新 master，用于指定一段代码块由主线程执行 ordered， 用于指定并行区域的循环按顺序执行 threadprivate, 用于指定一个变量是线程私有的。  例子1：
+#include &amp;lt;iostream&amp;gt;#include &amp;#34;omp.</description>
+    </item>
+    
     <item>
       <title>C&#43;&#43; - c&#43;&#43;17特性</title>
       <link>https://jfy0o0.github.io/2021/cpp_17%E7%89%B9%E6%80%A7/</link>

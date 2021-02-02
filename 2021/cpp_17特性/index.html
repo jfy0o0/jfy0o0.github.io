@@ -10,7 +10,7 @@
   
   
   <link rel="prev" href="https://jfy0o0.github.io/2021/cpp_14%E7%89%B9%E6%80%A7/" />
-  <link rel="next" href="https://jfy0o0.github.io/2021/a/" />
+  <link rel="next" href="https://jfy0o0.github.io/2021/cpp_openmp/" />
   <link rel="canonical" href="https://jfy0o0.github.io/2021/cpp_17%E7%89%B9%E6%80%A7/" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -57,7 +57,7 @@
     "datePublished": "2021-01-28 17:05:27 \u002b0800 CST",
     "dateModified" : "2021-01-28 17:05:27 \u002b0800 CST",
     "url" : "https:\/\/jfy0o0.github.io\/2021\/cpp_17%E7%89%B9%E6%80%A7\/",
-    "wordCount" : "791",
+    "wordCount" : "794",
     "keywords" : [ "C\u002b\u002b", "Jiang . \u0027s blog"]
 }
 </script>
@@ -369,7 +369,12 @@ S <span style="color:#a6e22e">foo</span>(<span style="color:#66d9ef">int</span> 
 </li>
 <li>
 <p><code>std::get&lt;I&gt;(v)</code> 如果变体类型 v 存放的数据类型下标为 I，那么返回所存放的数据，否则报错。</p>
+</li>
+<li>
 <p><code>std::get_if&lt;I&gt;(&amp;v)</code> 如果变体类型 v 存放的数据类型下标为 I，那么返回所存放数据的指针，否则返回空指针。</p>
+</li>
+<li>
+<p><code>std::emplace&lt;T&gt;()</code> :修改</p>
 </li>
 <li>
 <p><code>std::get&lt;T&gt;(v)</code> 如果变体类型 v 存放的数据类型为 T，那么返回所存放的数据，否则报错。</p>
@@ -479,7 +484,8 @@ file_time_type last_write_time(<span style="color:#66d9ef">const</span> path<spa
 uintmax_t remove_all(<span style="color:#66d9ef">const</span> path<span style="color:#f92672">&amp;</span> pval) <span style="color:#960050;background-color:#1e0010">：递归删除目录下所有文件，返回被成功删除的文件个数</span>
 
 <span style="color:#66d9ef">void</span> rename(<span style="color:#66d9ef">const</span> path<span style="color:#f92672">&amp;</span> from, <span style="color:#66d9ef">const</span> path<span style="color:#f92672">&amp;</span> to) <span style="color:#960050;background-color:#1e0010">：移动文件或者重命名</span>
-</code></pre></div>
+</code></pre></div><p>6.并行STL</p>
+
     </div>
 
     <div class="post-copyright">
@@ -525,7 +531,7 @@ uintmax_t remove_all(<span style="color:#66d9ef">const</span> path<span style="c
         <a href="https://jfy0o0.github.io/2021/cpp_14%E7%89%B9%E6%80%A7/" class="prev" rel="prev" title="C&#43;&#43; - c&#43;&#43;14特性"><i class="iconfont icon-left"></i>&nbsp;C&#43;&#43; - c&#43;&#43;14特性</a>
          
         
-        <a href="https://jfy0o0.github.io/2021/a/" class="next" rel="next" title="A">A&nbsp;<i class="iconfont icon-right"></i></a>
+        <a href="https://jfy0o0.github.io/2021/cpp_openmp/" class="next" rel="next" title="C&#43;&#43; - openmp">C&#43;&#43; - openmp&nbsp;<i class="iconfont icon-right"></i></a>
         
     </div>
 
