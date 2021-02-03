@@ -57,7 +57,7 @@
     "datePublished": "2021-01-29 10:49:45 \u002b0800 CST",
     "dateModified" : "2021-01-29 10:49:45 \u002b0800 CST",
     "url" : "https:\/\/jfy0o0.github.io\/2021\/cpp_openmp\/",
-    "wordCount" : "339",
+    "wordCount" : "901",
     "keywords" : [ "C\u002b\u002b", "Jiang . \u0027s blog"]
 }
 </script>
@@ -297,6 +297,187 @@ copyprivate	<span style="color:#75715e">#用于single指令中的指定变量为
 copyin	<span style="color:#75715e">#用来指定一个threadprivate的变量的值要用主线程的值进行初始化。</span>
 
 *default	<span style="color:#75715e">#用来指定并行处理区域内的变量的使用方式，缺省是shared</span>
+</code></pre></div><h2 id="例子">例子</h2>
+<h3 id="1使用-num_threads-控制线程的数量">1.使用 <code>num_threads</code> 控制线程的数量</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+  <span style="color:#75715e">#pragma omp parallel num_threads(5) 
+</span><span style="color:#75715e"></span>  {
+    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Hello World!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+  }
+}
+</code></pre></div><h3 id="2在-for-循环中使用-parallel-for-指令进行并行处理">2.在 <code>for</code> 循环中使用 <code>parallel for</code> 指令进行并行处理</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>( )
+{
+<span style="color:#66d9ef">int</span> a[<span style="color:#ae81ff">1000000</span>], b[<span style="color:#ae81ff">1000000</span>]; 
+<span style="color:#75715e">// ... some initialization code for populating arrays a and b; 
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> c[<span style="color:#ae81ff">1000000</span>];
+<span style="color:#75715e">#pragma omp parallel for 
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">1000000</span>; <span style="color:#f92672">++</span>i)
+  c[i] <span style="color:#f92672">=</span> a[i] <span style="color:#f92672">*</span> b[i] <span style="color:#f92672">+</span> a[i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> b[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>];
+<span style="color:#75715e">// ... now do some processing with array c
+</span><span style="color:#75715e"></span> }
+</code></pre></div><h3 id="3理解-omp_get_wtime">3.理解 omp_get_wtime</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;omp.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;math.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;time.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span> 
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[]) {
+    <span style="color:#66d9ef">int</span> i, nthreads;
+    clock_t clock_timer;
+    <span style="color:#66d9ef">double</span> wall_timer;
+    <span style="color:#66d9ef">double</span> c[<span style="color:#ae81ff">1000000</span>]; 
+    <span style="color:#66d9ef">for</span> (nthreads <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; nthreads <span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">8</span>; <span style="color:#f92672">++</span>nthreads) {
+        clock_timer <span style="color:#f92672">=</span> clock();
+        wall_timer <span style="color:#f92672">=</span> omp_get_wtime();
+<span style="color:#75715e">#pragma omp parallel for private(i) num_threads(nthreads)
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">1000000</span>; i<span style="color:#f92672">++</span>) 
+          c[i] <span style="color:#f92672">=</span> sqrt(i <span style="color:#f92672">*</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">+</span> i <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> i); 
+        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;threads: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> nthreads <span style="color:#f92672">&lt;&lt;</span>  <span style="color:#e6db74">&#34; time on clock(): &#34;</span>
+            <span style="color:#f92672">&lt;&lt;</span> (<span style="color:#66d9ef">double</span>) (clock() <span style="color:#f92672">-</span> clock_timer) <span style="color:#f92672">/</span> CLOCKS_PER_SEC
+           <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; time on wall: &#34;</span> <span style="color:#f92672">&lt;&lt;</span>  omp_get_wtime() <span style="color:#f92672">-</span> wall_timer <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+    }
+}
+<span style="color:#75715e">//可以通过不断增加线程的数量来计算运行内部 for 循环的时间。
+</span><span style="color:#75715e">//omp_get_wtime API 从一些任意的但是一致的点返回已用去的时间，以秒为单位。
+</span><span style="color:#75715e">//因此，omp_get_wtime() - wall_timer 将返回观察到的所用时间并运行 for 循环。
+</span><span style="color:#75715e">//clock() 系统调用用于预估整个程序的处理器使用时间，也就是说，将各个特定于线程的处理器使用时间相加，然后报告最终的结果。
+</span></code></pre></div><h3 id="4临界区">4.临界区</h3>
+<ul>
+<li>
+<p><code>optional section name</code> 是一个全局标识符，</p>
+</li>
+<li>
+<p>在同一时间，两个线程不能使用相同的全局标识符名称运行临界区段。</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#pragma omp critical (section1)
+</span><span style="color:#75715e"></span>{
+	myhashtable.insert(<span style="color:#e6db74">&#34;key1&#34;</span>, <span style="color:#e6db74">&#34;value1&#34;</span>);
+} 
+<span style="color:#75715e">// ... other code follows
+</span><span style="color:#75715e"></span><span style="color:#75715e">#pragma omp critical (section1)
+</span><span style="color:#75715e"></span>{
+	myhashtable.insert(<span style="color:#e6db74">&#34;key2&#34;</span>, <span style="color:#e6db74">&#34;value2&#34;</span>);
+}
+</code></pre></div><h3 id="5锁">5.锁</h3>
+<ul>
+<li><strong><code>omp_init_lock</code></strong>：此 API 必须是第一个访问 <code>omp_lock_t</code> 的 API，并且要使用它来完成初始化。注意，在完成初始化之后，锁被认为处于未设置状态。</li>
+<li><strong><code>omp_destroy_lock</code></strong>：此 API 会破坏锁。在调用该 API 时，锁必须处于未设置状态，这意味着您无法调用 <code>omp_set_lock</code> 并随后发出调用来破坏这个锁。</li>
+<li><strong><code>omp_set_lock</code></strong>：此 API 设置 <code>omp_lock_t</code>，也就是说，将会获得互斥。如果一个线程无法设置锁，那么它将继续等待，直到能够执行锁操作。</li>
+<li><strong><code>omp_test_lock</code></strong>：此 API 将在锁可用时尝试执行锁操作，并在获得成功后返回 <code>1</code>，否则返回 <code>0</code>。这是一个<em>非阻塞 API</em>， 也就是说，该函数不需要线程等待就可以设置锁。</li>
+<li><strong><code>omp_unset_lock</code></strong>：此 API 将会释放锁。</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;openmp.h&gt; </span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;myqueue.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span> 
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">omp_q</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> myqueue<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> { 
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span> 
+   <span style="color:#66d9ef">typedef</span> myqueue<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> base; 
+   omp_q( ) { 
+      omp_init_lock(<span style="color:#f92672">&amp;</span>lock);
+   }
+   <span style="color:#f92672">~</span>omp_q() { 
+       omp_destroy_lock(<span style="color:#f92672">&amp;</span>lock);
+   }
+   <span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">push</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;</span> value) { 
+      omp_set_lock(<span style="color:#f92672">&amp;</span>lock);
+      <span style="color:#66d9ef">bool</span> result <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>base<span style="color:#f92672">::</span>push(value);
+      omp_unset_lock(<span style="color:#f92672">&amp;</span>lock);
+      <span style="color:#66d9ef">return</span> result;
+   }
+   <span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">trypush</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;</span> value) 
+   { 
+       <span style="color:#66d9ef">bool</span> result <span style="color:#f92672">=</span> omp_test_lock(<span style="color:#f92672">&amp;</span>lock);
+       <span style="color:#66d9ef">if</span> (result) {
+          result <span style="color:#f92672">=</span> result <span style="color:#f92672">&amp;&amp;</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>base<span style="color:#f92672">::</span>push(value);
+          omp_unset_lock(<span style="color:#f92672">&amp;</span>lock);
+      } 
+      <span style="color:#66d9ef">return</span> result;
+   }
+   <span style="color:#75715e">// likewise for pop 
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span><span style="color:#f92672">:</span> 
+   omp_lock_t lock;
+};
+</code></pre></div><h3 id="6嵌套锁">6.嵌套锁</h3>
+<p>OpenMP 提供的其他类型的锁为 <code>omp_nest_lock_t</code> 锁的变体。它们与 <code>omp_lock_t</code> 类似，但是有一个额外的优势：已经持有锁的线程可以多次锁定这些锁。每当持有锁的线程使用 <code>omp_set_nest_lock</code> 重新获得嵌套锁时，内部计数器将会加一。当一个或多个对 <code>omp_unset_nest_lock</code> 的调用最终将这个内部锁计数器重置为 <code>0</code> 时，就会释放该锁。下面显示了用于 <code>omp_nest_lock_t</code> 的 API：</p>
+<ul>
+<li><strong><code>omp_init_nest_lock(omp_nest_lock_t\* )</code></strong>：此 API 将内部嵌套计数初始化为 <code>0</code>。</li>
+<li><strong><code>omp_destroy_nest_lock(omp_nest_lock_t\* )</code></strong>：此 API 将破坏锁。使用非零内部嵌套计数对某个锁调用此 API 将会导致出现未定义的行为。</li>
+<li><strong><code>omp_set_nest_lock(omp_nest_lock_t\* )</code></strong>：此 API 类似于 <code>omp_set_lock</code>，不同之处是线程可以在已持有锁的情况下多次调用这个函数。</li>
+<li><strong><code>omp_test_nest_lock(omp_nest_lock_t\* )</code></strong>：此 API 是 <code>omp_set_nest_lock</code> 的非阻塞版本。</li>
+<li><strong><code>omp_unset_nest_lock(omp_nest_lock_t\* )</code></strong>：此 API 将在内部计数器为 <code>0</code> 时释放锁。否则，计数器将在每次调用该方法时递减。</li>
+</ul>
+<p>一开始就创建 8 个线程。对于这 8 个线程，只需使用三个线程执行 <code>pragma omp sections</code> 代码块中的工作。在第二个区段中，您指定了输出语句的运行顺序。这就是使用 <code>sections</code> 编译指示的全部意义。如果需要的话，您可以指定代码块的顺序。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>( )
+{
+  <span style="color:#75715e">#pragma omp parallel
+</span><span style="color:#75715e"></span>  {
+    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;All threads run this</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+    <span style="color:#75715e">#pragma omp sections
+</span><span style="color:#75715e"></span>    {
+      <span style="color:#75715e">#pragma omp section
+</span><span style="color:#75715e"></span>      {
+        cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;This executes in parallel</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+      }
+      <span style="color:#75715e">#pragma omp section
+</span><span style="color:#75715e"></span>      {
+        cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Sequential statement 1</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+        cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;This always executes after statement 1</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+      }
+      <span style="color:#75715e">#pragma omp section
+</span><span style="color:#75715e"></span>      {
+        cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;This also executes in parallel</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+      }
+    }
+  }
+}
+<span style="color:#75715e">//All threads run this
+</span><span style="color:#75715e">//All threads run this
+</span><span style="color:#75715e">//All threads run this
+</span><span style="color:#75715e">//All threads run this
+</span><span style="color:#75715e">//All threads run this
+</span><span style="color:#75715e">//All threads run this
+</span><span style="color:#75715e">//All threads run this
+</span><span style="color:#75715e">//All threads run this
+</span><span style="color:#75715e">//This executes in parallel
+</span><span style="color:#75715e">//Sequential statement 1
+</span><span style="color:#75715e">//This also executes in parallel
+</span><span style="color:#75715e">//This always executes after statement 1
+</span></code></pre></div><h3 id="7firstprivate-指令">7.firstprivate 指令</h3>
+<p>可以将线程中的变量初始化为它在主线程中的任意值。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;omp.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span> 
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+  <span style="color:#66d9ef">int</span> idx <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>;
+  <span style="color:#75715e">#pragma omp parallel firstprivate(idx)
+</span><span style="color:#75715e"></span>  {
+    printf(<span style="color:#e6db74">&#34;In thread %d idx = %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, omp_get_thread_num(), idx);
+  }
+}
+</code></pre></div><h3 id="8lastprivate-指令"><code>8.lastprivate</code> 指令</h3>
+<p>现在将使用最后一次循环计数生成的数据同步主线程的数据</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;omp.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span> 
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+  <span style="color:#66d9ef">int</span> idx <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>;
+  <span style="color:#66d9ef">int</span> main_var <span style="color:#f92672">=</span> <span style="color:#ae81ff">2120</span>;
+ 
+  <span style="color:#75715e">#pragma omp parallel for private(idx) lastprivate(main_var)
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">for</span> (idx <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; idx <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">12</span>; <span style="color:#f92672">++</span>idx)
+  {
+    main_var <span style="color:#f92672">=</span> idx <span style="color:#f92672">*</span> idx;
+    printf(<span style="color:#e6db74">&#34;In thread %d idx = %d main_var = %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,
+      omp_get_thread_num(), idx, main_var);
+  }
+  printf(<span style="color:#e6db74">&#34;Back in main thread with main_var = %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, main_var);
+}
 </code></pre></div>
     </div>
 
