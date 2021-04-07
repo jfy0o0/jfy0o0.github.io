@@ -46,7 +46,7 @@
     "articleSection" : "posts",
     "name" : "Other - 大端、小端",
     "headline" : "Other - 大端、小端",
-    "description" : "大端 概念 是指数据的高字节保存在内存的低地址中，而数据的低字节保存在内存的高地址中。\n小端 概念 数据的高字节保存在内存的高地址中，而数据的低字节保存在内存的低地址中，\n这种存储模式将地址的高低和数据位权有效地结合起来，高地址部分权值高，低地址部分权值低，和我们的逻辑方法一致。\n简明区分 下面以unsigned int value = 0x12345678为例，\n分别看看在两种字节序下其存储情况，我们可以用unsigned char buf[4]来表示value\n Big-Endian: 低地址存放高位，如下：\n​\t高地址\n​\tbuf[3] (0x78) \u0026ndash; 低位\n​\tbuf[2] (0x56)\n​\tbuf[1] (0x34)\n​\tbuf[0] (0x12) \u0026ndash; 高位\n​\t低地址\n Little-Endian: 低地址存放低位，如下：\n​\t高地址\n​\tbuf[3] (0x12) \u0026ndash; 高位\n​\tbuf[2] (0x34)\n​\tbuf[1] (0x56)\n​\tbuf[0] (0x78) \u0026ndash; 低位\n​\t低地址\n    内存地址 小端模式存放内容 大端模式存放内容     0x4000 0x78 0x12   0x4001 0x56 0x34   0x4002 0x34 0x56   0x4003 0x12 0x78    ",
+    "description" : "大端 概念 是指数据的高字节保存在内存的低地址中，而数据的低字节保存在内存的高地址中。\n这是人类读写数值的方法。\n小端 概念 数据的高字节保存在内存的高地址中，而数据的低字节保存在内存的低地址中，\n这种存储模式将地址的高低和数据位权有效地结合起来，高地址部分权值高，低地址部分权值低，和我们的逻辑方法一致。\n简明区分 下面以unsigned int value = 0x12345678为例，\n分别看看在两种字节序下其存储情况，我们可以用unsigned char buf[4]来表示value\n Big-Endian: 低地址存放高位，如下：\n​\t高地址\n​\tbuf[3] (0x78) \u0026ndash; 低位\n​\tbuf[2] (0x56)\n​\tbuf[1] (0x34)\n​\tbuf[0] (0x12) \u0026ndash; 高位\n​\t低地址\n Little-Endian: 低地址存放低位，如下：\n​\t高地址\n​\tbuf[3] (0x12) \u0026ndash; 高位\n​\tbuf[2] (0x34)\n​\tbuf[1] (0x56)\n​\tbuf[0] (0x78) \u0026ndash; 低位\n​\t低地址\n    内存地址 小端模式存放内容 大端模式存放内容     0x4000 0x78 0x12   0x4001 0x56 0x34   0x4002 0x34 0x56   0x4003 0x12 0x78    ",
     "inLanguage" : "en-us",
     "author" : "Jiang",
     "creator" : "Jiang",
@@ -57,7 +57,7 @@
     "datePublished": "2020-11-17 13:54:52 \u002b0800 CST",
     "dateModified" : "2020-11-17 13:54:52 \u002b0800 CST",
     "url" : "https:\/\/jfy0o0.github.io\/2020\/other-%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF\/",
-    "wordCount" : "75",
+    "wordCount" : "76",
     "keywords" : [ "Other", "Jiang . \u0027s blog"]
 }
 </script>
@@ -149,6 +149,7 @@
           <h1 id="大端"><strong>大端</strong></h1>
 <h2 id="概念">概念</h2>
 <p>是指数据的<strong>高字节</strong>保存在内存的<strong>低地址</strong>中，而数据的低字节保存在内存的高地址中。</p>
+<p>这是人类读写数值的方法。</p>
 <h1 id="小端"><strong>小端</strong></h1>
 <h2 id="概念-1">概念</h2>
 <p>数据的高字节保存在内存的高地址中，而数据的低字节保存在内存的低地址中，</p>

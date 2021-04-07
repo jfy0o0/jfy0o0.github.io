@@ -6,7 +6,32 @@
     <description>Recent content in Posts on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 Jan 2021 10:49:45 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 30 Mar 2021 15:59:46 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Other - 公私钥、加验签、CA</title>
+      <link>https://jfy0o0.github.io/2021/other-%E5%85%AC%E7%A7%81%E9%92%A5%E5%8A%A0%E9%AA%8C%E7%AD%BEca/</link>
+      <pubDate>Tue, 30 Mar 2021 15:59:46 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/other-%E5%85%AC%E7%A7%81%E9%92%A5%E5%8A%A0%E9%AA%8C%E7%AD%BEca/</guid>
+      <description>公私钥加解密，加验签梳理 对称加密和非对称加密。  对称加密：也就是加密和解密所使用的密钥是同一个，常用到的有AES、DES、3DES等等，这类加密方式容易理解，不过多赘述。 非对称加密：加密和解密所使用的密钥是一对，也就是两个，  若A、B是一对密钥，那么加密使用A则解密只能使用B， 加密使用B则解密只能使用A。   这也就是公私钥的原型。 公钥加密，私钥解密。  数字签名 ​	加解密问题解决了，但是网络通讯远没有这么简单，报文信息被黑客拦截了怎么办？拦截后黑客替换成他的报文，还能用公钥继续加密发出去，那不就完了，所以我们还需要个方式来验证发送方的身份，也就是我们经常听说的数字签名。
+​	数字签名和加解密不同，是对一段信息做hash算法（MD5，RSA等）运算，生成唯一标识该信息的一个特征串，比如你小时候背课文，背完让家长签名（加签），然后第二天老师检查签名（验签），老师就会认为你完成了作业。老师认为该签名唯一且只能由你家长生成，所以认同你背过课文。（虽然你可以模仿）。
+​	那么我们要做的就是对我们的密文信息再进行一次签名，将签名得到的签名特征串附在原文后，那么对方接收到报文以后，如果能验签通过，那就能确定消息是你发的了。
+ 私钥加签，公钥验签  ​	网络通讯中我们一般用自己的私钥加签将报文，用第三方提供的公钥将报文中涉及安全隐私的部分加密，然后第三方会用我们提供公钥进行验签，验签通过后再用他们自己的私钥将报文加密部分解密。
+​	如果还需要响应返回，那么他们还将重复一遍我们这边的过程，我们这边也需要重复一边他们那边的过程，用他们提供的公钥验签返回回来的报文，并用自己的私钥解密隐私部分。
+​	这里又有个问题，既然公钥是公开的，你如何确定这个公钥是你的而不是别人的？这样一想，其实就变成了一个循环，没法证明绝对安全，鸡生蛋蛋生鸡的问题。
+ca 其实在密码学中也是这样，你必须建立一个信赖点，不然任何都是无法信赖的。所以在此基础上，出现了一个可信任的第三方认证中心（CA），
+ CA把你的公钥进行认证，并颁发一个数字证书给到你，该证书里面包含了你的公钥， 而你给别人的公钥也替换成数字证书， 别人拿到数字证书，看了下，确实是CA签发的，那么这里面的公钥就是你的，你是可信的。 这里就又把大家所迷惑的一个概念理清楚了， 证书就是经过认证的公钥。  </description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43; - 标准属性</title>
+      <link>https://jfy0o0.github.io/2021/cpp_%E6%A0%87%E5%87%86%E5%B1%9E%E6%80%A7/</link>
+      <pubDate>Sat, 20 Feb 2021 15:06:32 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/cpp_%E6%A0%87%E5%87%86%E5%B1%9E%E6%80%A7/</guid>
+      <description>标准属性  C++11后引入了 C++ 标准属性1。在 C++ 11 中，属性提供一种标准化的方法添加批注的其他信息，也可能不是特定于供应商的 C++ 构造 （包括但不是限于类、 函数、 变量和块）。 用于生成信息性消息，或应用特殊逻辑，编译特性化的代码时，编译器可以使用此信息。 编译器将忽略无法识别的任何属性，这意味着你不能定义自定义属性。 使用此语法，属性将由双方括号标明。     attribute-token 属性 值 标准 作用     carries_dependency [[carries_dependency]] 200809L (C++11) 指示释放消费 std::memory_order 中的依赖链传进和传出该函数，这允许编译器跳过不必要的内存栅栏指令。   noreturn [[noreturn]] 200809L (C++11) 表示函数不返回值,并只能应用在函数上面,如果函数真的有返回值，那么该属性无效,并且会给出警告   deprecated [[deprecated]] [[deprecated(“reason”)]] 201309L (C++14) 表示某些实体已经废弃，或者因为某些原因废弃，可以用在类，定义类型名，变量，非静态数据成员，枚举，模板实例   fallthrough [[fallthrough]] 201603L (C++17) 指示从前一 case 标号直落是有意的，而在发生直落时给出警告的编译器不应该为此诊断。   maybe_unused [[maybe_unused]] 201603L (C++17) 压制编译器在未使用实体上的警告，若存在。   nodiscard [[nodiscard]] [[nodiscard(“reason”)]] 201603L (C++17) (C++20) 若返回值被舍弃，则鼓励编译器发布警告。   likely [[likely]] 201803L C++20) 指示编译器应该针对通过某语句的执行路径比任何其他执行路径更可能或更不可能的情况进行优化。   unlikely [[unlikely]] 201803L (C++20) 指示编译器应该针对通过某语句的执行路径比任何其他执行路径更可能或更不可能的情况进行优化。   no_unique_address [[no_unique_address]] 201803L (C++20) 指示非静态数据成员不需要拥有不同于其类的所有其他非静态数据成员的地址。    </description>
+    </item>
+    
     <item>
       <title>C&#43;&#43; - openmp</title>
       <link>https://jfy0o0.github.io/2021/cpp_openmp/</link>
@@ -535,6 +560,7 @@ FILE *popen(const char *command,const char *type); int pclose(FILE *stream); #in
       
       <guid>https://jfy0o0.github.io/2020/other-%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF/</guid>
       <description>大端 概念 是指数据的高字节保存在内存的低地址中，而数据的低字节保存在内存的高地址中。
+这是人类读写数值的方法。
 小端 概念 数据的高字节保存在内存的高地址中，而数据的低字节保存在内存的低地址中，
 这种存储模式将地址的高低和数据位权有效地结合起来，高地址部分权值高，低地址部分权值低，和我们的逻辑方法一致。
 简明区分 下面以unsigned int value = 0x12345678为例，
@@ -1110,6 +1136,21 @@ void pay(string pay_type) { if(pay_type==现金) { 现金支付处理手段 } el
   优点： 　1、降低类的功能复杂度
 　2、提高系统的可维护性
 　3、变更风险低</description>
+    </item>
+    
+    <item>
+      <title>Other - git</title>
+      <link>https://jfy0o0.github.io/1/other-git/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://jfy0o0.github.io/1/other-git/</guid>
+      <description>一：创建版本库。   通过命令 git init 把这个目录变成git可以管理的仓库
+  使用命令 git add readme.txt添加到暂存区里面去。
+  用命令 git commit告诉Git，把文件提交到仓库。
+  继续使用git status来查看下结果
+  二：版本回退：  使用命令 git查看下历史记录 版本回退操作  git reset &amp;ndash;hard HEAD^ 那么如果要回退到上上个版本只需把HEAD^ 改成 HEAD^^ 如果要回退到前100个版本的话，git reset &amp;ndash;hard HEAD~100    三：理解工作区与暂存区的区别？  工作区：就是你在电脑上看到的目录，比如目录下testgit里的文件(.git隐藏目录版本库除外)。或者以后需要再新建的目录文件等等都属于工作区范畴。 版本库(Repository)：工作区有一个隐藏目录.git,这个不属于工作区，这是版本库。其中版本库里面存了很多东西，其中最重要的就是stage(暂存区)，还有Git为我们自动创建了第一个分支master,以及指向master的一个指针HEAD。  我们前面说过使用Git提交文件到版本库有两步：
+ 第一步：是使用 git add 把文件添加进去，实际上就是把文件添加到暂存区。 第二步：使用git commit提交更改，实际上就是把暂存区的所有内容提交到当前分支上。  四：Git撤销修改和删除文件操作。 一：撤销修改：
+ 如果我知道要删掉那些内容的话，直接手动更改去掉那些需要的文件，然后add添加到暂存区，最后commit掉。 我可以按以前的方法直接恢复到上一个版本。使用 git reset &amp;ndash;hard HEAD^ 可以发现，Git会告诉你，git checkout &amp;ndash; file 可以丢弃工作区的修改，如下命令： git checkout &amp;ndash; readme.</description>
     </item>
     
   </channel>

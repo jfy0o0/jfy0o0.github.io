@@ -57,7 +57,7 @@
     "datePublished": "2021-01-28 15:31:27 \u002b0800 CST",
     "dateModified" : "2021-01-28 15:31:27 \u002b0800 CST",
     "url" : "https:\/\/jfy0o0.github.io\/2021\/cpp_11%E7%89%B9%E6%80%A7\/",
-    "wordCount" : "1851",
+    "wordCount" : "2089",
     "keywords" : [ "C\u002b\u002b", "Jiang . \u0027s blog"]
 }
 </script>
@@ -244,7 +244,20 @@ cout <span style="color:#f92672">&lt;&lt;</span> a <span style="color:#f92672">&
 <li>begin</li>
 <li>end</li>
 </ul>
-<h3 id="52-列表初始化返回值">5.2 列表初始化返回值</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">sum</span>(<span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>initializer_list<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> list) {
+  <span style="color:#66d9ef">int</span> total <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">auto</span><span style="color:#f92672">&amp;</span> e : list) {
+    total <span style="color:#f92672">+=</span> e;
+  }
+
+  <span style="color:#66d9ef">return</span> total;
+}
+
+<span style="color:#66d9ef">auto</span> list <span style="color:#f92672">=</span> {<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>};
+sum(list); <span style="color:#75715e">// == 6
+</span><span style="color:#75715e"></span>sum({<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>}); <span style="color:#75715e">// == 6
+</span><span style="color:#75715e"></span>sum({}); <span style="color:#75715e">// == 0
+</span></code></pre></div><h3 id="52-列表初始化返回值">5.2 列表初始化返回值</h3>
 <p>函数可以返回花括号包围的值的列表，如果列表为空，临时量执行初始化，否则，返回的值由函数的返回类型决定；</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">vector<span style="color:#f92672">&lt;</span>string<span style="color:#f92672">&gt;</span> getAddress(<span style="color:#66d9ef">int</span> num) {
     <span style="color:#66d9ef">if</span> (num <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
@@ -993,6 +1006,69 @@ string <span style="color:#a6e22e">test3</span>(string s1, string s2)
 </span><span style="color:#75715e"></span>    cout <span style="color:#f92672">&lt;&lt;</span> FuncWrapper(test3, <span style="color:#e6db74">&#34;aa&#34;</span>, <span style="color:#e6db74">&#34;bb&#34;</span>) <span style="color:#f92672">&lt;&lt;</span> endl; <span style="color:#75715e">// 有参数，有返回值，返回&#34;aabb&#34;
 </span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 }
+</code></pre></div><h2 id="16-新的字符串表示方式原生字符串raw-string-literals">16 <strong>新的字符串表示方式——原生字符串（Raw String Literals）</strong></h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">string path4 <span style="color:#f92672">=</span> R<span style="color:#e6db74">&#34;(C:\Program &#34;</span>Files<span style="color:#e6db74">&#34; (x86)</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">alipay</span><span style="color:#ae81ff">\a</span><span style="color:#e6db74">liedit</span><span style="color:#ae81ff">\5</span><span style="color:#e6db74">.1.0.3754)&#34;</span>;
+</code></pre></div><h2 id="17强类型枚举">17.强类型枚举</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">// Specifying underlying type as `unsigned int`
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">enum</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Color</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> { Red <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xff0000</span>, Green <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xff00</span>, Blue <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xff</span> };
+Color c <span style="color:#f92672">=</span> Color<span style="color:#f92672">::</span>Red;
+</code></pre></div><h2 id="18attributes">18.attributes</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">// `noreturn` attribute indicates `f` doesn&#39;t return.
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">[[ noreturn ]]</span> <span style="color:#66d9ef">void</span> f() {
+  <span style="color:#66d9ef">throw</span> <span style="color:#e6db74">&#34;error&#34;</span>;
+}
+</code></pre></div><h2 id="19stdchrono">19.std::chrono</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">std<span style="color:#f92672">::</span>chrono<span style="color:#f92672">::</span>time_point<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>chrono<span style="color:#f92672">::</span>steady_clock<span style="color:#f92672">&gt;</span> start, end;
+start <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>chrono<span style="color:#f92672">::</span>steady_clock<span style="color:#f92672">::</span>now();
+<span style="color:#75715e">// Some computations...
+</span><span style="color:#75715e"></span>end <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>chrono<span style="color:#f92672">::</span>steady_clock<span style="color:#f92672">::</span>now();
+
+std<span style="color:#f92672">::</span>chrono<span style="color:#f92672">::</span>duration<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">double</span><span style="color:#f92672">&gt;</span> elapsed_seconds <span style="color:#f92672">=</span> end <span style="color:#f92672">-</span> start;
+<span style="color:#66d9ef">double</span> t <span style="color:#f92672">=</span> elapsed_seconds.count(); <span style="color:#75715e">// t number of seconds, represented as a `double`
+</span></code></pre></div><h2 id="20stdfuture-stdasync">20.std::future std::async</h2>
+<p>std::async会自动创建一个线程去调用 线程函数，它返回一个std::future，这个future中存储了线程函数返回的结果，当我们需要线程函数的结果时，直接从future中获取，非 常方便。</p>
+<p>std::async的原型async(std::launch::async | std::launch::deferred, f, args&hellip;)，第一个参数是线程的创建策略，有两种策略，默认的策略是立即创建线程：</p>
+<ul>
+<li>std::launch::async：在调用async就开始创建线程。</li>
+<li>std::launch::deferred：延迟加载方式创建线程。调用async时不创建线程，直到调用了future的get或者wait时才创建线程。</li>
+</ul>
+<p>第二个参数是线程函数，第三个参数是线程函数的参数。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">std<span style="color:#f92672">::</span>future<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> f1 <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>async(std<span style="color:#f92672">::</span>launch<span style="color:#f92672">::</span>async, [](){
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">8</span>;
+    });
+
+cout <span style="color:#f92672">&lt;&lt;</span> f1.get() <span style="color:#f92672">&lt;&lt;</span> endl; <span style="color:#75715e">//output: 8
+</span><span style="color:#75715e"></span>
+std<span style="color:#f92672">::</span>future<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span><span style="color:#f92672">&gt;</span> f2 <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>async(std<span style="color:#f92672">::</span>launch<span style="color:#f92672">::</span>async, [](){
+    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">8</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+    <span style="color:#75715e">//return 8;
+</span><span style="color:#75715e"></span>});
+    f2.wait(); <span style="color:#75715e">//output: 8
+</span><span style="color:#75715e"></span>
+    std<span style="color:#f92672">::</span>future<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> future <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>async(std<span style="color:#f92672">::</span>launch<span style="color:#f92672">::</span>async, [](){
+        std<span style="color:#f92672">::</span>this_thread<span style="color:#f92672">::</span>sleep_for(std<span style="color:#f92672">::</span>chrono<span style="color:#f92672">::</span>seconds(<span style="color:#ae81ff">3</span>));
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">8</span>;
+    });
+
+    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;waiting...</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+
+    <span style="color:#75715e">//Test12();
+</span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>future_status status;
+    Sleep(<span style="color:#ae81ff">3000</span>);
+    <span style="color:#66d9ef">do</span> {
+        status <span style="color:#f92672">=</span> future.wait_for(std<span style="color:#f92672">::</span>chrono<span style="color:#f92672">::</span>seconds(<span style="color:#ae81ff">1</span>));
+        <span style="color:#66d9ef">if</span> (status <span style="color:#f92672">==</span> std<span style="color:#f92672">::</span>future_status<span style="color:#f92672">::</span>deferred) {
+            std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;deferred</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+        }
+        <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> (status <span style="color:#f92672">==</span> std<span style="color:#f92672">::</span>future_status<span style="color:#f92672">::</span>timeout) {
+            std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;timeout</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+        }
+        <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> (status <span style="color:#f92672">==</span> std<span style="color:#f92672">::</span>future_status<span style="color:#f92672">::</span>ready) {
+            std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;ready!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+        }
+    } <span style="color:#66d9ef">while</span> (status <span style="color:#f92672">!=</span> std<span style="color:#f92672">::</span>future_status<span style="color:#f92672">::</span>ready);
+
+    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;result is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> future.get() <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>;
 </code></pre></div>
     </div>
 

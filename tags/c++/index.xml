@@ -6,7 +6,16 @@
     <description>Recent content in c&#43;&#43; on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 Jan 2021 10:49:45 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 20 Feb 2021 15:06:32 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C&#43;&#43; - 标准属性</title>
+      <link>https://jfy0o0.github.io/2021/cpp_%E6%A0%87%E5%87%86%E5%B1%9E%E6%80%A7/</link>
+      <pubDate>Sat, 20 Feb 2021 15:06:32 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/cpp_%E6%A0%87%E5%87%86%E5%B1%9E%E6%80%A7/</guid>
+      <description>标准属性  C++11后引入了 C++ 标准属性1。在 C++ 11 中，属性提供一种标准化的方法添加批注的其他信息，也可能不是特定于供应商的 C++ 构造 （包括但不是限于类、 函数、 变量和块）。 用于生成信息性消息，或应用特殊逻辑，编译特性化的代码时，编译器可以使用此信息。 编译器将忽略无法识别的任何属性，这意味着你不能定义自定义属性。 使用此语法，属性将由双方括号标明。     attribute-token 属性 值 标准 作用     carries_dependency [[carries_dependency]] 200809L (C++11) 指示释放消费 std::memory_order 中的依赖链传进和传出该函数，这允许编译器跳过不必要的内存栅栏指令。   noreturn [[noreturn]] 200809L (C++11) 表示函数不返回值,并只能应用在函数上面,如果函数真的有返回值，那么该属性无效,并且会给出警告   deprecated [[deprecated]] [[deprecated(“reason”)]] 201309L (C++14) 表示某些实体已经废弃，或者因为某些原因废弃，可以用在类，定义类型名，变量，非静态数据成员，枚举，模板实例   fallthrough [[fallthrough]] 201603L (C++17) 指示从前一 case 标号直落是有意的，而在发生直落时给出警告的编译器不应该为此诊断。   maybe_unused [[maybe_unused]] 201603L (C++17) 压制编译器在未使用实体上的警告，若存在。   nodiscard [[nodiscard]] [[nodiscard(“reason”)]] 201603L (C++17) (C++20) 若返回值被舍弃，则鼓励编译器发布警告。   likely [[likely]] 201803L C++20) 指示编译器应该针对通过某语句的执行路径比任何其他执行路径更可能或更不可能的情况进行优化。   unlikely [[unlikely]] 201803L (C++20) 指示编译器应该针对通过某语句的执行路径比任何其他执行路径更可能或更不可能的情况进行优化。   no_unique_address [[no_unique_address]] 201803L (C++20) 指示非静态数据成员不需要拥有不同于其类的所有其他非静态数据成员的地址。    </description>
+    </item>
+    
     <item>
       <title>C&#43;&#43; - openmp</title>
       <link>https://jfy0o0.github.io/2021/cpp_openmp/</link>
