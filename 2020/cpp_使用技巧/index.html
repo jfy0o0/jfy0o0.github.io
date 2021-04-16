@@ -57,7 +57,7 @@
     "datePublished": "2020-12-03 18:44:42 \u002b0800 CST",
     "dateModified" : "2020-12-03 18:44:42 \u002b0800 CST",
     "url" : "https:\/\/jfy0o0.github.io\/2020\/cpp_%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7\/",
-    "wordCount" : "77",
+    "wordCount" : "130",
     "keywords" : [ "C\u002b\u002b", "Jiang . \u0027s blog"]
 }
 </script>
@@ -184,7 +184,56 @@
         cout <span style="color:#f92672">&lt;&lt;</span> x <span style="color:#f92672">&lt;&lt;</span>endl;
     }
 }
-</code></pre></div>
+</code></pre></div><h1 id="dowhile0">do&hellip;while(0)</h1>
+<p>在一些函数中，我们在return语句之前可能需要做一些工作，比如释放在函数一开始由malloc函数申请的内存空间，使用goto总是一种简单的方法：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">foo</span>() 
+{ 
+    somestruct<span style="color:#f92672">*</span> ptr <span style="color:#f92672">=</span> malloc(...); 
+    
+    dosomething...; 
+    <span style="color:#66d9ef">if</span>(error) 
+    { 
+        <span style="color:#66d9ef">goto</span> END; 
+    } 
+    
+    dosomething...; 
+    <span style="color:#66d9ef">if</span>(error) 
+    { 
+        <span style="color:#66d9ef">goto</span> END; 
+    } 
+    dosomething...; 
+    
+END: 
+    free(ptr); 
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>; 
+    
+} 
+</code></pre></div><p>但由于goto关键字可能会使代码不易读，因此许多人都不推荐使用它，那么我们可以使用do{&hellip;}while(0)来解决这一问题：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">foo</span>() 
+{ 
+    somestruct<span style="color:#f92672">*</span> ptr <span style="color:#f92672">=</span> malloc(...); 
+    
+    <span style="color:#66d9ef">do</span>{ 
+        dosomething...; 
+        <span style="color:#66d9ef">if</span>(error) 
+        { 
+            <span style="color:#66d9ef">break</span>; 
+        } 
+    
+        dosomething...; 
+        <span style="color:#66d9ef">if</span>(error) 
+        { 
+            <span style="color:#66d9ef">break</span>; 
+        } 
+        dosomething...; 
+    }<span style="color:#66d9ef">while</span>(<span style="color:#ae81ff">0</span>); 
+    
+    free(ptr); 
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>; 
+    
+} 
+</code></pre></div><p>这里，我们使用do{&hellip;}while(0)来包含函数的主要部分，同时使用break替换goto，代码的可读性增强了。</p>
+
     </div>
 
     <div class="post-copyright">
