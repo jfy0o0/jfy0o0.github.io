@@ -6,7 +6,20 @@
     <description>Recent content in Other on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Mar 2021 15:59:46 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/categories/other/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 21 Apr 2021 15:37:06 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/categories/other/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Other - docker</title>
+      <link>https://jfy0o0.github.io/2021/other-docker/</link>
+      <pubDate>Wed, 21 Apr 2021 15:37:06 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/other-docker/</guid>
+      <description>Docker 架构 Docker 包括三个基本概念:
+ 镜像（Image）：Docker 镜像（Image），就相当于是一个 root 文件系统。比如官方镜像 ubuntu:16.04 就包含了完整的一套 Ubuntu16.04 最小系统的 root 文件系统。 容器（Container）：镜像（Image）和容器（Container）的关系，就像是面向对象程序设计中的类和实例一样，镜像是静态的定义，容器是镜像运行时的实体。容器可以被创建、启动、停止、删除、暂停等。 仓库（Repository）：仓库可看成一个代码控制中心，用来保存镜像。   Hello World $ docker run ubuntu:15.10 /bin/echo &amp;#34;Hello world&amp;#34; Hello world 各个参数解析：
+ docker: Docker 的二进制执行文件。 run: 与前面的 docker 组合来运行一个容器。 ubuntu:15.10 指定要运行的镜像，Docker 首先从本地主机上查找镜像是否存在，如果不存在，Docker 就会从镜像仓库 Docker Hub 下载公共镜像。 /bin/echo &amp;ldquo;Hello world&amp;rdquo;: 在启动的容器里执行的命令  运行交互式的容器 我们通过 docker 的两个参数 -i -t，让 docker 运行的容器实现**&amp;ldquo;对话&amp;rdquo;**的能力：
+$ docker run -i -t ubuntu:15.10 /bin/bash root@0123ce188bd8:/# 各个参数解析：
+ -t: 在新容器内指定一个伪终端或终端。 -i: 允许你对容器内的标准输入 (STDIN) 进行交互。  启动容器（后台模式） 使用以下命令创建一个以进程方式运行的容器</description>
+    </item>
+    
     <item>
       <title>Other - 公私钥、加验签、CA</title>
       <link>https://jfy0o0.github.io/2021/other-%E5%85%AC%E7%A7%81%E9%92%A5%E5%8A%A0%E9%AA%8C%E7%AD%BEca/</link>
@@ -113,10 +126,10 @@ ca 其实在密码学中也是这样，你必须建立一个信赖点，不然�
     
     <item>
       <title>Other - git</title>
-      <link>https://jfy0o0.github.io/1/other-git/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <link>https://jfy0o0.github.io/2020/other-git/</link>
+      <pubDate>Wed, 11 Nov 2020 13:44:41 +0800</pubDate>
       
-      <guid>https://jfy0o0.github.io/1/other-git/</guid>
+      <guid>https://jfy0o0.github.io/2020/other-git/</guid>
       <description>一：创建版本库。   通过命令 git init 把这个目录变成git可以管理的仓库
   使用命令 git add readme.txt添加到暂存区里面去。
   用命令 git commit告诉Git，把文件提交到仓库。
