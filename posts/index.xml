@@ -6,7 +6,18 @@
     <description>Recent content in Posts on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 21 Apr 2021 15:37:06 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 06 May 2021 15:32:33 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux Soft - tcpdump、tcpreplay</title>
+      <link>https://jfy0o0.github.io/2021/linux-soft-tcpdumptcpreplay/</link>
+      <pubDate>Thu, 06 May 2021 15:32:33 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/linux-soft-tcpdumptcpreplay/</guid>
+      <description>tcpdump  根据使用者的定义对网络上的数据包进行截获的包分析工具。 tcpdump可以将网络中传送的数据包的“头”完全截获下来提供分析。 它支持针对网络层、协议、主机、网络或端口的过滤，并提供and、or、not等逻辑语句来帮助你去掉无用的信息。  tcpdump [-adeflnNOpqStvx][-c&amp;lt;数据包数目&amp;gt;][-dd][-ddd][-F&amp;lt;表达文件&amp;gt;][-i&amp;lt;网络界面&amp;gt;][-r&amp;lt;数据包文件&amp;gt;][-s&amp;lt;数据包大小&amp;gt;][-tt][-T&amp;lt;数据包类型&amp;gt;][-vv][-w&amp;lt;数据包文件&amp;gt;][输出数据栏位] 参数说明： -a 尝试将网络和广播地址转换成名称。 -c&amp;lt;数据包数目&amp;gt; 收到指定的数据包数目后，就停止进行倾倒操作。 -d 把编译过的数据包编码转换成可阅读的格式，并倾倒到标准输出。 -dd 把编译过的数据包编码转换成C语言的格式，并倾倒到标准输出。 -ddd 把编译过的数据包编码转换成十进制数字的格式，并倾倒到标准输出。 -e 在每列倾倒资料上显示连接层级的文件头。 -f 用数字显示网际网络地址。 -F&amp;lt;表达文件&amp;gt; 指定内含表达方式的文件。 -i&amp;lt;网络界面&amp;gt; 使用指定的网络截面送出数据包。 -l 使用标准输出列的缓冲区。 -n 不把主机的网络地址转换成名字。 -N 不列出域名。 -O 不将数据包编码最佳化。 -p 不让网络界面进入混杂模式。 -q 快速输出，仅列出少数的传输协议信息。 -r&amp;lt;数据包文件&amp;gt; 从指定的文件读取数据包数据。 -s&amp;lt;数据包大小&amp;gt; 设置每个数据包的大小。 -S 用绝对而非相对数值列出TCP关联数。 -t 在每列倾倒资料上不显示时间戳记。 -tt 在每列倾倒资料上显示未经格式化的时间戳记。 -T&amp;lt;数据包类型&amp;gt; 强制将表达方式所指定的数据包转译成设置的数据包类型。 -v 详细显示指令执行过程。 -vv 更详细显示指令执行过程。 -x 用十六进制字码列出数据包资料。 -w&amp;lt;数据包文件&amp;gt; 把数据包数据写入指定的文件。 监视指定主机和端口的数据包
+如果想要获取主机210.27.48.1接收或发出的telnet包，使用如下命令
+tcpdump tcp port 23 and host 210.27.48.1 对本机的udp 123 端口进行监视 123 为ntp的服务端口</description>
+    </item>
+    
     <item>
       <title>Other - docker</title>
       <link>https://jfy0o0.github.io/2021/other-docker/</link>
