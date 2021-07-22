@@ -75,6 +75,15 @@ ca 其实在密码学中也是这样，你必须建立一个信赖点，不然�
     </item>
     
     <item>
+      <title>Other - 以太网帧结构</title>
+      <link>https://jfy0o0.github.io/2020/other-%E4%BB%A5%E5%A4%AA%E7%BD%91%E5%B8%A7%E7%BB%93%E6%9E%84/</link>
+      <pubDate>Tue, 17 Nov 2020 13:55:52 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/other-%E4%BB%A5%E5%A4%AA%E7%BD%91%E5%B8%A7%E7%BB%93%E6%9E%84/</guid>
+      <description>以太网帧结构    前导码 帧开始符 MAC 目标地址 MAC 源地址 802.1Q标签 (可选) 以太类型 负载 冗余校验 帧间距     10101010 7个octet 10101011 1个octet 6B 6B 2B 2B 46-1500B 4B 12B     |&amp;lt;&amp;mdash;&amp;mdash;&amp;mdash; &amp;mdash;&amp;mdash;&amp;mdash; 64-1522B &amp;mdash;&amp;mdash;- &amp;mdash;&amp;mdash;&amp;mdash; &amp;mdash;&amp;gt;|      以太网规定，以太网帧数据域部分最小为46字节,也就是以太网帧最小是6＋6＋2＋46＋4＝64。除去4个字节的FCS，因此，抓包时就是60字节。 当数据字段的长度小于46字节时，MAC子层就会在数据字段的后面填充以满足数据帧长不小于64字节。由于填充数据是由MAC子层负责，也就是设备驱动程序。  </description>
+    </item>
+    
+    <item>
       <title>Other - 同步、异步、阻塞、非阻塞</title>
       <link>https://jfy0o0.github.io/2020/other-%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/</link>
       <pubDate>Tue, 17 Nov 2020 13:54:52 +0800</pubDate>

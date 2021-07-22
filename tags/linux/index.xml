@@ -6,7 +6,19 @@
     <description>Recent content in Linux on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 May 2021 18:43:59 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 20 Jul 2021 10:19:18 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux - note</title>
+      <link>https://jfy0o0.github.io/2021/linux-note/</link>
+      <pubDate>Tue, 20 Jul 2021 10:19:18 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/linux-note/</guid>
+      <description>fd 1.所有进程允许打开的最大fd数量 cat /proc/sys/fs/file-max 2.所有进程已经打开的fd数量及允许的最大数量 /proc/sys/fs/file-nr 3.单个进程允许打开的最大fd数量 ulimit -n 4.单个进程（例如进程id为5454）已经打开的fd ls -l /proc/5454/fd/ /proc/[pid] cmdline /proc/[pid]/cmdline 是一个只读文件，包含进程的完整命令行信息。如果该进程已经被交换出内存或者这个进程是 zombie 进程，则这个文件没有任何内容
+exe /proc/[pid]/exe 为实际运行程序的符号链接。举例如下：
+$ ls -lt /proc/2406/exe lrwxrwxrwx 1 root root 0 Dec 11 19:00 /proc/2406/exe -&amp;gt; /usr/bin/frps fd fd 是一个目录，包含进程打开文件的情况。举例如下：
+$ ls -lt /proc/2406/fd lrwx------ 1 root root 64 Dec 24 09:39 77 -&amp;gt; socket:[44377722] lrwx------ 1 root root 64 Dec 17 15:07 47 -&amp;gt; socket:[29482617] lr-x------ 1 root root 64 Dec 12 20:18 0 -&amp;gt; pipe:[13282] l-wx------ 1 root root 64 Dec 12 20:18 1 -&amp;gt; pipe:[13283] lrwx------ 1 root root 64 Dec 12 20:18 10 -&amp;gt; socket:[12238218] lrwx------ 1 root root 64 Dec 12 20:18 4 -&amp;gt; anon_inode:[eventpoll] lrwx------ 1 root root 64 Dec 12 20:18 40 -&amp;gt; socket:[19378614] status /proc/[pid]/status 包含进程的状态信息。其很多内容与 /proc/[pid]/stat 和 /proc/[pid]/statm 相同，但是却是以一种更清晰地方式展现出来。举例如下：</description>
+    </item>
+    
     <item>
       <title>Linux - errno</title>
       <link>https://jfy0o0.github.io/2021/linux-errno/</link>

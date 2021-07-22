@@ -6,7 +6,19 @@
     <description>Recent content in Posts on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 May 2021 18:43:59 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 20 Jul 2021 10:19:18 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux - note</title>
+      <link>https://jfy0o0.github.io/2021/linux-note/</link>
+      <pubDate>Tue, 20 Jul 2021 10:19:18 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/linux-note/</guid>
+      <description>fd 1.所有进程允许打开的最大fd数量 cat /proc/sys/fs/file-max 2.所有进程已经打开的fd数量及允许的最大数量 /proc/sys/fs/file-nr 3.单个进程允许打开的最大fd数量 ulimit -n 4.单个进程（例如进程id为5454）已经打开的fd ls -l /proc/5454/fd/ /proc/[pid] cmdline /proc/[pid]/cmdline 是一个只读文件，包含进程的完整命令行信息。如果该进程已经被交换出内存或者这个进程是 zombie 进程，则这个文件没有任何内容
+exe /proc/[pid]/exe 为实际运行程序的符号链接。举例如下：
+$ ls -lt /proc/2406/exe lrwxrwxrwx 1 root root 0 Dec 11 19:00 /proc/2406/exe -&amp;gt; /usr/bin/frps fd fd 是一个目录，包含进程打开文件的情况。举例如下：
+$ ls -lt /proc/2406/fd lrwx------ 1 root root 64 Dec 24 09:39 77 -&amp;gt; socket:[44377722] lrwx------ 1 root root 64 Dec 17 15:07 47 -&amp;gt; socket:[29482617] lr-x------ 1 root root 64 Dec 12 20:18 0 -&amp;gt; pipe:[13282] l-wx------ 1 root root 64 Dec 12 20:18 1 -&amp;gt; pipe:[13283] lrwx------ 1 root root 64 Dec 12 20:18 10 -&amp;gt; socket:[12238218] lrwx------ 1 root root 64 Dec 12 20:18 4 -&amp;gt; anon_inode:[eventpoll] lrwx------ 1 root root 64 Dec 12 20:18 40 -&amp;gt; socket:[19378614] status /proc/[pid]/status 包含进程的状态信息。其很多内容与 /proc/[pid]/stat 和 /proc/[pid]/statm 相同，但是却是以一种更清晰地方式展现出来。举例如下：</description>
+    </item>
+    
     <item>
       <title>Linux - errno</title>
       <link>https://jfy0o0.github.io/2021/linux-errno/</link>
@@ -563,6 +575,15 @@ class A { public: A(int i) :a(i){} private: int a; }; int main() { A* example = 
  半双工，即不能同时在两个方向上传输数据。有的系统可能支持全双工。 只能在父子进程间。经典的形式就是管道由父进程创建，进程fork子进程之后，就可以在父子进程之间使用了。 进程创建管道，每次创建两个文件描述符来操作管道。 其中一个对管道进行写，另一个对管道进行读操作。  声明 使用popen函数和pclose函数结合来执行系统命令，就用到了管道，它们声明如下：
 FILE *popen(const char *command,const char *type); int pclose(FILE *stream); #include &amp;lt;unistd.h&amp;gt;int pipe(int filedes[2]);  filedes是一个文件描述符的数组，用于保存管道返回的两个文件描述符。 下标为0是为了读操作而创建打开的，下标为1是为了写操作而创建打开的。 执行成功返回0；失败返回1；  例子 我们看一个简单的使用管道的例子，这里使用了pipe函数来创建管道：
 #include &amp;lt;stdio.h&amp;gt;#include &amp;lt;unistd.h&amp;gt;#include &amp;lt;sys/types.h&amp;gt;#define MAX_LEN 128 int main() { /*0为读，1为写*/ int fd[2] = {0}; //描述符  pid_t pid = 0; char line[MAX_LEN] = {0}; int n = 0; /*创建管道，需要传入两个文件描述符*/ if(pipe(fd) &amp;lt; 0) { perror(&amp;#34;create pipe failed\n&amp;#34;); return -1; } /*fork子进程*/ if((pid = fork()) &amp;lt; 0) { perror(&amp;#34;fork failed\n&amp;#34;); return -1; } /*父进程*/ else if(pid &amp;gt; 0) { /*关闭管道的写描述符*/ close(fd[1]); /*从管道读取数据*/ n = read(fd[0],line,MAX_LEN); printf(&amp;#34;read %d bytes from pipe :%s\n&amp;#34;,n,line); } /*子进程*/ else { /*关闭管道的读描述符*/ close(fd[0]); /*向管道写入数据*/ write(fd[1],&amp;#34;www.</description>
+    </item>
+    
+    <item>
+      <title>Other - 以太网帧结构</title>
+      <link>https://jfy0o0.github.io/2020/other-%E4%BB%A5%E5%A4%AA%E7%BD%91%E5%B8%A7%E7%BB%93%E6%9E%84/</link>
+      <pubDate>Tue, 17 Nov 2020 13:55:52 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/other-%E4%BB%A5%E5%A4%AA%E7%BD%91%E5%B8%A7%E7%BB%93%E6%9E%84/</guid>
+      <description>以太网帧结构    前导码 帧开始符 MAC 目标地址 MAC 源地址 802.1Q标签 (可选) 以太类型 负载 冗余校验 帧间距     10101010 7个octet 10101011 1个octet 6B 6B 2B 2B 46-1500B 4B 12B     |&amp;lt;&amp;mdash;&amp;mdash;&amp;mdash; &amp;mdash;&amp;mdash;&amp;mdash; 64-1522B &amp;mdash;&amp;mdash;- &amp;mdash;&amp;mdash;&amp;mdash; &amp;mdash;&amp;gt;|      以太网规定，以太网帧数据域部分最小为46字节,也就是以太网帧最小是6＋6＋2＋46＋4＝64。除去4个字节的FCS，因此，抓包时就是60字节。 当数据字段的长度小于46字节时，MAC子层就会在数据字段的后面填充以满足数据帧长不小于64字节。由于填充数据是由MAC子层负责，也就是设备驱动程序。  </description>
     </item>
     
     <item>
