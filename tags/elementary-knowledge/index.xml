@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>elementary knowledge on Jiang . &#39;s blog</title>
+    <link>https://jfy0o0.github.io/tags/elementary-knowledge/</link>
+    <description>Recent content in elementary knowledge on Jiang . &#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 23 Jul 2021 08:40:52 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/elementary-knowledge/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>elementary knowledge - 字符编码</title>
+      <link>https://jfy0o0.github.io/2021/elementary-knowledge-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/</link>
+      <pubDate>Fri, 23 Jul 2021 08:40:52 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/elementary-knowledge-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/</guid>
+      <description>一、ASCII  由于美国日常使用中只有字母和数字，还有一些控制字符。 一个字节8位，8位可以表示256种字符。因此用一个字节就可以很好满足美国使用要求。　 ASCII码一共规定了128个字符，比如SPACE是32，A是65，这128个符号只咱用了一个字节的后面七位，最前面的一位统一规定为0。  Bin(二进制) Oct(八进制) Dec(十进制)　Hex(十六进制)　缩写/字符　解释 00000000　0　0　00　NUL(null)　空字符 00000001　1　1　01　SOH(start of headline)　标题开始 00000010　2　2　02　STX (start of text)　正文开始 00110000　60　48　30　0　数字0 00110001　61　49　31　1　数字1 00110010　62　50　32　2　数字2 01000001　101　65　41　A　大写字母A　01000010　102　66　42　B　大写字母B 01000011　103　67　43　C　大写字母C 二、gb2312和GBK  兼容ascii 第一个字节的最高位为1 由于一个字节已经无法满足数量的要求了。所以采用两个字节来表示汉字。 第一个字节称为“高位字节”（也称“区字节）”，第二个字节称为“低位字节”（也称“位字节”） 区位码=区字节+位字节。例如“啊”字在大多数程序中，会以两个字节，0xB0（第一个字节） 0xA1（第二个字节）储存。  三、Unicode   Unicode又称统一码、万国码。</description>
+    </item>
+    
+    <item>
+      <title>elementary knowledge - 公私钥、加验签、CA</title>
+      <link>https://jfy0o0.github.io/2021/elementary-knowledge-%E5%85%AC%E7%A7%81%E9%92%A5%E5%8A%A0%E9%AA%8C%E7%AD%BEca/</link>
+      <pubDate>Tue, 30 Mar 2021 15:59:46 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/elementary-knowledge-%E5%85%AC%E7%A7%81%E9%92%A5%E5%8A%A0%E9%AA%8C%E7%AD%BEca/</guid>
+      <description>公私钥加解密，加验签梳理 对称加密和非对称加密。  对称加密：也就是加密和解密所使用的密钥是同一个，常用到的有AES、DES、3DES等等，这类加密方式容易理解，不过多赘述。 非对称加密：加密和解密所使用的密钥是一对，也就是两个，  若A、B是一对密钥，那么加密使用A则解密只能使用B， 加密使用B则解密只能使用A。   这也就是公私钥的原型。 公钥加密，私钥解密。  数字签名 ​	加解密问题解决了，但是网络通讯远没有这么简单，报文信息被黑客拦截了怎么办？拦截后黑客替换成他的报文，还能用公钥继续加密发出去，那不就完了，所以我们还需要个方式来验证发送方的身份，也就是我们经常听说的数字签名。
+​	数字签名和加解密不同，是对一段信息做hash算法（MD5，RSA等）运算，生成唯一标识该信息的一个特征串，比如你小时候背课文，背完让家长签名（加签），然后第二天老师检查签名（验签），老师就会认为你完成了作业。老师认为该签名唯一且只能由你家长生成，所以认同你背过课文。（虽然你可以模仿）。
+​	那么我们要做的就是对我们的密文信息再进行一次签名，将签名得到的签名特征串附在原文后，那么对方接收到报文以后，如果能验签通过，那就能确定消息是你发的了。
+ 私钥加签，公钥验签  ​	网络通讯中我们一般用自己的私钥加签将报文，用第三方提供的公钥将报文中涉及安全隐私的部分加密，然后第三方会用我们提供公钥进行验签，验签通过后再用他们自己的私钥将报文加密部分解密。
+​	如果还需要响应返回，那么他们还将重复一遍我们这边的过程，我们这边也需要重复一边他们那边的过程，用他们提供的公钥验签返回回来的报文，并用自己的私钥解密隐私部分。
+​	这里又有个问题，既然公钥是公开的，你如何确定这个公钥是你的而不是别人的？这样一想，其实就变成了一个循环，没法证明绝对安全，鸡生蛋蛋生鸡的问题。
+ca 其实在密码学中也是这样，你必须建立一个信赖点，不然任何都是无法信赖的。所以在此基础上，出现了一个可信任的第三方认证中心（CA），
+ CA把你的公钥进行认证，并颁发一个数字证书给到你，该证书里面包含了你的公钥， 而你给别人的公钥也替换成数字证书， 别人拿到数字证书，看了下，确实是CA签发的，那么这里面的公钥就是你的，你是可信的。 这里就又把大家所迷惑的一个概念理清楚了， 证书就是经过认证的公钥。  </description>
+    </item>
+    
+    <item>
+      <title>elementary knowledge - 以太网帧结构</title>
+      <link>https://jfy0o0.github.io/2020/elementary-knowledge-%E4%BB%A5%E5%A4%AA%E7%BD%91%E5%B8%A7%E7%BB%93%E6%9E%84/</link>
+      <pubDate>Tue, 17 Nov 2020 13:55:52 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/elementary-knowledge-%E4%BB%A5%E5%A4%AA%E7%BD%91%E5%B8%A7%E7%BB%93%E6%9E%84/</guid>
+      <description>以太网帧结构    前导码 帧开始符 MAC 目标地址 MAC 源地址 802.1Q标签 (可选) 以太类型 负载 冗余校验 帧间距     10101010 7个octet 10101011 1个octet 6B 6B 2B 2B 46-1500B 4B 12B     |&amp;lt;&amp;mdash;&amp;mdash;&amp;mdash; &amp;mdash;&amp;mdash;&amp;mdash; 64-1522B &amp;mdash;&amp;mdash;- &amp;mdash;&amp;mdash;&amp;mdash; &amp;mdash;&amp;gt;|      以太网规定，以太网帧数据域部分最小为46字节,也就是以太网帧最小是6＋6＋2＋46＋4＝64。除去4个字节的FCS，因此，抓包时就是60字节。 当数据字段的长度小于46字节时，MAC子层就会在数据字段的后面填充以满足数据帧长不小于64字节。由于填充数据是由MAC子层负责，也就是设备驱动程序。  </description>
+    </item>
+    
+    <item>
+      <title>elementary knowledge - 同步、异步、阻塞、非阻塞</title>
+      <link>https://jfy0o0.github.io/2020/elementary-knowledge-%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/</link>
+      <pubDate>Tue, 17 Nov 2020 13:54:52 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/elementary-knowledge-%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/</guid>
+      <description>1.同步与异步 同步和异步关注的是消息通信机制
+指被调用者
+同步  就是在发出一个调用时，在没有得到结果之前，该调用就不返回。 但是一旦调用返回，就得到返回值了。 换句话说，就是由调用者主动等待这个调用的结果。  异步  调用在发出之后，这个调用就直接返回了，所以没有返回结果。 换句话说，当一个异步过程调用发出后，调用者不会立刻得到结果。 而是在调用发出后，被调用者通过状态、通知来通知调用者，或通过回调函数处理这个调用。  例子： 你打电话问书店老板有没有《分布式系统》这本书，
+ 如果是同步通信机制，书店老板会说，你稍等，”我查一下&amp;quot;，然后开始查啊查，等查好了（可能是5秒，也可能是一天）告诉你结果（返回结果）。 而异步通信机制，书店老板直接告诉你我查一下啊，查好了打电话给你，然后直接挂电话了（不返回结果）。然后查好了，他会主动打电话给你。在这里老板通过“回电”这种方式来回调。  2. 阻塞与非阻塞 阻塞和非阻塞关注的是程序在等待调用结果（消息，返回值）时的状态.
+指调用者
+阻塞调用 是指调用结果返回之前，当前线程会被挂起。调用线程只有在得到结果之后才会返回。
+非阻塞调用 指在不能立刻得到结果之前，该调用不会阻塞当前线程。
+例子： 你打电话问书店老板有没有《分布式系统》这本书，
+  你如果是阻塞式调用，你会一直把自己“挂起”，直到得到这本书有没有的结果，
+  如果是非阻塞式调用，你不管老板有没有告诉你，你自己先一边去玩了， 当然你也要偶尔过几分钟check一下老板有没有返回结果。
+  在这里阻塞与非阻塞与是否同步异步无关。跟老板通过什么方式回答你结果无关。
+  说明：  阻塞式发送：发送方进程会被一直阻塞， 直到消息被接受方进程收到。 非阻塞式发送： 发送方进程调用 send() 后， 立即就可以其他操作。 阻塞式接收：接收方调用 receive() 后一直阻塞， 直到消息到达可用。 非阻塞式接受：接收方调用 receive() 函数后， 要么得到一个有效的结果， 要么得到一个空值， 即不会被阻塞。  例子2： 老张爱喝茶，废话不说，煮开水。 出场人物：老张，水壶两把（普通水壶，简称水壶；会响的水壶，简称响水壶）。
+ 老张把水壶放到火上，立等水开。（同步阻塞） 老张觉得自己有点傻 老张把水壶放到火上，去客厅看电视，时不时去厨房看看水开没有。（同步非阻塞） 老张还是觉得自己有点傻，于是变高端了，买了把会响笛的那种水壶。水开之后，能大声发出嘀~~~~的噪音。 老张把响水壶放到火上，立等水开。（异步阻塞） 老张觉得这样傻等意义不大 老张把响水壶放到火上，去客厅看电视，水壶响之前不再去看它了，响了再去拿壶。（异步非阻塞） 老张觉得自己聪明了。  所谓同步异步，只是对于水壶**（被调用者）**而言。 普通水壶，同步；响水壶，异步。 虽然都能干活，但响水壶可以在自己完工之后，提示老张水开了。这是普通水壶所不能及的。 同步只能让调用者去轮询自己（情况2中），造成老张效率的低下。</description>
+    </item>
+    
+    <item>
+      <title>elementary knowledge - 大端、小端</title>
+      <link>https://jfy0o0.github.io/2020/elementary-knowledge-%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF/</link>
+      <pubDate>Tue, 17 Nov 2020 13:54:52 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2020/elementary-knowledge-%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF/</guid>
+      <description>大端 概念 是指数据的高字节保存在内存的低地址中，而数据的低字节保存在内存的高地址中。
+这是人类读写数值的方法。
+小端 概念 数据的高字节保存在内存的高地址中，而数据的低字节保存在内存的低地址中，
+这种存储模式将地址的高低和数据位权有效地结合起来，高地址部分权值高，低地址部分权值低，和我们的逻辑方法一致。
+简明区分 下面以unsigned int value = 0x12345678为例，
+分别看看在两种字节序下其存储情况，我们可以用unsigned char buf[4]来表示value
+ Big-Endian: 低地址存放高位，如下：
+​	高地址
+​	buf[3] (0x78) &amp;ndash; 低位
+​	buf[2] (0x56)
+​	buf[1] (0x34)
+​	buf[0] (0x12) &amp;ndash; 高位
+​	低地址
+ Little-Endian: 低地址存放低位，如下：
+​	高地址
+​	buf[3] (0x12) &amp;ndash; 高位
+​	buf[2] (0x34)
+​	buf[1] (0x56)
+​	buf[0] (0x78) &amp;ndash; 低位
+​	低地址
+    内存地址 小端模式存放内容 大端模式存放内容     0x4000 0x78 0x12   0x4001 0x56 0x34   0x4002 0x34 0x56   0x4003 0x12 0x78    </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -6,7 +6,38 @@
     <description>Recent content in Go on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 05 Jan 2021 16:41:46 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 27 Jul 2021 13:43:50 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go - 陷阱</title>
+      <link>https://jfy0o0.github.io/2021/go-%E9%99%B7%E9%98%B1/</link>
+      <pubDate>Tue, 27 Jul 2021 13:43:50 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/go-%E9%99%B7%E9%98%B1/</guid>
+      <description>1. 循环体变量 package main import ( &amp;#34;fmt&amp;#34; &amp;#34;time&amp;#34; ) func main(){ tt() } func tt() { for i := 0; i &amp;lt; 10; i++ { go func() { time.Sleep(1e3) fmt.Println(i) }() } time.Sleep(1e9) }  这个函数执行的时候 tt中打印出来的是10 原因也是很简单，  因为go在初始化的时候先初始化参数量， 全局先初始参数再看函数， 在函数内部先初始参数再进行运算， 所以 就造成在for执行完后,这里的i是同样的i,以为初始化的参数 i一直会变，但是都是这个变量本身，又因为for循环比内部的函数速度快很多，导致，当for循环进行完了，这些函数还没正式开始运行，然后i就取最终值10了    2. return 和 defer 的执行顺序  在Go语言的函数中return语句在底层并不是原子操作，它分为给返回值赋值和RET指令两步。 而defer语句执行的时机就在返回值赋值操作后，RET指令执行前。  return x
+ 返回值 = x 运行defer RET指令  3. 值的方法和指针的方法   指针的方法和值的方法可以互相调用，因为go会自动帮你</description>
+    </item>
+    
+    <item>
+      <title>Go - go test</title>
+      <link>https://jfy0o0.github.io/2021/go-go-test/</link>
+      <pubDate>Fri, 23 Jul 2021 15:22:31 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/go-go-test/</guid>
+      <description>go test工具  go test命令是一个按照一定约定和组织的测试代码的驱动程序。 在包目录内，所有以_test.go为后缀名的源代码文件都是go test测试的一部分，不会被go build编译到最终的可执行文件中。 在*_test.go文件中有三种类型的函数，单元测试函数、基准测试函数和示例函数。     类型 格式 作用     测试函数 函数名前缀为Test 测试程序的一些逻辑行为是否正确   基准函数 函数名前缀为Benchmark 测试函数的性能   示例函数 函数名前缀为Example 为文档提供示例文档     go test命令会遍历所有的*_test.go文件中符合上述命名规则的函数， 然后生成一个临时的main包用于调用相应的测试函数， 然后构建并运行、报告测试结果， 最后清理测试中生成的临时文件。  测试函数 每个测试函数必须导入testing包，测试函数的基本格式（签名）如下：
+func TestName(t *testing.T){ // ... } 测试函数的名字必须以Test开头，可选的后缀名必须以大写字母开头，举几个例子：
+func TestAdd(t *testing.T){ ... } func TestSum(t *testing.T){ ... } func TestLog(t *testing.T){ ... } 其中参数t用于报告测试失败和附加的日志信息。 testing.T的拥有的方法如下：
+func (c *T) Error(args .</description>
+    </item>
+    
+    <item>
+      <title>Go - cgo</title>
+      <link>https://jfy0o0.github.io/2021/go-cgo/</link>
+      <pubDate>Fri, 23 Jul 2021 09:22:31 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/go-cgo/</guid>
+      <description>1.1 最简CGO程序 // hello.go package main import &amp;#34;C&amp;#34; func main() { println(&amp;#34;hello cgo&amp;#34;) }  代码通过import &amp;quot;C&amp;quot;语句启用CGO特性，主函数只是通过Go内置的println函数输出字符串，其中并没有任何和CGO相关的代码。 虽然没有调用CGO的相关函数，但是go build命令会在编译和链接阶段启动gcc编译器，这已经是一个完整的CGO程序了。  1.2 基于C标准库函数输出字符串 // hello.go package main //#include &amp;lt;stdio.h&amp;gt; import &amp;#34;C&amp;#34; func main() { C.puts(C.CString(&amp;#34;Hello, World\n&amp;#34;)) }  通过import &amp;quot;C&amp;quot;语句启用CGO特性， 同时包含C语言的&amp;lt;stdio.h&amp;gt;头文件。 然后通过CGO包的C.CString函数将Go语言字符串转为C语言字符串， 最后调用CGO包的C.puts函数向标准输出窗口打印转换后的C字符串。 我们没有在程序退出前释放C.CString创建的C语言字符串； 还有我们改用puts函数直接向标准输出打印，之前是采用fputs向标准输出打印。 没有释放使用C.CString创建的C语言字符串会导致内存泄漏。  1.3 使用自己的C函数 // hello.go package main /* #include &amp;lt;stdio.h&amp;gt; static void SayHello(const char* s) { puts(s); } */ import &amp;#34;C&amp;#34; func main() { C.SayHello(C.CString(&amp;#34;Hello, World\n&amp;#34;)) }  现在我们先自定义一个叫SayHello的C函数来实现打印，然后从Go语言环境中调用这个SayHello函数 可以将SayHello函数放到当前目录下的一个C语言源文件中（后缀名必须是.</description>
+    </item>
+    
     <item>
       <title>Go - Go Module</title>
       <link>https://jfy0o0.github.io/2021/go-go-module/</link>

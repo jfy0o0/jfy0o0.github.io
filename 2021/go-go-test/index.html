@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Jiang .">
+  
+  
+  
+  <link rel="prev" href="https://jfy0o0.github.io/2021/go-cgo/" />
+  <link rel="next" href="https://jfy0o0.github.io/2021/go-%E9%99%B7%E9%98%B1/" />
+  <link rel="canonical" href="https://jfy0o0.github.io/2021/go-go-test/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Go - go test | Jiang . &#39;s blog
+       
+  </title>
+  <meta name="title" content="Go - go test | Jiang . &#39;s blog">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/jfy0o0.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Go - go test",
+    "headline" : "Go - go test",
+    "description" : "go test工具  go test命令是一个按照一定约定和组织的测试代码的驱动程序。 在包目录内，所有以_test.go为后缀名的源代码文件都是go test测试的一部分，不会被go build编译到最终的可执行文件中。 在*_test.go文件中有三种类型的函数，单元测试函数、基准测试函数和示例函数。     类型 格式 作用     测试函数 函数名前缀为Test 测试程序的一些逻辑行为是否正确   基准函数 函数名前缀为Benchmark 测试函数的性能   示例函数 函数名前缀为Example 为文档提供示例文档     go test命令会遍历所有的*_test.go文件中符合上述命名规则的函数， 然后生成一个临时的main包用于调用相应的测试函数， 然后构建并运行、报告测试结果， 最后清理测试中生成的临时文件。  测试函数 每个测试函数必须导入testing包，测试函数的基本格式（签名）如下：\nfunc TestName(t *testing.T){ \/\/ ... } 测试函数的名字必须以Test开头，可选的后缀名必须以大写字母开头，举几个例子：\nfunc TestAdd(t *testing.T){ ... } func TestSum(t *testing.T){ ... } func TestLog(t *testing.T){ ... } 其中参数t用于报告测试失败和附加的日志信息。 testing.T的拥有的方法如下：\nfunc (c *T) Error(args .",
+    "inLanguage" : "en-us",
+    "author" : "Jiang .",
+    "creator" : "Jiang .",
+    "publisher": "Jiang .",
+    "accountablePerson" : "Jiang .",
+    "copyrightHolder" : "Jiang .",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-07-23 15:22:31 \u002b0800 CST",
+    "dateModified" : "2021-07-23 15:22:31 \u002b0800 CST",
+    "url" : "https:\/\/jfy0o0.github.io\/2021\/go-go-test\/",
+    "wordCount" : "1365",
+    "keywords" : [ "Go", "Jiang . \u0027s blog"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Go - go test</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://jfy0o0.github.io" rel="author">Jiang .</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2021-07-23 itemprop="datePublished">July 23, 2021</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://jfy0o0.github.io/categories/go/"> Go </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="go-test工具">go test工具</h1>
+<ul>
+<li>go test命令是一个按照一定约定和组织的测试代码的驱动程序。</li>
+<li>在包目录内，所有以<code>_test.go</code>为后缀名的源代码文件都是<code>go test</code>测试的一部分，不会被<code>go build</code>编译到最终的可执行文件中。</li>
+<li>在<code>*_test.go</code>文件中有三种类型的函数，单元测试函数、基准测试函数和示例函数。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">类型</th>
+<th style="text-align:center">格式</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">测试函数</td>
+<td style="text-align:center">函数名前缀为Test</td>
+<td style="text-align:center">测试程序的一些逻辑行为是否正确</td>
+</tr>
+<tr>
+<td style="text-align:center">基准函数</td>
+<td style="text-align:center">函数名前缀为Benchmark</td>
+<td style="text-align:center">测试函数的性能</td>
+</tr>
+<tr>
+<td style="text-align:center">示例函数</td>
+<td style="text-align:center">函数名前缀为Example</td>
+<td style="text-align:center">为文档提供示例文档</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>go test</code>命令会遍历所有的<code>*_test.go</code>文件中符合上述命名规则的函数，</li>
+<li>然后生成一个临时的main包用于调用相应的测试函数，</li>
+<li>然后构建并运行、报告测试结果，</li>
+<li>最后清理测试中生成的临时文件。</li>
+</ul>
+<h1 id="测试函数">测试函数</h1>
+<p>每个测试函数必须导入<code>testing</code>包，测试函数的基本格式（签名）如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestName</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>){
+    <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>测试函数的名字必须以<code>Test</code>开头，可选的后缀名必须以大写字母开头，举几个例子：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestAdd</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>){ <span style="color:#f92672">...</span> }
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestSum</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>){ <span style="color:#f92672">...</span> }
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestLog</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>){ <span style="color:#f92672">...</span> }
+</code></pre></div><p>其中参数<code>t</code>用于报告测试失败和附加的日志信息。 <code>testing.T</code>的拥有的方法如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>) <span style="color:#a6e22e">Error</span>(<span style="color:#a6e22e">args</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">interface</span>{})
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>) <span style="color:#a6e22e">Errorf</span>(<span style="color:#a6e22e">format</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">args</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">interface</span>{})
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>) <span style="color:#a6e22e">Fail</span>()
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>) <span style="color:#a6e22e">FailNow</span>()
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>) <span style="color:#a6e22e">Failed</span>() <span style="color:#66d9ef">bool</span>
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>) <span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">args</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">interface</span>{})
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>) <span style="color:#a6e22e">Fatalf</span>(<span style="color:#a6e22e">format</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">args</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">interface</span>{})
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>) <span style="color:#a6e22e">Log</span>(<span style="color:#a6e22e">args</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">interface</span>{})
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>) <span style="color:#a6e22e">Logf</span>(<span style="color:#a6e22e">format</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">args</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">interface</span>{})
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>) <span style="color:#a6e22e">Name</span>() <span style="color:#66d9ef">string</span>
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>) <span style="color:#a6e22e">Parallel</span>()
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>) <span style="color:#a6e22e">Run</span>(<span style="color:#a6e22e">name</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">f</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>)) <span style="color:#66d9ef">bool</span>
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>) <span style="color:#a6e22e">Skip</span>(<span style="color:#a6e22e">args</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">interface</span>{})
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>) <span style="color:#a6e22e">SkipNow</span>()
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>) <span style="color:#a6e22e">Skipf</span>(<span style="color:#a6e22e">format</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">args</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">interface</span>{})
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>) <span style="color:#a6e22e">Skipped</span>() <span style="color:#66d9ef">bool</span>
+</code></pre></div><h2 id="测试函数示例">测试函数示例</h2>
+<p>我们定义一个<code>split</code>的包，包中定义了一个<code>Split</code>函数，具体实现如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// split/split.go
+</span><span style="color:#75715e"></span>
+<span style="color:#f92672">package</span> <span style="color:#a6e22e">split</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;strings&#34;</span>
+
+<span style="color:#75715e">// split package with a single split function.
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// Split slices s into all substrings separated by sep and
+</span><span style="color:#75715e">// returns a slice of the substrings between those separators.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">sep</span> <span style="color:#66d9ef">string</span>) (<span style="color:#a6e22e">result</span> []<span style="color:#66d9ef">string</span>) {
+	<span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Index</span>(<span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">sep</span>)
+
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> &gt; <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> {
+		<span style="color:#a6e22e">result</span> = append(<span style="color:#a6e22e">result</span>, <span style="color:#a6e22e">s</span>[:<span style="color:#a6e22e">i</span>])
+		<span style="color:#a6e22e">s</span> = <span style="color:#a6e22e">s</span>[<span style="color:#a6e22e">i</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>:]
+		<span style="color:#a6e22e">i</span> = <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Index</span>(<span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">sep</span>)
+	}
+	<span style="color:#a6e22e">result</span> = append(<span style="color:#a6e22e">result</span>, <span style="color:#a6e22e">s</span>)
+	<span style="color:#66d9ef">return</span>
+}
+</code></pre></div><p>在当前目录下，我们创建一个<code>split_test.go</code>的测试文件，并定义一个测试函数如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// split/split_test.go
+</span><span style="color:#75715e"></span>
+<span style="color:#f92672">package</span> <span style="color:#a6e22e">split</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;reflect&#34;</span>
+	<span style="color:#e6db74">&#34;testing&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestSplit</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) { <span style="color:#75715e">// 测试函数名必须以Test开头，必须接收一个*testing.T类型参数
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">got</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Split</span>(<span style="color:#e6db74">&#34;a🅱️c&#34;</span>, <span style="color:#e6db74">&#34;:&#34;</span>)         <span style="color:#75715e">// 程序输出的结果
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">want</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;a&#34;</span>, <span style="color:#e6db74">&#34;b&#34;</span>, <span style="color:#e6db74">&#34;c&#34;</span>}    <span style="color:#75715e">// 期望的结果
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">DeepEqual</span>(<span style="color:#a6e22e">want</span>, <span style="color:#a6e22e">got</span>) { <span style="color:#75715e">// 因为slice不能比较直接，借助反射包中的方法比较
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;excepted:%v, got:%v&#34;</span>, <span style="color:#a6e22e">want</span>, <span style="color:#a6e22e">got</span>) <span style="color:#75715e">// 测试失败输出错误提示
+</span><span style="color:#75715e"></span>	}
+}
+</code></pre></div><p>此时<code>split</code>这个包中的文件如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">split $ ls -l
+total <span style="color:#ae81ff">16</span>
+-rw-r--r--  <span style="color:#ae81ff">1</span> liwenzhou  staff  <span style="color:#ae81ff">408</span>  <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">29</span> 15:50 split.go
+-rw-r--r--  <span style="color:#ae81ff">1</span> liwenzhou  staff  <span style="color:#ae81ff">466</span>  <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">29</span> 16:04 split_test.go
+</code></pre></div><p>在<code>split</code>包路径下，执行<code>go test</code>命令，可以看到输出结果如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">split $ go test
+PASS
+ok      github.com/Q1mi/studygo/code_demo/test_demo/split       0.005s
+</code></pre></div><p>这一次，我们的测试失败了。我们可以为<code>go test</code>命令添加<code>-v</code>参数，查看测试函数名称和运行时间：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">split $ go test -v
+<span style="color:#f92672">===</span> RUN   TestSplit
+--- PASS: TestSplit <span style="color:#f92672">(</span>0.00s<span style="color:#f92672">)</span>
+<span style="color:#f92672">===</span> RUN   TestMoreSplit
+--- FAIL: TestMoreSplit <span style="color:#f92672">(</span>0.00s<span style="color:#f92672">)</span>
+    split_test.go:21: excepted:<span style="color:#f92672">[</span>a d<span style="color:#f92672">]</span>, got:<span style="color:#f92672">[</span>a cd<span style="color:#f92672">]</span>
+FAIL
+exit status <span style="color:#ae81ff">1</span>
+FAIL    github.com/Q1mi/studygo/code_demo/test_demo/split       0.005s
+</code></pre></div><p>这一次我们能清楚的看到是<code>TestMoreSplit</code>这个测试没有成功。 还可以在<code>go test</code>命令后添加<code>-run</code>参数，它对应一个正则表达式，只有函数名匹配上的测试函数才会被<code>go test</code>命令执行。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">split $ go test -v -run<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;More&#34;</span>
+<span style="color:#f92672">===</span> RUN   TestMoreSplit
+--- FAIL: TestMoreSplit <span style="color:#f92672">(</span>0.00s<span style="color:#f92672">)</span>
+    split_test.go:21: excepted:<span style="color:#f92672">[</span>a d<span style="color:#f92672">]</span>, got:<span style="color:#f92672">[</span>a cd<span style="color:#f92672">]</span>
+FAIL
+exit status <span style="color:#ae81ff">1</span>
+FAIL    github.com/Q1mi/studygo/code_demo/test_demo/split       0.006s
+</code></pre></div><h2 id="测试组">测试组</h2>
+<p>我们现在还想要测试一下<code>split</code>函数对中文字符串的支持，这个时候我们可以再编写一个<code>TestChineseSplit</code>测试函数，但是我们也可以使用如下更友好的一种方式来添加更多的测试用例。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestSplit</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+   <span style="color:#75715e">// 定义一个测试用例类型
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">test</span> <span style="color:#66d9ef">struct</span> {
+		<span style="color:#a6e22e">input</span> <span style="color:#66d9ef">string</span>
+		<span style="color:#a6e22e">sep</span>   <span style="color:#66d9ef">string</span>
+		<span style="color:#a6e22e">want</span>  []<span style="color:#66d9ef">string</span>
+	}
+	<span style="color:#75715e">// 定义一个存储测试用例的切片
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">tests</span> <span style="color:#f92672">:=</span> []<span style="color:#a6e22e">test</span>{
+		{<span style="color:#a6e22e">input</span>: <span style="color:#e6db74">&#34;a🅱️c&#34;</span>, <span style="color:#a6e22e">sep</span>: <span style="color:#e6db74">&#34;:&#34;</span>, <span style="color:#a6e22e">want</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;a&#34;</span>, <span style="color:#e6db74">&#34;b&#34;</span>, <span style="color:#e6db74">&#34;c&#34;</span>}},
+		{<span style="color:#a6e22e">input</span>: <span style="color:#e6db74">&#34;a🅱️c&#34;</span>, <span style="color:#a6e22e">sep</span>: <span style="color:#e6db74">&#34;,&#34;</span>, <span style="color:#a6e22e">want</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;a🅱️c&#34;</span>}},
+		{<span style="color:#a6e22e">input</span>: <span style="color:#e6db74">&#34;abcd&#34;</span>, <span style="color:#a6e22e">sep</span>: <span style="color:#e6db74">&#34;bc&#34;</span>, <span style="color:#a6e22e">want</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;a&#34;</span>, <span style="color:#e6db74">&#34;d&#34;</span>}},
+		{<span style="color:#a6e22e">input</span>: <span style="color:#e6db74">&#34;沙河有沙又有河&#34;</span>, <span style="color:#a6e22e">sep</span>: <span style="color:#e6db74">&#34;沙&#34;</span>, <span style="color:#a6e22e">want</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;河有&#34;</span>, <span style="color:#e6db74">&#34;又有河&#34;</span>}},
+	}
+	<span style="color:#75715e">// 遍历切片，逐一执行测试用例
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">tc</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">tests</span> {
+		<span style="color:#a6e22e">got</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">input</span>, <span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">sep</span>)
+		<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">DeepEqual</span>(<span style="color:#a6e22e">got</span>, <span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">want</span>) {
+			<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;excepted:%v, got:%v&#34;</span>, <span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">want</span>, <span style="color:#a6e22e">got</span>)
+		}
+	}
+}
+</code></pre></div><p>我们通过上面的代码把多个测试用例合到一起，再次执行<code>go test</code>命令。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">split $ go test -v
+<span style="color:#f92672">===</span> RUN   TestSplit
+--- FAIL: TestSplit <span style="color:#f92672">(</span>0.00s<span style="color:#f92672">)</span>
+    split_test.go:42: excepted:<span style="color:#f92672">[</span>河有 又有河<span style="color:#f92672">]</span>, got:<span style="color:#f92672">[</span> 河有 又有河<span style="color:#f92672">]</span>
+FAIL
+exit status <span style="color:#ae81ff">1</span>
+FAIL    github.com/Q1mi/studygo/code_demo/test_demo/split       0.006s
+</code></pre></div><p>我们的测试出现了问题，仔细看打印的测试失败提示信息：<code>excepted:[河有 又有河], got:[ 河有 又有河]</code>，你会发现<code>[ 河有 又有河]</code>中有个不明显的空串，这种情况下十分推荐使用<code>%#v</code>的格式化方式。</p>
+<h2 id="子测试">子测试</h2>
+<p>看起来都挺不错的，但是如果测试用例比较多的时候，我们是没办法一眼看出来具体是哪个测试用例失败了。我们可能会想到下面的解决办法：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestSplit</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+	<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">test</span> <span style="color:#66d9ef">struct</span> { <span style="color:#75715e">// 定义test结构体
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">input</span> <span style="color:#66d9ef">string</span>
+		<span style="color:#a6e22e">sep</span>   <span style="color:#66d9ef">string</span>
+		<span style="color:#a6e22e">want</span>  []<span style="color:#66d9ef">string</span>
+	}
+	<span style="color:#a6e22e">tests</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#a6e22e">test</span>{ <span style="color:#75715e">// 测试用例使用map存储
+</span><span style="color:#75715e"></span>		<span style="color:#e6db74">&#34;simple&#34;</span>:      {<span style="color:#a6e22e">input</span>: <span style="color:#e6db74">&#34;a🅱️c&#34;</span>, <span style="color:#a6e22e">sep</span>: <span style="color:#e6db74">&#34;:&#34;</span>, <span style="color:#a6e22e">want</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;a&#34;</span>, <span style="color:#e6db74">&#34;b&#34;</span>, <span style="color:#e6db74">&#34;c&#34;</span>}},
+		<span style="color:#e6db74">&#34;wrong sep&#34;</span>:   {<span style="color:#a6e22e">input</span>: <span style="color:#e6db74">&#34;a🅱️c&#34;</span>, <span style="color:#a6e22e">sep</span>: <span style="color:#e6db74">&#34;,&#34;</span>, <span style="color:#a6e22e">want</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;a🅱️c&#34;</span>}},
+		<span style="color:#e6db74">&#34;more sep&#34;</span>:    {<span style="color:#a6e22e">input</span>: <span style="color:#e6db74">&#34;abcd&#34;</span>, <span style="color:#a6e22e">sep</span>: <span style="color:#e6db74">&#34;bc&#34;</span>, <span style="color:#a6e22e">want</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;a&#34;</span>, <span style="color:#e6db74">&#34;d&#34;</span>}},
+		<span style="color:#e6db74">&#34;leading sep&#34;</span>: {<span style="color:#a6e22e">input</span>: <span style="color:#e6db74">&#34;沙河有沙又有河&#34;</span>, <span style="color:#a6e22e">sep</span>: <span style="color:#e6db74">&#34;沙&#34;</span>, <span style="color:#a6e22e">want</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;河有&#34;</span>, <span style="color:#e6db74">&#34;又有河&#34;</span>}},
+	}
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">name</span>, <span style="color:#a6e22e">tc</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">tests</span> {
+		<span style="color:#a6e22e">got</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">input</span>, <span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">sep</span>)
+		<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">DeepEqual</span>(<span style="color:#a6e22e">got</span>, <span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">want</span>) {
+			<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;name:%s excepted:%#v, got:%#v&#34;</span>, <span style="color:#a6e22e">name</span>, <span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">want</span>, <span style="color:#a6e22e">got</span>) <span style="color:#75715e">// 将测试用例的name格式化输出
+</span><span style="color:#75715e"></span>		}
+	}
+}
+</code></pre></div><p>上面的做法是能够解决问题的。同时Go1.7+中新增了子测试，我们可以按照如下方式使用<code>t.Run</code>执行子测试：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestSplit</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+	<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">test</span> <span style="color:#66d9ef">struct</span> { <span style="color:#75715e">// 定义test结构体
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">input</span> <span style="color:#66d9ef">string</span>
+		<span style="color:#a6e22e">sep</span>   <span style="color:#66d9ef">string</span>
+		<span style="color:#a6e22e">want</span>  []<span style="color:#66d9ef">string</span>
+	}
+	<span style="color:#a6e22e">tests</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#a6e22e">test</span>{ <span style="color:#75715e">// 测试用例使用map存储
+</span><span style="color:#75715e"></span>		<span style="color:#e6db74">&#34;simple&#34;</span>:      {<span style="color:#a6e22e">input</span>: <span style="color:#e6db74">&#34;a🅱️c&#34;</span>, <span style="color:#a6e22e">sep</span>: <span style="color:#e6db74">&#34;:&#34;</span>, <span style="color:#a6e22e">want</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;a&#34;</span>, <span style="color:#e6db74">&#34;b&#34;</span>, <span style="color:#e6db74">&#34;c&#34;</span>}},
+		<span style="color:#e6db74">&#34;wrong sep&#34;</span>:   {<span style="color:#a6e22e">input</span>: <span style="color:#e6db74">&#34;a🅱️c&#34;</span>, <span style="color:#a6e22e">sep</span>: <span style="color:#e6db74">&#34;,&#34;</span>, <span style="color:#a6e22e">want</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;a🅱️c&#34;</span>}},
+		<span style="color:#e6db74">&#34;more sep&#34;</span>:    {<span style="color:#a6e22e">input</span>: <span style="color:#e6db74">&#34;abcd&#34;</span>, <span style="color:#a6e22e">sep</span>: <span style="color:#e6db74">&#34;bc&#34;</span>, <span style="color:#a6e22e">want</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;a&#34;</span>, <span style="color:#e6db74">&#34;d&#34;</span>}},
+		<span style="color:#e6db74">&#34;leading sep&#34;</span>: {<span style="color:#a6e22e">input</span>: <span style="color:#e6db74">&#34;沙河有沙又有河&#34;</span>, <span style="color:#a6e22e">sep</span>: <span style="color:#e6db74">&#34;沙&#34;</span>, <span style="color:#a6e22e">want</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;河有&#34;</span>, <span style="color:#e6db74">&#34;又有河&#34;</span>}},
+	}
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">name</span>, <span style="color:#a6e22e">tc</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">tests</span> {
+		<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Run</span>(<span style="color:#a6e22e">name</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) { <span style="color:#75715e">// 使用t.Run()执行子测试
+</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">got</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">input</span>, <span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">sep</span>)
+			<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">DeepEqual</span>(<span style="color:#a6e22e">got</span>, <span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">want</span>) {
+				<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;excepted:%#v, got:%#v&#34;</span>, <span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">want</span>, <span style="color:#a6e22e">got</span>)
+			}
+		})
+	}
+}
+</code></pre></div><p>此时我们再执行<code>go test</code>命令就能够看到更清晰的输出内容了：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">split $ go test -v
+<span style="color:#f92672">===</span> RUN   TestSplit
+<span style="color:#f92672">===</span> RUN   TestSplit/leading_sep
+<span style="color:#f92672">===</span> RUN   TestSplit/simple
+<span style="color:#f92672">===</span> RUN   TestSplit/wrong_sep
+<span style="color:#f92672">===</span> RUN   TestSplit/more_sep
+--- FAIL: TestSplit <span style="color:#f92672">(</span>0.00s<span style="color:#f92672">)</span>
+    --- FAIL: TestSplit/leading_sep <span style="color:#f92672">(</span>0.00s<span style="color:#f92672">)</span>
+        split_test.go:83: excepted:<span style="color:#f92672">[]</span>string<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;河有&#34;</span>, <span style="color:#e6db74">&#34;又有河&#34;</span><span style="color:#f92672">}</span>, got:<span style="color:#f92672">[]</span>string<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;河有&#34;</span>, <span style="color:#e6db74">&#34;又有河&#34;</span><span style="color:#f92672">}</span>
+    --- PASS: TestSplit/simple <span style="color:#f92672">(</span>0.00s<span style="color:#f92672">)</span>
+    --- PASS: TestSplit/wrong_sep <span style="color:#f92672">(</span>0.00s<span style="color:#f92672">)</span>
+    --- PASS: TestSplit/more_sep <span style="color:#f92672">(</span>0.00s<span style="color:#f92672">)</span>
+FAIL
+exit status <span style="color:#ae81ff">1</span>
+FAIL    github.com/Q1mi/studygo/code_demo/test_demo/split       0.006s
+</code></pre></div><p>这个时候我们要把测试用例中的错误修改回来：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestSplit</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+	<span style="color:#f92672">...</span>
+	<span style="color:#a6e22e">tests</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#a6e22e">test</span>{ <span style="color:#75715e">// 测试用例使用map存储
+</span><span style="color:#75715e"></span>		<span style="color:#e6db74">&#34;simple&#34;</span>:      {<span style="color:#a6e22e">input</span>: <span style="color:#e6db74">&#34;a🅱️c&#34;</span>, <span style="color:#a6e22e">sep</span>: <span style="color:#e6db74">&#34;:&#34;</span>, <span style="color:#a6e22e">want</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;a&#34;</span>, <span style="color:#e6db74">&#34;b&#34;</span>, <span style="color:#e6db74">&#34;c&#34;</span>}},
+		<span style="color:#e6db74">&#34;wrong sep&#34;</span>:   {<span style="color:#a6e22e">input</span>: <span style="color:#e6db74">&#34;a🅱️c&#34;</span>, <span style="color:#a6e22e">sep</span>: <span style="color:#e6db74">&#34;,&#34;</span>, <span style="color:#a6e22e">want</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;a🅱️c&#34;</span>}},
+		<span style="color:#e6db74">&#34;more sep&#34;</span>:    {<span style="color:#a6e22e">input</span>: <span style="color:#e6db74">&#34;abcd&#34;</span>, <span style="color:#a6e22e">sep</span>: <span style="color:#e6db74">&#34;bc&#34;</span>, <span style="color:#a6e22e">want</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;a&#34;</span>, <span style="color:#e6db74">&#34;d&#34;</span>}},
+		<span style="color:#e6db74">&#34;leading sep&#34;</span>: {<span style="color:#a6e22e">input</span>: <span style="color:#e6db74">&#34;沙河有沙又有河&#34;</span>, <span style="color:#a6e22e">sep</span>: <span style="color:#e6db74">&#34;沙&#34;</span>, <span style="color:#a6e22e">want</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;河有&#34;</span>, <span style="color:#e6db74">&#34;又有河&#34;</span>}},
+	}
+	<span style="color:#f92672">...</span>
+}
+</code></pre></div><p>我们都知道可以通过<code>-run=RegExp</code>来指定运行的测试用例，还可以通过<code>/</code>来指定要运行的子测试用例，例如：<code>go test -v -run=Split/simple</code>只会运行<code>simple</code>对应的子测试用例。</p>
+<h1 id="基准测试">基准测试</h1>
+<p>基准测试就是在一定的工作负载之下检测程序性能的一种方法。基准测试的基本格式如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkName</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>){
+    <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>基准测试以<code>Benchmark</code>为前缀，需要一个<code>*testing.B</code>类型的参数b，基准测试必须要执行<code>b.N</code>次，这样的测试才有对照性，<code>b.N</code>的值是系统根据实际情况去调整的，从而保证测试的稳定性。 <code>testing.B</code>拥有的方法如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">Error</span>(<span style="color:#a6e22e">args</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">interface</span>{})
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">Errorf</span>(<span style="color:#a6e22e">format</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">args</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">interface</span>{})
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">Fail</span>()
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">FailNow</span>()
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">Failed</span>() <span style="color:#66d9ef">bool</span>
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">args</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">interface</span>{})
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">Fatalf</span>(<span style="color:#a6e22e">format</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">args</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">interface</span>{})
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">Log</span>(<span style="color:#a6e22e">args</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">interface</span>{})
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">Logf</span>(<span style="color:#a6e22e">format</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">args</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">interface</span>{})
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">Name</span>() <span style="color:#66d9ef">string</span>
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">ReportAllocs</span>()
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">ResetTimer</span>()
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">Run</span>(<span style="color:#a6e22e">name</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">f</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>)) <span style="color:#66d9ef">bool</span>
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">RunParallel</span>(<span style="color:#a6e22e">body</span> <span style="color:#66d9ef">func</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">PB</span>))
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">SetBytes</span>(<span style="color:#a6e22e">n</span> <span style="color:#66d9ef">int64</span>)
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">SetParallelism</span>(<span style="color:#a6e22e">p</span> <span style="color:#66d9ef">int</span>)
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">Skip</span>(<span style="color:#a6e22e">args</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">interface</span>{})
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">SkipNow</span>()
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">Skipf</span>(<span style="color:#a6e22e">format</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">args</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">interface</span>{})
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">Skipped</span>() <span style="color:#66d9ef">bool</span>
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">StartTimer</span>()
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">StopTimer</span>()
+</code></pre></div><h2 id="基准测试示例">基准测试示例</h2>
+<p>我们为split包中的<code>Split</code>函数编写基准测试如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkSplit</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">N</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+		<span style="color:#a6e22e">Split</span>(<span style="color:#e6db74">&#34;沙河有沙又有河&#34;</span>, <span style="color:#e6db74">&#34;沙&#34;</span>)
+	}
+}
+</code></pre></div><p>基准测试并不会默认执行，需要增加<code>-bench</code>参数，所以我们通过执行<code>go test -bench=Split</code>命令执行基准测试，输出结果如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">split $ go test -bench<span style="color:#f92672">=</span>Split
+goos: darwin
+goarch: amd64
+pkg: github.com/Q1mi/studygo/code_demo/test_demo/split
+BenchmarkSplit-8        <span style="color:#ae81ff">10000000</span>               <span style="color:#ae81ff">203</span> ns/op
+PASS
+ok      github.com/Q1mi/studygo/code_demo/test_demo/split       2.255s
+</code></pre></div><p>其中<code>BenchmarkSplit-8</code>表示对Split函数进行基准测试，数字<code>8</code>表示<code>GOMAXPROCS</code>的值，这个对于并发基准测试很重要。<code>10000000</code>和<code>203ns/op</code>表示每次调用<code>Split</code>函数耗时<code>203ns</code>，这个结果是<code>10000000</code>次调用的平均值。</p>
+<p>我们还可以为基准测试添加<code>-benchmem</code>参数，来获得内存分配的统计数据。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">split $ go test -bench<span style="color:#f92672">=</span>Split -benchmem
+goos: darwin
+goarch: amd64
+pkg: github.com/Q1mi/studygo/code_demo/test_demo/split
+BenchmarkSplit-8        <span style="color:#ae81ff">10000000</span>               <span style="color:#ae81ff">215</span> ns/op             <span style="color:#ae81ff">112</span> B/op          <span style="color:#ae81ff">3</span> allocs/op
+PASS
+ok      github.com/Q1mi/studygo/code_demo/test_demo/split       2.394s
+</code></pre></div><p>其中，<code>112 B/op</code>表示每次操作内存分配了112字节，<code>3 allocs/op</code>则表示每次操作进行了3次内存分配。 我们将我们的<code>Split</code>函数优化如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">sep</span> <span style="color:#66d9ef">string</span>) (<span style="color:#a6e22e">result</span> []<span style="color:#66d9ef">string</span>) {
+	<span style="color:#a6e22e">result</span> = make([]<span style="color:#66d9ef">string</span>, <span style="color:#ae81ff">0</span>, <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Count</span>(<span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">sep</span>)<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)
+	<span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Index</span>(<span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">sep</span>)
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> &gt; <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> {
+		<span style="color:#a6e22e">result</span> = append(<span style="color:#a6e22e">result</span>, <span style="color:#a6e22e">s</span>[:<span style="color:#a6e22e">i</span>])
+		<span style="color:#a6e22e">s</span> = <span style="color:#a6e22e">s</span>[<span style="color:#a6e22e">i</span><span style="color:#f92672">+</span>len(<span style="color:#a6e22e">sep</span>):] <span style="color:#75715e">// 这里使用len(sep)获取sep的长度
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">i</span> = <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Index</span>(<span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">sep</span>)
+	}
+	<span style="color:#a6e22e">result</span> = append(<span style="color:#a6e22e">result</span>, <span style="color:#a6e22e">s</span>)
+	<span style="color:#66d9ef">return</span>
+}
+</code></pre></div><p>这一次我们提前使用make函数将result初始化为一个容量足够大的切片，而不再像之前一样通过调用append函数来追加。我们来看一下这个改进会带来多大的性能提升：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">split $ go test -bench<span style="color:#f92672">=</span>Split -benchmem
+goos: darwin
+goarch: amd64
+pkg: github.com/Q1mi/studygo/code_demo/test_demo/split
+BenchmarkSplit-8        <span style="color:#ae81ff">10000000</span>               <span style="color:#ae81ff">127</span> ns/op              <span style="color:#ae81ff">48</span> B/op          <span style="color:#ae81ff">1</span> allocs/op
+PASS
+ok      github.com/Q1mi/studygo/code_demo/test_demo/split       1.423s
+</code></pre></div><p>这个使用make函数提前分配内存的改动，减少了2/3的内存分配次数，并且减少了一半的内存分配。</p>
+<h2 id="并行测试">并行测试</h2>
+<p><code>func (b *B) RunParallel(body func(*PB))</code>会以并行的方式执行给定的基准测试。</p>
+<p><code>RunParallel</code>会创建出多个<code>goroutine</code>，并将<code>b.N</code>分配给这些<code>goroutine</code>执行， 其中<code>goroutine</code>数量的默认值为<code>GOMAXPROCS</code>。用户如果想要增加非CPU受限（non-CPU-bound）基准测试的并行性， 那么可以在<code>RunParallel</code>之前调用<code>SetParallelism</code> 。<code>RunParallel</code>通常会与<code>-cpu</code>标志一同使用。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkSplitParallel</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
+	<span style="color:#75715e">// b.SetParallelism(1) // 设置使用的CPU数
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">RunParallel</span>(<span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">pb</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">PB</span>) {
+		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Next</span>() {
+			<span style="color:#a6e22e">Split</span>(<span style="color:#e6db74">&#34;沙河有沙又有河&#34;</span>, <span style="color:#e6db74">&#34;沙&#34;</span>)
+		}
+	})
+}
+</code></pre></div><p>执行一下基准测试：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">split $ go test -bench<span style="color:#f92672">=</span>.
+goos: darwin
+goarch: amd64
+pkg: github.com/Q1mi/studygo/code_demo/test_demo/split
+BenchmarkSplit-8                <span style="color:#ae81ff">10000000</span>               <span style="color:#ae81ff">131</span> ns/op
+BenchmarkSplitParallel-8        <span style="color:#ae81ff">50000000</span>                36.1 ns/op
+PASS
+ok      github.com/Q1mi/studygo/code_demo/test_demo/split       3.308s
+</code></pre></div><p>还可以通过在测试命令后添加<code>-cpu</code>参数如<code>go test -bench=. -cpu 1</code>来指定使用的CPU数量。</p>
+<h2 id="setup与teardown">Setup与TearDown</h2>
+<p>测试程序有时需要在测试之前进行额外的设置（setup）或在测试之后进行拆卸（teardown）。</p>
+<h2 id="testmain">TestMain</h2>
+<p>通过在<code>*_test.go</code>文件中定义<code>TestMain</code>函数来可以在测试之前进行额外的设置（setup）或在测试之后进行拆卸（teardown）操作。</p>
+<p>如果测试文件包含函数:<code>func TestMain(m *testing.M)</code>那么生成的测试会先调用 TestMain(m)，然后再运行具体测试。<code>TestMain</code>运行在主<code>goroutine</code>中, 可以在调用 <code>m.Run</code>前后做任何设置（setup）和拆卸（teardown）。退出测试的时候应该使用<code>m.Run</code>的返回值作为参数调用<code>os.Exit</code>。</p>
+<p>一个使用<code>TestMain</code>来设置Setup和TearDown的示例如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestMain</span>(<span style="color:#a6e22e">m</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">M</span>) {
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;write setup code here...&#34;</span>) <span style="color:#75715e">// 测试之前的做一些设置
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 如果 TestMain 使用了 flags，这里应该加上flag.Parse()
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">retCode</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">m</span>.<span style="color:#a6e22e">Run</span>()                         <span style="color:#75715e">// 执行测试
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;write teardown code here...&#34;</span>) <span style="color:#75715e">// 测试之后做一些拆卸工作
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#a6e22e">retCode</span>)                           <span style="color:#75715e">// 退出测试
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>需要注意的是：在调用<code>TestMain</code>时, <code>flag.Parse</code>并没有被调用。所以如果<code>TestMain</code> 依赖于command-line标志 (包括 testing 包的标记), 则应该显示的调用<code>flag.Parse</code>。</p>
+<h2 id="子测试的setup与teardown">子测试的Setup与Teardown</h2>
+<p>有时候我们可能需要为每个测试集设置Setup与Teardown，也有可能需要为每个子测试设置Setup与Teardown。下面我们定义两个函数工具函数如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// 测试集的Setup与Teardown
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">setupTestCase</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+	<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;如有需要在此执行:测试之前的setup&#34;</span>)
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+		<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;如有需要在此执行:测试之后的teardown&#34;</span>)
+	}
+}
+
+<span style="color:#75715e">// 子测试的Setup与Teardown
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">setupSubTest</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+	<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;如有需要在此执行:子测试之前的setup&#34;</span>)
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+		<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;如有需要在此执行:子测试之后的teardown&#34;</span>)
+	}
+}
+</code></pre></div><p>使用方式如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestSplit</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+	<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">test</span> <span style="color:#66d9ef">struct</span> { <span style="color:#75715e">// 定义test结构体
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">input</span> <span style="color:#66d9ef">string</span>
+		<span style="color:#a6e22e">sep</span>   <span style="color:#66d9ef">string</span>
+		<span style="color:#a6e22e">want</span>  []<span style="color:#66d9ef">string</span>
+	}
+	<span style="color:#a6e22e">tests</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#a6e22e">test</span>{ <span style="color:#75715e">// 测试用例使用map存储
+</span><span style="color:#75715e"></span>		<span style="color:#e6db74">&#34;simple&#34;</span>:      {<span style="color:#a6e22e">input</span>: <span style="color:#e6db74">&#34;a🅱️c&#34;</span>, <span style="color:#a6e22e">sep</span>: <span style="color:#e6db74">&#34;:&#34;</span>, <span style="color:#a6e22e">want</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;a&#34;</span>, <span style="color:#e6db74">&#34;b&#34;</span>, <span style="color:#e6db74">&#34;c&#34;</span>}},
+		<span style="color:#e6db74">&#34;wrong sep&#34;</span>:   {<span style="color:#a6e22e">input</span>: <span style="color:#e6db74">&#34;a🅱️c&#34;</span>, <span style="color:#a6e22e">sep</span>: <span style="color:#e6db74">&#34;,&#34;</span>, <span style="color:#a6e22e">want</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;a🅱️c&#34;</span>}},
+		<span style="color:#e6db74">&#34;more sep&#34;</span>:    {<span style="color:#a6e22e">input</span>: <span style="color:#e6db74">&#34;abcd&#34;</span>, <span style="color:#a6e22e">sep</span>: <span style="color:#e6db74">&#34;bc&#34;</span>, <span style="color:#a6e22e">want</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;a&#34;</span>, <span style="color:#e6db74">&#34;d&#34;</span>}},
+		<span style="color:#e6db74">&#34;leading sep&#34;</span>: {<span style="color:#a6e22e">input</span>: <span style="color:#e6db74">&#34;沙河有沙又有河&#34;</span>, <span style="color:#a6e22e">sep</span>: <span style="color:#e6db74">&#34;沙&#34;</span>, <span style="color:#a6e22e">want</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;河有&#34;</span>, <span style="color:#e6db74">&#34;又有河&#34;</span>}},
+	}
+	<span style="color:#a6e22e">teardownTestCase</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">setupTestCase</span>(<span style="color:#a6e22e">t</span>) <span style="color:#75715e">// 测试之前执行setup操作
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">teardownTestCase</span>(<span style="color:#a6e22e">t</span>)            <span style="color:#75715e">// 测试之后执行testdoen操作
+</span><span style="color:#75715e"></span>
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">name</span>, <span style="color:#a6e22e">tc</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">tests</span> {
+		<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Run</span>(<span style="color:#a6e22e">name</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) { <span style="color:#75715e">// 使用t.Run()执行子测试
+</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">teardownSubTest</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">setupSubTest</span>(<span style="color:#a6e22e">t</span>) <span style="color:#75715e">// 子测试之前执行setup操作
+</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">teardownSubTest</span>(<span style="color:#a6e22e">t</span>)           <span style="color:#75715e">// 测试之后执行testdoen操作
+</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">got</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">input</span>, <span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">sep</span>)
+			<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">DeepEqual</span>(<span style="color:#a6e22e">got</span>, <span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">want</span>) {
+				<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;excepted:%#v, got:%#v&#34;</span>, <span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">want</span>, <span style="color:#a6e22e">got</span>)
+			}
+		})
+	}
+}
+</code></pre></div><p>测试结果如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">split $ go test -v
+<span style="color:#f92672">===</span> RUN   TestSplit
+<span style="color:#f92672">===</span> RUN   TestSplit/simple
+<span style="color:#f92672">===</span> RUN   TestSplit/wrong_sep
+<span style="color:#f92672">===</span> RUN   TestSplit/more_sep
+<span style="color:#f92672">===</span> RUN   TestSplit/leading_sep
+--- PASS: TestSplit <span style="color:#f92672">(</span>0.00s<span style="color:#f92672">)</span>
+    split_test.go:71: 如有需要在此执行:测试之前的setup
+    --- PASS: TestSplit/simple <span style="color:#f92672">(</span>0.00s<span style="color:#f92672">)</span>
+        split_test.go:79: 如有需要在此执行:子测试之前的setup
+        split_test.go:81: 如有需要在此执行:子测试之后的teardown
+    --- PASS: TestSplit/wrong_sep <span style="color:#f92672">(</span>0.00s<span style="color:#f92672">)</span>
+        split_test.go:79: 如有需要在此执行:子测试之前的setup
+        split_test.go:81: 如有需要在此执行:子测试之后的teardown
+    --- PASS: TestSplit/more_sep <span style="color:#f92672">(</span>0.00s<span style="color:#f92672">)</span>
+        split_test.go:79: 如有需要在此执行:子测试之前的setup
+        split_test.go:81: 如有需要在此执行:子测试之后的teardown
+    --- PASS: TestSplit/leading_sep <span style="color:#f92672">(</span>0.00s<span style="color:#f92672">)</span>
+        split_test.go:79: 如有需要在此执行:子测试之前的setup
+        split_test.go:81: 如有需要在此执行:子测试之后的teardown
+    split_test.go:73: 如有需要在此执行:测试之后的teardown
+<span style="color:#f92672">===</span> RUN   ExampleSplit
+--- PASS: ExampleSplit <span style="color:#f92672">(</span>0.00s<span style="color:#f92672">)</span>
+PASS
+ok      github.com/Q1mi/studygo/code_demo/test_demo/split       0.006s
+</code></pre></div><h1 id="示例函数">示例函数</h1>
+<h2 id="示例函数示例">示例函数示例</h2>
+<p>下面的代码是我们为<code>Split</code>函数编写的一个示例函数：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">ExampleSplit</span>() {
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">split</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#e6db74">&#34;a🅱️c&#34;</span>, <span style="color:#e6db74">&#34;:&#34;</span>))
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">split</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#e6db74">&#34;沙河有沙又有河&#34;</span>, <span style="color:#e6db74">&#34;沙&#34;</span>))
+	<span style="color:#75715e">// Output:
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// [a b c]
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// [ 河有 又有河]
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>为你的代码编写示例代码有如下三个用处：</p>
+<ol>
+<li>
+<p>示例函数能够作为文档直接使用，例如基于web的godoc中能把示例函数与对应的函数或包相关联。</p>
+</li>
+<li>
+<p>示例函数只要包含了<code>// Output:</code>也是可以通过<code>go test</code>运行的可执行测试。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">split $ go test -run Example
+PASS
+ok      github.com/Q1mi/studygo/code_demo/test_demo/split       0.006s
+</code></pre></div></li>
+<li>
+<p>示例函数提供了可以直接运行的示例代码，可以直接在<code>golang.org</code>的<code>godoc</code>文档服务器上使用<code>Go Playground</code>运行示例代码。</p>
+</li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Jiang . </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://jfy0o0.github.io/2021/go-go-test/>https://jfy0o0.github.io/2021/go-go-test/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/go/">
+                    #Go</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://jfy0o0.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://jfy0o0.github.io/2021/go-cgo/" class="prev" rel="prev" title="Go - cgo"><i class="iconfont icon-left"></i>&nbsp;Go - cgo</a>
+         
+        
+        <a href="https://jfy0o0.github.io/2021/go-%E9%99%B7%E9%98%B1/" class="next" rel="next" title="Go - 陷阱">Go - 陷阱&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2021</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://jfy0o0.github.io">Jiang .</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

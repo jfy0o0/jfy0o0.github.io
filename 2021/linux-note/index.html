@@ -10,7 +10,7 @@
   
   
   <link rel="prev" href="https://jfy0o0.github.io/2021/linux-errno/" />
-  
+  <link rel="next" href="https://jfy0o0.github.io/2021/elementary-knowledge-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" />
   <link rel="canonical" href="https://jfy0o0.github.io/2021/linux-note/" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -175,7 +175,7 @@ lrwx------ <span style="color:#ae81ff">1</span> root root <span style="color:#ae
 lrwx------ <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">64</span> Dec <span style="color:#ae81ff">12</span> 20:18 <span style="color:#ae81ff">40</span> -&gt; socket:<span style="color:#f92672">[</span>19378614<span style="color:#f92672">]</span>
 </code></pre></div><h2 id="status"><strong>status</strong></h2>
 <p>/proc/[pid]/status 包含进程的状态信息。其很多内容与 /proc/[pid]/stat 和 /proc/[pid]/statm 相同，但是却是以一种更清晰地方式展现出来。举例如下：</p>
-<pre><code>$ cat /proc/2406/status
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmd" data-lang="cmd">$ cat /proc/2406/status
 Name:   frps
 State:  S (sleeping)
 Tgid:   2406
@@ -224,7 +224,7 @@ Mems_allowed:   00000000,00000001
 Mems_allowed_list:  0
 voluntary_ctxt_switches:    2251028
 nonvoluntary_ctxt_switches: 18031
-</code></pre><p>关于信号（signal）的信息：SigQ 分为两部分（例如 0/31834），前面表示当前处在队列中的信号（0），后面则表示队列一共可以存储多少信号（31834）；SigPnd 表示当前线程 pending 的信号，而ShdPnd 则表示整个进程 pending 的信号；SigBlk、SigIgn 和 SigCgt 分别表示对信号的处理是阻塞，忽略，还是捕获。（关于Unix信号的相关知识，可以参考 Unix: Dealing with signals）。</p>
+</code></pre></div><p>关于信号（signal）的信息：SigQ 分为两部分（例如 0/31834），前面表示当前处在队列中的信号（0），后面则表示队列一共可以存储多少信号（31834）；SigPnd 表示当前线程 pending 的信号，而ShdPnd 则表示整个进程 pending 的信号；SigBlk、SigIgn 和 SigCgt 分别表示对信号的处理是阻塞，忽略，还是捕获。（关于Unix信号的相关知识，可以参考 Unix: Dealing with signals）。</p>
 <h1 id="procself">/proc/self</h1>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">ssize_t <span style="color:#a6e22e">readlink</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>path, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf, size_t bufsiz);
 </code></pre></div><p>/proc/self/exe 是一个符号链接，代表当前程序的绝对路径
@@ -274,6 +274,8 @@ nonvoluntary_ctxt_switches: 18031
         
         <a href="https://jfy0o0.github.io/2021/linux-errno/" class="prev" rel="prev" title="Linux - errno"><i class="iconfont icon-left"></i>&nbsp;Linux - errno</a>
          
+        
+        <a href="https://jfy0o0.github.io/2021/elementary-knowledge-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" class="next" rel="next" title="elementary knowledge - 字符编码">elementary knowledge - 字符编码&nbsp;<i class="iconfont icon-right"></i></a>
         
     </div>
 

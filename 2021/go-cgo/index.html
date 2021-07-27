@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Jiang .">
+  
+  
+  
+  <link rel="prev" href="https://jfy0o0.github.io/2021/elementary-knowledge-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" />
+  <link rel="next" href="https://jfy0o0.github.io/2021/go-go-test/" />
+  <link rel="canonical" href="https://jfy0o0.github.io/2021/go-cgo/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Go - cgo | Jiang . &#39;s blog
+       
+  </title>
+  <meta name="title" content="Go - cgo | Jiang . &#39;s blog">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/jfy0o0.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Go - cgo",
+    "headline" : "Go - cgo",
+    "description" : "1.1 最简CGO程序 \/\/ hello.go package main import \u0026#34;C\u0026#34; func main() { println(\u0026#34;hello cgo\u0026#34;) }  代码通过import \u0026quot;C\u0026quot;语句启用CGO特性，主函数只是通过Go内置的println函数输出字符串，其中并没有任何和CGO相关的代码。 虽然没有调用CGO的相关函数，但是go build命令会在编译和链接阶段启动gcc编译器，这已经是一个完整的CGO程序了。  1.2 基于C标准库函数输出字符串 \/\/ hello.go package main \/\/#include \u0026lt;stdio.h\u0026gt; import \u0026#34;C\u0026#34; func main() { C.puts(C.CString(\u0026#34;Hello, World\\n\u0026#34;)) }  通过import \u0026quot;C\u0026quot;语句启用CGO特性， 同时包含C语言的\u0026lt;stdio.h\u0026gt;头文件。 然后通过CGO包的C.CString函数将Go语言字符串转为C语言字符串， 最后调用CGO包的C.puts函数向标准输出窗口打印转换后的C字符串。 我们没有在程序退出前释放C.CString创建的C语言字符串； 还有我们改用puts函数直接向标准输出打印，之前是采用fputs向标准输出打印。 没有释放使用C.CString创建的C语言字符串会导致内存泄漏。  1.3 使用自己的C函数 \/\/ hello.go package main \/* #include \u0026lt;stdio.h\u0026gt; static void SayHello(const char* s) { puts(s); } *\/ import \u0026#34;C\u0026#34; func main() { C.SayHello(C.CString(\u0026#34;Hello, World\\n\u0026#34;)) }  现在我们先自定义一个叫SayHello的C函数来实现打印，然后从Go语言环境中调用这个SayHello函数 可以将SayHello函数放到当前目录下的一个C语言源文件中（后缀名必须是.",
+    "inLanguage" : "en-us",
+    "author" : "Jiang .",
+    "creator" : "Jiang .",
+    "publisher": "Jiang .",
+    "accountablePerson" : "Jiang .",
+    "copyrightHolder" : "Jiang .",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-07-23 09:22:31 \u002b0800 CST",
+    "dateModified" : "2021-07-23 09:22:31 \u002b0800 CST",
+    "url" : "https:\/\/jfy0o0.github.io\/2021\/go-cgo\/",
+    "wordCount" : "645",
+    "keywords" : [ "Go", "Jiang . \u0027s blog"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Go - cgo</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://jfy0o0.github.io" rel="author">Jiang .</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2021-07-23 itemprop="datePublished">July 23, 2021</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://jfy0o0.github.io/categories/go/"> Go </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="11-最简cgo程序">1.1 最简CGO程序</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// hello.go
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;C&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    println(<span style="color:#e6db74">&#34;hello cgo&#34;</span>)
+}
+</code></pre></div><ul>
+<li>代码通过<code>import &quot;C&quot;</code>语句启用CGO特性，主函数只是通过Go内置的println函数输出字符串，其中并没有任何和CGO相关的代码。</li>
+<li>虽然没有调用CGO的相关函数，但是<code>go build</code>命令会在编译和链接阶段启动gcc编译器，这已经是一个完整的CGO程序了。</li>
+</ul>
+<h1 id="12-基于c标准库函数输出字符串">1.2 基于C标准库函数输出字符串</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// hello.go
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#75715e">//#include &lt;stdio.h&gt;
+</span><span style="color:#75715e"></span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;C&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">puts</span>(<span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">CString</span>(<span style="color:#e6db74">&#34;Hello, World\n&#34;</span>))
+}
+</code></pre></div><ul>
+<li>通过<code>import &quot;C&quot;</code>语句启用CGO特性，</li>
+<li>同时包含C语言的<code>&lt;stdio.h&gt;</code>头文件。</li>
+<li>然后通过CGO包的<code>C.CString</code>函数将Go语言字符串转为C语言字符串，</li>
+<li>最后调用CGO包的<code>C.puts</code>函数向标准输出窗口打印转换后的C字符串。</li>
+<li>我们没有在程序退出前释放<code>C.CString</code>创建的C语言字符串；</li>
+<li>还有我们改用<code>puts</code>函数直接向标准输出打印，之前是采用<code>fputs</code>向标准输出打印。</li>
+<li>没有释放使用<code>C.CString</code>创建的C语言字符串会导致内存泄漏。</li>
+</ul>
+<h1 id="13-使用自己的c函数">1.3 使用自己的C函数</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// hello.go
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#75715e">/*
+</span><span style="color:#75715e">#include &lt;stdio.h&gt;
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">static void SayHello(const char* s) {
+</span><span style="color:#75715e">    puts(s);
+</span><span style="color:#75715e">}
+</span><span style="color:#75715e">*/</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;C&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">SayHello</span>(<span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">CString</span>(<span style="color:#e6db74">&#34;Hello, World\n&#34;</span>))
+}
+</code></pre></div><ul>
+<li>现在我们先自定义一个叫<code>SayHello</code>的C函数来实现打印，然后从Go语言环境中调用这个<code>SayHello</code>函数</li>
+<li>可以将<code>SayHello</code>函数放到当前目录下的一个C语言源文件中（后缀名必须是<code>.c</code>）。因为是编写在独立的C文件中，为了允许外部引用，所以需要去掉函数的<code>static</code>修饰符。</li>
+<li>然后在CGO部分先声明<code>SayHello</code>函数，其它部分不变：</li>
+<li>如果是以静态库或动态库方式引用<code>SayHello</code>函数的话，需要将对应的C源文件移出当前目录（CGO构建程序会自动构建当前目录下的C源文件，从而导致C函数名冲突）</li>
+</ul>
+<h1 id="14-用go重新实现c函数">1.4 用Go重新实现C函数</h1>
+<p>CGO不仅仅用于Go语言中调用C语言函数，还可以用于导出Go语言函数给C语言函数调用。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// hello.go
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;C&#34;</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+
+<span style="color:#75715e">//export SayHello
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">SayHello</span>(<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">char</span>) {
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">GoString</span>(<span style="color:#a6e22e">s</span>))
+}
+</code></pre></div><ul>
+<li>我们通过CGO的<code>//export SayHello</code>指令将Go语言实现的函数<code>SayHello</code>导出为C语言函数。</li>
+<li>为了适配CGO导出的C语言函数，我们禁止了在函数的声明语句中的const修饰符。</li>
+<li>需要注意的是，这里其实有两个版本的<code>SayHello</code>函数：一个Go语言环境的；另一个是C语言环境的。</li>
+<li>cgo生成的C语言版本SayHello函数最终会通过桥接代码调用Go语言版本的SayHello函数。</li>
+</ul>
+<h1 id="21-cgo基础">2.1 CGO基础</h1>
+<ul>
+<li>在macOS和Linux下是要安装GCC，在windows下是需要安装MinGW工具。</li>
+<li>同时需要保证环境变量<code>CGO_ENABLED</code>被设置为1，这表示CGO是被启用的状态。</li>
+</ul>
+<h1 id="22import-c语句">2.2<code>import &quot;C&quot;</code>语句</h1>
+<ul>
+<li>Go代码中出现了<code>import &quot;C&quot;</code>语句则表示使用了CGO特性，紧跟在这行语句前面的注释是一种特殊语法，里面包含的是正常的C语言代码。</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#75715e">/*
+</span><span style="color:#75715e">#include &lt;stdio.h&gt;
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">void printint(int v) {
+</span><span style="color:#75715e">    printf(&#34;printint: %d\n&#34;, v);
+</span><span style="color:#75715e">}
+</span><span style="color:#75715e">*/</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;C&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">42</span>
+    <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">printint</span>(<span style="color:#a6e22e">C</span>.int(<span style="color:#a6e22e">v</span>))
+}
+</code></pre></div><ul>
+<li>开头的注释中写了要调用的C函数和相关的头文件，头文件被include之后里面的所有的C语言元素都会被加入到”C”这个虚拟的包中。</li>
+<li>需要注意的是，import &ldquo;C&quot;导入语句需要单独一行，不能与其他包一同import。</li>
+<li>向C函数传递参数也很简单，就直接转化成对应C语言类型传递就可以。</li>
+<li>Go是强类型语言，所以cgo中传递的参数类型必须与声明的类型完全一致，而且传递前必须用”C”中的转化函数转换成对应的C类型，不能直接传入Go中类型的变量。</li>
+<li>同时通过虚拟的C包导入的C语言符号并不需要是大写字母开头，它们不受Go语言的导出规则约束。</li>
+</ul>
+<h1 id="22-cgo语句">2.2 <code>#cgo</code>语句</h1>
+<ul>
+<li>在<code>import &quot;C&quot;</code>语句前的注释中可以通过<code>#cgo</code>语句设置编译阶段和链接阶段的相关参数。</li>
+<li>编译阶段的参数主要用于定义相关宏和指定头文件检索路径。</li>
+<li>链接阶段的参数主要是指定库文件检索路径和要链接的库文件。</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// #cgo CFLAGS: -DPNG_DEBUG=1 -I./include
+</span><span style="color:#75715e">// #cgo LDFLAGS: -L/usr/local/lib -lpng
+</span><span style="color:#75715e">// #include &lt;png.h&gt;
+</span><span style="color:#75715e"></span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;C&#34;</span>
+</code></pre></div><ul>
+<li>
+<p>CFLAGS部分，<code>-D</code>部分定义了宏PNG_DEBUG，值为1；</p>
+</li>
+<li>
+<p><code>-I</code>定义了头文件包含的检索目录。LDFLAGS部分</p>
+</li>
+<li>
+<p><code>-L</code>指定了链接时库文件检索目录，</p>
+</li>
+<li>
+<p><code>-l</code>指定了链接时需要链接png库。</p>
+</li>
+<li>
+<p>因为C/C++遗留的问题，C头文件检索目录可以是相对目录，但是库文件检索目录则需要绝对路径。</p>
+</li>
+<li>
+<p>在库文件的检索目录中可以通过<code>${SRCDIR}</code>变量表示当前包目录的绝对路径：</p>
+</li>
+</ul>
+<pre><code>// #cgo LDFLAGS: -L${SRCDIR}/libs -lfoo
+</code></pre><ul>
+<li><code>#cgo</code>语句主要影响CFLAGS、CPPFLAGS、CXXFLAGS、FFLAGS和LDFLAGS几个编译器环境变量。</li>
+<li>LDFLAGS用于设置链接时的参数，除此之外的几个变量用于改变编译阶段的构建参数(CFLAGS用于针对C语言代码设置编译参数)。</li>
+<li>对于在cgo环境混合使用C和C++的用户来说，可能有三种不同的编译选项：
+<ul>
+<li>CFLAGS对应C语言特有的编译选项、</li>
+<li>CXXFLAGS对应是C++特有的编译选项、</li>
+<li>CPPFLAGS则对应C和C++共有的编译选项。</li>
+</ul>
+</li>
+<li>但是在链接阶段，C和C++的链接选项是通用的，因此这个时候已经不再有C和C++语言的区别，它们的目标文件的类型是相同的。</li>
+</ul>
+<h1 id="23-build-tag-条件编译">2.3 build tag 条件编译</h1>
+<p><code>#cgo</code>指令针对不同平台定义的宏，只有在对应平台的宏被定义之后才会构建对应的代码。</p>
+<p>比如下面的源文件只有在设置debug构建标志时才会被构建：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// +build debug
+</span><span style="color:#75715e"></span>
+<span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">buildMode</span> = <span style="color:#e6db74">&#34;debug&#34;</span>
+</code></pre></div><p>可以用以下命令构建：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">go</span> <span style="color:#a6e22e">build</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">tags</span>=<span style="color:#e6db74">&#34;debug&#34;</span>
+<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">build</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">tags</span>=<span style="color:#e6db74">&#34;windows debug&#34;</span>
+</code></pre></div><p>我们可以通过<code>-tags</code>命令行参数同时指定多个build标志，它们之间用空格分隔。</p>
+<p>当有多个build tag时，我们将多个标志通过逻辑操作的规则来组合使用。</p>
+<h1 id="31-类型转换">3.1 类型转换</h1>
+<ul>
+<li>Go语言中访问C语言的符号时，一般是通过虚拟的“C”包访问，比如<code>C.int</code>对应C语言的<code>int</code>类型。</li>
+<li>有些C语言的类型是由多个关键字组成，但通过虚拟的“C”包访问C语言类型时名称部分不能有空格字符，比如<code>unsigned int</code>不能直接通过<code>C.unsigned int</code>访问。</li>
+<li>因此CGO为C语言的基础数值类型都提供了相应转换规则，比如<code>C.uint</code>对应C语言的<code>unsigned int</code>。</li>
+</ul>
+<p>应关系表2-1所示。</p>
+<table>
+<thead>
+<tr>
+<th>C语言类型</th>
+<th>CGO类型</th>
+<th>Go语言类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>char</td>
+<td>C.char</td>
+<td>byte</td>
+</tr>
+<tr>
+<td>singed char</td>
+<td>C.schar</td>
+<td>int8</td>
+</tr>
+<tr>
+<td>unsigned char</td>
+<td>C.uchar</td>
+<td>uint8</td>
+</tr>
+<tr>
+<td>short</td>
+<td>C.short</td>
+<td>int16</td>
+</tr>
+<tr>
+<td>unsigned short</td>
+<td>C.ushort</td>
+<td>uint16</td>
+</tr>
+<tr>
+<td>int</td>
+<td>C.int</td>
+<td>int32</td>
+</tr>
+<tr>
+<td>unsigned int</td>
+<td>C.uint</td>
+<td>uint32</td>
+</tr>
+<tr>
+<td>long</td>
+<td>C.long</td>
+<td>int32</td>
+</tr>
+<tr>
+<td>unsigned long</td>
+<td>C.ulong</td>
+<td>uint32</td>
+</tr>
+<tr>
+<td>long long int</td>
+<td>C.longlong</td>
+<td>int64</td>
+</tr>
+<tr>
+<td>unsigned long long int</td>
+<td>C.ulonglong</td>
+<td>uint64</td>
+</tr>
+<tr>
+<td>float</td>
+<td>C.float</td>
+<td>float32</td>
+</tr>
+<tr>
+<td>double</td>
+<td>C.double</td>
+<td>float64</td>
+</tr>
+<tr>
+<td>size_t</td>
+<td>C.size_t</td>
+<td>uint</td>
+</tr>
+</tbody>
+</table>
+<p><em>表 2-1 Go语言和C语言类型对比</em></p>
+<p>在<code>&lt;stdint.h&gt;</code>文件中，不但每个数值类型都提供了明确内存大小，而且和Go语言的类型命名更加一致。Go语言类型<code>&lt;stdint.h&gt;</code>头文件类型对比如表2-2所示。</p>
+<table>
+<thead>
+<tr>
+<th>C语言类型</th>
+<th>CGO类型</th>
+<th>Go语言类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int8_t</td>
+<td>C.int8_t</td>
+<td>int8</td>
+</tr>
+<tr>
+<td>uint8_t</td>
+<td>C.uint8_t</td>
+<td>uint8</td>
+</tr>
+<tr>
+<td>int16_t</td>
+<td>C.int16_t</td>
+<td>int16</td>
+</tr>
+<tr>
+<td>uint16_t</td>
+<td>C.uint16_t</td>
+<td>uint16</td>
+</tr>
+<tr>
+<td>int32_t</td>
+<td>C.int32_t</td>
+<td>int32</td>
+</tr>
+<tr>
+<td>uint32_t</td>
+<td>C.uint32_t</td>
+<td>uint32</td>
+</tr>
+<tr>
+<td>int64_t</td>
+<td>C.int64_t</td>
+<td>int64</td>
+</tr>
+<tr>
+<td>uint64_t</td>
+<td>C.uint64_t</td>
+<td>uint64</td>
+</tr>
+</tbody>
+</table>
+<p><em>表 2-2 <code>&lt;stdint.h&gt;</code>类型对比</em></p>
+<h1 id="32-结构体联合枚举类型">3.2 结构体、联合、枚举类型</h1>
+<ul>
+<li>C语言的结构体、联合、枚举类型不能作为匿名成员被嵌入到Go语言的结构体中。</li>
+<li>在Go语言中，我们可以通过<code>C.struct_xxx</code>来访问C语言中定义的<code>struct xxx</code>结构体类型。</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">/*
+</span><span style="color:#75715e">struct A {
+</span><span style="color:#75715e">    int i;
+</span><span style="color:#75715e">    float f;
+</span><span style="color:#75715e">};
+</span><span style="color:#75715e">*/</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;C&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">struct_A</span>
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">i</span>)
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">f</span>)
+}
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">/*
+</span><span style="color:#75715e">struct A {
+</span><span style="color:#75715e">    int type; // type 是 Go 语言的关键字
+</span><span style="color:#75715e">};
+</span><span style="color:#75715e">*/</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;C&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">struct_A</span>
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">_type</span>) <span style="color:#75715e">// _type 对应 type
+</span><span style="color:#75715e"></span>}
+</code></pre></div><ul>
+<li>如果结构体的成员名字中碰巧是Go语言的关键字，可以通过在成员名开头添加下划线来访问：</li>
+<li>但是如果有2个成员：一个是以Go语言关键字命名，另一个刚好是以下划线和Go语言关键字命名，那么以Go语言关键字命名的成员将无法访问（被屏蔽）：</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">/*
+</span><span style="color:#75715e">struct A {
+</span><span style="color:#75715e">    int   type;  // type 是 Go 语言的关键字
+</span><span style="color:#75715e">    float _type; // 将屏蔽CGO对 type 成员的访问
+</span><span style="color:#75715e">};
+</span><span style="color:#75715e">*/</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;C&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">struct_A</span>
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">_type</span>) <span style="color:#75715e">// _type 对应 _type
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>对应零长数组的成员，无法在Go语言中直接访问数组的元素，但其中零长的数组成员所在位置的偏移量依然可以通过<code>unsafe.Offsetof(a.arr)</code>来访问。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">/*
+</span><span style="color:#75715e">struct A {
+</span><span style="color:#75715e">    int   size: 10; // 位字段无法访问
+</span><span style="color:#75715e">    float arr[];    // 零长的数组也无法访问
+</span><span style="color:#75715e">};
+</span><span style="color:#75715e">*/</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;C&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">struct_A</span>
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">size</span>) <span style="color:#75715e">// 错误: 位字段无法访问
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">arr</span>)  <span style="color:#75715e">// 错误: 零长的数组也无法访问
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>对于联合类型，我们可以通过<code>C.union_xxx</code>来访问C语言中定义的<code>union xxx</code>类型。但是Go语言中并不支持C语言联合类型，它们会被转为对应大小的字节数组。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">/*
+</span><span style="color:#75715e">#include &lt;stdint.h&gt;
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">union B1 {
+</span><span style="color:#75715e">    int i;
+</span><span style="color:#75715e">    float f;
+</span><span style="color:#75715e">};
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">union B2 {
+</span><span style="color:#75715e">    int8_t i8;
+</span><span style="color:#75715e">    int64_t i64;
+</span><span style="color:#75715e">};
+</span><span style="color:#75715e">*/</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;C&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">b1</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">union_B1</span>;
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%T\n&#34;</span>, <span style="color:#a6e22e">b1</span>) <span style="color:#75715e">// [4]uint8
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">b2</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">union_B2</span>;
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%T\n&#34;</span>, <span style="color:#a6e22e">b2</span>) <span style="color:#75715e">// [8]uint8
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>对于枚举类型，我们可以通过<code>C.enum_xxx</code>来访问C语言中定义的<code>enum xxx</code>结构体类型。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">/*
+</span><span style="color:#75715e">enum C {
+</span><span style="color:#75715e">    ONE,
+</span><span style="color:#75715e">    TWO,
+</span><span style="color:#75715e">};
+</span><span style="color:#75715e">*/</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;C&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">c</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">enum_C</span> = <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">TWO</span>
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">c</span>)
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">ONE</span>)
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">TWO</span>)
+}
+</code></pre></div><p>在C语言中，枚举类型底层对应<code>int</code>类型，支持负数类型的值。我们可以通过<code>C.ONE</code>、<code>C.TWO</code>等直接访问定义的枚举值。</p>
+<h1 id="41-函数调用">4.1 函数调用</h1>
+<h2 id="411-c函数的返回值">4.1.1 C函数的返回值</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">/*
+</span><span style="color:#75715e">static int div(int a, int b) {
+</span><span style="color:#75715e">    return a/b;
+</span><span style="color:#75715e">}
+</span><span style="color:#75715e">*/</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;C&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">div</span>(<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">3</span>)
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">v</span>)
+}
+</code></pre></div><p>因为C语言不支持返回多个结果，因此<code>&lt;errno.h&gt;</code>标准库提供了一个<code>errno</code>宏用于返回错误状态。我们可以近似地将<code>errno</code>看成一个线程安全的全局变量，可以用于记录最近一次错误的状态码。</p>
+<p>改进后的div函数实现如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;errno.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">div</span>(<span style="color:#66d9ef">int</span> a, <span style="color:#66d9ef">int</span> b) {
+    <span style="color:#66d9ef">if</span>(b <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+        errno <span style="color:#f92672">=</span> EINVAL;
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+    }
+    <span style="color:#66d9ef">return</span> a<span style="color:#f92672">/</span>b;
+}
+</code></pre></div><p>CGO也针对<code>&lt;errno.h&gt;</code>标准库的<code>errno</code>宏做的特殊支持：在CGO调用C函数时如果有两个返回值，那么第二个返回值将对应<code>errno</code>错误状态。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">/*
+</span><span style="color:#75715e">#include &lt;errno.h&gt;
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">static int div(int a, int b) {
+</span><span style="color:#75715e">    if(b == 0) {
+</span><span style="color:#75715e">        errno = EINVAL;
+</span><span style="color:#75715e">        return 0;
+</span><span style="color:#75715e">    }
+</span><span style="color:#75715e">    return a/b;
+</span><span style="color:#75715e">}
+</span><span style="color:#75715e">*/</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;C&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#a6e22e">v0</span>, <span style="color:#a6e22e">err0</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">div</span>(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>)
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">v0</span>, <span style="color:#a6e22e">err0</span>)
+
+    <span style="color:#a6e22e">v1</span>, <span style="color:#a6e22e">err1</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">div</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>)
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">v1</span>, <span style="color:#a6e22e">err1</span>)
+}
+</code></pre></div><p>运行这个代码将会产生以下输出：</p>
+<pre><code>2 &lt;nil&gt;
+0 invalid argument
+</code></pre><p>我们可以近似地将div函数看作为以下类型的函数：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">div</span>(<span style="color:#a6e22e">a</span>, <span style="color:#a6e22e">b</span> <span style="color:#a6e22e">C</span>.<span style="color:#66d9ef">int</span>) (<span style="color:#a6e22e">C</span>.<span style="color:#66d9ef">int</span>, [<span style="color:#66d9ef">error</span>])
+</code></pre></div><h1 id="5-内部机制">5 内部机制</h1>
+<ul>
+<li>
+<p>CGO特性主要是通过一个叫cgo的命令行工具来辅助输出Go和C之间的桥接代码。本节我们尝试从生成的代码分析Go语言和C语言函数直接相互调用的流程。</p>
+</li>
+<li>
+<p>我们可以在构建一个cgo包时增加一个<code>-work</code>输出中间生成文件所在的目录并且在构建完成时保留中间文件。</p>
+</li>
+<li>
+<p>包中有4个Go文件，其中nocgo开头的文件中没有<code>import &quot;C&quot;</code>指令，其它的2个文件则包含了cgo代码。</p>
+</li>
+<li>
+<p>cgo命令会为每个包含了cgo代码的Go文件创建2个中间文件，比如 main.go 会分别创建 main.cgo1.go 和 main.cgo2.c 两个中间文件。</p>
+</li>
+<li>
+<p>然后会为整个包创建一个 <code>_cgo_gotypes.go</code> Go文件，其中包含Go语言部分辅助代码。</p>
+</li>
+<li>
+<p>此外还会创建一个 <code>_cgo_export.h</code> 和 <code>_cgo_export.c</code> 文件，对应Go语言导出到C语言的类型和函数。</p>
+</li>
+</ul>
+<h1 id="6c-类包装">6.C++ 类包装</h1>
+<ul>
+<li>CGO是C语言和Go语言之间的桥梁，原则上无法直接支持C++的类。</li>
+<li>CGO不支持C++语法的根本原因是C++至今为止还没有一个二进制接口规范(ABI)。</li>
+<li>一个C++类的构造函数在编译为目标文件时如何生成链接符号名称、方法在不同平台甚至是C++的不同版本之间都是不一样的。</li>
+<li>但是C++是兼容C语言，所以我们可以通过增加一组C语言函数接口作为C++类和CGO之间的桥梁，这样就可以间接地实现C++和Go之间的互联。</li>
+<li>当然，因为CGO只支持C语言中值类型的数据类型，所以我们是无法直接使用C++的引用参数等特性的。</li>
+</ul>
+<h2 id="61-c-类到-go-语言对象">6.1 C++ 类到 Go 语言对象</h2>
+<ul>
+<li>实现C++类到Go语言对象的包装需要经过以下几个步骤：首先是用纯C函数接口包装该C++类；</li>
+<li>其次是通过CGO将纯C函数接口映射到Go函数；</li>
+<li>最后是做一个Go包装对象，将C++类到方法用Go对象的方法实现。</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Jiang . </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://jfy0o0.github.io/2021/go-cgo/>https://jfy0o0.github.io/2021/go-cgo/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/go/">
+                    #Go</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://jfy0o0.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://jfy0o0.github.io/2021/elementary-knowledge-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" class="prev" rel="prev" title="elementary knowledge - 字符编码"><i class="iconfont icon-left"></i>&nbsp;elementary knowledge - 字符编码</a>
+         
+        
+        <a href="https://jfy0o0.github.io/2021/go-go-test/" class="next" rel="next" title="Go - go test">Go - go test&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2021</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://jfy0o0.github.io">Jiang .</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

@@ -6,7 +6,47 @@
     <description>Recent content in Posts on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Jul 2021 10:19:18 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 27 Jul 2021 13:43:50 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go - 陷阱</title>
+      <link>https://jfy0o0.github.io/2021/go-%E9%99%B7%E9%98%B1/</link>
+      <pubDate>Tue, 27 Jul 2021 13:43:50 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/go-%E9%99%B7%E9%98%B1/</guid>
+      <description>1. 循环体变量 package main import ( &amp;#34;fmt&amp;#34; &amp;#34;time&amp;#34; ) func main(){ tt() } func tt() { for i := 0; i &amp;lt; 10; i++ { go func() { time.Sleep(1e3) fmt.Println(i) }() } time.Sleep(1e9) }  这个函数执行的时候 tt中打印出来的是10 原因也是很简单，  因为go在初始化的时候先初始化参数量， 全局先初始参数再看函数， 在函数内部先初始参数再进行运算， 所以 就造成在for执行完后,这里的i是同样的i,以为初始化的参数 i一直会变，但是都是这个变量本身，又因为for循环比内部的函数速度快很多，导致，当for循环进行完了，这些函数还没正式开始运行，然后i就取最终值10了    2. return 和 defer 的执行顺序  在Go语言的函数中return语句在底层并不是原子操作，它分为给返回值赋值和RET指令两步。 而defer语句执行的时机就在返回值赋值操作后，RET指令执行前。  return x
+ 返回值 = x 运行defer RET指令  3. 值的方法和指针的方法   指针的方法和值的方法可以互相调用，因为go会自动帮你</description>
+    </item>
+    
+    <item>
+      <title>Go - go test</title>
+      <link>https://jfy0o0.github.io/2021/go-go-test/</link>
+      <pubDate>Fri, 23 Jul 2021 15:22:31 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/go-go-test/</guid>
+      <description>go test工具  go test命令是一个按照一定约定和组织的测试代码的驱动程序。 在包目录内，所有以_test.go为后缀名的源代码文件都是go test测试的一部分，不会被go build编译到最终的可执行文件中。 在*_test.go文件中有三种类型的函数，单元测试函数、基准测试函数和示例函数。     类型 格式 作用     测试函数 函数名前缀为Test 测试程序的一些逻辑行为是否正确   基准函数 函数名前缀为Benchmark 测试函数的性能   示例函数 函数名前缀为Example 为文档提供示例文档     go test命令会遍历所有的*_test.go文件中符合上述命名规则的函数， 然后生成一个临时的main包用于调用相应的测试函数， 然后构建并运行、报告测试结果， 最后清理测试中生成的临时文件。  测试函数 每个测试函数必须导入testing包，测试函数的基本格式（签名）如下：
+func TestName(t *testing.T){ // ... } 测试函数的名字必须以Test开头，可选的后缀名必须以大写字母开头，举几个例子：
+func TestAdd(t *testing.T){ ... } func TestSum(t *testing.T){ ... } func TestLog(t *testing.T){ ... } 其中参数t用于报告测试失败和附加的日志信息。 testing.T的拥有的方法如下：
+func (c *T) Error(args .</description>
+    </item>
+    
+    <item>
+      <title>Go - cgo</title>
+      <link>https://jfy0o0.github.io/2021/go-cgo/</link>
+      <pubDate>Fri, 23 Jul 2021 09:22:31 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/go-cgo/</guid>
+      <description>1.1 最简CGO程序 // hello.go package main import &amp;#34;C&amp;#34; func main() { println(&amp;#34;hello cgo&amp;#34;) }  代码通过import &amp;quot;C&amp;quot;语句启用CGO特性，主函数只是通过Go内置的println函数输出字符串，其中并没有任何和CGO相关的代码。 虽然没有调用CGO的相关函数，但是go build命令会在编译和链接阶段启动gcc编译器，这已经是一个完整的CGO程序了。  1.2 基于C标准库函数输出字符串 // hello.go package main //#include &amp;lt;stdio.h&amp;gt; import &amp;#34;C&amp;#34; func main() { C.puts(C.CString(&amp;#34;Hello, World\n&amp;#34;)) }  通过import &amp;quot;C&amp;quot;语句启用CGO特性， 同时包含C语言的&amp;lt;stdio.h&amp;gt;头文件。 然后通过CGO包的C.CString函数将Go语言字符串转为C语言字符串， 最后调用CGO包的C.puts函数向标准输出窗口打印转换后的C字符串。 我们没有在程序退出前释放C.CString创建的C语言字符串； 还有我们改用puts函数直接向标准输出打印，之前是采用fputs向标准输出打印。 没有释放使用C.CString创建的C语言字符串会导致内存泄漏。  1.3 使用自己的C函数 // hello.go package main /* #include &amp;lt;stdio.h&amp;gt; static void SayHello(const char* s) { puts(s); } */ import &amp;#34;C&amp;#34; func main() { C.SayHello(C.CString(&amp;#34;Hello, World\n&amp;#34;)) }  现在我们先自定义一个叫SayHello的C函数来实现打印，然后从Go语言环境中调用这个SayHello函数 可以将SayHello函数放到当前目录下的一个C语言源文件中（后缀名必须是.</description>
+    </item>
+    
+    <item>
+      <title>elementary knowledge - 字符编码</title>
+      <link>https://jfy0o0.github.io/2021/elementary-knowledge-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/</link>
+      <pubDate>Fri, 23 Jul 2021 08:40:52 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/elementary-knowledge-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/</guid>
+      <description>一、ASCII  由于美国日常使用中只有字母和数字，还有一些控制字符。 一个字节8位，8位可以表示256种字符。因此用一个字节就可以很好满足美国使用要求。　 ASCII码一共规定了128个字符，比如SPACE是32，A是65，这128个符号只咱用了一个字节的后面七位，最前面的一位统一规定为0。  Bin(二进制) Oct(八进制) Dec(十进制)　Hex(十六进制)　缩写/字符　解释 00000000　0　0　00　NUL(null)　空字符 00000001　1　1　01　SOH(start of headline)　标题开始 00000010　2　2　02　STX (start of text)　正文开始 00110000　60　48　30　0　数字0 00110001　61　49　31　1　数字1 00110010　62　50　32　2　数字2 01000001　101　65　41　A　大写字母A　01000010　102　66　42　B　大写字母B 01000011　103　67　43　C　大写字母C 二、gb2312和GBK  兼容ascii 第一个字节的最高位为1 由于一个字节已经无法满足数量的要求了。所以采用两个字节来表示汉字。 第一个字节称为“高位字节”（也称“区字节）”，第二个字节称为“低位字节”（也称“位字节”） 区位码=区字节+位字节。例如“啊”字在大多数程序中，会以两个字节，0xB0（第一个字节） 0xA1（第二个字节）储存。  三、Unicode   Unicode又称统一码、万国码。</description>
+    </item>
+    
     <item>
       <title>Linux - note</title>
       <link>https://jfy0o0.github.io/2021/linux-note/</link>
@@ -34,9 +74,7 @@ $ ls -lt /proc/2406/fd lrwx------ 1 root root 64 Dec 24 09:39 77 -&amp;gt; socke
       <pubDate>Thu, 06 May 2021 15:32:33 +0800</pubDate>
       
       <guid>https://jfy0o0.github.io/2021/linux-%E8%BD%AF%E4%BB%B6-tcpdumptcpreplay/</guid>
-      <description>tcpdump  根据使用者的定义对网络上的数据包进行截获的包分析工具。 tcpdump可以将网络中传送的数据包的“头”完全截获下来提供分析。 它支持针对网络层、协议、主机、网络或端口的过滤，并提供and、or、not等逻辑语句来帮助你去掉无用的信息。  tcpdump [-adeflnNOpqStvx][-c&amp;lt;数据包数目&amp;gt;][-dd][-ddd][-F&amp;lt;表达文件&amp;gt;][-i&amp;lt;网络界面&amp;gt;][-r&amp;lt;数据包文件&amp;gt;][-s&amp;lt;数据包大小&amp;gt;][-tt][-T&amp;lt;数据包类型&amp;gt;][-vv][-w&amp;lt;数据包文件&amp;gt;][输出数据栏位] 参数说明： -a 尝试将网络和广播地址转换成名称。 -c&amp;lt;数据包数目&amp;gt; 收到指定的数据包数目后，就停止进行倾倒操作。 -d 把编译过的数据包编码转换成可阅读的格式，并倾倒到标准输出。 -dd 把编译过的数据包编码转换成C语言的格式，并倾倒到标准输出。 -ddd 把编译过的数据包编码转换成十进制数字的格式，并倾倒到标准输出。 -e 在每列倾倒资料上显示连接层级的文件头。 -f 用数字显示网际网络地址。 -F&amp;lt;表达文件&amp;gt; 指定内含表达方式的文件。 -i&amp;lt;网络界面&amp;gt; 使用指定的网络截面送出数据包。 -l 使用标准输出列的缓冲区。 -n 不把主机的网络地址转换成名字。 -N 不列出域名。 -O 不将数据包编码最佳化。 -p 不让网络界面进入混杂模式。 -q 快速输出，仅列出少数的传输协议信息。 -r&amp;lt;数据包文件&amp;gt; 从指定的文件读取数据包数据。 -s&amp;lt;数据包大小&amp;gt; 设置每个数据包的大小。 -S 用绝对而非相对数值列出TCP关联数。 -t 在每列倾倒资料上不显示时间戳记。 -tt 在每列倾倒资料上显示未经格式化的时间戳记。 -T&amp;lt;数据包类型&amp;gt; 强制将表达方式所指定的数据包转译成设置的数据包类型。 -v 详细显示指令执行过程。 -vv 更详细显示指令执行过程。 -x 用十六进制字码列出数据包资料。 -w&amp;lt;数据包文件&amp;gt; 把数据包数据写入指定的文件。 监视指定主机和端口的数据包
-如果想要获取主机210.27.48.1接收或发出的telnet包，使用如下命令
-tcpdump tcp port 23 and host 210.27.48.1 对本机的udp 123 端口进行监视 123 为ntp的服务端口</description>
+      <description>tcpdump  根据使用者的定义对网络上的数据包进行截获的包分析工具。 tcpdump可以将网络中传送的数据包的“头”完全截获下来提供分析。 它支持针对网络层、协议、主机、网络或端口的过滤，并提供and、or、not等逻辑语句来帮助你去掉无用的信息。  tcpdump [-adeflnNOpqStvx][-c&amp;lt;数据包数目&amp;gt;][-dd][-ddd][-F&amp;lt;表达文件&amp;gt;][-i&amp;lt;网络接口&amp;gt;][-r&amp;lt;数据包文件&amp;gt;][-s&amp;lt;数据包大小&amp;gt;][-tt][-T&amp;lt;数据包类型&amp;gt;][-vv][-w&amp;lt;数据包文件&amp;gt;][输出数据栏位] 参数说明： -A 以ASCII码方式显示每一个数据包(不会显示数据包中链路层头部信息). 在抓取包含网页数据的数据包时, 可方便查看数据(nt: 即Handy for capturing web pages). -c count tcpdump将在接受到count个数据包后退出. -C file-size (nt: 此选项用于配合-w file 选项使用) 该选项使得tcpdump 在把原始数据包直接保存到文件中之前, 检查此文件大小是否超过file-size. 如果超过了, 将关闭此文件,另创一个文件继续用于原始数据包的记录. 新创建的文件名与-w 选项指定的文件名一致, 但文件名后多了一个数字.该数字会从1开始随着新创建文件的增多而增加. file-size的单位是百万字节(nt: 这里指1,000,000个字节,并非1,048,576个字节, 后者是以1024字节为1k, 1024k字节为1M计算所得, 即1M=1024 ＊ 1024 ＝ 1,048,576) -d 以容易阅读的形式,在标准输出上打印出编排过的包匹配码, 随后tcpdump停止.(nt | rt: human readable, 容易阅读的,通常是指以ascii码来打印一些信息. compiled, 编排过的. packet-matching code, 包匹配码,含义未知, 需补充) -dd 以C语言的形式打印出包匹配码. -ddd 以十进制数的形式打印出包匹配码(会在包匹配码之前有一个附加的&amp;#39;count&amp;#39;前缀). -D 打印系统中所有tcpdump可以在其上进行抓包的网络接口. 每一个接口会打印出数字编号, 相应的接口名字, 以及可能的一个网络接口描述. 其中网络接口名字和数字编号可以用在tcpdump 的-i flag 选项(nt: 把名字或数字代替flag), 来指定要在其上抓包的网络接口.</description>
     </item>
     
     <item>
@@ -53,11 +91,11 @@ $ docker run -i -t ubuntu:15.10 /bin/bash root@0123ce188bd8:/# 各个参数解�
     </item>
     
     <item>
-      <title>Other - 公私钥、加验签、CA</title>
-      <link>https://jfy0o0.github.io/2021/other-%E5%85%AC%E7%A7%81%E9%92%A5%E5%8A%A0%E9%AA%8C%E7%AD%BEca/</link>
+      <title>elementary knowledge - 公私钥、加验签、CA</title>
+      <link>https://jfy0o0.github.io/2021/elementary-knowledge-%E5%85%AC%E7%A7%81%E9%92%A5%E5%8A%A0%E9%AA%8C%E7%AD%BEca/</link>
       <pubDate>Tue, 30 Mar 2021 15:59:46 +0800</pubDate>
       
-      <guid>https://jfy0o0.github.io/2021/other-%E5%85%AC%E7%A7%81%E9%92%A5%E5%8A%A0%E9%AA%8C%E7%AD%BEca/</guid>
+      <guid>https://jfy0o0.github.io/2021/elementary-knowledge-%E5%85%AC%E7%A7%81%E9%92%A5%E5%8A%A0%E9%AA%8C%E7%AD%BEca/</guid>
       <description>公私钥加解密，加验签梳理 对称加密和非对称加密。  对称加密：也就是加密和解密所使用的密钥是同一个，常用到的有AES、DES、3DES等等，这类加密方式容易理解，不过多赘述。 非对称加密：加密和解密所使用的密钥是一对，也就是两个，  若A、B是一对密钥，那么加密使用A则解密只能使用B， 加密使用B则解密只能使用A。   这也就是公私钥的原型。 公钥加密，私钥解密。  数字签名 ​	加解密问题解决了，但是网络通讯远没有这么简单，报文信息被黑客拦截了怎么办？拦截后黑客替换成他的报文，还能用公钥继续加密发出去，那不就完了，所以我们还需要个方式来验证发送方的身份，也就是我们经常听说的数字签名。
 ​	数字签名和加解密不同，是对一段信息做hash算法（MD5，RSA等）运算，生成唯一标识该信息的一个特征串，比如你小时候背课文，背完让家长签名（加签），然后第二天老师检查签名（验签），老师就会认为你完成了作业。老师认为该签名唯一且只能由你家长生成，所以认同你背过课文。（虽然你可以模仿）。
 ​	那么我们要做的就是对我们的密文信息再进行一次签名，将签名得到的签名特征串附在原文后，那么对方接收到报文以后，如果能验签通过，那就能确定消息是你发的了。
@@ -578,20 +616,20 @@ FILE *popen(const char *command,const char *type); int pclose(FILE *stream); #in
     </item>
     
     <item>
-      <title>Other - 以太网帧结构</title>
-      <link>https://jfy0o0.github.io/2020/other-%E4%BB%A5%E5%A4%AA%E7%BD%91%E5%B8%A7%E7%BB%93%E6%9E%84/</link>
+      <title>elementary knowledge - 以太网帧结构</title>
+      <link>https://jfy0o0.github.io/2020/elementary-knowledge-%E4%BB%A5%E5%A4%AA%E7%BD%91%E5%B8%A7%E7%BB%93%E6%9E%84/</link>
       <pubDate>Tue, 17 Nov 2020 13:55:52 +0800</pubDate>
       
-      <guid>https://jfy0o0.github.io/2020/other-%E4%BB%A5%E5%A4%AA%E7%BD%91%E5%B8%A7%E7%BB%93%E6%9E%84/</guid>
+      <guid>https://jfy0o0.github.io/2020/elementary-knowledge-%E4%BB%A5%E5%A4%AA%E7%BD%91%E5%B8%A7%E7%BB%93%E6%9E%84/</guid>
       <description>以太网帧结构    前导码 帧开始符 MAC 目标地址 MAC 源地址 802.1Q标签 (可选) 以太类型 负载 冗余校验 帧间距     10101010 7个octet 10101011 1个octet 6B 6B 2B 2B 46-1500B 4B 12B     |&amp;lt;&amp;mdash;&amp;mdash;&amp;mdash; &amp;mdash;&amp;mdash;&amp;mdash; 64-1522B &amp;mdash;&amp;mdash;- &amp;mdash;&amp;mdash;&amp;mdash; &amp;mdash;&amp;gt;|      以太网规定，以太网帧数据域部分最小为46字节,也就是以太网帧最小是6＋6＋2＋46＋4＝64。除去4个字节的FCS，因此，抓包时就是60字节。 当数据字段的长度小于46字节时，MAC子层就会在数据字段的后面填充以满足数据帧长不小于64字节。由于填充数据是由MAC子层负责，也就是设备驱动程序。  </description>
     </item>
     
     <item>
-      <title>Other - 同步、异步、阻塞、非阻塞</title>
-      <link>https://jfy0o0.github.io/2020/other-%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/</link>
+      <title>elementary knowledge - 同步、异步、阻塞、非阻塞</title>
+      <link>https://jfy0o0.github.io/2020/elementary-knowledge-%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/</link>
       <pubDate>Tue, 17 Nov 2020 13:54:52 +0800</pubDate>
       
-      <guid>https://jfy0o0.github.io/2020/other-%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/</guid>
+      <guid>https://jfy0o0.github.io/2020/elementary-knowledge-%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/</guid>
       <description>1.同步与异步 同步和异步关注的是消息通信机制
 指被调用者
 同步  就是在发出一个调用时，在没有得到结果之前，该调用就不返回。 但是一旦调用返回，就得到返回值了。 换句话说，就是由调用者主动等待这个调用的结果。  异步  调用在发出之后，这个调用就直接返回了，所以没有返回结果。 换句话说，当一个异步过程调用发出后，调用者不会立刻得到结果。 而是在调用发出后，被调用者通过状态、通知来通知调用者，或通过回调函数处理这个调用。  例子： 你打电话问书店老板有没有《分布式系统》这本书，
@@ -608,11 +646,11 @@ FILE *popen(const char *command,const char *type); int pclose(FILE *stream); #in
     </item>
     
     <item>
-      <title>Other - 大端、小端</title>
-      <link>https://jfy0o0.github.io/2020/other-%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF/</link>
+      <title>elementary knowledge - 大端、小端</title>
+      <link>https://jfy0o0.github.io/2020/elementary-knowledge-%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF/</link>
       <pubDate>Tue, 17 Nov 2020 13:54:52 +0800</pubDate>
       
-      <guid>https://jfy0o0.github.io/2020/other-%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF/</guid>
+      <guid>https://jfy0o0.github.io/2020/elementary-knowledge-%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF/</guid>
       <description>大端 概念 是指数据的高字节保存在内存的低地址中，而数据的低字节保存在内存的高地址中。
 这是人类读写数值的方法。
 小端 概念 数据的高字节保存在内存的高地址中，而数据的低字节保存在内存的低地址中，
