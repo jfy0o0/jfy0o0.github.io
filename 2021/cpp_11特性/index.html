@@ -57,7 +57,7 @@
     "datePublished": "2021-01-28 15:31:27 \u002b0800 CST",
     "dateModified" : "2021-01-28 15:31:27 \u002b0800 CST",
     "url" : "https:\/\/jfy0o0.github.io\/2021\/cpp_11%E7%89%B9%E6%80%A7\/",
-    "wordCount" : "2089",
+    "wordCount" : "2325",
     "keywords" : [ "C\u002b\u002b", "Jiang . \u0027s blog"]
 }
 </script>
@@ -685,8 +685,40 @@ sum(list); <span style="color:#75715e">// == 6
 <ul>
 <li>左值：在赋值号左边，可以被赋值的值，可以取地址；</li>
 <li>右值：在赋值号右边，取出值赋给其他变量的值；</li>
+<li>左值：可以放到等号左边的东西叫左值。</li>
+<li>右值：不可以放到等号左边的东西就叫右值。</li>
 <li>左值引用：type &amp; 引用名 = 左值表达式</li>
 <li>右值引用：type &amp;&amp; 引用名 = 右值表达式</li>
+</ul>
+<p>左值一般有</p>
+<ul>
+<li>函数名和变量名</li>
+<li>返回左值引用的函数调用</li>
+<li>前置自增自减表达式++i、&ndash;i</li>
+<li>由赋值表达式或赋值运算符连接的表达式(a=b, a += b等)</li>
+<li>解引用表达式*p</li>
+<li>字符串字面值&quot;abcd&quot;</li>
+</ul>
+<p>纯右值</p>
+<ul>
+<li>除字符串字面值外的字面值</li>
+<li>返回非引用类型的函数调用</li>
+<li>后置自增自减表达式i++、i&ndash;</li>
+<li>算术表达式(a+b, a*b, a&amp;&amp;b, a==b等)</li>
+<li>取地址表达式等(&amp;a)</li>
+<li>运算表达式产生的临时变量、</li>
+<li>不和对象关联的原始字面量、</li>
+<li>非引用返回的临时变量、</li>
+<li>lambda表达式</li>
+</ul>
+<p>将亡值</p>
+<ul>
+<li>右值引用相关的表达式，</li>
+<li>通常指将要被移动的对象、</li>
+<li>T&amp;&amp;函数的返回值、</li>
+<li>std::move函数的返回值、</li>
+<li>转换为T&amp;&amp;类型转换函数的返回值，</li>
+<li>将亡值可以理解为即将要销毁的值，通过“盗取”其它变量内存空间方式获取的值，在确保其它变量不再被使用或者即将被销毁时，可以避免内存空间的释放和分配，延长变量值的生命周期，常用来完成移动构造或者移动赋值的特殊任务。</li>
 </ul>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"> <span style="color:#66d9ef">int</span> a <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#75715e">//2
 </span><span style="color:#75715e"></span> <span style="color:#66d9ef">int</span> b <span style="color:#f92672">=</span> a; <span style="color:#75715e">//1
@@ -813,6 +845,60 @@ sum(list); <span style="color:#75715e">// == 6
     <span style="color:#75715e">// 保存函数对象
 </span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span>(<span style="color:#66d9ef">int</span>)<span style="color:#f92672">&gt;</span> f_display_obj <span style="color:#f92672">=</span> PrintNum();
     f_display_obj(<span style="color:#ae81ff">18</span>);
+}
+</code></pre></div><p>结合lambda</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
+std<span style="color:#f92672">::</span>function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span>(<span style="color:#66d9ef">int</span>)<span style="color:#f92672">&gt;</span> f; <span style="color:#75715e">// 这里表示function的对象f的参数是int，返回值是void
+</span><span style="color:#75715e"></span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;functional&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Foo</span> {
+   Foo(<span style="color:#66d9ef">int</span> num) <span style="color:#f92672">:</span> num_(num) {}
+   <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">print_add</span>(<span style="color:#66d9ef">int</span> i) <span style="color:#66d9ef">const</span> { std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> num_ <span style="color:#f92672">+</span> i <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>; }
+   <span style="color:#66d9ef">int</span> num_;
+};
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">print_num</span>(<span style="color:#66d9ef">int</span> i) { std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> i <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>; }
+
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">PrintNum</span> {
+   <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">operator</span>()(<span style="color:#66d9ef">int</span> i) <span style="color:#66d9ef">const</span> { std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> i <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>; }
+};
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+   <span style="color:#75715e">// 存储自由函数
+</span><span style="color:#75715e"></span>   std<span style="color:#f92672">::</span>function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span>(<span style="color:#66d9ef">int</span>)<span style="color:#f92672">&gt;</span> f_display <span style="color:#f92672">=</span> print_num;
+   f_display(<span style="color:#f92672">-</span><span style="color:#ae81ff">9</span>);
+
+   <span style="color:#75715e">// 存储 lambda
+</span><span style="color:#75715e"></span>   std<span style="color:#f92672">::</span>function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span>()<span style="color:#f92672">&gt;</span> f_display_42 <span style="color:#f92672">=</span> []() { print_num(<span style="color:#ae81ff">42</span>); };
+   f_display_42();
+
+   <span style="color:#75715e">// 存储到 std::bind 调用的结果
+</span><span style="color:#75715e"></span>   std<span style="color:#f92672">::</span>function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span>()<span style="color:#f92672">&gt;</span> f_display_31337 <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>bind(print_num, <span style="color:#ae81ff">31337</span>);
+   f_display_31337();
+
+   <span style="color:#75715e">// 存储到成员函数的调用
+</span><span style="color:#75715e"></span>   std<span style="color:#f92672">::</span>function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span>(<span style="color:#66d9ef">const</span> Foo<span style="color:#f92672">&amp;</span>, <span style="color:#66d9ef">int</span>)<span style="color:#f92672">&gt;</span> f_add_display <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>Foo<span style="color:#f92672">::</span>print_add;
+   <span style="color:#66d9ef">const</span> Foo foo(<span style="color:#ae81ff">314159</span>);
+   f_add_display(foo, <span style="color:#ae81ff">1</span>);
+   f_add_display(<span style="color:#ae81ff">314159</span>, <span style="color:#ae81ff">1</span>);
+
+   <span style="color:#75715e">// 存储到数据成员访问器的调用
+</span><span style="color:#75715e"></span>   std<span style="color:#f92672">::</span>function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>(Foo <span style="color:#66d9ef">const</span><span style="color:#f92672">&amp;</span>)<span style="color:#f92672">&gt;</span> f_num <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>Foo<span style="color:#f92672">::</span>num_;
+   std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;num_: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> f_num(foo) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>;
+
+   <span style="color:#75715e">// 存储到成员函数及对象的调用
+</span><span style="color:#75715e"></span>   <span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>placeholders<span style="color:#f92672">::</span>_1;
+   std<span style="color:#f92672">::</span>function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span>(<span style="color:#66d9ef">int</span>)<span style="color:#f92672">&gt;</span> f_add_display2 <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>bind(<span style="color:#f92672">&amp;</span>Foo<span style="color:#f92672">::</span>print_add, foo, _1);
+   f_add_display2(<span style="color:#ae81ff">2</span>);
+
+   <span style="color:#75715e">// 存储到成员函数和对象指针的调用
+</span><span style="color:#75715e"></span>   std<span style="color:#f92672">::</span>function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span>(<span style="color:#66d9ef">int</span>)<span style="color:#f92672">&gt;</span> f_add_display3 <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>bind(<span style="color:#f92672">&amp;</span>Foo<span style="color:#f92672">::</span>print_add, <span style="color:#f92672">&amp;</span>foo, _1);
+   f_add_display3(<span style="color:#ae81ff">3</span>);
+
+   <span style="color:#75715e">// 存储到函数对象的调用
+</span><span style="color:#75715e"></span>   std<span style="color:#f92672">::</span>function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span>(<span style="color:#66d9ef">int</span>)<span style="color:#f92672">&gt;</span> f_display_obj <span style="color:#f92672">=</span> PrintNum();
+   f_display_obj(<span style="color:#ae81ff">18</span>);
 }
 </code></pre></div><h3 id="132-explicit类型转换运算符">13.2 explicit类型转换运算符</h3>
 <p>用来防止由构造函数定义的隐式转换；</p>
@@ -1025,6 +1111,35 @@ start <span style="color:#f92672">=</span> std<span style="color:#f92672">::</sp
 
 std<span style="color:#f92672">::</span>chrono<span style="color:#f92672">::</span>duration<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">double</span><span style="color:#f92672">&gt;</span> elapsed_seconds <span style="color:#f92672">=</span> end <span style="color:#f92672">-</span> start;
 <span style="color:#66d9ef">double</span> t <span style="color:#f92672">=</span> elapsed_seconds.count(); <span style="color:#75715e">// t number of seconds, represented as a `double`
+</span></code></pre></div><p><strong>duration</strong></p>
+<p>std::chrono::duration表示一段时间，常见的单位有s、ms等，示例代码：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">// 拿休眠一段时间举例，这里表示休眠100msstd::this_thread::sleep_for(std::chrono::milliseconds(100));
+</span></code></pre></div><p>sleep_for里面其实就是std::chrono::duration，表示一段时间，实际是这样：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">typedef</span> duration<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int64_t</span>, milli<span style="color:#f92672">&gt;</span> milliseconds;<span style="color:#66d9ef">typedef</span> duration<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int64_t</span><span style="color:#f92672">&gt;</span> seconds;
+</code></pre></div><p>duration具体模板如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Rep</span>, <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Period</span> <span style="color:#f92672">=</span> ratio<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">1</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">duration</span>;
+</code></pre></div><p>Rep表示一种数值类型，用来表示Period的数量，比如int、float、double，Period是ratio类型，用来表示【用秒表示的时间单位】比如second，常用的duration已经定义好了，在std::chrono::duration下：</p>
+<ul>
+<li>ratio&lt;3600, 1&gt;：hours</li>
+<li>ratio&lt;60, 1&gt;：minutes</li>
+<li>ratio&lt;1, 1&gt;：seconds</li>
+<li>ratio&lt;1, 1000&gt;：microseconds</li>
+<li>ratio&lt;1, 1000000&gt;：microseconds</li>
+<li>ratio&lt;1, 1000000000&gt;：nanosecons</li>
+</ul>
+<p>ratio的具体模板如下：</p>
+<ul>
+<li></li>
+</ul>
+<pre><code>template &lt;intmax_t N, intmax_t D = 1&gt; class ratio;
+</code></pre><p>N代表分子，D代表分母，所以ratio表示一个分数，我们可以自定义Period，比如ratio&lt;2, 1&gt;表示单位时间是2秒。</p>
+<p>**
+**</p>
+<p><strong>time_point</strong></p>
+<p>表示一个具体时间点，如2020年5月10日10点10分10秒，拿获取当前时间举例：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">std<span style="color:#f92672">::</span>chrono<span style="color:#f92672">::</span>time_point<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>chrono<span style="color:#f92672">::</span>high_resolution_clock<span style="color:#f92672">&gt;</span> Now() {
+    <span style="color:#66d9ef">return</span> std<span style="color:#f92672">::</span>chrono<span style="color:#f92672">::</span>high_resolution_clock<span style="color:#f92672">::</span>now();
+}<span style="color:#75715e">// std::chrono::high_resolution_clock为高精度时钟，下面会提到
 </span></code></pre></div><h2 id="20stdfuture-stdasync">20.std::future std::async</h2>
 <p>std::async会自动创建一个线程去调用 线程函数，它返回一个std::future，这个future中存储了线程函数返回的结果，当我们需要线程函数的结果时，直接从future中获取，非 常方便。</p>
 <p>std::async的原型async(std::launch::async | std::launch::deferred, f, args&hellip;)，第一个参数是线程的创建策略，有两种策略，默认的策略是立即创建线程：</p>

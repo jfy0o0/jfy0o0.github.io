@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Jiang .">
+  
+  
+  
+  <link rel="prev" href="https://jfy0o0.github.io/2021/go-%E9%99%B7%E9%98%B1/" />
+  
+  <link rel="canonical" href="https://jfy0o0.github.io/2021/linux-io%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Linux - io 多路复用 | Jiang . &#39;s blog
+       
+  </title>
+  <meta name="title" content="Linux - io 多路复用 | Jiang . &#39;s blog">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/jfy0o0.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Linux - io 多路复用",
+    "headline" : "Linux - io 多路复用",
+    "description" : "select 基本概念 　IO多路复用是指内核一旦发现进程指定的一个或者多个IO条件准备读取，它就通知该进程。IO多路复用适用如下场合：\n 当客户处理多个描述字时（一般是交互式输入和网络套接口），必须使用I\/O复用。 当一个客户同时处理多个套接口时，而这种情况是可能的，但很少出现。 如果一个TCP服务器既要处理监听套接口，又要处理已连接套接口，一般也要用到I\/O复用。 如果一个服务器即要处理TCP，又要处理UDP，一般要使用I\/O复用。 如果一个服务器要处理多个服务或多个协议，一般要使用I\/O复用。  　与多进程和多线程技术相比，I\/O多路复用技术的最大优势是系统开销小，系统不必创建进程\/线程，也不必维护这些进程\/线程，从而大大减小了系统的开销。\nselect函数 该函数准许进程指示内核等待多个事件中的任何一个发送，并只在有一个或多个事件发生或经历一段指定的时间后才唤醒。函数原型如下：\n#include \u0026lt;sys\/select.h\u0026gt;#include \u0026lt;sys\/time.h\u0026gt; int select(int maxfdp1, fd_set *readset, fd_set *writeset, fd_set *exceptset, const struct timeval *timeout) \/\/ 返回值：就绪描述符的数目，超时返回0，出错返回-1 函数参数介绍如下：\n  第一个参数maxfdp1指定待测试的描述字个数，它的值是待测试的最大描述字加1（因此把该参数命名为maxfdp1），描述字0、1、2\u0026hellip;maxfdp1-1均将被测试。因为文件描述符是从0开始的。\n  中间的三个参数readset、writeset和exceptset指定我们要让内核测试读、写和异常条件的描述字。\n  如果对某一个的条件不感兴趣，就可以把它设为空指针。\n  struct fd_set可以理解为一个集合，这个集合中存放的是文件描述符，可通过以下四个宏进行设置：\n  void FD_ZERO(fd_set *fdset); \/\/清空集合  void FD_SET(int fd, fd_set *fdset); \/\/将一个给定的文件描述符加入集合之中  void FD_CLR(int fd, fd_set *fdset); \/\/将一个给定的文件描述符从集合中删除  int FD_ISSET(int fd, fd_set *fdset); \/\/ 检查集合中指定的文件描述符是否可以读写  timeout告知内核等待所指定描述字中的任何一个就绪可花多少时间。其timeval结构用于指定这段时间的秒数和微秒数。  struct timeval{ long tv_sec; \/\/seconds  long tv_usec; \/\/microseconds  }; 这个参数有三种可能：",
+    "inLanguage" : "en-us",
+    "author" : "Jiang",
+    "creator" : "Jiang",
+    "publisher": "Jiang",
+    "accountablePerson" : "Jiang",
+    "copyrightHolder" : "Jiang",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-07-29 13:43:01 \u002b0800 CST",
+    "dateModified" : "2021-07-29 13:43:01 \u002b0800 CST",
+    "url" : "https:\/\/jfy0o0.github.io\/2021\/linux-io%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8\/",
+    "wordCount" : "1824",
+    "keywords" : [ "Linux", "Jiang . \u0027s blog"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://jfy0o0.github.io">Jiang . &#39;s blog</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Linux - io 多路复用</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://jfy0o0.github.io" rel="author">Jiang</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2021-07-29 itemprop="datePublished">July 29, 2021</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://jfy0o0.github.io/categories/linux/"> Linux </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="select">select</h1>
+<h2 id="基本概念"><strong>基本概念</strong></h2>
+<p>　　IO多路复用是指内核一旦发现进程指定的一个或者多个IO条件准备读取，它就通知该进程。IO多路复用适用如下场合：</p>
+<ul>
+<li>当客户处理多个描述字时（一般是交互式输入和网络套接口），必须使用I/O复用。</li>
+<li>当一个客户同时处理多个套接口时，而这种情况是可能的，但很少出现。</li>
+<li>如果一个TCP服务器既要处理监听套接口，又要处理已连接套接口，一般也要用到I/O复用。</li>
+<li>如果一个服务器即要处理TCP，又要处理UDP，一般要使用I/O复用。</li>
+<li>如果一个服务器要处理多个服务或多个协议，一般要使用I/O复用。</li>
+</ul>
+<p>　　与多进程和多线程技术相比，I/O多路复用技术的最大优势是系统开销小，系统不必创建进程/线程，也不必维护这些进程/线程，从而大大减小了系统的开销。</p>
+<h2 id="select函数"><strong>select函数</strong></h2>
+<p>该函数准许进程指示内核等待多个事件中的任何一个发送，并只在有一个或多个事件发生或经历一段指定的时间后才唤醒。函数原型如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/select.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/time.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> select(<span style="color:#66d9ef">int</span> maxfdp1,
+           fd_set <span style="color:#f92672">*</span>readset,
+           fd_set <span style="color:#f92672">*</span>writeset,
+           fd_set <span style="color:#f92672">*</span>exceptset,
+           <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">timeval</span> <span style="color:#f92672">*</span>timeout)
+ <span style="color:#75715e">//   返回值：就绪描述符的数目，超时返回0，出错返回-1
+</span></code></pre></div><p>函数参数介绍如下：</p>
+<ul>
+<li>
+<p>第一个参数maxfdp1指定待测试的描述字个数，它的值是待测试的最大描述字加1（因此把该参数命名为maxfdp1），描述字0、1、2&hellip;maxfdp1-1均将被测试。因为文件描述符是从0开始的。</p>
+</li>
+<li>
+<p>中间的三个参数readset、writeset和exceptset指定我们要让内核测试读、写和异常条件的描述字。</p>
+</li>
+<li>
+<p>如果对某一个的条件不感兴趣，就可以把它设为空指针。</p>
+</li>
+<li>
+<p>struct fd_set可以理解为一个集合，这个集合中存放的是文件描述符，可通过以下四个宏进行设置：</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">     <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">FD_ZERO</span>(fd_set <span style="color:#f92672">*</span>fdset);      <span style="color:#75715e">//清空集合
+</span><span style="color:#75715e"></span>
+     <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">FD_SET</span>(<span style="color:#66d9ef">int</span> fd, fd_set <span style="color:#f92672">*</span>fdset);  <span style="color:#75715e">//将一个给定的文件描述符加入集合之中
+</span><span style="color:#75715e"></span>
+     <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">FD_CLR</span>(<span style="color:#66d9ef">int</span> fd, fd_set <span style="color:#f92672">*</span>fdset);  <span style="color:#75715e">//将一个给定的文件描述符从集合中删除
+</span><span style="color:#75715e"></span>
+     <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">FD_ISSET</span>(<span style="color:#66d9ef">int</span> fd, fd_set <span style="color:#f92672">*</span>fdset);  <span style="color:#75715e">// 检查集合中指定的文件描述符是否可以读写 
+</span></code></pre></div><ul>
+<li>timeout告知内核等待所指定描述字中的任何一个就绪可花多少时间。其timeval结构用于指定这段时间的秒数和微秒数。</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">     <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">timeval</span>{
+
+          <span style="color:#66d9ef">long</span> tv_sec;  <span style="color:#75715e">//seconds
+</span><span style="color:#75715e"></span>
+          <span style="color:#66d9ef">long</span> tv_usec; <span style="color:#75715e">//microseconds
+</span><span style="color:#75715e"></span>
+    };
+</code></pre></div><p>这个参数有三种可能：</p>
+<ol>
+<li>永远等待下去：仅在有一个描述字准备好I/O时才返回。为此，把该参数设置为空指针NULL。</li>
+<li>等待一段固定时间：在有一个描述字准备好I/O时返回，但是不超过由该参数所指向的timeval结构中指定的秒数和微秒数。</li>
+<li>根本不等待：检查描述字后立即返回，这称为轮询。为此，该参数必须指向一个timeval结构，而且其中的定时器值必须为0。</li>
+</ol>
+<h2 id="原理图">原理图</h2>
+<p><img src="https://images2015.cnblogs.com/blog/305504/201509/305504-20150918012828961-1176245587.png" alt="img"></p>
+<h2 id="测试程序"><strong>测试程序</strong></h2>
+<p>写一个TCP回射程序，程序的功能是：客户端向服务器发送信息，服务器接收并原样发送给客户端，客户端显示出接收到的信息。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;errno.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;netinet/in.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/socket.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/select.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/types.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;netinet/in.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;arpa/inet.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;assert.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#define IPADDR      &#34;127.0.0.1&#34;
+</span><span style="color:#75715e">#define PORT        8787
+</span><span style="color:#75715e">#define MAXLINE     1024
+</span><span style="color:#75715e">#define LISTENQ     5
+</span><span style="color:#75715e">#define SIZE        10
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">server_context_st</span>
+{
+    <span style="color:#66d9ef">int</span> cli_cnt;        <span style="color:#75715e">/*客户端个数*/</span>
+    <span style="color:#66d9ef">int</span> clifds[SIZE];   <span style="color:#75715e">/*客户端的个数*/</span>
+    fd_set allfds;      <span style="color:#75715e">/*句柄集合*/</span>
+    <span style="color:#66d9ef">int</span> maxfd;          <span style="color:#75715e">/*句柄最大值*/</span>
+} server_context_st;
+<span style="color:#66d9ef">static</span> server_context_st <span style="color:#f92672">*</span>s_srv_ctx <span style="color:#f92672">=</span> NULL;
+<span style="color:#75715e">/*===========================================================================
+</span><span style="color:#75715e"> * ==========================================================================*/</span>
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">create_server_proc</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> ip,<span style="color:#66d9ef">int</span> port)
+{
+    <span style="color:#66d9ef">int</span>  fd;
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">sockaddr_in</span> servaddr;
+    fd <span style="color:#f92672">=</span> socket(AF_INET, SOCK_STREAM,<span style="color:#ae81ff">0</span>);
+    <span style="color:#66d9ef">if</span> (fd <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) {
+        fprintf(stderr, <span style="color:#e6db74">&#34;create socket fail,erron:%d,reason:%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,
+                errno, strerror(errno));
+        <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+    }
+
+    <span style="color:#75715e">/*一个端口释放后会等待两分钟之后才能再被使用，SO_REUSEADDR是让端口释放后立即就可以被再次使用。*/</span>
+    <span style="color:#66d9ef">int</span> reuse <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+    <span style="color:#66d9ef">if</span> (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, <span style="color:#f92672">&amp;</span>reuse, <span style="color:#66d9ef">sizeof</span>(reuse)) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) {
+        <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+    }
+
+    bzero(<span style="color:#f92672">&amp;</span>servaddr,<span style="color:#66d9ef">sizeof</span>(servaddr));
+    servaddr.sin_family <span style="color:#f92672">=</span> AF_INET;
+    inet_pton(AF_INET,ip,<span style="color:#f92672">&amp;</span>servaddr.sin_addr);
+    servaddr.sin_port <span style="color:#f92672">=</span> htons(port);
+
+    <span style="color:#66d9ef">if</span> (bind(fd,(<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">sockaddr</span><span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>servaddr,<span style="color:#66d9ef">sizeof</span>(servaddr)) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) {
+        perror(<span style="color:#e6db74">&#34;bind error: &#34;</span>);
+        <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+    }
+
+    listen(fd,LISTENQ);
+
+    <span style="color:#66d9ef">return</span> fd;
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">accept_client_proc</span>(<span style="color:#66d9ef">int</span> srvfd)
+{
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">sockaddr_in</span> cliaddr;
+    socklen_t cliaddrlen;
+    cliaddrlen <span style="color:#f92672">=</span> <span style="color:#66d9ef">sizeof</span>(cliaddr);
+    <span style="color:#66d9ef">int</span> clifd <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+
+    printf(<span style="color:#e6db74">&#34;accpet clint proc is called.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+
+ACCEPT:
+    clifd <span style="color:#f92672">=</span> accept(srvfd,(<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">sockaddr</span><span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>cliaddr,<span style="color:#f92672">&amp;</span>cliaddrlen);
+
+    <span style="color:#66d9ef">if</span> (clifd <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) {
+        <span style="color:#66d9ef">if</span> (errno <span style="color:#f92672">==</span> EINTR) {
+            <span style="color:#66d9ef">goto</span> ACCEPT;
+        } <span style="color:#66d9ef">else</span> {
+            fprintf(stderr, <span style="color:#e6db74">&#34;accept fail,error:%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, strerror(errno));
+            <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+        }
+    }
+
+    fprintf(stdout, <span style="color:#e6db74">&#34;accept a new client: %s:%d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,
+            inet_ntoa(cliaddr.sin_addr),cliaddr.sin_port);
+
+    <span style="color:#75715e">//将新的连接描述符添加到数组中
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> SIZE; i<span style="color:#f92672">++</span>) {
+        <span style="color:#66d9ef">if</span> (s_srv_ctx<span style="color:#f92672">-&gt;</span>clifds[i] <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) {
+            s_srv_ctx<span style="color:#f92672">-&gt;</span>clifds[i] <span style="color:#f92672">=</span> clifd;
+            s_srv_ctx<span style="color:#f92672">-&gt;</span>cli_cnt<span style="color:#f92672">++</span>;
+            <span style="color:#66d9ef">break</span>;
+        }
+    }
+
+    <span style="color:#66d9ef">if</span> (i <span style="color:#f92672">==</span> SIZE) {
+        fprintf(stderr,<span style="color:#e6db74">&#34;too many clients.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+        <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+    }
+
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">handle_client_msg</span>(<span style="color:#66d9ef">int</span> fd, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf)
+{
+    assert(buf);
+    printf(<span style="color:#e6db74">&#34;recv buf is :%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, buf);
+    write(fd, buf, strlen(buf) <span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>);
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">recv_client_msg</span>(fd_set <span style="color:#f92672">*</span>readfds)
+{
+    <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, n <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    <span style="color:#66d9ef">int</span> clifd;
+    <span style="color:#66d9ef">char</span> buf[MAXLINE] <span style="color:#f92672">=</span> {<span style="color:#ae81ff">0</span>};
+    <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;i <span style="color:#f92672">&lt;=</span> s_srv_ctx<span style="color:#f92672">-&gt;</span>cli_cnt;i<span style="color:#f92672">++</span>) {
+        clifd <span style="color:#f92672">=</span> s_srv_ctx<span style="color:#f92672">-&gt;</span>clifds[i];
+        <span style="color:#66d9ef">if</span> (clifd <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) {
+            <span style="color:#66d9ef">continue</span>;
+        }
+        <span style="color:#75715e">/*判断客户端套接字是否有数据*/</span>
+        <span style="color:#66d9ef">if</span> (FD_ISSET(clifd, readfds)) {
+            <span style="color:#75715e">//接收客户端发送的信息
+</span><span style="color:#75715e"></span>            n <span style="color:#f92672">=</span> read(clifd, buf, MAXLINE);
+            <span style="color:#66d9ef">if</span> (n <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0</span>) {
+                <span style="color:#75715e">/*n==0表示读取完成，客户都关闭套接字*/</span>
+                FD_CLR(clifd, <span style="color:#f92672">&amp;</span>s_srv_ctx<span style="color:#f92672">-&gt;</span>allfds);
+                close(clifd);
+                s_srv_ctx<span style="color:#f92672">-&gt;</span>clifds[i] <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+                <span style="color:#66d9ef">continue</span>;
+            }
+            handle_client_msg(clifd, buf);
+        }
+    }
+}
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">handle_client_proc</span>(<span style="color:#66d9ef">int</span> srvfd)
+{
+    <span style="color:#66d9ef">int</span>  clifd <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+    <span style="color:#66d9ef">int</span>  retval <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    fd_set <span style="color:#f92672">*</span>readfds <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>s_srv_ctx<span style="color:#f92672">-&gt;</span>allfds;
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">timeval</span> tv;
+    <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+
+    <span style="color:#66d9ef">while</span> (<span style="color:#ae81ff">1</span>) {
+        <span style="color:#75715e">/*每次调用select前都要重新设置文件描述符和时间，因为事件发生后，文件描述符和时间都被内核修改啦*/</span>
+        FD_ZERO(readfds);
+        <span style="color:#75715e">/*添加监听套接字*/</span>
+        FD_SET(srvfd, readfds);
+        s_srv_ctx<span style="color:#f92672">-&gt;</span>maxfd <span style="color:#f92672">=</span> srvfd;
+
+        tv.tv_sec <span style="color:#f92672">=</span> <span style="color:#ae81ff">30</span>;
+        tv.tv_usec <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+        <span style="color:#75715e">/*添加客户端套接字*/</span>
+        <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> s_srv_ctx<span style="color:#f92672">-&gt;</span>cli_cnt; i<span style="color:#f92672">++</span>) {
+            clifd <span style="color:#f92672">=</span> s_srv_ctx<span style="color:#f92672">-&gt;</span>clifds[i];
+            <span style="color:#75715e">/*去除无效的客户端句柄*/</span>
+            <span style="color:#66d9ef">if</span> (clifd <span style="color:#f92672">!=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) {
+                FD_SET(clifd, readfds);
+            }
+            s_srv_ctx<span style="color:#f92672">-&gt;</span>maxfd <span style="color:#f92672">=</span> (clifd <span style="color:#f92672">&gt;</span> s_srv_ctx<span style="color:#f92672">-&gt;</span>maxfd <span style="color:#f92672">?</span> clifd : s_srv_ctx<span style="color:#f92672">-&gt;</span>maxfd);
+        }
+
+        <span style="color:#75715e">/*开始轮询接收处理服务端和客户端套接字*/</span>
+        retval <span style="color:#f92672">=</span> select(s_srv_ctx<span style="color:#f92672">-&gt;</span>maxfd <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, readfds, NULL, NULL, <span style="color:#f92672">&amp;</span>tv);
+        <span style="color:#66d9ef">if</span> (retval <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) {
+            fprintf(stderr, <span style="color:#e6db74">&#34;select error:%s.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, strerror(errno));
+            <span style="color:#66d9ef">return</span>;
+        }
+        <span style="color:#66d9ef">if</span> (retval <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+            fprintf(stdout, <span style="color:#e6db74">&#34;select is timeout.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+            <span style="color:#66d9ef">continue</span>;
+        }
+        <span style="color:#66d9ef">if</span> (FD_ISSET(srvfd, readfds)) {
+            <span style="color:#75715e">/*监听客户端请求*/</span>
+            accept_client_proc(srvfd);
+        } <span style="color:#66d9ef">else</span> {
+            <span style="color:#75715e">/*接受处理客户端消息*/</span>
+            recv_client_msg(readfds);
+        }
+    }
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">server_uninit</span>()
+{
+    <span style="color:#66d9ef">if</span> (s_srv_ctx) {
+        free(s_srv_ctx);
+        s_srv_ctx <span style="color:#f92672">=</span> NULL;
+    }
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">server_init</span>()
+{
+    s_srv_ctx <span style="color:#f92672">=</span> (server_context_st <span style="color:#f92672">*</span>)malloc(<span style="color:#66d9ef">sizeof</span>(server_context_st));
+    <span style="color:#66d9ef">if</span> (s_srv_ctx <span style="color:#f92672">==</span> NULL) {
+        <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+    }
+
+    memset(s_srv_ctx, <span style="color:#ae81ff">0</span>, <span style="color:#66d9ef">sizeof</span>(server_context_st));
+
+    <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    <span style="color:#66d9ef">for</span> (;i <span style="color:#f92672">&lt;</span> SIZE; i<span style="color:#f92672">++</span>) {
+        s_srv_ctx<span style="color:#f92672">-&gt;</span>clifds[i] <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+    }
+
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc,<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[])
+{
+    <span style="color:#66d9ef">int</span>  srvfd;
+    <span style="color:#75715e">/*初始化服务端context*/</span>
+    <span style="color:#66d9ef">if</span> (server_init() <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) {
+        <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+    }
+    <span style="color:#75715e">/*创建服务,开始监听客户端请求*/</span>
+    srvfd <span style="color:#f92672">=</span> create_server_proc(IPADDR, PORT);
+    <span style="color:#66d9ef">if</span> (srvfd <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) {
+        fprintf(stderr, <span style="color:#e6db74">&#34;socket create or bind fail.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+        <span style="color:#66d9ef">goto</span> err;
+    }
+    <span style="color:#75715e">/*开始接收并处理客户端请求*/</span>
+    handle_client_proc(srvfd);
+    server_uninit();
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+err:
+    server_uninit();
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+}
+</code></pre></div><h1 id="poll">poll</h1>
+<h2 id="基本知识"><strong>基本知识</strong></h2>
+<p>　　poll的机制与select类似，与select在本质上没有多大差别，管理多个描述符也是进行轮询，根据描述符的状态进行处理，但是poll没有最大文件描述符数量的限制。poll和select同样存在一个缺点就是，包含大量文件描述符的数组被整体复制于用户态和内核的地址空间之间，而不论这些文件描述符是否就绪，它的开销随着文件描述符数量的增加而线性增大。</p>
+<h2 id="poll函数"><strong>poll函数</strong></h2>
+<p>　　函数格式如下所示：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e"># include &lt;poll.h&gt;
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">poll</span> ( <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">pollfd</span> <span style="color:#f92672">*</span> fds, <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> nfds, <span style="color:#66d9ef">int</span> timeout);
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">pollfd</span> {
+	<span style="color:#66d9ef">int</span> fd;     <span style="color:#75715e">// 文件描述符 
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">short</span> events;     <span style="color:#75715e">// 等待的事件
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">short</span> revents;    <span style="color:#75715e">// 实际发生了的事件 
+</span><span style="color:#75715e"></span>} ;
+</code></pre></div><ul>
+<li>每一个pollfd结构体指定了一个被监视的文件描述符，可以传递多个结构体，指示poll()监视多个文件描述符</li>
+<li>每个结构体的events域是监视该文件描述符的事件掩码，由用户来设置这个域。</li>
+<li>revents域是文件描述符的操作结果事件掩码，内核在调用返回时设置这个域。</li>
+<li>events域中请求的任何事件都可能在revents域中返回。合法的事件如下：</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">　　POLLIN 　　　　　　　有数据可读。
+
+　　POLLRDNORM 　　　  有普通数据可读。
+
+　　POLLRDBAND　　　　　 有优先数据可读。
+
+　　POLLPRI　　　　　　　　 有紧迫数据可读。
+
+　　POLLOUT　　　　　　    写数据不会导致阻塞。
+
+　　POLLWRNORM　　　　　  写普通数据不会导致阻塞。
+
+　　POLLWRBAND　　　　　  写优先数据不会导致阻塞。
+
+　　POLLMSGSIGPOLL 　　　消息可用。
+
+　　此外，revents域中还可能返回下列事件：
+　　POLLER　　  指定的文件描述符发生错误。
+
+　　POLLHUP　　 指定的文件描述符挂起事件。
+
+　　POLLNVAL　　指定的文件描述符非法。
+　　
+　　这些事件在events域中无意义，因为它们在合适的时候总是会从revents中返回。
+</code></pre></div><p>　　使用poll()和select()不一样，你不需要显式地请求异常情况报告。</p>
+<ul>
+<li>POLLIN | POLLPRI等价于select()的读事件，POLLOUT |POLLWRBAND等价于select()的写事件。</li>
+<li>POLLIN等价于POLLRDNORM |POLLRDBAND，而POLLOUT则等价于POLLWRNORM。
+<ul>
+<li>例如，要同时监视一个文件描述符是否可读和可写，我们可以设置 events为POLLIN |POLLOUT。</li>
+<li>在poll返回时，我们可以检查revents中的标志，对应于文件描述符请求的events结构体。</li>
+<li>如果POLLIN事件被设置，则文件描述符可以被读取而不阻塞。</li>
+<li>如果POLLOUT被设置，则文件描述符可以写入而不导致阻塞。</li>
+<li>这些标志并不是互斥的：它们可能被同时设置，表示这个文件描述符的读取和写入操作都会正常返回而不阻塞。</li>
+<li>timeout参数指定等待的毫秒数，无论I/O是否准备好，poll都会返回。</li>
+<li>timeout指定为负数值表示无限超时，使poll()一直挂起直到一个指定事件发生；</li>
+<li>timeout为0指示poll调用立即返回并列出准备好I/O的文件描述符，但并不等待其它的事件。</li>
+<li>这种情况下，poll()就像它的名字那样，一旦选举出来，立即返回。</li>
+</ul>
+</li>
+</ul>
+<p>　　返回值和错误代码</p>
+<p>　　成功时，poll()返回结构体中revents域不为0的文件描述符个数；如果在超时前没有任何事件发生，poll()返回0；失败时，poll()返回-1，并设置errno为下列值之一：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">　　EBADF　　    一个或多个结构体中指定的文件描述符无效。
+
+　　EFAULTfds　　 指针指向的地址超出进程的地址空间。
+
+　　EINTR　　　　  请求的事件之前产生一个信号，调用可以重新发起。
+
+　　EINVALnfds　　参数超出PLIMIT_NOFILE值。
+
+　　ENOMEM　　   可用内存不足，无法完成请求。
+</code></pre></div><h2 id="测试程序-1">测试程序</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;errno.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;netinet/in.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/socket.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;poll.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/types.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#define IPADDRESS   &#34;127.0.0.1&#34;
+</span><span style="color:#75715e">#define PORT        8787
+</span><span style="color:#75715e">#define MAXLINE     1024
+</span><span style="color:#75715e">#define LISTENQ     5
+</span><span style="color:#75715e">#define OPEN_MAX    1000
+</span><span style="color:#75715e">#define INFTIM      -1
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">//函数声明
+</span><span style="color:#75715e">//创建套接字并进行绑定
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">socket_bind</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> ip,<span style="color:#66d9ef">int</span> port);
+<span style="color:#75715e">//IO多路复用poll
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">do_poll</span>(<span style="color:#66d9ef">int</span> listenfd);
+<span style="color:#75715e">//处理多个连接
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">handle_connection</span>(<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">pollfd</span> <span style="color:#f92672">*</span>connfds,<span style="color:#66d9ef">int</span> num);
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc,<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[])
+{
+    <span style="color:#66d9ef">int</span>  listenfd,connfd,sockfd;
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">sockaddr_in</span> cliaddr;
+    socklen_t cliaddrlen;
+    listenfd <span style="color:#f92672">=</span> socket_bind(IPADDRESS,PORT);
+    listen(listenfd,LISTENQ);
+    do_poll(listenfd);
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">socket_bind</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> ip,<span style="color:#66d9ef">int</span> port)
+{
+    <span style="color:#66d9ef">int</span>  listenfd;
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">sockaddr_in</span> servaddr;
+    listenfd <span style="color:#f92672">=</span> socket(AF_INET,SOCK_STREAM,<span style="color:#ae81ff">0</span>);
+    <span style="color:#66d9ef">if</span> (listenfd <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+    {
+        perror(<span style="color:#e6db74">&#34;socket error:&#34;</span>);
+        exit(<span style="color:#ae81ff">1</span>);
+    }
+    bzero(<span style="color:#f92672">&amp;</span>servaddr,<span style="color:#66d9ef">sizeof</span>(servaddr));
+    servaddr.sin_family <span style="color:#f92672">=</span> AF_INET;
+    inet_pton(AF_INET,ip,<span style="color:#f92672">&amp;</span>servaddr.sin_addr);
+    servaddr.sin_port <span style="color:#f92672">=</span> htons(port);
+    <span style="color:#66d9ef">if</span> (bind(listenfd,(<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">sockaddr</span><span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>servaddr,<span style="color:#66d9ef">sizeof</span>(servaddr)) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+    {
+        perror(<span style="color:#e6db74">&#34;bind error: &#34;</span>);
+        exit(<span style="color:#ae81ff">1</span>);
+    }
+    <span style="color:#66d9ef">return</span> listenfd;
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">do_poll</span>(<span style="color:#66d9ef">int</span> listenfd)
+{
+    <span style="color:#66d9ef">int</span>  connfd,sockfd;
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">sockaddr_in</span> cliaddr;
+    socklen_t cliaddrlen;
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">pollfd</span> clientfds[OPEN_MAX];
+    <span style="color:#66d9ef">int</span> maxi;
+    <span style="color:#66d9ef">int</span> i;
+    <span style="color:#66d9ef">int</span> nready;
+    <span style="color:#75715e">//添加监听描述符
+</span><span style="color:#75715e"></span>    clientfds[<span style="color:#ae81ff">0</span>].fd <span style="color:#f92672">=</span> listenfd;
+    clientfds[<span style="color:#ae81ff">0</span>].events <span style="color:#f92672">=</span> POLLIN;
+    <span style="color:#75715e">//初始化客户连接描述符
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;i <span style="color:#f92672">&lt;</span> OPEN_MAX;i<span style="color:#f92672">++</span>)
+        clientfds[i].fd <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+    maxi <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    <span style="color:#75715e">//循环处理
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> ( ; ; )
+    {
+        <span style="color:#75715e">//获取可用描述符的个数
+</span><span style="color:#75715e"></span>        nready <span style="color:#f92672">=</span> poll(clientfds,maxi<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>,INFTIM);
+        <span style="color:#66d9ef">if</span> (nready <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+        {
+            perror(<span style="color:#e6db74">&#34;poll error:&#34;</span>);
+            exit(<span style="color:#ae81ff">1</span>);
+        }
+        <span style="color:#75715e">//测试监听描述符是否准备好
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (clientfds[<span style="color:#ae81ff">0</span>].revents <span style="color:#f92672">&amp;</span> POLLIN)
+        {
+            cliaddrlen <span style="color:#f92672">=</span> <span style="color:#66d9ef">sizeof</span>(cliaddr);
+            <span style="color:#75715e">//接受新的连接
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> ((connfd <span style="color:#f92672">=</span> accept(listenfd,(<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">sockaddr</span><span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>cliaddr,<span style="color:#f92672">&amp;</span>cliaddrlen)) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+            {
+                <span style="color:#66d9ef">if</span> (errno <span style="color:#f92672">==</span> EINTR)
+                    <span style="color:#66d9ef">continue</span>;
+                <span style="color:#66d9ef">else</span>
+                {
+                   perror(<span style="color:#e6db74">&#34;accept error:&#34;</span>);
+                   exit(<span style="color:#ae81ff">1</span>);
+                }
+            }
+            fprintf(stdout,<span style="color:#e6db74">&#34;accept a new client: %s:%d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, inet_ntoa(cliaddr.sin_addr),cliaddr.sin_port);
+            <span style="color:#75715e">//将新的连接描述符添加到数组中
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;i <span style="color:#f92672">&lt;</span> OPEN_MAX;i<span style="color:#f92672">++</span>)
+            {
+                <span style="color:#66d9ef">if</span> (clientfds[i].fd <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+                {
+                    clientfds[i].fd <span style="color:#f92672">=</span> connfd;
+                    <span style="color:#66d9ef">break</span>;
+                }
+            }
+            <span style="color:#66d9ef">if</span> (i <span style="color:#f92672">==</span> OPEN_MAX)
+            {
+                fprintf(stderr,<span style="color:#e6db74">&#34;too many clients.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+                exit(<span style="color:#ae81ff">1</span>);
+            }
+            <span style="color:#75715e">//将新的描述符添加到读描述符集合中
+</span><span style="color:#75715e"></span>            clientfds[i].events <span style="color:#f92672">=</span> POLLIN;
+            <span style="color:#75715e">//记录客户连接套接字的个数
+</span><span style="color:#75715e"></span>            maxi <span style="color:#f92672">=</span> (i <span style="color:#f92672">&gt;</span> maxi <span style="color:#f92672">?</span> i : maxi);
+            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">--</span>nready <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0</span>)
+                <span style="color:#66d9ef">continue</span>;
+        }
+        <span style="color:#75715e">//处理客户连接
+</span><span style="color:#75715e"></span>        handle_connection(clientfds,maxi);
+    }
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">handle_connection</span>(<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">pollfd</span> <span style="color:#f92672">*</span>connfds,<span style="color:#66d9ef">int</span> num)
+{
+    <span style="color:#66d9ef">int</span> i,n;
+    <span style="color:#66d9ef">char</span> buf[MAXLINE];
+    memset(buf,<span style="color:#ae81ff">0</span>,MAXLINE);
+    <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;i <span style="color:#f92672">&lt;=</span> num;i<span style="color:#f92672">++</span>)
+    {
+        <span style="color:#66d9ef">if</span> (connfds[i].fd <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+            <span style="color:#66d9ef">continue</span>;
+        <span style="color:#75715e">//测试客户描述符是否准备好
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (connfds[i].revents <span style="color:#f92672">&amp;</span> POLLIN)
+        {
+            <span style="color:#75715e">//接收客户端发送的信息
+</span><span style="color:#75715e"></span>            n <span style="color:#f92672">=</span> read(connfds[i].fd,buf,MAXLINE);
+            <span style="color:#66d9ef">if</span> (n <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+            {
+                close(connfds[i].fd);
+                connfds[i].fd <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+                <span style="color:#66d9ef">continue</span>;
+            }
+           <span style="color:#75715e">// printf(&#34;read msg is: &#34;);
+</span><span style="color:#75715e"></span>            write(STDOUT_FILENO,buf,n);
+            <span style="color:#75715e">//向客户端发送buf
+</span><span style="color:#75715e"></span>            write(connfds[i].fd,buf,n);
+        }
+    }
+}
+</code></pre></div><h1 id="epoll">epoll</h1>
+<h2 id="基本知识-1"><strong>基本知识</strong></h2>
+<p>　　epoll是在2.6内核中提出的，是之前的select和poll的增强版本。相对于select和poll来说，epoll更加灵活，没有描述符限制。epoll使用一个文件描述符管理多个描述符，将用户关系的文件描述符的事件存放到内核的一个事件表中，这样在用户空间和内核空间的copy只需一次。</p>
+<h2 id="epoll接口"><strong>epoll接口</strong></h2>
+<p>　　epoll操作过程需要三个接口，分别如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/epoll.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">epoll_create</span>(<span style="color:#66d9ef">int</span> size);
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">epoll_ctl</span>(<span style="color:#66d9ef">int</span> epfd, <span style="color:#66d9ef">int</span> op, <span style="color:#66d9ef">int</span> fd, <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">epoll_event</span> <span style="color:#f92672">*</span>event);
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">epoll_wait</span>(<span style="color:#66d9ef">int</span> epfd, <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">epoll_event</span> <span style="color:#f92672">*</span> events, <span style="color:#66d9ef">int</span> maxevents, <span style="color:#66d9ef">int</span> timeout);
+</code></pre></div><p><strong>（1） int epoll_create(int size);</strong></p>
+<ul>
+<li>创建一个epoll的句柄，size用来告诉内核这个监听的数目一共有多大。</li>
+<li>这个参数不同于select()中的第一个参数，给出最大监听的fd+1的值。</li>
+<li>需要注意的是，当创建好epoll句柄后，它就是会占用一个fd值，在linux下如果查看/proc/进程id/fd/，是能够看到这个fd的，所以在使用完epoll后，必须调用close()关闭，否则可能导致fd被耗尽。</li>
+</ul>
+<p><strong>（2）int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event);</strong>
+　　</p>
+<ul>
+<li>
+<p>epoll的事件注册函数，它不同与select()是在监听事件时告诉内核要监听什么类型的事件epoll的事件注册函数，它不同与select()是在监听事件时告诉内核要监听什么类型的事件，而是在这里先注册要监听的事件类型。</p>
+</li>
+<li>
+<p>第一个参数是epoll_create()的返回值，</p>
+</li>
+<li>
+<p>第二个参数表示动作，用三个宏来表示：</p>
+<ul>
+<li>
+<p>EPOLL_CTL_ADD：注册新的fd到epfd中；</p>
+</li>
+<li>
+<p>EPOLL_CTL_MOD：修改已经注册的fd的监听事件；</p>
+</li>
+<li>
+<p>EPOLL_CTL_DEL：从epfd中删除一个fd；</p>
+</li>
+</ul>
+</li>
+<li>
+<p>第三个参数是需要监听的fd，</p>
+</li>
+<li>
+<p>第四个参数是告诉内核需要监听什么事，struct epoll_event结构如下：</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">epoll_event</span> {
+  __uint32_t events;  <span style="color:#75715e">/* Epoll events */</span>
+  epoll_data_t data;  <span style="color:#75715e">/* User data variable */</span>
+};
+</code></pre></div><p>events可以是以下几个宏的集合：</p>
+<ul>
+<li>EPOLLIN ：表示对应的文件描述符可以读（包括对端SOCKET正常关闭）；</li>
+<li>EPOLLOUT：表示对应的文件描述符可以写；</li>
+<li>EPOLLPRI：表示对应的文件描述符有紧急的数据可读（这里应该表示有带外数据到来）；</li>
+<li>EPOLLERR：表示对应的文件描述符发生错误；</li>
+<li>EPOLLHUP：表示对应的文件描述符被挂断；</li>
+<li>EPOLLET： 将EPOLL设为边缘触发(Edge Triggered)模式，这是相对于水平触发(Level Triggered)来说的。</li>
+<li>EPOLLONESHOT：只监听一次事件，当监听完这次事件之后，如果还需要继续监听这个socket的话，需要再次把这个socket加入到EPOLL队列里</li>
+</ul>
+<p><strong>（3） int epoll_wait(int epfd, struct epoll_event * events, int maxevents, int timeout);</strong></p>
+<ul>
+<li>等待事件的产生，类似于select()调用。</li>
+<li>参数events用来从内核得到事件的集合，maxevents告之内核这个events有多大，这个maxevents的值不能大于创建epoll_create()时的size，参数timeout是超时时间（毫秒，0会立即返回，-1将不确定，也有说法说是永久阻塞）。</li>
+<li>该函数返回需要处理的事件数目，如返回0表示已超时。</li>
+</ul>
+<h2 id="工作模式"><strong>工作模式</strong></h2>
+<p>　　epoll对文件描述符的操作有两种模式：LT（level trigger）和ET（edge trigger）。LT模式是默认模式，LT模式与ET模式的区别如下：</p>
+<p>　　LT模式：<strong>当epoll_wait检测到描述符事件发生并将此事件通知应用程序，应用程序可以不立即处理该事件。下次调用epoll_wait时，会再次响应应用程序并通知此事件。</strong></p>
+<p>　　ET模式：<strong>当epoll_wait检测到描述符事件发生并将此事件通知应用程序，应用程序必须立即处理该事件。如果不处理，下次调用epoll_wait时，不会再次响应应用程序并通知此事件。</strong></p>
+<p>　　<strong>ET模式在很大程度上减少了epoll事件被重复触发的次数，因此效率要比LT模式高。epoll工作在ET模式的时候，必须使用非阻塞套接口，以避免由于一个文件句柄的阻塞读/阻塞写操作把处理多个文件描述符的任务饿死。</strong></p>
+<h2 id="测试程序-2">测试程序</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;errno.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;netinet/in.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/socket.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;arpa/inet.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/epoll.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/types.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#define IPADDRESS   &#34;127.0.0.1&#34;
+</span><span style="color:#75715e">#define PORT        8787
+</span><span style="color:#75715e">#define MAXSIZE     1024
+</span><span style="color:#75715e">#define LISTENQ     5
+</span><span style="color:#75715e">#define FDSIZE      1000
+</span><span style="color:#75715e">#define EPOLLEVENTS 100
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">//函数声明
+</span><span style="color:#75715e">//创建套接字并进行绑定
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">socket_bind</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> ip,<span style="color:#66d9ef">int</span> port);
+<span style="color:#75715e">//IO多路复用epoll
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">do_epoll</span>(<span style="color:#66d9ef">int</span> listenfd);
+<span style="color:#75715e">//事件处理函数
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">handle_events</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">epoll_event</span> <span style="color:#f92672">*</span>events,<span style="color:#66d9ef">int</span> num,<span style="color:#66d9ef">int</span> listenfd,<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf);
+<span style="color:#75715e">//处理接收到的连接
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">handle_accpet</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">int</span> listenfd);
+<span style="color:#75715e">//读处理
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">do_read</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">int</span> fd,<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf);
+<span style="color:#75715e">//写处理
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">do_write</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">int</span> fd,<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf);
+<span style="color:#75715e">//添加事件
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">add_event</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">int</span> fd,<span style="color:#66d9ef">int</span> state);
+<span style="color:#75715e">//修改事件
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">modify_event</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">int</span> fd,<span style="color:#66d9ef">int</span> state);
+<span style="color:#75715e">//删除事件
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">delete_event</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">int</span> fd,<span style="color:#66d9ef">int</span> state);
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc,<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[])
+{
+    <span style="color:#66d9ef">int</span>  listenfd;
+    listenfd <span style="color:#f92672">=</span> socket_bind(IPADDRESS,PORT);
+    listen(listenfd,LISTENQ);
+    do_epoll(listenfd);
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">socket_bind</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> ip,<span style="color:#66d9ef">int</span> port)
+{
+    <span style="color:#66d9ef">int</span>  listenfd;
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">sockaddr_in</span> servaddr;
+    listenfd <span style="color:#f92672">=</span> socket(AF_INET,SOCK_STREAM,<span style="color:#ae81ff">0</span>);
+    <span style="color:#66d9ef">if</span> (listenfd <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+    {
+        perror(<span style="color:#e6db74">&#34;socket error:&#34;</span>);
+        exit(<span style="color:#ae81ff">1</span>);
+    }
+    bzero(<span style="color:#f92672">&amp;</span>servaddr,<span style="color:#66d9ef">sizeof</span>(servaddr));
+    servaddr.sin_family <span style="color:#f92672">=</span> AF_INET;
+    inet_pton(AF_INET,ip,<span style="color:#f92672">&amp;</span>servaddr.sin_addr);
+    servaddr.sin_port <span style="color:#f92672">=</span> htons(port);
+    <span style="color:#66d9ef">if</span> (bind(listenfd,(<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">sockaddr</span><span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>servaddr,<span style="color:#66d9ef">sizeof</span>(servaddr)) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+    {
+        perror(<span style="color:#e6db74">&#34;bind error: &#34;</span>);
+        exit(<span style="color:#ae81ff">1</span>);
+    }
+    <span style="color:#66d9ef">return</span> listenfd;
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">do_epoll</span>(<span style="color:#66d9ef">int</span> listenfd)
+{
+    <span style="color:#66d9ef">int</span> epollfd;
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">epoll_event</span> events[EPOLLEVENTS];
+    <span style="color:#66d9ef">int</span> ret;
+    <span style="color:#66d9ef">char</span> buf[MAXSIZE];
+    memset(buf,<span style="color:#ae81ff">0</span>,MAXSIZE);
+    <span style="color:#75715e">//创建一个描述符
+</span><span style="color:#75715e"></span>    epollfd <span style="color:#f92672">=</span> epoll_create(FDSIZE);
+    <span style="color:#75715e">//添加监听描述符事件
+</span><span style="color:#75715e"></span>    add_event(epollfd,listenfd,EPOLLIN);
+    <span style="color:#66d9ef">for</span> ( ; ; )
+    {
+        <span style="color:#75715e">//获取已经准备好的描述符事件
+</span><span style="color:#75715e"></span>        ret <span style="color:#f92672">=</span> epoll_wait(epollfd,events,EPOLLEVENTS,<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+        handle_events(epollfd,events,ret,listenfd,buf);
+    }
+    close(epollfd);
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">handle_events</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">epoll_event</span> <span style="color:#f92672">*</span>events,<span style="color:#66d9ef">int</span> num,<span style="color:#66d9ef">int</span> listenfd,<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf)
+{
+    <span style="color:#66d9ef">int</span> i;
+    <span style="color:#66d9ef">int</span> fd;
+    <span style="color:#75715e">//进行选好遍历
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;i <span style="color:#f92672">&lt;</span> num;i<span style="color:#f92672">++</span>)
+    {
+        fd <span style="color:#f92672">=</span> events[i].data.fd;
+        <span style="color:#75715e">//根据描述符的类型和事件类型进行处理
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> ((fd <span style="color:#f92672">==</span> listenfd) <span style="color:#f92672">&amp;&amp;</span>(events[i].events <span style="color:#f92672">&amp;</span> EPOLLIN))
+            handle_accpet(epollfd,listenfd);
+        <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (events[i].events <span style="color:#f92672">&amp;</span> EPOLLIN)
+            do_read(epollfd,fd,buf);
+        <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (events[i].events <span style="color:#f92672">&amp;</span> EPOLLOUT)
+            do_write(epollfd,fd,buf);
+    }
+}
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">handle_accpet</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">int</span> listenfd)
+{
+    <span style="color:#66d9ef">int</span> clifd;
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">sockaddr_in</span> cliaddr;
+    socklen_t  cliaddrlen;
+    clifd <span style="color:#f92672">=</span> accept(listenfd,(<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">sockaddr</span><span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>cliaddr,<span style="color:#f92672">&amp;</span>cliaddrlen);
+    <span style="color:#66d9ef">if</span> (clifd <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+        perror(<span style="color:#e6db74">&#34;accpet error:&#34;</span>);
+    <span style="color:#66d9ef">else</span>
+    {
+        printf(<span style="color:#e6db74">&#34;accept a new client: %s:%d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,inet_ntoa(cliaddr.sin_addr),cliaddr.sin_port);
+        <span style="color:#75715e">//添加一个客户描述符和事件
+</span><span style="color:#75715e"></span>        add_event(epollfd,clifd,EPOLLIN);
+    }
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">do_read</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">int</span> fd,<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf)
+{
+    <span style="color:#66d9ef">int</span> nread;
+    nread <span style="color:#f92672">=</span> read(fd,buf,MAXSIZE);
+    <span style="color:#66d9ef">if</span> (nread <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+    {
+        perror(<span style="color:#e6db74">&#34;read error:&#34;</span>);
+        close(fd);
+        delete_event(epollfd,fd,EPOLLIN);
+    }
+    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (nread <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+    {
+        fprintf(stderr,<span style="color:#e6db74">&#34;client close.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+        close(fd);
+        delete_event(epollfd,fd,EPOLLIN);
+    }
+    <span style="color:#66d9ef">else</span>
+    {
+        printf(<span style="color:#e6db74">&#34;read message is : %s&#34;</span>,buf);
+        <span style="color:#75715e">//修改描述符对应的事件，由读改为写
+</span><span style="color:#75715e"></span>        modify_event(epollfd,fd,EPOLLOUT);
+    }
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">do_write</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">int</span> fd,<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf)
+{
+    <span style="color:#66d9ef">int</span> nwrite;
+    nwrite <span style="color:#f92672">=</span> write(fd,buf,strlen(buf));
+    <span style="color:#66d9ef">if</span> (nwrite <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+    {
+        perror(<span style="color:#e6db74">&#34;write error:&#34;</span>);
+        close(fd);
+        delete_event(epollfd,fd,EPOLLOUT);
+    }
+    <span style="color:#66d9ef">else</span>
+        modify_event(epollfd,fd,EPOLLIN);
+    memset(buf,<span style="color:#ae81ff">0</span>,MAXSIZE);
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">add_event</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">int</span> fd,<span style="color:#66d9ef">int</span> state)
+{
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">epoll_event</span> ev;
+    ev.events <span style="color:#f92672">=</span> state;
+    ev.data.fd <span style="color:#f92672">=</span> fd;
+    epoll_ctl(epollfd,EPOLL_CTL_ADD,fd,<span style="color:#f92672">&amp;</span>ev);
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">delete_event</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">int</span> fd,<span style="color:#66d9ef">int</span> state)
+{
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">epoll_event</span> ev;
+    ev.events <span style="color:#f92672">=</span> state;
+    ev.data.fd <span style="color:#f92672">=</span> fd;
+    epoll_ctl(epollfd,EPOLL_CTL_DEL,fd,<span style="color:#f92672">&amp;</span>ev);
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">modify_event</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">int</span> fd,<span style="color:#66d9ef">int</span> state)
+{
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">epoll_event</span> ev;
+    ev.events <span style="color:#f92672">=</span> state;
+    ev.data.fd <span style="color:#f92672">=</span> fd;
+    epoll_ctl(epollfd,EPOLL_CTL_MOD,fd,<span style="color:#f92672">&amp;</span>ev);
+}
+</code></pre></div><p>客户端也用epoll实现，控制STDIN_FILENO、STDOUT_FILENO、和sockfd三个描述符</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;netinet/in.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/socket.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/epoll.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;time.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/types.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;arpa/inet.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#define MAXSIZE     1024
+</span><span style="color:#75715e">#define IPADDRESS   &#34;127.0.0.1&#34;
+</span><span style="color:#75715e">#define SERV_PORT   8787
+</span><span style="color:#75715e">#define FDSIZE        1024
+</span><span style="color:#75715e">#define EPOLLEVENTS 20
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">handle_connection</span>(<span style="color:#66d9ef">int</span> sockfd);
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">handle_events</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">epoll_event</span> <span style="color:#f92672">*</span>events,<span style="color:#66d9ef">int</span> num,<span style="color:#66d9ef">int</span> sockfd,<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf);
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">do_read</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">int</span> fd,<span style="color:#66d9ef">int</span> sockfd,<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf);
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">do_read</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">int</span> fd,<span style="color:#66d9ef">int</span> sockfd,<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf);
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">do_write</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">int</span> fd,<span style="color:#66d9ef">int</span> sockfd,<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf);
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">add_event</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">int</span> fd,<span style="color:#66d9ef">int</span> state);
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">delete_event</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">int</span> fd,<span style="color:#66d9ef">int</span> state);
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">modify_event</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">int</span> fd,<span style="color:#66d9ef">int</span> state);
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc,<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[])
+{
+    <span style="color:#66d9ef">int</span>                 sockfd;
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">sockaddr_in</span>  servaddr;
+    sockfd <span style="color:#f92672">=</span> socket(AF_INET,SOCK_STREAM,<span style="color:#ae81ff">0</span>);
+    bzero(<span style="color:#f92672">&amp;</span>servaddr,<span style="color:#66d9ef">sizeof</span>(servaddr));
+    servaddr.sin_family <span style="color:#f92672">=</span> AF_INET;
+    servaddr.sin_port <span style="color:#f92672">=</span> htons(SERV_PORT);
+    inet_pton(AF_INET,IPADDRESS,<span style="color:#f92672">&amp;</span>servaddr.sin_addr);
+    connect(sockfd,(<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">sockaddr</span><span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>servaddr,<span style="color:#66d9ef">sizeof</span>(servaddr));
+    <span style="color:#75715e">//处理连接
+</span><span style="color:#75715e"></span>    handle_connection(sockfd);
+    close(sockfd);
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">handle_connection</span>(<span style="color:#66d9ef">int</span> sockfd)
+{
+    <span style="color:#66d9ef">int</span> epollfd;
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">epoll_event</span> events[EPOLLEVENTS];
+    <span style="color:#66d9ef">char</span> buf[MAXSIZE];
+    <span style="color:#66d9ef">int</span> ret;
+    epollfd <span style="color:#f92672">=</span> epoll_create(FDSIZE);
+    add_event(epollfd,STDIN_FILENO,EPOLLIN);
+    <span style="color:#66d9ef">for</span> ( ; ; )
+    {
+        ret <span style="color:#f92672">=</span> epoll_wait(epollfd,events,EPOLLEVENTS,<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+        handle_events(epollfd,events,ret,sockfd,buf);
+    }
+    close(epollfd);
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">handle_events</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">epoll_event</span> <span style="color:#f92672">*</span>events,<span style="color:#66d9ef">int</span> num,<span style="color:#66d9ef">int</span> sockfd,<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf)
+{
+    <span style="color:#66d9ef">int</span> fd;
+    <span style="color:#66d9ef">int</span> i;
+    <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;i <span style="color:#f92672">&lt;</span> num;i<span style="color:#f92672">++</span>)
+    {
+        fd <span style="color:#f92672">=</span> events[i].data.fd;
+        <span style="color:#66d9ef">if</span> (events[i].events <span style="color:#f92672">&amp;</span> EPOLLIN)
+            do_read(epollfd,fd,sockfd,buf);
+        <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (events[i].events <span style="color:#f92672">&amp;</span> EPOLLOUT)
+            do_write(epollfd,fd,sockfd,buf);
+    }
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">do_read</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">int</span> fd,<span style="color:#66d9ef">int</span> sockfd,<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf)
+{
+    <span style="color:#66d9ef">int</span> nread;
+    nread <span style="color:#f92672">=</span> read(fd,buf,MAXSIZE);
+        <span style="color:#66d9ef">if</span> (nread <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+    {
+        perror(<span style="color:#e6db74">&#34;read error:&#34;</span>);
+        close(fd);
+    }
+    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (nread <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+    {
+        fprintf(stderr,<span style="color:#e6db74">&#34;server close.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+        close(fd);
+    }
+    <span style="color:#66d9ef">else</span>
+    {
+        <span style="color:#66d9ef">if</span> (fd <span style="color:#f92672">==</span> STDIN_FILENO)
+            add_event(epollfd,sockfd,EPOLLOUT);
+        <span style="color:#66d9ef">else</span>
+        {
+            delete_event(epollfd,sockfd,EPOLLIN);
+            add_event(epollfd,STDOUT_FILENO,EPOLLOUT);
+        }
+    }
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">do_write</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">int</span> fd,<span style="color:#66d9ef">int</span> sockfd,<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf)
+{
+    <span style="color:#66d9ef">int</span> nwrite;
+    nwrite <span style="color:#f92672">=</span> write(fd,buf,strlen(buf));
+    <span style="color:#66d9ef">if</span> (nwrite <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+    {
+        perror(<span style="color:#e6db74">&#34;write error:&#34;</span>);
+        close(fd);
+    }
+    <span style="color:#66d9ef">else</span>
+    {
+        <span style="color:#66d9ef">if</span> (fd <span style="color:#f92672">==</span> STDOUT_FILENO)
+            delete_event(epollfd,fd,EPOLLOUT);
+        <span style="color:#66d9ef">else</span>
+            modify_event(epollfd,fd,EPOLLIN);
+    }
+    memset(buf,<span style="color:#ae81ff">0</span>,MAXSIZE);
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">add_event</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">int</span> fd,<span style="color:#66d9ef">int</span> state)
+{
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">epoll_event</span> ev;
+    ev.events <span style="color:#f92672">=</span> state;
+    ev.data.fd <span style="color:#f92672">=</span> fd;
+    epoll_ctl(epollfd,EPOLL_CTL_ADD,fd,<span style="color:#f92672">&amp;</span>ev);
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">delete_event</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">int</span> fd,<span style="color:#66d9ef">int</span> state)
+{
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">epoll_event</span> ev;
+    ev.events <span style="color:#f92672">=</span> state;
+    ev.data.fd <span style="color:#f92672">=</span> fd;
+    epoll_ctl(epollfd,EPOLL_CTL_DEL,fd,<span style="color:#f92672">&amp;</span>ev);
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">modify_event</span>(<span style="color:#66d9ef">int</span> epollfd,<span style="color:#66d9ef">int</span> fd,<span style="color:#66d9ef">int</span> state)
+{
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">epoll_event</span> ev;
+    ev.events <span style="color:#f92672">=</span> state;
+    ev.data.fd <span style="color:#f92672">=</span> fd;
+    epoll_ctl(epollfd,EPOLL_CTL_MOD,fd,<span style="color:#f92672">&amp;</span>ev);
+}
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Jiang . </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://jfy0o0.github.io/2021/linux-io%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/>https://jfy0o0.github.io/2021/linux-io%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://jfy0o0.github.io/tags/linux/">
+                    #Linux</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://jfy0o0.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://jfy0o0.github.io/2021/go-%E9%99%B7%E9%98%B1/" class="prev" rel="prev" title="Go - 陷阱"><i class="iconfont icon-left"></i>&nbsp;Go - 陷阱</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2021</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://jfy0o0.github.io">Jiang .</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

@@ -57,7 +57,7 @@
     "datePublished": "2021-07-20 10:19:18 \u002b0800 CST",
     "dateModified" : "2021-07-20 10:19:18 \u002b0800 CST",
     "url" : "https:\/\/jfy0o0.github.io\/2021\/linux-note\/",
-    "wordCount" : "276",
+    "wordCount" : "377",
     "keywords" : [ "Linux", "Jiang . \u0027s blog"]
 }
 </script>
@@ -225,6 +225,86 @@ Mems_allowed_list:  0
 voluntary_ctxt_switches:    2251028
 nonvoluntary_ctxt_switches: 18031
 </code></pre></div><p>关于信号（signal）的信息：SigQ 分为两部分（例如 0/31834），前面表示当前处在队列中的信号（0），后面则表示队列一共可以存储多少信号（31834）；SigPnd 表示当前线程 pending 的信号，而ShdPnd 则表示整个进程 pending 的信号；SigBlk、SigIgn 和 SigCgt 分别表示对信号的处理是阻塞，忽略，还是捕获。（关于Unix信号的相关知识，可以参考 Unix: Dealing with signals）。</p>
+<ul>
+<li>
+<p>Name:  rsyslogd 解释:进程名</p>
+</li>
+<li>
+<p>State:  S (sleeping)</p>
+<ul>
+<li>
+<p>解释:进程的状态我们前文已经做了很详细的分析,各进程的状态代表的意义如下:</p>
+<p>R (running)&quot;, &ldquo;S (sleeping)&rdquo;, &ldquo;D (disk sleep)&rdquo;, &ldquo;T (stopped)&rdquo;, &ldquo;T(tracing stop)&rdquo;, &ldquo;Z (zombie)&rdquo;, or &ldquo;X (dead)&rdquo;</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Tgid:  987</p>
+<p>解释:Tgid是线程组的ID,一个线程一定属于一个线程组(进程组).</p>
+</li>
+<li>
+<p>Pid:   987</p>
+<p>解释:这个是进程的ID,更准确的说应该是线程的ID.</p>
+</li>
+<li>
+<p>PPid:  1</p>
+<p>解释:当前进程的父进程</p>
+</li>
+<li>
+<p>TracerPid:    0</p>
+<p>解释:跟踪当前进程的进程ID,如果是0,表示没有跟踪.</p>
+</li>
+<li>
+<p>Uid:   0    0    0    0</p>
+<p>Gid:   0    0    0    0</p>
+<p>解释:</p>
+<p>第一列数字(RUID):实际用户ID,指的是进程执行者是谁.</p>
+<p>第二列数字(EUID):有效用户ID,指进程执行时对文件的访问权限.</p>
+<p>第三列数字(SUID):保存设置用户ID,作为effective user ID的副本,在执行exec调用时后能重新恢复原来的effectiv user ID.</p>
+<p>第四列数字(FSUID):目前进程的文件系统的用户识别码.一般情况下,文件系统的用户识别码(fsuid)与有效的用户识别码(euid)是相同的.</p>
+<p>这里重点说明RUID和EUID,我们用test用户启动top,如下:</p>
+<p>终端1)</p>
+</li>
+<li>
+<p>FDSize: 32</p>
+<p>解释:</p>
+<p>FDSize是当前分配的文件描述符,这个值不是当前进程使用文件描述符的上限.</p>
+<p>我们看到这里是32,但实际并没有分配32个文件</p>
+</li>
+<li>
+<p>Groups: 0</p>
+<p>解释:</p>
+<p>这里的groups表示启动这个进程的用户所在的组.</p>
+</li>
+<li>
+<p>VmPeak:   36528 kB</p>
+<p>解释:这里的VmPeak代表当前进程运行过程中占用内存的峰值.</p>
+<p>我们用下面的程序申请内存,然后释放内存,最后通pause()函数中止程序的运行,</p>
+</li>
+<li>
+<p>VmSize:   36528 kB</p>
+<p>解释:VmSize代表进程现在正在占用的内存</p>
+</li>
+<li>
+<p>VmLck:     0 kB</p>
+<p>解释:VmLck代表进程已经锁住的物理内存的大小.锁住的物理内存不能交换到硬盘.</p>
+</li>
+<li>
+<p>VmHWM:    1432 kB</p>
+<p>VmRSS:    1420 kB</p>
+<p>解释:</p>
+<p>VmHWM是程序得到分配到物理内存的峰值.</p>
+<p>VmRSS是程序现在使用的物理内存.</p>
+</li>
+<li>
+<p>VmPTE:     56 kB</p>
+<p>VmSwap:     0 kB</p>
+<p>VmPTE:     56 kB</p>
+<p>解释:</p>
+<p>占用的页表的大小.</p>
+<p>VmSwap: 0 kB</p>
+</li>
+</ul>
 <h1 id="procself">/proc/self</h1>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">ssize_t <span style="color:#a6e22e">readlink</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>path, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf, size_t bufsiz);
 </code></pre></div><p>/proc/self/exe 是一个符号链接，代表当前程序的绝对路径

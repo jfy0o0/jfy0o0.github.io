@@ -6,7 +6,24 @@
     <description>Recent content in Linux on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Jul 2021 10:19:18 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 29 Jul 2021 13:43:01 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux - io 多路复用</title>
+      <link>https://jfy0o0.github.io/2021/linux-io%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/</link>
+      <pubDate>Thu, 29 Jul 2021 13:43:01 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/linux-io%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/</guid>
+      <description>select 基本概念 　IO多路复用是指内核一旦发现进程指定的一个或者多个IO条件准备读取，它就通知该进程。IO多路复用适用如下场合：
+ 当客户处理多个描述字时（一般是交互式输入和网络套接口），必须使用I/O复用。 当一个客户同时处理多个套接口时，而这种情况是可能的，但很少出现。 如果一个TCP服务器既要处理监听套接口，又要处理已连接套接口，一般也要用到I/O复用。 如果一个服务器即要处理TCP，又要处理UDP，一般要使用I/O复用。 如果一个服务器要处理多个服务或多个协议，一般要使用I/O复用。  　与多进程和多线程技术相比，I/O多路复用技术的最大优势是系统开销小，系统不必创建进程/线程，也不必维护这些进程/线程，从而大大减小了系统的开销。
+select函数 该函数准许进程指示内核等待多个事件中的任何一个发送，并只在有一个或多个事件发生或经历一段指定的时间后才唤醒。函数原型如下：
+#include &amp;lt;sys/select.h&amp;gt;#include &amp;lt;sys/time.h&amp;gt; int select(int maxfdp1, fd_set *readset, fd_set *writeset, fd_set *exceptset, const struct timeval *timeout) // 返回值：就绪描述符的数目，超时返回0，出错返回-1 函数参数介绍如下：
+  第一个参数maxfdp1指定待测试的描述字个数，它的值是待测试的最大描述字加1（因此把该参数命名为maxfdp1），描述字0、1、2&amp;hellip;maxfdp1-1均将被测试。因为文件描述符是从0开始的。
+  中间的三个参数readset、writeset和exceptset指定我们要让内核测试读、写和异常条件的描述字。
+  如果对某一个的条件不感兴趣，就可以把它设为空指针。
+  struct fd_set可以理解为一个集合，这个集合中存放的是文件描述符，可通过以下四个宏进行设置：
+  void FD_ZERO(fd_set *fdset); //清空集合  void FD_SET(int fd, fd_set *fdset); //将一个给定的文件描述符加入集合之中  void FD_CLR(int fd, fd_set *fdset); //将一个给定的文件描述符从集合中删除  int FD_ISSET(int fd, fd_set *fdset); // 检查集合中指定的文件描述符是否可以读写  timeout告知内核等待所指定描述字中的任何一个就绪可花多少时间。其timeval结构用于指定这段时间的秒数和微秒数。  struct timeval{ long tv_sec; //seconds  long tv_usec; //microseconds  }; 这个参数有三种可能：</description>
+    </item>
+    
     <item>
       <title>Linux - note</title>
       <link>https://jfy0o0.github.io/2021/linux-note/</link>
