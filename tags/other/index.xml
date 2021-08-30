@@ -6,7 +6,17 @@
     <description>Recent content in Other on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 21 Apr 2021 15:37:06 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/other/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 30 Aug 2021 09:26:35 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/other/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Other - 线程池</title>
+      <link>https://jfy0o0.github.io/2021/other-%E7%BA%BF%E7%A8%8B%E6%B1%A0/</link>
+      <pubDate>Mon, 30 Aug 2021 09:26:35 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/other-%E7%BA%BF%E7%A8%8B%E6%B1%A0/</guid>
+      <description>简介 线程池（thread pool）：一种线程的使用模式，线程过多会带来调度开销，进而影响缓存局部性和整体性能。而线程池维护着多个线程，等待着监督管理者分配可并发执行的任务。这避免了在处理短时间任务时创建与销毁线程的代价。线程池不仅能够保证内核的充分利用，还能防止过分调度。可用线程数量应该取决于可用的并发处理器、处理器内核、内存、网络sockets等的数量。
+实现 /* * example: * // create thread pool with 4 worker threads * ThreadPool pool(4); * * // enqueue and store future * auto result = pool.enqueue([](int answer) { return answer; }, 42); * * // get result from future * std::cout &amp;lt;&amp;lt; result.get() &amp;lt;&amp;lt; std::endl; * */ class thread_pool { public: explicit thread_pool(size_t); template&amp;lt;class F, class... Args&amp;gt; auto enqueue(F&amp;amp;&amp;amp; f, Args&amp;amp;&amp;amp;... args) -&amp;gt; std::future&amp;lt;typename std::result_of&amp;lt;F(Args...)&amp;gt;::type&amp;gt;; ~thread_pool(); private: // need to keep track of threads so we can join them  std::vector&amp;lt; std::thread &amp;gt; workers; // the task queue  std::queue&amp;lt; std::function&amp;lt;void()&amp;gt; &amp;gt; tasks; // synchronization  std::mutex queue_mutex; std::condition_variable condition; bool stop; }; // the constructor just launches some amount of workers inline thread_pool::thread_pool(size_t threads) : stop(false) { for(size_t i = 0;i&amp;lt;threads;++i) workers.</description>
+    </item>
+    
     <item>
       <title>Other - docker</title>
       <link>https://jfy0o0.github.io/2021/other-docker/</link>

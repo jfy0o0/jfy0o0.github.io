@@ -6,7 +6,27 @@
     <description>Recent content in c&#43;&#43; on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Feb 2021 15:06:32 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 27 Aug 2021 08:38:24 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C&#43;&#43; - 性能测试</title>
+      <link>https://jfy0o0.github.io/2021/cpp_%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/</link>
+      <pubDate>Fri, 27 Aug 2021 08:38:24 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/cpp_%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/</guid>
+      <description>锁 未加锁 int MAX_CNT = 1000 * 10000; bool run = true; int gTestN = 0; TIME_COST([&amp;amp;](){ while (run) { gTestN++; if (gTestN &amp;gt; MAX_CNT) { run = false; } } }) // 23 ms 单线程加锁 int MAX_CNT = 1000 * 10000; bool run = true; int gTestN = 0; mutex m ; TIME_COST([&amp;amp;]() { while (run) { m.lock(); gTestN++; if (gTestN &amp;gt; MAX_CNT) { run = false; } m.unlock(); } }) // 187ms &amp;lt;---&amp;gt; 100 0000  // 187 000 μs &amp;lt;---&amp;gt; 100 0000  // 187 000 000 ns &amp;lt;---&amp;gt; 100 0000  // 187 ns &amp;lt;---&amp;gt; 1 多线程加锁 int MAX_CNT = 1000 * 10000; bool run = true; int gTestN = 0; thread th1 ([&amp;amp;]() { TIME_COST([&amp;amp;]() { while (run) { m.</description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43; - 并发详解</title>
+      <link>https://jfy0o0.github.io/2021/cpp_%E5%B9%B6%E5%8F%91%E8%AF%A6%E8%A7%A3/</link>
+      <pubDate>Fri, 13 Aug 2021 10:14:55 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/cpp_%E5%B9%B6%E5%8F%91%E8%AF%A6%E8%A7%A3/</guid>
+      <description>线程 创建线程 创建线程非常的简单的，下面就是一个使用了多线程的Hello World示例：
+// 01_hello_thread.cpp  #include &amp;lt;iostream&amp;gt;#include &amp;lt;thread&amp;gt; // ① using namespace std; // ②  void hello() { // ③  cout &amp;lt;&amp;lt; &amp;#34;Hello World from new thread.&amp;#34; &amp;lt;&amp;lt; endl; } int main() { thread t(hello); // ④  t.join(); // ⑤  return 0; } 对于这段代码说明如下：
+ 为了使用多线程的接口，我们需要#include 头文件。 为了简化声明，本文中的代码都将using namespace std;。 新建线程的入口是一个普通的函数，它并没有什么特别的地方。 创建线程的方式就是构造一个thread对象，并指定入口函数。与普通对象不一样的是，此时编译器便会为我们创建一个新的操作系统线程，并在新的线程中执行我们的入口函数。 关于join函数在下文中讲解。  int main() { thread t([] { cout &amp;lt;&amp;lt; &amp;#34;Hello World from lambda thread.</description>
+    </item>
+    
     <item>
       <title>C&#43;&#43; - 标准属性</title>
       <link>https://jfy0o0.github.io/2021/cpp_%E6%A0%87%E5%87%86%E5%B1%9E%E6%80%A7/</link>
@@ -131,7 +151,9 @@ template&amp;lt;typename Iterator, typename T&amp;gt; void func_impl(Iterator it
       <description>空间配置器 前言 在STL中，容器的定义中都带一个模板参数，如vector
 template &amp;lt;class T, class Alloc = alloc&amp;gt; class vector {...} 其中第二个参数就是该容器使用的空间配置器，其中缺省使用STL已经实现的空间配置器(alloc)，
 该配置器使用malloc/free等为vector分配内存。
-缺省的空间配置器  alloc定义了两级的空间配置器， 第一级是对malloc/free简单的封装。 而为了解决内存碎片的问题，跟进行内存管理，alloc实现的第二级的空间配置器。 第二级空间配置器在分配大块内存(大于128bytes)时，会直接调用第一级空间配置器， 而分配小于128bytes的内存时，则使用内存池跟free_list进行内存分配/管理。  第一级空间配置器  它可以设定一个处理内存不足的时候的处理函数(跟set_new_handler类似)。  class base_alloc { public: // 只是对malloc/free的简单封装  static void* allocate(size_t n) { void* res = malloc(n); if (0 == res) res = oom_malloc(n); return res; } static void* reallocate(void* p, size_t new_sz) { void* res = realloc(p, new_sz); if (0 == res) res = oom_realloc(p, new_sz); return res; } static void deallocate(void* p) { free(p); } // 用来设置内存不足时的处理函数 该函数参数跟返回值都是一个函数指针  // 一般会抛出异常/尝试回收内存  static void(*set_handler(void(*f)()))() { void(*old)() = _oom_handler; _oom_handler = f; return old; } private: // 用来处理内存不足的情况  static void* oom_malloc(size_t n) { void(*my_handler)(); void* res; for (;;) { my_handler = _oom_handler; if (0 == my_handler) { return NULL; } (*my_handler)(); if (res = malloc(n)) return res; } } // 用来处理内存不足的情况  static void* oom_realloc(void* p, size_t n) { void(*my_handler)(); void* res; for (;;) { my_handler = _oom_handler; if (0 == my_handler) { return NULL; } (*my_handler)(); if (res = reallocate(p, n)) return res; } } // 由用户设置，在内存不足的时候进行处理，由上面两个函数调用  static void(*_oom_handler)(); }; // 处理函数默认为0 void(*base_alloc::_oom_handler)() = 0; 第二级空间配置器  该配置器维护一个free_list，这是一个指针数组。 在分配内存的时候，补足8bytes的倍数，free_list数组中每个指针分别管理分配大小为8、16、24、32&amp;hellip;bytes的内存。 下图表示从二级空间配置器中分配内存时是如何维护free_list的(建议参考下面源码阅读)。 开始所有指针都为0，没有可分配的区块时(就是free_list[i]==0)会从内存池中分配内存(默认分配20个区块)插入到free_list[i]中。 然后改变free_list[i]的指向，指向下一个区块(free_list_link指向下一个区块，如果没有则为0)。  enum { _ALIGN = 8 }; // 对齐 enum { _MAX_BYTES = 128 }; // 区块大小上限 enum { _NFREELISTS = _MAX_BYTES / _ALIGN }; // free-list个数  class default_alloc { private: // 将bytes上调到8的倍数  static size_t ROUND_UP(size_t bytes) { return (bytes + _ALIGN - 1) &amp;amp; ~(_ALIGN - 1); } private: union obj { union obj* free_list_link; char client_data[1]; }; private: // 16个free-lists 各自管理分别为8,16,24.</description>
+#include &amp;lt;vector&amp;gt; int main() { std::vector&amp;lt;int&amp;gt; v; // Do something; return 0; }  从用户代码std::vector&amp;lt;int&amp;gt; v;开始，vector的模板参数class T被替换为int， 同时第二个模板参数因为没有指定，所以为默认模板参数，即allocator&amp;lt;int&amp;gt;， 这个vector对象v会在内部实例一个allocator&amp;lt;int&amp;gt;的对象，用来管理内存。  假设我们自己写了一个allocator，叫做my_alloc，就可以指定它来为vector分配空间：
+allocator 标准接口 这是STL标准要求的allocator必要接口：
+// 以下几种自定义类型是一种type_traits技巧，暂时不需要了解 allocator::value_type allocator::pointer allocator::const_pointer allocator::reference allocator::const_reference allocator::size_type allocator::difference // 一个嵌套的(nested)class template，class rebind&amp;lt;U&amp;gt;拥有唯一成员other，那是一个typedef，代表allocator&amp;lt;U&amp;gt; allocator::rebind allocator::allocator() // 默认构造函数 allocator::allocator(const allocator&amp;amp;) // 拷贝构造函数 template &amp;lt;class U&amp;gt;allocator::allocator(const allocator&amp;lt;U&amp;gt;&amp;amp;) // 泛化的拷贝构造函数 allocator::~allocator() // 析构函数  // 返回某个对象的地址，a.</description>
     </item>
     
     <item>

@@ -6,7 +6,17 @@
     <description>Recent content in elementary knowledge on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 Jul 2021 08:40:52 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/elementary-knowledge/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 09 Aug 2021 15:06:25 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/elementary-knowledge/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>elementary knowledge - P2P技术之UDP打洞</title>
+      <link>https://jfy0o0.github.io/2021/elementary-knowledge-p2p%E6%8A%80%E6%9C%AF%E4%B9%8Budp%E6%89%93%E6%B4%9E/</link>
+      <pubDate>Mon, 09 Aug 2021 15:06:25 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/elementary-knowledge-p2p%E6%8A%80%E6%9C%AF%E4%B9%8Budp%E6%89%93%E6%B4%9E/</guid>
+      <description>简单解释 P2P 技术之 UDP 打洞  P2P 通信最大的障碍就是 NAT（网络地址转换），NAT 使得局域网内的设备也可以与公网进行通讯，但是不同 NAT 下的设备之间通讯将会变得很困难。 UDP 打洞就是用来使得设备间绕过 NAT 进行通讯的一种技术。  简单解释 NAT  一种就叫做 NAT，它只对 IP 地址进行转换； 另一种叫做 NAPT（Network Address/Port Translation），它可以对整个会话的端点（由 IP 地址和端口号组成）做转换，这是一种更加常见的 NAT 变种。  面就简单介绍一下 NAT 的工作原理：
+ 首先，NAT A 网下的设备 1（192.168.1.101）想与某公网 IP 通讯，  设备 1 将包发给 NAT A， 然后 NAT A 对源 IP 进行转换发给 NAT B（中间可能还会经过多重 NAT）。   这样做的目的是，NAT B 并不知晓 NAT A 下的各个设备，他只能与 NAT A 本身通讯，因此发送给 NAT B 的包源 IP 必须是 NAT A 的公网 IP，不然 NAT B 没有办法进行回复。 接下来 NAT B 将回复包再发回 NAT A，此时就是 NAT 发挥作用的时候了，NAT A 现在要做的就是将包再分发回之前的设备，  如何确定要发给谁呢？ NAT 中记录了一张表，之前 192.</description>
+    </item>
+    
     <item>
       <title>elementary knowledge - 字符编码</title>
       <link>https://jfy0o0.github.io/2021/elementary-knowledge-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/</link>
@@ -28,6 +38,7 @@
  私钥加签，公钥验签  ​	网络通讯中我们一般用自己的私钥加签将报文，用第三方提供的公钥将报文中涉及安全隐私的部分加密，然后第三方会用我们提供公钥进行验签，验签通过后再用他们自己的私钥将报文加密部分解密。
 ​	如果还需要响应返回，那么他们还将重复一遍我们这边的过程，我们这边也需要重复一边他们那边的过程，用他们提供的公钥验签返回回来的报文，并用自己的私钥解密隐私部分。
 ​	这里又有个问题，既然公钥是公开的，你如何确定这个公钥是你的而不是别人的？这样一想，其实就变成了一个循环，没法证明绝对安全，鸡生蛋蛋生鸡的问题。
+证书链 位于签名后面。为证书的一条链，顶级为ca，下级由上一级的私钥加签，一级级下去，这样可以判断是否有效。其中签名可以由上一级的公钥验签，判断是否合法
 ca 其实在密码学中也是这样，你必须建立一个信赖点，不然任何都是无法信赖的。所以在此基础上，出现了一个可信任的第三方认证中心（CA），
  CA把你的公钥进行认证，并颁发一个数字证书给到你，该证书里面包含了你的公钥， 而你给别人的公钥也替换成数字证书， 别人拿到数字证书，看了下，确实是CA签发的，那么这里面的公钥就是你的，你是可信的。 这里就又把大家所迷惑的一个概念理清楚了， 证书就是经过认证的公钥。  </description>
     </item>

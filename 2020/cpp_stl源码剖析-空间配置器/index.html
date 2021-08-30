@@ -46,7 +46,7 @@
     "articleSection" : "posts",
     "name" : "C\u002b\u002b - STL源码剖析 - 空间配置器",
     "headline" : "C\u002b\u002b - STL源码剖析 - 空间配置器",
-    "description" : "空间配置器 前言 在STL中，容器的定义中都带一个模板参数，如vector\ntemplate \u0026lt;class T, class Alloc = alloc\u0026gt; class vector {...} 其中第二个参数就是该容器使用的空间配置器，其中缺省使用STL已经实现的空间配置器(alloc)，\n该配置器使用malloc\/free等为vector分配内存。\n缺省的空间配置器  alloc定义了两级的空间配置器， 第一级是对malloc\/free简单的封装。 而为了解决内存碎片的问题，跟进行内存管理，alloc实现的第二级的空间配置器。 第二级空间配置器在分配大块内存(大于128bytes)时，会直接调用第一级空间配置器， 而分配小于128bytes的内存时，则使用内存池跟free_list进行内存分配\/管理。  第一级空间配置器  它可以设定一个处理内存不足的时候的处理函数(跟set_new_handler类似)。  class base_alloc { public: \/\/ 只是对malloc\/free的简单封装  static void* allocate(size_t n) { void* res = malloc(n); if (0 == res) res = oom_malloc(n); return res; } static void* reallocate(void* p, size_t new_sz) { void* res = realloc(p, new_sz); if (0 == res) res = oom_realloc(p, new_sz); return res; } static void deallocate(void* p) { free(p); } \/\/ 用来设置内存不足时的处理函数 该函数参数跟返回值都是一个函数指针  \/\/ 一般会抛出异常\/尝试回收内存  static void(*set_handler(void(*f)()))() { void(*old)() = _oom_handler; _oom_handler = f; return old; } private: \/\/ 用来处理内存不足的情况  static void* oom_malloc(size_t n) { void(*my_handler)(); void* res; for (;;) { my_handler = _oom_handler; if (0 == my_handler) { return NULL; } (*my_handler)(); if (res = malloc(n)) return res; } } \/\/ 用来处理内存不足的情况  static void* oom_realloc(void* p, size_t n) { void(*my_handler)(); void* res; for (;;) { my_handler = _oom_handler; if (0 == my_handler) { return NULL; } (*my_handler)(); if (res = reallocate(p, n)) return res; } } \/\/ 由用户设置，在内存不足的时候进行处理，由上面两个函数调用  static void(*_oom_handler)(); }; \/\/ 处理函数默认为0 void(*base_alloc::_oom_handler)() = 0; 第二级空间配置器  该配置器维护一个free_list，这是一个指针数组。 在分配内存的时候，补足8bytes的倍数，free_list数组中每个指针分别管理分配大小为8、16、24、32\u0026hellip;bytes的内存。 下图表示从二级空间配置器中分配内存时是如何维护free_list的(建议参考下面源码阅读)。 开始所有指针都为0，没有可分配的区块时(就是free_list[i]==0)会从内存池中分配内存(默认分配20个区块)插入到free_list[i]中。 然后改变free_list[i]的指向，指向下一个区块(free_list_link指向下一个区块，如果没有则为0)。  enum { _ALIGN = 8 }; \/\/ 对齐 enum { _MAX_BYTES = 128 }; \/\/ 区块大小上限 enum { _NFREELISTS = _MAX_BYTES \/ _ALIGN }; \/\/ free-list个数  class default_alloc { private: \/\/ 将bytes上调到8的倍数  static size_t ROUND_UP(size_t bytes) { return (bytes \u002b _ALIGN - 1) \u0026amp; ~(_ALIGN - 1); } private: union obj { union obj* free_list_link; char client_data[1]; }; private: \/\/ 16个free-lists 各自管理分别为8,16,24.",
+    "description" : "空间配置器 前言 在STL中，容器的定义中都带一个模板参数，如vector\ntemplate \u0026lt;class T, class Alloc = alloc\u0026gt; class vector {...} 其中第二个参数就是该容器使用的空间配置器，其中缺省使用STL已经实现的空间配置器(alloc)，\n该配置器使用malloc\/free等为vector分配内存。\n#include \u0026lt;vector\u0026gt; int main() { std::vector\u0026lt;int\u0026gt; v; \/\/ Do something; return 0; }  从用户代码std::vector\u0026lt;int\u0026gt; v;开始，vector的模板参数class T被替换为int， 同时第二个模板参数因为没有指定，所以为默认模板参数，即allocator\u0026lt;int\u0026gt;， 这个vector对象v会在内部实例一个allocator\u0026lt;int\u0026gt;的对象，用来管理内存。  假设我们自己写了一个allocator，叫做my_alloc，就可以指定它来为vector分配空间：\nallocator 标准接口 这是STL标准要求的allocator必要接口：\n\/\/ 以下几种自定义类型是一种type_traits技巧，暂时不需要了解 allocator::value_type allocator::pointer allocator::const_pointer allocator::reference allocator::const_reference allocator::size_type allocator::difference \/\/ 一个嵌套的(nested)class template，class rebind\u0026lt;U\u0026gt;拥有唯一成员other，那是一个typedef，代表allocator\u0026lt;U\u0026gt; allocator::rebind allocator::allocator() \/\/ 默认构造函数 allocator::allocator(const allocator\u0026amp;) \/\/ 拷贝构造函数 template \u0026lt;class U\u0026gt;allocator::allocator(const allocator\u0026lt;U\u0026gt;\u0026amp;) \/\/ 泛化的拷贝构造函数 allocator::~allocator() \/\/ 析构函数  \/\/ 返回某个对象的地址，a.",
     "inLanguage" : "en-us",
     "author" : "Jiang",
     "creator" : "Jiang",
@@ -57,7 +57,7 @@
     "datePublished": "2020-12-21 16:14:02 \u002b0800 CST",
     "dateModified" : "2020-12-21 16:14:02 \u002b0800 CST",
     "url" : "https:\/\/jfy0o0.github.io\/2020\/cpp_stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90-%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8\/",
-    "wordCount" : "575",
+    "wordCount" : "939",
     "keywords" : [ "C\u002b\u002b", "Jiang . \u0027s blog"]
 }
 </script>
@@ -153,6 +153,148 @@
 <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">vector</span> {...}
 </code></pre></div><p>其中第二个参数就是该容器使用的空间配置器，其中缺省使用STL已经实现的空间配置器(alloc)，</p>
 <p>该配置器使用malloc/free等为vector分配内存。</p>
+<pre><code>#include &lt;vector&gt;
+int main()
+{
+    std::vector&lt;int&gt; v;
+    // Do something;
+    return 0;
+}
+</code></pre><ul>
+<li>从用户代码<code>std::vector&lt;int&gt; v;</code>开始，vector的<strong>模板参数class T被替换为int</strong>，</li>
+<li>同时第二个模板参数因为没有指定，所以为默认模板参数，即<code>allocator&lt;int&gt;</code>，</li>
+<li>这个vector对象v会在内部实例一个<code>allocator&lt;int&gt;</code>的对象，用来管理内存。</li>
+</ul>
+<p>假设我们自己写了一个allocator，叫做my_alloc，就可以指定它来为vector分配空间：</p>
+<h2 id="allocator-标准接口">allocator 标准接口</h2>
+<p>这是STL标准要求的allocator必要接口：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">// 以下几种自定义类型是一种type_traits技巧，暂时不需要了解
+</span><span style="color:#75715e"></span>allocator<span style="color:#f92672">::</span>value_type
+allocator<span style="color:#f92672">::</span>pointer
+allocator<span style="color:#f92672">::</span>const_pointer
+allocator<span style="color:#f92672">::</span>reference
+allocator<span style="color:#f92672">::</span>const_reference
+allocator<span style="color:#f92672">::</span>size_type
+allocator<span style="color:#f92672">::</span>difference
+
+<span style="color:#75715e">// 一个嵌套的(nested)class template，class rebind&lt;U&gt;拥有唯一成员other，那是一个typedef，代表allocator&lt;U&gt;
+</span><span style="color:#75715e"></span>allocator<span style="color:#f92672">::</span>rebind
+
+allocator<span style="color:#f92672">::</span>allocator() <span style="color:#75715e">// 默认构造函数
+</span><span style="color:#75715e"></span>allocator<span style="color:#f92672">::</span>allocator(<span style="color:#66d9ef">const</span> allocator<span style="color:#f92672">&amp;</span>) <span style="color:#75715e">// 拷贝构造函数
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">U</span><span style="color:#f92672">&gt;</span>allocator<span style="color:#f92672">::</span>allocator(<span style="color:#66d9ef">const</span> allocator<span style="color:#f92672">&lt;</span>U<span style="color:#f92672">&gt;&amp;</span>) <span style="color:#75715e">// 泛化的拷贝构造函数
+</span><span style="color:#75715e"></span>allocator<span style="color:#f92672">::~</span>allocator() <span style="color:#75715e">// 析构函数
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// 返回某个对象的地址，a.address(x)等同于&amp;x
+</span><span style="color:#75715e"></span>pointer allocator<span style="color:#f92672">::</span>address(reference x) <span style="color:#66d9ef">const</span>
+<span style="color:#75715e">// 返回某个const对象的地址，a.address(x)等同于&amp;x
+</span><span style="color:#75715e"></span>const_pointer allocator<span style="color:#f92672">::</span>address(const_reference x) <span style="color:#66d9ef">const</span>
+
+<span style="color:#75715e">// 配置空间，足以存储n个T对象。第二个参数是个提示。实现上可能会利用它来增进区域性(locality)，或完全忽略之
+</span><span style="color:#75715e"></span>pointer allocator<span style="color:#f92672">::</span>allocate(size_type n, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span><span style="color:#f92672">*</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>)
+<span style="color:#75715e">// 释放先前配置的空间
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> allocator<span style="color:#f92672">::</span>deallocate(pointer p, size_type n)
+
+<span style="color:#75715e">// 返回可成功配置的最大量
+</span><span style="color:#75715e"></span>size_type allocator:maxsize() <span style="color:#66d9ef">const</span>
+
+<span style="color:#75715e">// 调用对象的构造函数，等同于 new((void*)p) T(x)
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> allocator<span style="color:#f92672">::</span>construct(pointer p, <span style="color:#66d9ef">const</span> T<span style="color:#f92672">&amp;</span> x)
+<span style="color:#75715e">// 调用对象的析构函数，等同于 p-&gt;~T()
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> allocator<span style="color:#f92672">::</span>destroy(pointer p)
+</code></pre></div><p>上面的标准接口实际只需要关注最后的<code>allocate</code>，<code>deallocate</code>，<code>construct</code>和<code>destroy</code>函数的实现即可</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;new&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstddef&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstdlib&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;climits&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">namespace</span> my_alloc
+{
+    <span style="color:#75715e">// allocate的实际实现，简单封装new，当无法获得内存时，报错并退出
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#66d9ef">inline</span> T<span style="color:#f92672">*</span> _allocate(ptrdiff_t size, T<span style="color:#f92672">*</span>) {
+        set_new_handler(<span style="color:#ae81ff">0</span>);
+        T<span style="color:#f92672">*</span> tmp <span style="color:#f92672">=</span> (T<span style="color:#f92672">*</span>)(<span style="color:#f92672">::</span><span style="color:#66d9ef">operator</span> <span style="color:#66d9ef">new</span>((size_t)(size <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(T))));
+        <span style="color:#66d9ef">if</span> (tmp <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+            cerr <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;out of memory&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+            exit(<span style="color:#ae81ff">1</span>);
+        }
+        <span style="color:#66d9ef">return</span> tmp;
+    }
+
+    <span style="color:#75715e">// deallocate的实际实现，简单封装delete
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> _deallocate(T<span style="color:#f92672">*</span> buffer) { <span style="color:#f92672">::</span><span style="color:#66d9ef">operator</span> <span style="color:#66d9ef">delete</span>(buffer); }
+
+    <span style="color:#75715e">// construct的实际实现，直接调用对象的构造函数
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T1</span>, <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T2</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> _construct(T1<span style="color:#f92672">*</span> p, <span style="color:#66d9ef">const</span> T2<span style="color:#f92672">&amp;</span> value) { <span style="color:#66d9ef">new</span>(p) T1(value); }
+
+    <span style="color:#75715e">// destroy的实际实现，直接调用对象的析构函数
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> _destroy(T<span style="color:#f92672">*</span> ptr) { ptr<span style="color:#f92672">-&gt;~</span>T(); }
+
+    <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">allocator</span> {
+    <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+        <span style="color:#66d9ef">typedef</span> T           value_type;
+        <span style="color:#66d9ef">typedef</span> T<span style="color:#f92672">*</span>          pointer;
+        <span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">const</span> T<span style="color:#f92672">*</span>    const_pointer;
+        <span style="color:#66d9ef">typedef</span> T<span style="color:#f92672">&amp;</span>          reference;
+        <span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">const</span> T<span style="color:#f92672">&amp;</span>    const_reference;
+        <span style="color:#66d9ef">typedef</span> size_t      size_type;
+        <span style="color:#66d9ef">typedef</span> ptrdiff_t   difference_type;
+
+        <span style="color:#75715e">// 构造函数
+</span><span style="color:#75715e"></span>        allocator(){ <span style="color:#66d9ef">return</span>; }
+        <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">U</span><span style="color:#f92672">&gt;</span>
+        allocator(<span style="color:#66d9ef">const</span> allocator<span style="color:#f92672">&lt;</span>U<span style="color:#f92672">&gt;&amp;</span> c){}
+
+        <span style="color:#75715e">// rebind allocator of type U
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">U</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">rebind</span> { <span style="color:#66d9ef">typedef</span> allocator<span style="color:#f92672">&lt;</span>U<span style="color:#f92672">&gt;</span> other; };
+
+        <span style="color:#75715e">// allocate，deallocate，construct和destroy函数均调用上面的实际实现
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// hint used for locality. ref.[Austern],p189
+</span><span style="color:#75715e"></span>        pointer <span style="color:#a6e22e">allocate</span>(size_type n, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span><span style="color:#f92672">*</span> hint <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>) {
+            <span style="color:#66d9ef">return</span> _allocate((difference_type)n, (pointer)<span style="color:#ae81ff">0</span>);
+        }
+        <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">deallocate</span>(pointer p, size_type n) { _deallocate(p); }
+        <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">construct</span>(pointer p, <span style="color:#66d9ef">const</span> T<span style="color:#f92672">&amp;</span> value) { _construct(p, value); }
+        <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">destroy</span>(pointer p) { _destroy(p); }
+
+        pointer <span style="color:#a6e22e">address</span>(reference x) { <span style="color:#66d9ef">return</span> (pointer)<span style="color:#f92672">&amp;</span>x; }
+        const_pointer <span style="color:#a6e22e">const_address</span>(const_reference x) { <span style="color:#66d9ef">return</span> (const_pointer)<span style="color:#f92672">&amp;</span>x; }
+
+        size_type <span style="color:#a6e22e">max_size</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> size_type(UINT_MAX <span style="color:#f92672">/</span> <span style="color:#66d9ef">sizeof</span>(T)); }   
+    };
+} <span style="color:#75715e">// end of namespace myalloc
+</span></code></pre></div><p>**然而，这样并不能通过编译（如果你使用的是GCC编译器），因为SGI STL的allocator并不完全符合STL规范，我们编写的符合规范的自然不能搭配使用，**SGI STL版本的allocator具体实现在下文阐述。</p>
+<h2 id="sgi-stl-的-allocator">SGI STL 的 allocator</h2>
+<p>SGI STL 实现了两个allocator：一个是标准的std::allocator，另一个是特殊的std::alloc。</p>
+<h3 id="标准配置器-stdallocator">标准配置器 std::allocator</h3>
+<p>这个allocator部分符合STL标准，它在文件 defalloc.h 中实现。但是SGI STL的容器并不使用它，也不建议我们使用，它存在的意义仅在于为用户提供一个兼容老代码的折衷方法，其实现仅仅是对new和delete的简单包装。</p>
+<h2 id="特殊配置器-stdalloc">特殊配置器 std::alloc</h2>
+<p>这个配置器是SGI STL的默认配置器，它在<code>&lt;memory&gt;</code>中实现。</p>
+<p><code>&lt;memory&gt;</code>中包含三个文件：</p>
+<ul>
+<li><code>&lt;stl_construct.h&gt;</code>：定义了全局函数construct()和destroy()，负责对象构造和析构。</li>
+<li><code>&lt;stl_alloc.h&gt;</code>：内存配置和释放在此处实现，其内部有两级配置器，第一级结构简单，封装malloc()和free()，第二级实现了自由链表和内存池，用于提升大量小额内存配置时的性能。</li>
+<li><code>&lt;stl_uninitialiezed.h&gt;</code>：一些用于用于填充和拷贝大块内存的全局函数。</li>
+</ul>
+<p>对象构造和/析构，与内存配置/释放是分离实现的。</p>
+<p>用户代码实例化一个vector对象，vector对象调用<code>alloc</code>的接口，注意，不同于之前标准的allocator，这里不需要实例化一个空间配置器，只需要调用<code>alloc</code>的静态函数就行了。</p>
+<p><code>std::alloc</code>的接口与标准非常相似：</p>
+<ul>
+<li><code>static T* allocate()</code>函数负责空间配置，返回一个T对象大小的空间。</li>
+<li><code>static T* allocate(size_t)</code>函数负责批量空间配置。</li>
+<li><code>static void deallocate(T*)</code>函数负责空间释放。</li>
+<li><code>static void deallocate(T*,size_t)</code>函数负责批量空间释放。</li>
+</ul>
+<p>我们看到还有两级配置器，上面的接口根据情况调用这两个配置器，第二级配置器实现了内存池和自由链表，当程序多次进行小空间的配置时，可以从内存池和自由链表中获取空间，减少系统调用，提升性能。当进行大空间的配置时，上面的接口直接调用第一级配置器。最终，它们都是用<code>malloc()</code>和<code>free()</code>来配置和释放空间。</p>
+<p>一般C++开发者了解到此已经足够应付大多数开发场景了。</p>
+<p>这样看起来<code>std::alloc</code>的结构还算清晰，但是实际实现还会出现多种边界情况，比如，当系统调用<code>malloc()</code>空间不足时，我们需要让第一级配置器来处理，这可能涉及从第二级配置器中回收已经缓存但还未使用的空间，事情就变得繁琐了。</p>
 <h1 id="缺省的空间配置器"><strong>缺省的空间配置器</strong></h1>
 <ul>
 <li>alloc定义了两级的空间配置器，</li>

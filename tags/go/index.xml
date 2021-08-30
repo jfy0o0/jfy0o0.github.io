@@ -6,7 +6,17 @@
     <description>Recent content in Go on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Jul 2021 13:43:50 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 31 Jul 2021 09:42:56 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go - 详解reflect</title>
+      <link>https://jfy0o0.github.io/2021/go-%E8%AF%A6%E8%A7%A3reflect/</link>
+      <pubDate>Sat, 31 Jul 2021 09:42:56 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/go-%E8%AF%A6%E8%A7%A3reflect/</guid>
+      <description>reflect包实现了运行时反射，允许程序操作任意类型的对象。 典型用法是用静态类型interface{}保存一个值，通过调用TypeOf获取其动态类型信息，该函数返回一个Type类型值。 调用ValueOf函数返回一个Value类型值，该值代表运行时的数据。 Zero接受一个Type类型参数并返回一个代表该类型零值的Value类型值。  reflect.Type 在Go语言程序中，使用 reflect.TypeOf() 函数可以获得任意值的类型对象（reflect.Type），程序通过类型对象可以访问任意值的类型信息，下面通过示例来理解获取类型对象的过程：
+package main import ( &amp;#34;fmt&amp;#34; &amp;#34;reflect&amp;#34; ) func main() { var a int typeOfA := reflect.TypeOf(a) fmt.Println(typeOfA.Name(), typeOfA.Kind())//int int } 反射的类型（Type）与种类（Kind）  在使用反射时，需要首先理解类型（Type）和种类（Kind）的区别。 编程中，使用最多的是类型，但在反射中，当需要区分一个大品种的类型时，就会用到种类（Kind）。 例如需要统一判断类型中的指针时，使用种类（Kind）信息就较为方便。  1) 反射种类（Kind）的定义  Go语言程序中的类型（Type）指的是系统原生数据类型，如 int、string、bool、float32 等类型，以及使用 type 关键字定义的类型，这些类型的名称就是其类型本身的名称。 例如使用 type A struct{} 定义结构体时，A 就是 struct{} 的类型。  type Kind uint const ( Invalid Kind = iota // 非法类型  Bool // 布尔型  Int // 有符号整型  Int8 // 有符号8位整型  Int16 // 有符号16位整型  Int32 // 有符号32位整型  Int64 // 有符号64位整型  Uint // 无符号整型  Uint8 // 无符号8位整型  Uint16 // 无符号16位整型  Uint32 // 无符号32位整型  Uint64 // 无符号64位整型  Uintptr // 指针  Float32 // 单精度浮点数  Float64 // 双精度浮点数  Complex64 // 64位复数类型  Complex128 // 128位复数类型  Array // 数组  Chan // 通道  Func // 函数  Interface // 接口  Map // 映射  Ptr // 指针  Slice // 切片  String // 字符串  Struct // 结构体  UnsafePointer // 底层指针 ) Map、Slice、Chan 属于引用类型，使用起来类似于指针，但是在种类常量定义中仍然属于独立的种类，不属于 Ptr。type A struct{} 定义的结构体属于 Struct 种类，*A 属于 Ptr。</description>
+    </item>
+    
     <item>
       <title>Go - 陷阱</title>
       <link>https://jfy0o0.github.io/2021/go-%E9%99%B7%E9%98%B1/</link>

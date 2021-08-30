@@ -57,7 +57,7 @@
     "datePublished": "2020-12-21 18:45:25 \u002b0800 CST",
     "dateModified" : "2020-12-21 18:45:25 \u002b0800 CST",
     "url" : "https:\/\/jfy0o0.github.io\/2020\/cpp_stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90-traits%E6%8A%80%E6%9C%AF\/",
-    "wordCount" : "514",
+    "wordCount" : "777",
     "keywords" : [ "C\u002b\u002b", "Jiang . \u0027s blog"]
 }
 </script>
@@ -432,7 +432,129 @@ cout <span style="color:#f92672">&lt;&lt;</span> func(ite);
 {  
     <span style="color:#75715e">//...  
 </span><span style="color:#75715e"></span>}  
-</code></pre></div>
+</code></pre></div><h1 id="例子">例子</h1>
+<h2 id="容器实现">容器实现</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ListItem</span>
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    ListItem() { m_pNext <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;}
+    ListItem(T v, ListItem <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>) { m_value <span style="color:#f92672">=</span> v; m_pNext <span style="color:#f92672">=</span> p;}
+    T <span style="color:#a6e22e">Value</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> m_value;}
+    ListItem<span style="color:#f92672">*</span> <span style="color:#a6e22e">Next</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> m_pNext;}
+	
+<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+    T m_value;	<span style="color:#75715e">//存储的数据
+</span><span style="color:#75715e"></span>    ListItem<span style="color:#f92672">*</span> m_pNext;	<span style="color:#75715e">//指向下一个ListItem的指针
+</span><span style="color:#75715e"></span>};
+ 
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">List</span>
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    <span style="color:#75715e">//从链表尾部插入元素
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">void</span> Push(T value)
+    {
+       m_pTail <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ListItem<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>(value);
+       m_pTail <span style="color:#f92672">=</span> m_pTail<span style="color:#f92672">-&gt;</span>Next();
+    }
+	
+    <span style="color:#75715e">//打印链表元素
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Print</span>(std<span style="color:#f92672">::</span>ostream <span style="color:#f92672">&amp;</span>os <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>cout) <span style="color:#66d9ef">const</span>
+    {	
+        <span style="color:#66d9ef">for</span> (ListItem<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#f92672">*</span>ptr <span style="color:#f92672">=</span> m_pHead; ptr; ptr <span style="color:#f92672">=</span> ptr<span style="color:#f92672">-&gt;</span>Next())
+        os<span style="color:#f92672">&lt;&lt;</span>ptr<span style="color:#f92672">-&gt;</span>Value<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34; &#34;</span>;
+        os<span style="color:#f92672">&lt;&lt;</span>endl;
+    }
+	
+    <span style="color:#75715e">//返回链表头部指针
+</span><span style="color:#75715e"></span>    ListItem<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;*</span> Begin() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> m_pHead;}
+ 
+    <span style="color:#75715e">//返回链表尾部指针
+</span><span style="color:#75715e"></span>    ListItem<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;*</span> End() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;}
+	
+    <span style="color:#75715e">//其它成员函数
+</span><span style="color:#75715e"></span> 
+<span style="color:#66d9ef">private</span><span style="color:#960050;background-color:#1e0010">：</span>
+    ListItem<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#f92672">*</span>m_pHead;    <span style="color:#75715e">//指向链表头部的指针
+</span><span style="color:#75715e"></span>    ListItem<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#f92672">*</span>m_pTail;    <span style="color:#75715e">//指向链表尾部的指针
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">long</span> m_nSize;    <span style="color:#75715e">//链表长度
+</span><span style="color:#75715e"></span>};
+</code></pre></div><h2 id="迭代器实现">迭代器实现</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ListIter</span>
+{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    ListIter(T <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">:</span> m_ptr(p){}
+	
+    <span style="color:#75715e">//解引用，即dereference
+</span><span style="color:#75715e"></span>    T<span style="color:#f92672">&amp;</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">*</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> <span style="color:#f92672">*</span>m_ptr;}
+	
+    <span style="color:#75715e">//成员访问，即member access
+</span><span style="color:#75715e"></span>    T<span style="color:#f92672">*</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">-&gt;</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> m_ptr;}
+	
+    <span style="color:#75715e">//前置++操作
+</span><span style="color:#75715e"></span>    ListIter<span style="color:#f92672">&amp;</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">++</span>() 
+    { 
+        m_ptr <span style="color:#f92672">=</span> m_ptr<span style="color:#f92672">-&gt;</span>Next(); <span style="color:#75715e">//暴露了ListItem的东西
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>;
+    }
+	
+    <span style="color:#75715e">//后置++操作
+</span><span style="color:#75715e"></span>    ListIter <span style="color:#66d9ef">operator</span><span style="color:#f92672">++</span>(<span style="color:#66d9ef">int</span>)
+    {
+        ListIter temp <span style="color:#f92672">=</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>;
+        <span style="color:#f92672">++*</span><span style="color:#66d9ef">this</span>;
+        <span style="color:#66d9ef">return</span> temp;
+    }
+	
+    <span style="color:#75715e">//判断两个ListIter是否指向相同的地址
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">bool</span> opeartor<span style="color:#f92672">==</span>(<span style="color:#66d9ef">const</span> ListIter <span style="color:#f92672">&amp;</span>arg) <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> arg.m_ptr <span style="color:#f92672">==</span> m_ptr;}
+	
+    <span style="color:#75715e">//判断两个ListIter是否指向不同的地址
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">bool</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">!=</span>(<span style="color:#66d9ef">const</span> ListIter <span style="color:#f92672">&amp;</span>arg) <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> arg.m_ptr <span style="color:#f92672">!=</span> m_ptr;}
+	
+<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+    T <span style="color:#f92672">*</span>m_ptr;
+};
+
+</code></pre></div><h2 id="测试代码">测试代码</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[])
+{
+    List<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> mylist;
+	
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">5</span>; <span style="color:#f92672">++</span>i)
+    {
+        mylist.push(i);
+    }
+    mylist.Print();	<span style="color:#75715e">//0 1 2 3 4
+</span><span style="color:#75715e"></span>	
+    <span style="color:#75715e">//暴露了ListItem
+</span><span style="color:#75715e"></span>    ListIter<span style="color:#f92672">&lt;</span>ListItem<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&gt;</span> begin(mylist.Begin());
+    ListIter<span style="color:#f92672">&lt;</span>ListItem<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&gt;</span> end(mylist.End());
+    ListIter<span style="color:#f92672">&lt;</span>ListItem<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&gt;</span> iter;
+	
+    iter <span style="color:#f92672">=</span> find(begin, end, <span style="color:#ae81ff">3</span>);<span style="color:#75715e">//从链表中查找3
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (iter <span style="color:#f92672">!=</span> end)
+        cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;found&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl;
+    <span style="color:#66d9ef">else</span>
+        cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;not found&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl;
+}
+
+</code></pre></div><ul>
+<li>上面使用迭代器的测试代码给人的第一感觉就是好麻烦，</li>
+<li>首先需要声明和定义了begin和end两个ListIter&lt;ListItem<!-- raw HTML omitted --> &gt;类型的迭代器，分别用来标识所操作容器List的头部和尾部，这时候暴露了ListItem；</li>
+<li>在ListIter的实现中，为了实现operator++的功能，我们又暴露了ListItem的函数Next()。</li>
+<li>另外，细心的你可能发现，算法find是通过*first != value用来判断元素是否符合要求，而上面测试代码中，first的类型为ListItem<!-- raw HTML omitted -->，而value的类型为int，两者之间并没有可用的operator!=函数，因此，需要另外声明一个全局的operator!=重载函数，代码如下：</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">bool</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">!=</span>(<span style="color:#66d9ef">const</span> ListItem<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span>item, T n)
+{
+    <span style="color:#66d9ef">return</span> item.Value() <span style="color:#f92672">!=</span> n;
+}
+</code></pre></div><p>​       为了实现迭代器ListIter，我们在很多地方暴露了容器List的内部实现ListItem，这违背一开始说的迭代器模式中不暴露某个容器的内部表现形式情况下，使之能依次访问该容器中的各个元素的定义。为了解决这种问题，STL将迭代器的实现交给了容器，每种容器都会以嵌套的方式在内部定义专属的迭代器。各种迭代器的接口相同，内部实现却不相同，这也直接体现了泛型编程的概念。</p>
+
     </div>
 
     <div class="post-copyright">
