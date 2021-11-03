@@ -57,7 +57,7 @@
     "datePublished": "2021-04-21 15:37:06 \u002b0800 CST",
     "dateModified" : "2021-04-21 15:37:06 \u002b0800 CST",
     "url" : "https:\/\/jfy0o0.github.io\/2021\/other-docker\/",
-    "wordCount" : "456",
+    "wordCount" : "470",
     "keywords" : [ "Other", "Jiang . \u0027s blog"]
 }
 </script>
@@ -342,8 +342,18 @@ root@0123ce188bd8:/#
 </li>
 </ul>
 </li>
+<li>
+<p>已root权限进入</p>
+</li>
 </ul>
-<h1 id="导入导出">导入导出</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">第一步：查看容器的CONTAINER ID
+
+docker ps
+
+第二步：获取root权限，例如需要进入的CONTAINER ID为4650e8d1bcca
+
+docker exec -ti -u root 4650e8d1bcca bash
+</code></pre></div><h1 id="导入导出">导入导出</h1>
 <h2 id="一使用-export-和-import">一、使用 export 和 import</h2>
 <h3 id="导出镜像">导出镜像</h3>
 <p>（1）使用 <strong>docker export</strong> 命令根据容器 <strong>ID</strong> 将镜像导出成一个文件。</p>

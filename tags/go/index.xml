@@ -6,7 +6,19 @@
     <description>Recent content in Go on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 31 Jul 2021 09:42:56 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 03 Nov 2021 13:51:10 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go - gdb动态调试go程序</title>
+      <link>https://jfy0o0.github.io/2021/go-gdb%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95go%E7%A8%8B%E5%BA%8F/</link>
+      <pubDate>Wed, 03 Nov 2021 13:51:10 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/go-gdb%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95go%E7%A8%8B%E5%BA%8F/</guid>
+      <description>编译选项 go build -gcflags “-N -l” // 编译，关闭内联优化。 加载goroutine gdb原生支持golang的调试，但是像info goroutines此类有go特性的命令却无法使用， info goroutines，提示找不到Undefined info command: &amp;ldquo;goroutines&amp;rdquo;. Try &amp;ldquo;help info&amp;rdquo;. 以下列出解决方案。
+首先找到go的安装路径
+$ which go /usr/local/go/bin/go在go/bin/go之前的便是安装目录（如：/usr/local） 在go/bin/go之前的便是安装目录（如：/usr/local） 加载runtime-gdb.py
+ 方法一：打开gdb，在运行程序之前输入：  (gdb) source /usr/local/go/src/runtime/runtime-gdb.py　（注：每次gdb都要运行）  方法二：在.gdinit文件中添加如下配置,没有文件就创建一个,重启gdb生效  add-auto-load-safe-path /usr/local/go/src/runtime/runtime-gdb.py </description>
+    </item>
+    
     <item>
       <title>Go - 详解reflect</title>
       <link>https://jfy0o0.github.io/2021/go-%E8%AF%A6%E8%A7%A3reflect/</link>

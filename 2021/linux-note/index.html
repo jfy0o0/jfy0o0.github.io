@@ -57,7 +57,7 @@
     "datePublished": "2021-07-20 10:19:18 \u002b0800 CST",
     "dateModified" : "2021-07-20 10:19:18 \u002b0800 CST",
     "url" : "https:\/\/jfy0o0.github.io\/2021\/linux-note\/",
-    "wordCount" : "377",
+    "wordCount" : "386",
     "keywords" : [ "Linux", "Jiang . \u0027s blog"]
 }
 </script>
@@ -309,7 +309,10 @@ nonvoluntary_ctxt_switches: 18031
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">ssize_t <span style="color:#a6e22e">readlink</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>path, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf, size_t bufsiz);
 </code></pre></div><p>/proc/self/exe 是一个符号链接，代表当前程序的绝对路径
 用readlink读取/proc/self/exe可以获取当前程序的绝对路径</p>
-
+<h1 id="demsg">demsg</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">dmesg -Tx | grep <span style="color:#e6db74">&#39;Out of memory&#39;</span>
+<span style="color:#75715e">#查看是否有内存溢出</span>
+</code></pre></div>
     </div>
 
     <div class="post-copyright">

@@ -57,7 +57,7 @@
     "datePublished": "2020-12-03 18:44:42 \u002b0800 CST",
     "dateModified" : "2020-12-03 18:44:42 \u002b0800 CST",
     "url" : "https:\/\/jfy0o0.github.io\/2020\/cpp_%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7\/",
-    "wordCount" : "130",
+    "wordCount" : "190",
     "keywords" : [ "C\u002b\u002b", "Jiang . \u0027s blog"]
 }
 </script>
@@ -233,7 +233,33 @@ END:
     
 } 
 </code></pre></div><p>这里，我们使用do{&hellip;}while(0)来包含函数的主要部分，同时使用break替换goto，代码的可读性增强了。</p>
+<h1 id="判断类型">判断类型</h1>
+<h2 id="is_same">is_same</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">assert (std<span style="color:#f92672">::</span>is_same<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, T<span style="color:#f92672">&gt;::</span>value)
+</code></pre></div><h1 id="模板返回类型">模板返回类型</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">    <span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OutputType</span> <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>string<span style="color:#f92672">&gt;</span>
+    OutputType get(<span style="color:#66d9ef">int</span> idx)
+    {
+        std<span style="color:#f92672">::</span>stringstream ss;
+        ss <span style="color:#f92672">&lt;&lt;</span> args_vec[idx];
+        OutputType ret;
+        ss <span style="color:#f92672">&gt;&gt;</span> ret;
+        <span style="color:#66d9ef">return</span> ret;
+	}
+</code></pre></div><h1 id="把函数对象直接放到类中">把函数对象直接放到类中</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AAA</span>{
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">int</span> lastname;
+    <span style="color:#75715e">// 比大小
+</span><span style="color:#75715e"></span>    function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">bool</span>(<span style="color:#66d9ef">const</span> BBB <span style="color:#f92672">&amp;</span>p1, <span style="color:#66d9ef">const</span> BBB <span style="color:#f92672">&amp;</span>p2)<span style="color:#f92672">&gt;</span> cmp <span style="color:#f92672">=</span> [](<span style="color:#66d9ef">const</span> BBB <span style="color:#f92672">&amp;</span>p1, <span style="color:#66d9ef">const</span> BBB <span style="color:#f92672">&amp;</span>p2) {
+        <span style="color:#66d9ef">return</span> p1.lastname<span style="color:#f92672">&lt;</span> p2.lastname;
+    };
 
+    <span style="color:#75715e">// 对于lambda,我们往往只有object,很少有人能够写出它的类型，而有时就需要知道它的类型,要获得其type,就要借助其decltype
+</span><span style="color:#75715e"></span>    set<span style="color:#f92672">&lt;</span>BBB, <span style="color:#66d9ef">decltype</span>(cmp)<span style="color:#f92672">&gt;</span> col;
+
+};
+</code></pre></div>
     </div>
 
     <div class="post-copyright">

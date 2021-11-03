@@ -6,7 +6,22 @@
     <description>Recent content in Other on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 30 Aug 2021 09:26:35 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/categories/other/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 15 Sep 2021 14:44:31 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/categories/other/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Other - tcp 长连接通信设计</title>
+      <link>https://jfy0o0.github.io/2021/other-tcp%E9%95%BF%E8%BF%9E%E6%8E%A5%E9%80%9A%E4%BF%A1%E8%AE%BE%E8%AE%A1/</link>
+      <pubDate>Wed, 15 Sep 2021 14:44:31 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/other-tcp%E9%95%BF%E8%BF%9E%E6%8E%A5%E9%80%9A%E4%BF%A1%E8%AE%BE%E8%AE%A1/</guid>
+      <description>Goroutine safe io safe 基于goroutine的网络架构模型，存在在不同goroutine间共享conn的情况，那么conn的读写是否是goroutine safe的呢？在深入这个问题之前，我们先从应用意义上来看read操作和write操作的goroutine-safe必要性。
+  对 于read操作而言，由于TCP是面向字节流，conn.Read无法正确区分数据的业务边界，因此多个goroutine对同一个conn进行read 的意义不大，goroutine读到不完整的业务包反倒是增加了业务处理的难度。
+  对与Write操作而言，倒是有多个goroutine并发写的情况。
+  所以需要一个
+ req chan tx  需要发什么入队， 出队时转换为指定格式写入conn   res chan rx  一个goroutine一直读conn,读成指定格式 写入rx ，rx 出队时候根据命令分到处理      数据通道和命令通道 共用   一条连接既发命令又发数据
+  go tx chan go rx chan   对于数据要分块
+ 例如文件要拆分成块 根据不同的命令分到不同的处理器里     非共用 命令通道 go tx chan go rx chan 数据通道 go tx chan go rx chan  每有一个命令就新建一个连接传输数据 此条连接直接收发  </description>
+    </item>
+    
     <item>
       <title>Other - 线程池</title>
       <link>https://jfy0o0.github.io/2021/other-%E7%BA%BF%E7%A8%8B%E6%B1%A0/</link>

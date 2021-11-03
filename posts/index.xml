@@ -6,7 +6,34 @@
     <description>Recent content in Posts on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 30 Aug 2021 09:26:35 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 03 Nov 2021 13:51:10 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go - gdb动态调试go程序</title>
+      <link>https://jfy0o0.github.io/2021/go-gdb%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95go%E7%A8%8B%E5%BA%8F/</link>
+      <pubDate>Wed, 03 Nov 2021 13:51:10 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/go-gdb%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95go%E7%A8%8B%E5%BA%8F/</guid>
+      <description>编译选项 go build -gcflags “-N -l” // 编译，关闭内联优化。 加载goroutine gdb原生支持golang的调试，但是像info goroutines此类有go特性的命令却无法使用， info goroutines，提示找不到Undefined info command: &amp;ldquo;goroutines&amp;rdquo;. Try &amp;ldquo;help info&amp;rdquo;. 以下列出解决方案。
+首先找到go的安装路径
+$ which go /usr/local/go/bin/go在go/bin/go之前的便是安装目录（如：/usr/local） 在go/bin/go之前的便是安装目录（如：/usr/local） 加载runtime-gdb.py
+ 方法一：打开gdb，在运行程序之前输入：  (gdb) source /usr/local/go/src/runtime/runtime-gdb.py　（注：每次gdb都要运行）  方法二：在.gdinit文件中添加如下配置,没有文件就创建一个,重启gdb生效  add-auto-load-safe-path /usr/local/go/src/runtime/runtime-gdb.py </description>
+    </item>
+    
+    <item>
+      <title>Other - tcp 长连接通信设计</title>
+      <link>https://jfy0o0.github.io/2021/other-tcp%E9%95%BF%E8%BF%9E%E6%8E%A5%E9%80%9A%E4%BF%A1%E8%AE%BE%E8%AE%A1/</link>
+      <pubDate>Wed, 15 Sep 2021 14:44:31 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/other-tcp%E9%95%BF%E8%BF%9E%E6%8E%A5%E9%80%9A%E4%BF%A1%E8%AE%BE%E8%AE%A1/</guid>
+      <description>Goroutine safe io safe 基于goroutine的网络架构模型，存在在不同goroutine间共享conn的情况，那么conn的读写是否是goroutine safe的呢？在深入这个问题之前，我们先从应用意义上来看read操作和write操作的goroutine-safe必要性。
+  对 于read操作而言，由于TCP是面向字节流，conn.Read无法正确区分数据的业务边界，因此多个goroutine对同一个conn进行read 的意义不大，goroutine读到不完整的业务包反倒是增加了业务处理的难度。
+  对与Write操作而言，倒是有多个goroutine并发写的情况。
+  所以需要一个
+ req chan tx  需要发什么入队， 出队时转换为指定格式写入conn   res chan rx  一个goroutine一直读conn,读成指定格式 写入rx ，rx 出队时候根据命令分到处理      数据通道和命令通道 共用   一条连接既发命令又发数据
+  go tx chan go rx chan   对于数据要分块
+ 例如文件要拆分成块 根据不同的命令分到不同的处理器里     非共用 命令通道 go tx chan go rx chan 数据通道 go tx chan go rx chan  每有一个命令就新建一个连接传输数据 此条连接直接收发  </description>
+    </item>
+    
     <item>
       <title>Other - 线程池</title>
       <link>https://jfy0o0.github.io/2021/other-%E7%BA%BF%E7%A8%8B%E6%B1%A0/</link>
