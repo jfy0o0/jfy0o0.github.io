@@ -46,7 +46,7 @@
     "articleSection" : "posts",
     "name" : "C\u002b\u002b - 使用技巧",
     "headline" : "C\u002b\u002b - 使用技巧",
-    "description" : "变长数组 特点：\n 变长 空间合理  eg: struct MutableLenArray { int count; char p[0]; }; 宏的妙用 1. “#”符号把一个符号直接转换为字符串，例如：\n#define TO_STRING(x) #x const char *str = TO_STRING( test ); ##符号会连接两个符号，从而产生新的符号(词法层次)，例如：\n#define SIGN( x ) INT_##x int SIGN( 1 ); \/\/宏被展开后将成为：int INT_1; 2. 变参宏 #define LOG( format, ... ) printf( format, __VA_ARGS__ ) LOG( \u0026#34;%s %d\u0026#34;, str, count );  VA_ARGS是系统预定义宏，被自动替换为参数列表。 经常需要进行输出格式化，重定义时，可以用到以上技巧。  不定参 模板实现： template\u0026lt;typename... T\u0026gt; void func(T... args) { for (auto x : {args.",
+    "description" : "变长数组 特点：\n 变长 空间合理  eg: struct MutableLenArray { int count; char p[0]; }; 宏的妙用 1.#和## “#”符号把一个符号直接转换为字符串，例如：\n#define TO_STRING(x) #x const char *str = TO_STRING( test ); #define P(A) printf(\u0026#34;%s:%d\\n\u0026#34;,#A,A); int a = 1; P(a) \/\/\ta:1  ##符号会连接两个符号，从而产生新的符号(词法层次)，例如：\n#define SIGN( x ) INT_##x int SIGN( 1 ); \/\/宏被展开后将成为：int INT_1; 2. 变参宏 #define LOG( format, ... ) printf( format, __VA_ARGS__ ) LOG( \u0026#34;%s %d\u0026#34;, str, count ); #define LOG(format, args.",
     "inLanguage" : "en-us",
     "author" : "Jiang",
     "creator" : "Jiang",
@@ -57,7 +57,7 @@
     "datePublished": "2020-12-03 18:44:42 \u002b0800 CST",
     "dateModified" : "2020-12-03 18:44:42 \u002b0800 CST",
     "url" : "https:\/\/jfy0o0.github.io\/2020\/cpp_%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7\/",
-    "wordCount" : "190",
+    "wordCount" : "1250",
     "keywords" : [ "C\u002b\u002b", "Jiang . \u0027s blog"]
 }
 </script>
@@ -159,10 +159,18 @@
 	<span style="color:#66d9ef">char</span> p[<span style="color:#ae81ff">0</span>]; 
 };
 </code></pre></div><h1 id="宏的妙用">宏的妙用</h1>
-<h2 id="1">1.</h2>
+<h2 id="1和">1.#和##</h2>
 <p>“#”符号把一个符号直接转换为字符串，例如：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#define TO_STRING(x) #x 
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>str <span style="color:#f92672">=</span> TO_STRING( test );
+
+<span style="color:#75715e">#define P(A) printf(&#34;%s:%d\n&#34;,#A,A);
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> a <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+
+P(a) 
+<span style="color:#75715e">//	a:1 
+</span><span style="color:#75715e"></span>
+
 </code></pre></div><p>##符号会连接两个符号，从而产生新的符号(词法层次)，例如：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#define SIGN( x ) INT_##x 
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">SIGN</span>( <span style="color:#ae81ff">1</span> );
@@ -170,12 +178,112 @@
 </span></code></pre></div><h2 id="2-变参宏">2. 变参宏</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#define LOG( format, ... ) printf( format, __VA_ARGS__ ) 
 </span><span style="color:#75715e"></span>LOG( <span style="color:#e6db74">&#34;%s %d&#34;</span>, str, count );
+
+<span style="color:#75715e">#define LOG(format, args...) fprintf(stdout, format, args)
+</span><span style="color:#75715e"></span>
 </code></pre></div><ul>
 <li>VA_ARGS是系统预定义宏，被自动替换为参数列表。</li>
 <li>经常需要进行输出格式化，重定义时，可以用到以上技巧。</li>
+<li>同样，args在预处理过程中，会被实际的参数集所替换。其用法和上面的方式一样，只是参数的符号有变。</li>
+<li>需要注意的是，<strong>上述两种方式的可变参数不能省略</strong>，尽管可以传一个空参数进去。</li>
+<li>说到这里，有必要提一下“##”连接符号的用法，“##”的作用是对token进行连接，上例中format，args，__VA_ARGS都可以看作是token，如果token为空，“##”则不进行连接，所以允许省略可变参数。</li>
 </ul>
-<h1 id="不定参">不定参</h1>
-<h2 id="模板实现">模板实现：</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#define LOG(format, ...) fprintf(stdout, format, ##__VA_ARGS__)  </span>
+<span style="color:#75715e">#define LOG(format, args...) fprintf(stdout, format, ##args)</span>
+
+<span style="color:#75715e">#define LOG(format, ...) fprintf(stdout, &#34;&gt;&gt;&gt;&gt;&gt;&#34; format &#34;&lt;&lt;&lt;&lt;&#34;, ##__VA_ARGS__) </span>
+<span style="color:#75715e">#define LOG(format, ...) </span>
+</code></pre></div><h3 id="变参宏个数">变参宏个数</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#define comac_arg_n( _0,_1,_2,_3,_4,_5,_6,_7,N,...) N
+</span><span style="color:#75715e">#define comac_get_args_cnt( ... ) comac_arg_n( __VA_ARGS__ )
+</span><span style="color:#75715e">#define comac_argc(...) comac_get_args_cnt( 0, ##__VA_ARGS__, 7,6,5,4,3,2,1,0)
+</span><span style="color:#75715e"></span>
+
+
+comac_argc(arg1,arg2,arg3)
+
+comac_get_args_cnt(<span style="color:#ae81ff">0</span>,arg1,arg2,arg3, <span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">6</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>)
+
+comac_arg_n(<span style="color:#ae81ff">0</span> ,arg1,arg2,arg3, <span style="color:#ae81ff">7</span> , <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>)
+		   (<span style="color:#f92672">-</span><span style="color:#ae81ff">0</span>,  _1, _2, _3,   _4,_5,_6,_7,N)    N <span style="color:#75715e">//（对称性） 此时n为3
+</span><span style="color:#75715e"></span>    			
+
+<span style="color:#75715e">#define D(_1, _2, _3, _4,   _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, N, ...)  N
+</span><span style="color:#75715e">#define D2(args...) D(args, 15, 14, 13, 12, 11,  10,   9,   8,   7,   6,   5,   4, 3, 2, 1, 0)
+</span><span style="color:#75715e"></span>    
+D2(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>)  ;<span style="color:#75715e">//此时N为   4
+</span><span style="color:#75715e"></span>    
+    
+
+</code></pre></div><h4 id="eg-1">eg：</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">{DBG_MAP(DBG_STRINGIFY, __VA_ARGS__)}
+<span style="color:#75715e">// DBG_MAP(fn, e1, e2, e3, ...) =&gt; fn(e1), fn(e2), fn(e3), ...
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#define DBG_STRINGIFY_IMPL(x) #x
+</span><span style="color:#75715e">#define DBG_STRINGIFY(x) DBG_STRINGIFY_IMPL(x)
+</span><span style="color:#75715e"></span>
+
+<span style="color:#75715e">#define DBG_MAP(fn, ...) DBG_VARIADIC_CALL(DBG_MAP, fn, __VA_ARGS__)
+</span><span style="color:#75715e">#define DBG_VARIADIC_CALL(fn, data, ...) DBG_CAT(fn##_, DBG_NARG(__VA_ARGS__))(data, (__VA_ARGS__))
+</span><span style="color:#75715e">#define DBG_CAT(_1, _2) DBG_CAT_IMPL(_1, _2)
+</span><span style="color:#75715e">#define DBG_CAT_IMPL(_1, _2) _1##_2
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#define DBG_NARG(...) DBG_16TH((__VA_ARGS__, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0))
+</span><span style="color:#75715e">#define DBG_16TH(args) DBG_CALL(DBG_16TH_IMPL, args)
+</span><span style="color:#75715e">#define DBG_CALL(fn, args) DBG_IDENTITY(fn args)
+</span><span style="color:#75715e">#define DBG_IDENTITY(x) x
+</span><span style="color:#75715e"></span>
+
+<span style="color:#75715e">#define DBG_16TH_IMPL(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, ...)  _16
+</span><span style="color:#75715e"></span>
+
+DBG_VARIADIC_CALL(DBG_MAP, DBG_STRINGIFY, __VA_ARGS__)
+DBG_CAT(DBG_MAP_, DBG_NARG(__VA_ARGS__))(DBG_STRINGIFY, (__VA_ARGS__))
+
+
+
+DBG_MAP_[DBG_NARG(__VA_ARGS__)]
+
+DBG_MAP_[DBG_16TH((__VA_ARGS__, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>))]
+
+DBG_MAP_[DBG_CALL(DBG_16TH_IMPL, (__VA_ARGS__, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>))]
+
+DBG_MAP_[DBG_IDENTITY(DBG_16TH_IMPL (__VA_ARGS__, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>))]
+
+DBG_MAP_[DBG_16TH_IMPL (__VA_ARGS__, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>)]
+
+DBG_MAP_[<span style="color:#960050;background-color:#1e0010">参数个数</span>](DBG_STRINGIFY,(__VA_ARGS__))
+
+<span style="color:#75715e">// (e1, e2, e3, ...) =&gt; e1
+</span><span style="color:#75715e"></span><span style="color:#75715e">#define DBG_HEAD_IMPL(_1, ...) _1
+</span><span style="color:#75715e">#define DBG_HEAD(args) DBG_CALL(DBG_HEAD_IMPL, args)
+</span><span style="color:#75715e"></span>
+
+<span style="color:#75715e">// (e1, e2, e3, ...) =&gt; (e2, e3, ...)
+</span><span style="color:#75715e"></span><span style="color:#75715e">#define DBG_TAIL_IMPL(_1, ...) (__VA_ARGS__)
+</span><span style="color:#75715e">#define DBG_TAIL(args) DBG_CALL(DBG_TAIL_IMPL, args)
+</span><span style="color:#75715e"></span>
+
+<span style="color:#75715e">//此时定义 便可以用fn 来遍历所有参数
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#define DBG_MAP_1(fn, args) DBG_CALL(fn, args)
+</span><span style="color:#75715e">#define DBG_MAP_2(fn, args) fn(DBG_HEAD(args)), DBG_MAP_1(fn, DBG_TAIL(args))
+</span><span style="color:#75715e">#define DBG_MAP_3(fn, args) fn(DBG_HEAD(args)), DBG_MAP_2(fn, DBG_TAIL(args))
+</span><span style="color:#75715e">#define DBG_MAP_4(fn, args) fn(DBG_HEAD(args)), DBG_MAP_3(fn, DBG_TAIL(args))
+</span><span style="color:#75715e">#define DBG_MAP_5(fn, args) fn(DBG_HEAD(args)), DBG_MAP_4(fn, DBG_TAIL(args))
+</span><span style="color:#75715e">#define DBG_MAP_6(fn, args) fn(DBG_HEAD(args)), DBG_MAP_5(fn, DBG_TAIL(args))
+</span><span style="color:#75715e">#define DBG_MAP_7(fn, args) fn(DBG_HEAD(args)), DBG_MAP_6(fn, DBG_TAIL(args))
+</span><span style="color:#75715e">#define DBG_MAP_8(fn, args) fn(DBG_HEAD(args)), DBG_MAP_7(fn, DBG_TAIL(args))
+</span><span style="color:#75715e">#define DBG_MAP_9(fn, args) fn(DBG_HEAD(args)), DBG_MAP_8(fn, DBG_TAIL(args))
+</span><span style="color:#75715e">#define DBG_MAP_10(fn, args) fn(DBG_HEAD(args)), DBG_MAP_9(fn, DBG_TAIL(args))
+</span><span style="color:#75715e">#define DBG_MAP_11(fn, args) fn(DBG_HEAD(args)), DBG_MAP_10(fn, DBG_TAIL(args))
+</span><span style="color:#75715e">#define DBG_MAP_12(fn, args) fn(DBG_HEAD(args)), DBG_MAP_11(fn, DBG_TAIL(args))
+</span><span style="color:#75715e">#define DBG_MAP_13(fn, args) fn(DBG_HEAD(args)), DBG_MAP_12(fn, DBG_TAIL(args))
+</span><span style="color:#75715e">#define DBG_MAP_14(fn, args) fn(DBG_HEAD(args)), DBG_MAP_13(fn, DBG_TAIL(args))
+</span><span style="color:#75715e">#define DBG_MAP_15(fn, args) fn(DBG_HEAD(args)), DBG_MAP_14(fn, DBG_TAIL(args))
+</span><span style="color:#75715e"></span>
+</code></pre></div><h2 id="3不定参">3.不定参</h2>
+<h3 id="模板实现">模板实现：</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span>... T<span style="color:#f92672">&gt;</span>
 <span style="color:#66d9ef">void</span> func(T... args)
 {
@@ -184,7 +292,45 @@
         cout <span style="color:#f92672">&lt;&lt;</span> x <span style="color:#f92672">&lt;&lt;</span>endl;
     }
 }
-</code></pre></div><h1 id="dowhile0">do&hellip;while(0)</h1>
+</code></pre></div><h3 id="单个使用">单个使用</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">func_</span>()
+{
+    cout <span style="color:#f92672">&lt;&lt;</span>endl;
+}
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T, <span style="color:#66d9ef">typename</span>... U<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">void</span> func_(T <span style="color:#f92672">&amp;&amp;</span>value, U <span style="color:#f92672">&amp;&amp;</span>... rest) <span style="color:#75715e">//-&gt; last_t&lt;T, U...&gt;
+</span><span style="color:#75715e"></span>{
+    cout <span style="color:#f92672">&lt;&lt;</span> value <span style="color:#f92672">&lt;&lt;</span> endl;
+    func_(std<span style="color:#f92672">::</span>forward<span style="color:#f92672">&lt;</span>U<span style="color:#f92672">&gt;</span>(rest)...);
+}
+
+<span style="color:#75715e">// int x = 1, y = 3, z = 6, a = 10; func_(x,y,z,a);
+</span><span style="color:#75715e">//	1
+</span><span style="color:#75715e">//	3
+</span><span style="color:#75715e">//	6
+</span><span style="color:#75715e">//	10
+</span><span style="color:#75715e">//
+</span></code></pre></div><h2 id="4-note">4. note</h2>
+<pre><code>__func__
+已被添加到C ++ 11中的C ++中，其中被指定为包含“实现定义的字符串”（C ++ 11§8.4.1[dcl.fct.def.general] / 8），可用作C中的规范。（最初添加__func__到C ++中的建议是N1642）。
+
+__FUNCTION__
+是某些C编译器支持的标准扩展（包括gcc和Visual C ++）；通常，应该__func__在受支持的地方使用它，并且仅__FUNCTION__在使用不支持它的编译器时才使用（例如，不支持C99并且尚不支持所有C ++ 0x的Visual C ++不支持）。提供__func__）。
+
+__PRETTY_FUNCTION__
+是gcc扩展名，与__FUNCTION__g ++ 扩展名几乎相同，除了C ++函数外，它包含函数的“漂亮”名称，包括函数的签名。Visual C ++具有类似（但不完全相同）的扩展__FUNCSIG__。
+
+__DATE__
+源文件的翻译日期：字符字符串文字，格式为&quot; Mmm dd yyyy&quot; ，其中月份的名称与asctime函数生成的月份的名称相同，并且dd的第一个字符（如果值小于10）为空格字符。没有可用的
+，则应提供实现定义的有效日期。
+
+__FILE__
+当前源文件的假定名称（字符字符串文字）。
+
+__TIME__
+翻译的时间源文件：一个字符串字符串文字，格式为&quot; hh：mm：ss&quot; ，与asctime函数生成的时间相同。
+
+</code></pre><h1 id="dowhile0">do&hellip;while(0)</h1>
 <p>在一些函数中，我们在return语句之前可能需要做一些工作，比如释放在函数一开始由malloc函数申请的内存空间，使用goto总是一种简单的方法：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">foo</span>() 
 { 
@@ -233,9 +379,238 @@ END:
     
 } 
 </code></pre></div><p>这里，我们使用do{&hellip;}while(0)来包含函数的主要部分，同时使用break替换goto，代码的可读性增强了。</p>
-<h1 id="判断类型">判断类型</h1>
-<h2 id="is_same">is_same</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">assert (std<span style="color:#f92672">::</span>is_same<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, T<span style="color:#f92672">&gt;::</span>value)
+<h1 id="type_traits">type_traits</h1>
+<p>traits是c++模板编程中使用的一种技术，主要功能：
+把功能相同而参数不同的函数抽象出来，通过traits将不同的参数的相同属性提取出来，在函数中利用这些用traits提取的属性，使得函数对不同的参数表现一致。</p>
+<blockquote>
+<p>traits是一种特性萃取技术,它在Generic Programming中被广泛运用,常常被用于使不同的类型可以用于相同的操作,或者针对不同类型提供不同的实现.traits在实现过程中往往需要用到以下三种C++的基本特性:
+enum、typedef、template (partial) specialization
+其中:
+enum用于将在不同类型间变化的标示统一成一个,它在C++中常常被用于在类中替代define,你可以称enum为类中的define;
+typedef则用于定义你的模板类支持特性的形式,你的模板类必须以某种形式支持某一特性,否则类型萃取器traits将无法正常工作
+template (partial) specialization被用于提供针对特定类型的正确的或更合适的版本.</p>
+</blockquote>
+<h2 id="1-基本的type_traits"><strong>1. 基本的type_traits</strong></h2>
+<h3 id="11-简单的type_trait"><strong>1.1 简单的type_trait</strong></h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#960050;background-color:#1e0010">定义一个编译期常量</span>
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">GetLeftSize</span>{
+    <span style="color:#75715e">//使用静态常量
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> value <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+    <span style="color:#75715e">//或者使用 enum
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">enum</span>{value <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>};
+};
+ 
+<span style="color:#960050;background-color:#1e0010">在</span>c<span style="color:#f92672">++</span><span style="color:#ae81ff">11</span><span style="color:#960050;background-color:#1e0010">中直接继承</span> std<span style="color:#f92672">::</span>integral_constant即可<span style="color:#960050;background-color:#1e0010">。</span>
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">GetLeftSize</span> <span style="color:#f92672">:</span> std<span style="color:#f92672">::</span>integral_constant <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">int</span>, <span style="color:#ae81ff">1</span> <span style="color:#f92672">&gt;</span>
+{
+};
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+    cout <span style="color:#f92672">&lt;&lt;</span> GetLeftSize<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">float</span><span style="color:#f92672">&gt;::</span>value <span style="color:#f92672">&lt;&lt;</span> endl;
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+ 
+std<span style="color:#f92672">::</span>integral_constant的实现:
+    <span style="color:#75715e">// TEMPLATE CLASS integral_constant
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">_Ty</span>,
+    _Ty _Val<span style="color:#f92672">&gt;</span>
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">integral_constant</span>
+    {   <span style="color:#75715e">// convenient template for integral constant types
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> _Ty value <span style="color:#f92672">=</span> _Val;
+ 
+    <span style="color:#66d9ef">typedef</span> _Ty value_type;
+    <span style="color:#66d9ef">typedef</span> integral_constant<span style="color:#f92672">&lt;</span>_Ty, _Val<span style="color:#f92672">&gt;</span> type;
+ 
+    <span style="color:#66d9ef">operator</span> <span style="color:#a6e22e">value_type</span>() <span style="color:#66d9ef">const</span>
+        {   <span style="color:#75715e">// return stored value
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> (value);
+        }
+    };
+</code></pre></div><h3 id="12-类型判断的type_traits"><strong>1.2 类型判断的type_traits</strong></h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">is_integral</span>; <span style="color:#75715e">//用来检查T是否为bool、char、char16t_t、char32_t、short、long、long long或者这些类型的无符号整数类型。如果T是这些类型中的某一类型，则std::is_integral::value 为true， 否则为false。
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">其他的一些类型判断</span>type_traits
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">is_void</span>; <span style="color:#75715e">//是否为void类型
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">is_floating_point</span>; <span style="color:#75715e">//是否为浮点类型
+</span><span style="color:#75715e"></span>is_const, is_function, is_pointer, is_compound....
+std<span style="color:#f92672">::</span>is_const<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;::</span>value <span style="color:#75715e">//false
+</span><span style="color:#75715e"></span>std<span style="color:#f92672">::</span>is_const<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;::</span>value <span style="color:#75715e">//true
+</span></code></pre></div><p><strong>1.3 判断两个类型之间关系的traits</strong></p>
+<table>
+<thead>
+<tr>
+<th>traits 类型</th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>template&lt; typename T, typename U&gt;<!-- raw HTML omitted -->struct is_same;</td>
+<td>判断两个类型是否相同</td>
+</tr>
+<tr>
+<td>template&lt; typename T, typename U&gt;<!-- raw HTML omitted -->struct is_base_of;</td>
+<td>判断类型T是否是类型U的基类</td>
+</tr>
+<tr>
+<td>template&lt; typename T, typename U&gt;<!-- raw HTML omitted -->struct is_convertible;</td>
+<td>判断类型T能否转换为类型U</td>
+</tr>
+</tbody>
+</table>
+<p><strong>1.4 类型的转换 traits</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">traits类型	<span style="color:#960050;background-color:#1e0010">说明</span>
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">remove_const</span>;	<span style="color:#960050;background-color:#1e0010">移除</span><span style="color:#66d9ef">const</span>
+    
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">add_const</span>;	<span style="color:#960050;background-color:#1e0010">添加</span><span style="color:#66d9ef">const</span>
+    
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">remove_reference</span>;	<span style="color:#960050;background-color:#1e0010">移除引用</span>
+    
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">add_lvalue_reference</span>;	<span style="color:#960050;background-color:#1e0010">添加左值引用</span>
+    
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">add_rvalue_reference</span>;	<span style="color:#960050;background-color:#1e0010">添加右值引用</span>
+    
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">remove_extent</span>;	<span style="color:#960050;background-color:#1e0010">移除数组顶层的维度，</span>
+<span style="color:#75715e">//比如 int [3][3][2] 变为 int [3][2]
+</span><span style="color:#75715e"></span>    
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">remove_all_extent</span>;	<span style="color:#960050;background-color:#1e0010">移除数组所有的维度，比如</span> <span style="color:#66d9ef">int</span> [<span style="color:#ae81ff">3</span>][<span style="color:#ae81ff">3</span>][<span style="color:#ae81ff">2</span>] <span style="color:#960050;background-color:#1e0010">变为</span> <span style="color:#66d9ef">int</span>
+    
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">remove_pointer</span>;	<span style="color:#960050;background-color:#1e0010">移除指针</span>
+    
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">add_pointer</span>;	<span style="color:#960050;background-color:#1e0010">添加指针</span>
+    
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">decay</span>;	<span style="color:#960050;background-color:#1e0010">移除</span>cv或者添加指针
+    
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">typename</span> .... T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">common_type</span>;	<span style="color:#960050;background-color:#1e0010">获取公共类型</span>
+
+    <span style="color:#75715e">//通过 ::type来访问这些类型。
+</span><span style="color:#75715e"></span>    
+    
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>is_same<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span>, std<span style="color:#f92672">::</span>add_const<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;::</span>type<span style="color:#f92672">&gt;::</span>value <span style="color:#f92672">&lt;&lt;</span> endl; <span style="color:#75715e">//结果为true
+</span><span style="color:#75715e"></span>std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>is_same<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, std<span style="color:#f92672">::</span>remove_all_extent<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>[<span style="color:#ae81ff">2</span>][<span style="color:#ae81ff">2</span>][<span style="color:#ae81ff">3</span>]<span style="color:#f92672">&gt;::</span>type<span style="color:#f92672">&gt;::</span>value<span style="color:#f92672">&lt;&lt;</span>endl;
+ 
+<span style="color:#75715e">//在根据模板参数创建对象时，要注意移除引用：
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">typename</span> std<span style="color:#f92672">::</span>remove_reference<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>type<span style="color:#f92672">*</span> Create(){
+    <span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">typename</span> std<span style="color:#f92672">::</span>remove_reference<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>type U;
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">U</span>();
+}
+<span style="color:#75715e">//因为模板参数可能是引用类型，而创建对象时，需要原始的类型，不能用引用类型，所以需要将可能的引用移除
+</span><span style="color:#75715e"></span> 
+<span style="color:#75715e">//如果给的模板参数是一个带cv描述符的引用类型，要获取它的原始类型，可以使用decay
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">typename</span> std<span style="color:#f92672">::</span>decay<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>type<span style="color:#f92672">*</span> Create(){
+    <span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">typename</span> std<span style="color:#f92672">::</span>decay<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>type U;
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">U</span>();
+}
+ 
+decay还可以获得函数的指针类型<span style="color:#960050;background-color:#1e0010">，从而将函数指针变量保存起来，以便在后面延迟调用。</span>
+typdef std<span style="color:#f92672">::</span>decay<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>(<span style="color:#66d9ef">double</span>)<span style="color:#f92672">&gt;::</span>type F; <span style="color:#75715e">//F为一个函数指针类型， int(*)(double)
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> F<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">SimpleFunction</span>{
+    <span style="color:#66d9ef">using</span> FnTyppe <span style="color:#f92672">=</span> <span style="color:#66d9ef">typename</span> std<span style="color:#f92672">::</span>decay<span style="color:#f92672">&lt;</span>F<span style="color:#f92672">&gt;::</span>type;
+    SimpleFunction(F<span style="color:#f92672">&amp;</span> f)<span style="color:#f92672">:</span> m_fn(f){};
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Run</span>(){
+        m_fn();
+    }
+     
+    FnType m_fn;
+};
+</code></pre></div><h2 id="2-根据条件选择的traits"><strong>2. 根据条件选择的traits</strong></h2>
+<p>std::conditional在编译期根据一个判断式选择两个类型中的一个，和条件表达式的语义类似，类似于一个三元表达式：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">bool</span> B, <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span>, <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">F</span><span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">conditional</span>;
+<span style="color:#75715e">//在std::conditonal模板参数中，如果B为true，则conditional::type为T，否则为F。
+</span><span style="color:#75715e"></span>std<span style="color:#f92672">::</span>conditional<span style="color:#f92672">&lt;</span>true, <span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">double</span><span style="color:#f92672">&gt;::</span>type <span style="color:#75715e">//= int
+</span></code></pre></div><h2 id="3-获取可调用对象返回类型的traits"><strong>3. 获取可调用对象返回类型的traits</strong></h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">//返回类型后置
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> F, <span style="color:#66d9ef">typename</span> Arg<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">auto</span> Func(F f, Arg arg)<span style="color:#f92672">-&gt;</span><span style="color:#66d9ef">decltype</span>(f(arg)){
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">f</span>(arg);
+}
+
+ <span style="color:#75715e">//c++11提供了另一个traits——result_of，用来在编译期获取一个可调用对象的返回类型。
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> F, <span style="color:#66d9ef">class</span><span style="color:#960050;background-color:#1e0010">... </span><span style="color:#a6e22e">ArgTypes</span><span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">result_of</span><span style="color:#f92672">&lt;</span>F(ArgTypes...)<span style="color:#f92672">&gt;</span>;
+ 
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">fn</span>(<span style="color:#66d9ef">int</span>) {<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">int</span>();};
+<span style="color:#66d9ef">typedef</span> <span style="color:#a6e22e">int</span>(<span style="color:#f92672">&amp;</span>fn_ref)(<span style="color:#66d9ef">int</span>);
+<span style="color:#66d9ef">typedef</span> <span style="color:#a6e22e">int</span>(<span style="color:#f92672">*</span>fn_ptr)(<span style="color:#66d9ef">int</span>);
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">fn_class</span>{
+    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">operator</span>()(<span style="color:#66d9ef">int</span> i){
+        <span style="color:#66d9ef">return</span> i;
+    }
+};
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+    <span style="color:#66d9ef">typedef</span> std<span style="color:#f92672">::</span>result_of<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">decltype</span>(fn)<span style="color:#f92672">&amp;</span>(<span style="color:#66d9ef">int</span>)<span style="color:#f92672">&gt;::</span>type A;  <span style="color:#75715e">//int
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">typedef</span> std<span style="color:#f92672">::</span>result_of<span style="color:#f92672">&lt;</span>fn_ref(<span style="color:#66d9ef">int</span>)<span style="color:#f92672">&gt;::</span>type B;        <span style="color:#75715e">//int
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">typedef</span> std<span style="color:#f92672">::</span>result_of<span style="color:#f92672">&lt;</span>fn_ptr(<span style="color:#66d9ef">int</span>)<span style="color:#f92672">&gt;::</span>type C;        <span style="color:#75715e">//int
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">typedef</span> std<span style="color:#f92672">::</span>result_of<span style="color:#f92672">&lt;</span>fn_class(<span style="color:#66d9ef">int</span>)<span style="color:#f92672">&gt;::</span>type D;      <span style="color:#75715e">//int
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+<span style="color:#75715e">//需要注意 std::result_of&lt;Fn(ArgTypes)&gt; 要去Fn为一个可调用对象，而函数类型不是一个可调用对象，因此，不能使用
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">typedef</span> std<span style="color:#f92672">::</span>result_of<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">decltype</span>(fn)(<span style="color:#66d9ef">int</span>)<span style="color:#f92672">&gt;::</span>type A:  <span style="color:#75715e">//错误
+</span><span style="color:#75715e">//需要先将fn转换为一个可调用对象类型，比如：
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">typedef</span> std<span style="color:#f92672">::</span>result_of<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">decltype</span>(fn)<span style="color:#f92672">&amp;</span>(<span style="color:#66d9ef">int</span>)<span style="color:#f92672">&gt;::</span>type A;
+<span style="color:#66d9ef">typedef</span> std<span style="color:#f92672">::</span>result_of<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">decltype</span>(fn)<span style="color:#f92672">*</span>(<span style="color:#66d9ef">int</span>)<span style="color:#f92672">&gt;::</span>type B;
+<span style="color:#66d9ef">typedef</span> std<span style="color:#f92672">::</span>result_of<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>decay<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">decltype</span>(fn)<span style="color:#f92672">&gt;::</span>type(<span style="color:#66d9ef">int</span>)<span style="color:#f92672">&gt;::</span>type C;
+</code></pre></div><h2 id="4-根据条件禁用或启用某种或某些类型traits"><strong>4. 根据条件禁用或启用某种或某些类型traits</strong></h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">bool</span> B, <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">void</span><span style="color:#f92672">&gt;</span>   <span style="color:#75715e">//T为返回类型，常用作函数的返回类型
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">enable_if</span>;
+<span style="color:#960050;background-color:#1e0010">```</span>
+<span style="color:#960050;background-color:#1e0010">`当</span>B为true的时候<span style="color:#960050;background-color:#1e0010">，返回类型</span>T<span style="color:#960050;background-color:#1e0010">，否则编译出错。`</span>
+<span style="color:#960050;background-color:#1e0010">```</span>
+<span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>       <span style="color:#75715e">//T只有为合法的类型，才能调用该函数，否则编译出错
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">typename</span> std<span style="color:#f92672">::</span>enable_if<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>is_arithmetic<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>value, T<span style="color:#f92672">&gt;::</span>type foo(T t){
+    <span style="color:#66d9ef">return</span> t;
+}
+<span style="color:#66d9ef">auto</span> r <span style="color:#f92672">=</span> foo(<span style="color:#ae81ff">1</span>);    <span style="color:#75715e">//返回1
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">auto</span> r1 <span style="color:#f92672">=</span> foo(<span style="color:#ae81ff">1.2</span>); <span style="color:#75715e">//返回1.2
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">auto</span> r2 <span style="color:#f92672">=</span> foo(<span style="color:#e6db74">&#34;hello&#34;</span>); <span style="color:#75715e">//编译出错
+</span></code></pre></div><h2 id="5sfinae">5.SFINAE</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">has_type</span> {
+<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">char</span> one;
+    <span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> { <span style="color:#66d9ef">char</span> data[<span style="color:#ae81ff">2</span>]; } two;
+    <span style="color:#75715e">// 存在的话返回类型为 one
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> U<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">static</span> one test(<span style="color:#66d9ef">typename</span> U<span style="color:#f92672">::</span>type<span style="color:#f92672">*</span>);
+    <span style="color:#75715e">// 不存在的话返回类型为 two
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> U<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">static</span> two test(...);
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">enum</span> { value <span style="color:#f92672">=</span> <span style="color:#66d9ef">sizeof</span>(test<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">0</span>)) <span style="color:#f92672">==</span> <span style="color:#66d9ef">sizeof</span>(one) };
+};
+</code></pre></div><p>如果 <strong>T::type</strong> 存在的话就会选择第一个重载，否则就会选择第二个重载，由此判断 <strong>T::type</strong> 是否存在。但是这样的代码阅读起来可能会挺费劲的……于是，现在有了 void_t！</p>
+<h2 id="6-is_detected">6. is_detected</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">//下面是用 is_detected 判断成员函数是否存在：
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">using</span> has_type_t <span style="color:#f92672">=</span> <span style="color:#66d9ef">typename</span> T<span style="color:#f92672">::</span>type;
+<span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">using</span> has_type <span style="color:#f92672">=</span> is_detected<span style="color:#f92672">&lt;</span>has_type_t, T<span style="color:#f92672">&gt;</span>;
+
+
+<span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span>, <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span>...<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Op</span>, <span style="color:#66d9ef">typename</span>... T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">is_detected_impl</span> <span style="color:#f92672">:</span> std<span style="color:#f92672">::</span>false_type {};
+<span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span>...<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Op</span>, <span style="color:#66d9ef">typename</span>... T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">is_detected_impl</span><span style="color:#f92672">&lt;</span>void_t<span style="color:#f92672">&lt;</span>Op<span style="color:#f92672">&lt;</span>T...<span style="color:#f92672">&gt;&gt;</span>, Op, T...<span style="color:#f92672">&gt;</span> <span style="color:#f92672">:</span> std<span style="color:#f92672">::</span>true_type {};
+
+<span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span>...<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Op</span>, <span style="color:#66d9ef">typename</span>... T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">using</span> is_detected <span style="color:#f92672">=</span> is_detected_impl<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span>, Op, T...<span style="color:#f92672">&gt;</span>;
 </code></pre></div><h1 id="模板返回类型">模板返回类型</h1>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">    <span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OutputType</span> <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>string<span style="color:#f92672">&gt;</span>
     OutputType get(<span style="color:#66d9ef">int</span> idx)

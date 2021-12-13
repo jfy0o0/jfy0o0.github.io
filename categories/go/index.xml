@@ -13,10 +13,7 @@
       <pubDate>Wed, 03 Nov 2021 13:51:10 +0800</pubDate>
       
       <guid>https://jfy0o0.github.io/2021/go-gdb%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95go%E7%A8%8B%E5%BA%8F/</guid>
-      <description>编译选项 go build -gcflags “-N -l” // 编译，关闭内联优化。 加载goroutine gdb原生支持golang的调试，但是像info goroutines此类有go特性的命令却无法使用， info goroutines，提示找不到Undefined info command: &amp;ldquo;goroutines&amp;rdquo;. Try &amp;ldquo;help info&amp;rdquo;. 以下列出解决方案。
-首先找到go的安装路径
-$ which go /usr/local/go/bin/go在go/bin/go之前的便是安装目录（如：/usr/local） 在go/bin/go之前的便是安装目录（如：/usr/local） 加载runtime-gdb.py
- 方法一：打开gdb，在运行程序之前输入：  (gdb) source /usr/local/go/src/runtime/runtime-gdb.py　（注：每次gdb都要运行）  方法二：在.gdinit文件中添加如下配置,没有文件就创建一个,重启gdb生效  add-auto-load-safe-path /usr/local/go/src/runtime/runtime-gdb.py </description>
+      <description>编译选项 go build -gcflags “-N -l” // 编译，关闭内联优化。 gobuild -a 完全编译，不理会-i产生的.a文件(文件会比不带-a的编译出来要大？) -n 仅打印输出build需要的命令，不执行build动作（少用）。 -p n 开多少核cpu来并行编译，默认为本机CPU核数（少用）。 -race 同时检测数据竞争状态，只支持 linux/amd64, freebsd/amd64, darwin/amd64 和 windows/amd64. -msan 启用与内存消毒器的互操作。仅支持linux / amd64，并且只用Clang / LLVM作为主机C编译器（少用）。 -v 打印出被编译的包名（少用）. -work 打印临时工作目录的名称，并在退出时不删除它（少用）。 -x 同时打印输出执行的命令名（-n）（少用）. -asmflags &amp;#39;flag list&amp;#39; 传递每个go工具asm调用的参数（少用） -buildmode mode 编译模式（少用） &amp;#39;go help buildmode&amp;#39; -compiler name 使用的编译器 == runtime.Compiler (gccgo or gc)（少用）. -gccgoflags &amp;#39;arg list&amp;#39; gccgo 编译/链接器参数（少用） -gcflags &amp;#39;arg list&amp;#39; 垃圾回收参数（少用）. -installsuffix suffix a suffix to use in the name of the package installation directory, in order to keep output separate from default builds.</description>
     </item>
     
     <item>

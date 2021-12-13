@@ -57,7 +57,7 @@
     "datePublished": "2020-12-14 19:08:28 \u002b0800 CST",
     "dateModified" : "2020-12-14 19:08:28 \u002b0800 CST",
     "url" : "https:\/\/jfy0o0.github.io\/2020\/linux-%E8%BD%AF%E4%BB%B6-gdb\/",
-    "wordCount" : "281",
+    "wordCount" : "377",
     "keywords" : [ "Linux Soft", "Jiang . \u0027s blog"]
 }
 </script>
@@ -526,6 +526,29 @@ vi /etc/sysctl.conf
 kernel.core_uses_pid <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
 kernel.core_pattern<span style="color:#f92672">=</span>/tmp/core-%e-%p
 sysctl -p /etc/sysctl.conf
+</code></pre></div><p><strong>core文件的名称和生成路径</strong></p>
+<p>　　若未设置过core文件生成路径和名称，默认生成在可执行文件运行命令的同一路径下，命名为core。新的core文件生成将覆盖原来的core文件。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmd" data-lang="cmd"> 　1) core文件保存位置和文件名设置   通过编辑 proc/sys/kernel/core_pattern，设置文件路径和文件名，可用如下命令：
+
+ 　　**echo <span style="color:#e6db74">&#34;/corefile/core-</span>%e-%<span style="color:#e6db74">p-%t&#34;</span> &gt; core_pattern**
+
+ 　所产生的 core 文件会存放到 /corefile 目录下，产生的文件名为 core- 命令名 -pid- 时间戳
+
+　　文件名参数列表说明:
+
+  　　%p - insert pid into filename 添加 pid
+
+  　　%u - insert current uid into filename 添加当前 uid
+
+  　　%g - insert current gid into filename 添加当前 gid
+
+  　　%s - insert signal that caused the coredump into the filename 添加导致产生 core 的信号
+
+  　　%t - insert UNIX time that the coredump occurred into filename 添加 core 文件生成时的 unix 时间
+
+  　　%h - insert hostname where the coredump happened into filename 添加主机名
+
+  　　%e - insert coredumping executable name into filename 添加命令名
 </code></pre></div>
     </div>
 

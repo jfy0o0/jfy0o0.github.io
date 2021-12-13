@@ -57,7 +57,7 @@
     "datePublished": "2021-07-29 13:43:01 \u002b0800 CST",
     "dateModified" : "2021-07-29 13:43:01 \u002b0800 CST",
     "url" : "https:\/\/jfy0o0.github.io\/2021\/linux-io%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8\/",
-    "wordCount" : "1824",
+    "wordCount" : "2300",
     "keywords" : [ "Linux", "Jiang . \u0027s blog"]
 }
 </script>
@@ -1066,6 +1066,216 @@ err:
     ev.events <span style="color:#f92672">=</span> state;
     ev.data.fd <span style="color:#f92672">=</span> fd;
     epoll_ctl(epollfd,EPOLL_CTL_MOD,fd,<span style="color:#f92672">&amp;</span>ev);
+}
+</code></pre></div><h2 id="eg">eg:</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">/******************************************************************************
+</span><span style="color:#75715e"> * 文件名称：TestEpoll.cpp
+</span><span style="color:#75715e"> * 文件描述：Epoll测试服务器端
+</span><span style="color:#75715e"> ******************************************************************************/</span>
+
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;errno.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/types.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/socket.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/epoll.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;arpa/inet.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;fcntl.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#define LOG_ERR(fmt, args...) fprintf(stderr, &#34;%d|&#34;fmt&#34;\n&#34;, __LINE__, ##args)
+</span><span style="color:#75715e">#define LOG_INFO(fmt, args...) fprintf(stdout, &#34;%d|&#34;fmt&#34;\n&#34;, __LINE__, ##args)
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">CreateListenFd</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>pszIP, <span style="color:#66d9ef">uint16_t</span> usPort)
+{
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">sockaddr_in</span> stAddr;
+    stAddr.sin_family <span style="color:#f92672">=</span> AF_INET;
+    stAddr.sin_port <span style="color:#f92672">=</span> htons(usPort);
+    stAddr.sin_addr.s_addr <span style="color:#f92672">=</span> inet_addr(pszIP);
+    socklen_t nAddrLen <span style="color:#f92672">=</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">sockaddr_in</span>);
+
+    <span style="color:#66d9ef">int</span> iFd <span style="color:#f92672">=</span> socket(AF_INET, SOCK_STREAM, <span style="color:#ae81ff">0</span>);
+
+    <span style="color:#66d9ef">if</span> (iFd <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+    {
+        LOG_ERR(<span style="color:#e6db74">&#34;create socket fail: %s&#34;</span>, strerror(errno)); 
+        <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+    }
+
+    <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">0</span> <span style="color:#f92672">&gt;</span> bind(iFd, (<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">sockaddr</span> <span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>stAddr, nAddrLen))
+    {
+        LOG_ERR(<span style="color:#e6db74">&#34;bind fail: %s&#34;</span>, strerror(errno));
+        <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+    }
+
+    <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">0</span> <span style="color:#f92672">&gt;</span> listen(iFd, <span style="color:#ae81ff">64</span>))
+    {
+        LOG_ERR(<span style="color:#e6db74">&#34;listen fail: %s&#34;</span>, strerror(errno));
+        <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+    }
+
+    LOG_INFO(<span style="color:#e6db74">&#34;Listening: %s:%hu, fd=%d&#34;</span>, pszIP, usPort, iFd);
+
+    <span style="color:#66d9ef">return</span> iFd;
+}
+
+<span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">SetSockNonBlock</span>(<span style="color:#66d9ef">int</span> iSockfd)
+{
+    <span style="color:#66d9ef">int</span> iRet <span style="color:#f92672">=</span> fcntl(iSockfd, F_GETFL, <span style="color:#ae81ff">0</span>);
+    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">==</span> iRet)
+    {
+        <span style="color:#66d9ef">return</span> false;    
+    }
+
+    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">==</span> fcntl(iSockfd, F_SETFL, iRet <span style="color:#f92672">|</span> O_NONBLOCK))
+    {
+        <span style="color:#66d9ef">return</span> false;
+    }
+
+    <span style="color:#66d9ef">return</span> true;
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+    <span style="color:#66d9ef">int</span> iEpollFd <span style="color:#f92672">=</span> epoll_create(<span style="color:#ae81ff">100</span>);    <span style="color:#75715e">// 100为预估需要epoll的fd数量
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (iEpollFd <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+    {
+        LOG_ERR(<span style="color:#e6db74">&#34;epoll_create fail: %s&#34;</span>);
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+    }
+
+    <span style="color:#66d9ef">int</span> iListenFd <span style="color:#f92672">=</span> CreateListenFd(<span style="color:#e6db74">&#34;0.0.0.0&#34;</span>, <span style="color:#ae81ff">12333</span>);
+    <span style="color:#66d9ef">if</span> (iListenFd <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+    {
+        LOG_ERR(<span style="color:#e6db74">&#34;CreateListenFd Fail&#34;</span>);
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+    }
+
+    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SetSockNonBlock(iListenFd))    <span style="color:#75715e">// 确保socket为非阻塞状态
+</span><span style="color:#75715e"></span>    {
+        LOG_ERR(<span style="color:#e6db74">&#34;SetSockNonBlock Fail: %s&#34;</span>, strerror(errno));
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+    }
+
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">epoll_event</span> ev, events[<span style="color:#ae81ff">20</span>];
+
+    ev.events <span style="color:#f92672">=</span> EPOLLIN;
+    ev.data.fd <span style="color:#f92672">=</span> iListenFd;
+
+    <span style="color:#75715e">// 将监听的socket加入epoll
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> iRet <span style="color:#f92672">=</span> epoll_ctl(iEpollFd, EPOLL_CTL_ADD, iListenFd, <span style="color:#f92672">&amp;</span>ev);
+    <span style="color:#66d9ef">if</span> (iRet <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+    {
+        LOG_ERR(<span style="color:#e6db74">&#34;epoll_ctl fail: %s&#34;</span>, strerror(errno)); 
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+    }
+
+    <span style="color:#66d9ef">while</span> (true) 
+    {
+        iRet <span style="color:#f92672">=</span> epoll_wait(iEpollFd, events, <span style="color:#ae81ff">20</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);    <span style="color:#75715e">// 最后的-1表示超时时间无穷大
+</span><span style="color:#75715e"></span>
+        <span style="color:#66d9ef">if</span> (iRet <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+        {
+            <span style="color:#66d9ef">if</span> (errno <span style="color:#f92672">==</span> EINTR)
+            {
+                LOG_ERR(<span style="color:#e6db74">&#34;Interrupted, quit.&#34;</span>);
+            }
+            <span style="color:#66d9ef">else</span>
+            {
+                LOG_ERR(<span style="color:#e6db74">&#34;epoll_wait fail: %s&#34;</span>, strerror(errno)); 
+            }
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+        }
+
+        <span style="color:#66d9ef">int</span> iEvents <span style="color:#f92672">=</span> iRet;
+
+        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> iEvents; i<span style="color:#f92672">++</span>)
+        {
+            <span style="color:#75715e">// 对于监听状态中的套接字，可读意味着有新的连接
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> (events[i].data.fd <span style="color:#f92672">==</span> iListenFd)
+            {
+                <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">sockaddr_in</span> stClientAddr;
+                socklen_t nAddrLen <span style="color:#f92672">=</span> <span style="color:#66d9ef">sizeof</span>(stClientAddr);
+
+                memset(<span style="color:#f92672">&amp;</span>stClientAddr, <span style="color:#ae81ff">0</span>, <span style="color:#66d9ef">sizeof</span>(stClientAddr));
+
+                <span style="color:#66d9ef">int</span> iClientFd <span style="color:#f92672">=</span> accept(iListenFd, (<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">sockaddr</span> <span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>stClientAddr, <span style="color:#f92672">&amp;</span>nAddrLen);
+                <span style="color:#66d9ef">if</span> (iClientFd <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+                {
+                    LOG_ERR(<span style="color:#e6db74">&#34;accept fail: %s&#34;</span>, strerror(errno));
+                    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+                }
+
+                <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SetSockNonBlock(iClientFd))    <span style="color:#75715e">// 将新连接的套接字设置为非阻塞
+</span><span style="color:#75715e"></span>                {
+                    LOG_ERR(<span style="color:#e6db74">&#34;SetSockNonBlock Fail: fd=%d %s&#34;</span>, iClientFd, strerror(errno));
+                    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+                }
+
+                LOG_INFO(<span style="color:#e6db74">&#34;Connected:%s:%hu, fd=%d&#34;</span>, inet_ntoa(stClientAddr.sin_addr), htons(stClientAddr.sin_port), iClientFd);
+
+                ev.events <span style="color:#f92672">=</span> EPOLLIN;
+                ev.data.fd <span style="color:#f92672">=</span> iClientFd;
+
+                <span style="color:#75715e">// 将连接的fd加入epoll
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">int</span> iRet <span style="color:#f92672">=</span> epoll_ctl(iEpollFd, EPOLL_CTL_ADD, iClientFd, <span style="color:#f92672">&amp;</span>ev);
+                <span style="color:#66d9ef">if</span> (iRet <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+                {
+                    LOG_ERR(<span style="color:#e6db74">&#34;epoll_ctl fail: %s&#34;</span>, strerror(errno)); 
+                    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+                }
+            }
+            <span style="color:#66d9ef">else</span>   <span style="color:#75715e">// 对于客户端连接可读的情况
+</span><span style="color:#75715e"></span>            {
+                <span style="color:#66d9ef">int</span> iClientFd <span style="color:#f92672">=</span> events[i].data.fd;
+
+                <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">char</span> s_acBuf[<span style="color:#ae81ff">10</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1024</span>] <span style="color:#f92672">=</span> {<span style="color:#ae81ff">0</span>};
+
+                <span style="color:#66d9ef">int</span> iTotal <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+
+                <span style="color:#66d9ef">do</span>
+                {
+                    iRet <span style="color:#f92672">=</span> recv(iClientFd, <span style="color:#f92672">&amp;</span>s_acBuf[iTotal], <span style="color:#66d9ef">sizeof</span>(s_acBuf) <span style="color:#f92672">-</span> iTotal, <span style="color:#ae81ff">0</span>);
+
+                    <span style="color:#66d9ef">if</span> (iRet <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>)
+                    {
+                        iTotal <span style="color:#f92672">+=</span> iRet;
+                    }
+                    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (iRet <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> errno <span style="color:#f92672">==</span> EAGAIN)
+                    {
+                        LOG_INFO(<span style="color:#e6db74">&#34;Total: %d Bytes, [%s]&#34;</span>, iTotal, s_acBuf);
+                        <span style="color:#66d9ef">break</span>;
+                    }
+                    <span style="color:#66d9ef">else</span>
+                    {
+                        <span style="color:#66d9ef">if</span> (iRet <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)    <span style="color:#75715e">// 连接已经断开
+</span><span style="color:#75715e"></span>                        {
+                            LOG_INFO(<span style="color:#e6db74">&#34;Disconnected: fd=%d&#34;</span>, iClientFd);
+                        }
+                        <span style="color:#66d9ef">else</span> <span style="color:#75715e">// iRet &lt; 0 出现错误
+</span><span style="color:#75715e"></span>                        {
+                            LOG_INFO(<span style="color:#e6db74">&#34;recv fail: fd=%d %s&#34;</span>, iClientFd, strerror(errno));
+                        }
+
+                        <span style="color:#75715e">// 将出错或断开连接的fd从epoll中去掉
+</span><span style="color:#75715e"></span>                        <span style="color:#66d9ef">int</span> iRet <span style="color:#f92672">=</span> epoll_ctl(iEpollFd, EPOLL_CTL_DEL, iClientFd, NULL);
+                        <span style="color:#66d9ef">if</span> (iRet <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+                        {
+                            LOG_ERR(<span style="color:#e6db74">&#34;epoll_ctl fail: %s&#34;</span>, strerror(errno)); 
+                            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+                        }
+
+                        close(iClientFd);
+                        <span style="color:#66d9ef">break</span>;
+                    }
+
+                } <span style="color:#66d9ef">while</span> (iTotal <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">sizeof</span>(s_acBuf));
+            }
+        }
+    }
+
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 }
 </code></pre></div>
     </div>

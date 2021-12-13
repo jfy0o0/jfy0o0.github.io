@@ -6,17 +6,49 @@
     <description>Recent content in Posts on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Nov 2021 13:51:10 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 11 Nov 2021 15:34:01 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>elementary knowledge - 内存五区</title>
+      <link>https://jfy0o0.github.io/2021/elementary-knowledge-%E5%86%85%E5%AD%98%E4%BA%94%E5%8C%BA/</link>
+      <pubDate>Thu, 11 Nov 2021 15:34:01 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/elementary-knowledge-%E5%86%85%E5%AD%98%E4%BA%94%E5%8C%BA/</guid>
+      <description>内存五区 栈： 存放函数参数以及局部变量 , 在出作用域时 , 将自动被释放 . 栈内存分配运算内置于处理器的指令集中 , 效率 很 高 , 但分配的内存容量有限 .
+堆： new 分配的内存块 ( 包括数组 , 类实例等 ), 需 delete 手动释放 . 如果未释放 , 在整个程序结束后 ,OS 会帮你回收掉 .
+自由存储区: malloc 分配的内存块 , 需 free 手动释放 . 它和堆有些相似 .
+全局/静态区: 保存自动全局变量和static变量（包括static全局和局部变量）。静态区的内容在整个程序的生命周期内都存在，有编译器在编译的时候分配（数据段（存储全局数据和静态数据）和代码段（可执行的代码/只读常量））。
+常量存储区: 常量 (const) 存于此处 , 此存储区不可修改 .</description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43; - 元编程</title>
+      <link>https://jfy0o0.github.io/2021/cpp_%E5%85%83%E7%BC%96%E7%A8%8B/</link>
+      <pubDate>Mon, 08 Nov 2021 14:36:36 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/cpp_%E5%85%83%E7%BC%96%E7%A8%8B/</guid>
+      <description>概念 1.概述 　模版元编程（template metaprogram）是C++中最复杂也是威力最强大的编程范式，它是一种可以创建和操纵程序的程序。模版元编程完全不同于普通的运行期程序，它很独特，因为模版元程序的执行完全是在编译期，并且模版元程序操纵的数据不能是运行时变量，只能是编译期常量，不可修改，另外它用到的语法元素也是相当有限，不能使用运行期的一些语法，比如if-else，for等语句都不能用。因此，模版元编程需要很多技巧，常常需要类型重定义、枚举常量、继承、模板偏特化等方法来配合，因此编写模版元编程比较复杂也比较困难。
+　现在C++11新增了一些模版元相关的特性，不仅可以让我们编写模版元程序变得更容易，还进一步增强了泛型编程的能力，比如type_traits让我们不必再重复发明轮子了，给我们提供了大量便利的元函数，还提供了可变模板参数和tuple，让模版元编程“如虎添翼”。本文将向读者展示C++11中模版元编程常用的技巧和具体应用。
+2.模版元基本概念 　模版元程序由元数据和元函数组成，元数据就是元编程可以操作的数据，即C++编译器在编译期可以操作的数据。元数据不是运行期变量，只能是编译期常量，不能修改，常见的元数据有enum枚举常量、静态常量、基本类型和自定义类型等。
+　元函数是模板元编程中用于操作处理元数据的“构件”，可以在编译期被“调用”，因为它的功能和形式和运行时的函数类似，而被称为元函数，它是元编程中最重要的构件。元函数实际上表现为C++的一个类、模板类或模板函数，它的通常形式如下：
+template&amp;lt;int N, int M&amp;gt; struct meta_func { static const int value = N+M; } 　调用元函数获取value值：cout&amp;laquo;meta_func&amp;lt;1, 2&amp;gt;::value&amp;laquo;endl;
+　meta_func的执行过程是在编译期完成的，实际执行程序时，是没有计算动作而是直接使用编译期的计算结果的。元函数只处理元数据，元数据是编译期常量和类型，所以下面的代码是编译不过的：
+int i = 1, j = 2; meta_func&amp;lt;i, j&amp;gt;::value; //错误，元函数无法处理运行时普通数据 　模板元编程产生的源程序是在编译期执行的程序，因此它首先要遵循C++和模板的语法，但是它操作的对象不是运行时普通的变量，因此不能使用运行时的C++关键字（如if、else、for），可用的语法元素相当有限，最常用的是：
+ enum、static const，用来定义编译期的整数常量； typedef/using，用于定义元数据； T、Args&amp;hellip;，声明元数据类型； template，主要用于定义元函数； &amp;ldquo;::&amp;quot;，域运算符，用于解析类型作用域获取计算结果（元数据）。  如果模板元编程中需要if-else、for等逻辑时该怎么办呢？
+模板元中的if-else可以通过type_traits来实现，它不仅仅可以在编译期做判断，还可以做计算、查询、转换和选择。
+模板元中的for等逻辑可以通过递归、重载、和模板特化（偏特化）等方法实现。
+下面来看看C++11提供的模版元基础库type_traits。
+3.type_traits 　type_traits是C++11提供的模板元基础库，通过type_traits可以实现在编译期计算、查询、判断、转换和选择，提供了模板元编程需要的一些常用元函数。下面来看看一些基本的type_traits的基本用法。
+　最简单的一个type_traits是定义编译期常量的元函数integral_constant，它的定义如下：
+template&amp;lt; class T, T v &amp;gt; struct integral_constant; 　借助这个简单的trait，我们可以很方便地定义编译期常量，比如定义一个值为1的int常量可以这样定义：</description>
+    </item>
+    
     <item>
       <title>Go - gdb动态调试go程序</title>
       <link>https://jfy0o0.github.io/2021/go-gdb%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95go%E7%A8%8B%E5%BA%8F/</link>
       <pubDate>Wed, 03 Nov 2021 13:51:10 +0800</pubDate>
       
       <guid>https://jfy0o0.github.io/2021/go-gdb%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95go%E7%A8%8B%E5%BA%8F/</guid>
-      <description>编译选项 go build -gcflags “-N -l” // 编译，关闭内联优化。 加载goroutine gdb原生支持golang的调试，但是像info goroutines此类有go特性的命令却无法使用， info goroutines，提示找不到Undefined info command: &amp;ldquo;goroutines&amp;rdquo;. Try &amp;ldquo;help info&amp;rdquo;. 以下列出解决方案。
-首先找到go的安装路径
-$ which go /usr/local/go/bin/go在go/bin/go之前的便是安装目录（如：/usr/local） 在go/bin/go之前的便是安装目录（如：/usr/local） 加载runtime-gdb.py
- 方法一：打开gdb，在运行程序之前输入：  (gdb) source /usr/local/go/src/runtime/runtime-gdb.py　（注：每次gdb都要运行）  方法二：在.gdinit文件中添加如下配置,没有文件就创建一个,重启gdb生效  add-auto-load-safe-path /usr/local/go/src/runtime/runtime-gdb.py </description>
+      <description>编译选项 go build -gcflags “-N -l” // 编译，关闭内联优化。 gobuild -a 完全编译，不理会-i产生的.a文件(文件会比不带-a的编译出来要大？) -n 仅打印输出build需要的命令，不执行build动作（少用）。 -p n 开多少核cpu来并行编译，默认为本机CPU核数（少用）。 -race 同时检测数据竞争状态，只支持 linux/amd64, freebsd/amd64, darwin/amd64 和 windows/amd64. -msan 启用与内存消毒器的互操作。仅支持linux / amd64，并且只用Clang / LLVM作为主机C编译器（少用）。 -v 打印出被编译的包名（少用）. -work 打印临时工作目录的名称，并在退出时不删除它（少用）。 -x 同时打印输出执行的命令名（-n）（少用）. -asmflags &amp;#39;flag list&amp;#39; 传递每个go工具asm调用的参数（少用） -buildmode mode 编译模式（少用） &amp;#39;go help buildmode&amp;#39; -compiler name 使用的编译器 == runtime.Compiler (gccgo or gc)（少用）. -gccgoflags &amp;#39;arg list&amp;#39; gccgo 编译/链接器参数（少用） -gcflags &amp;#39;arg list&amp;#39; 垃圾回收参数（少用）. -installsuffix suffix a suffix to use in the name of the package installation directory, in order to keep output separate from default builds.</description>
     </item>
     
     <item>
@@ -641,9 +673,9 @@ class A { public: A(int i) :a(i){} private: int a; }; int main() { A* example = 
       
       <guid>https://jfy0o0.github.io/2020/cpp_%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</guid>
       <description>变长数组 特点：
- 变长 空间合理  eg: struct MutableLenArray { int count; char p[0]; }; 宏的妙用 1. “#”符号把一个符号直接转换为字符串，例如：
-#define TO_STRING(x) #x const char *str = TO_STRING( test ); ##符号会连接两个符号，从而产生新的符号(词法层次)，例如：
-#define SIGN( x ) INT_##x int SIGN( 1 ); //宏被展开后将成为：int INT_1; 2. 变参宏 #define LOG( format, ... ) printf( format, __VA_ARGS__ ) LOG( &amp;#34;%s %d&amp;#34;, str, count );  VA_ARGS是系统预定义宏，被自动替换为参数列表。 经常需要进行输出格式化，重定义时，可以用到以上技巧。  不定参 模板实现： template&amp;lt;typename... T&amp;gt; void func(T... args) { for (auto x : {args.</description>
+ 变长 空间合理  eg: struct MutableLenArray { int count; char p[0]; }; 宏的妙用 1.#和## “#”符号把一个符号直接转换为字符串，例如：
+#define TO_STRING(x) #x const char *str = TO_STRING( test ); #define P(A) printf(&amp;#34;%s:%d\n&amp;#34;,#A,A); int a = 1; P(a) //	a:1  ##符号会连接两个符号，从而产生新的符号(词法层次)，例如：
+#define SIGN( x ) INT_##x int SIGN( 1 ); //宏被展开后将成为：int INT_1; 2. 变参宏 #define LOG( format, ... ) printf( format, __VA_ARGS__ ) LOG( &amp;#34;%s %d&amp;#34;, str, count ); #define LOG(format, args.</description>
     </item>
     
     <item>

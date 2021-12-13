@@ -6,7 +6,29 @@
     <description>Recent content in c&#43;&#43; on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Aug 2021 08:38:24 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 08 Nov 2021 14:36:36 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C&#43;&#43; - 元编程</title>
+      <link>https://jfy0o0.github.io/2021/cpp_%E5%85%83%E7%BC%96%E7%A8%8B/</link>
+      <pubDate>Mon, 08 Nov 2021 14:36:36 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/cpp_%E5%85%83%E7%BC%96%E7%A8%8B/</guid>
+      <description>概念 1.概述 　模版元编程（template metaprogram）是C++中最复杂也是威力最强大的编程范式，它是一种可以创建和操纵程序的程序。模版元编程完全不同于普通的运行期程序，它很独特，因为模版元程序的执行完全是在编译期，并且模版元程序操纵的数据不能是运行时变量，只能是编译期常量，不可修改，另外它用到的语法元素也是相当有限，不能使用运行期的一些语法，比如if-else，for等语句都不能用。因此，模版元编程需要很多技巧，常常需要类型重定义、枚举常量、继承、模板偏特化等方法来配合，因此编写模版元编程比较复杂也比较困难。
+　现在C++11新增了一些模版元相关的特性，不仅可以让我们编写模版元程序变得更容易，还进一步增强了泛型编程的能力，比如type_traits让我们不必再重复发明轮子了，给我们提供了大量便利的元函数，还提供了可变模板参数和tuple，让模版元编程“如虎添翼”。本文将向读者展示C++11中模版元编程常用的技巧和具体应用。
+2.模版元基本概念 　模版元程序由元数据和元函数组成，元数据就是元编程可以操作的数据，即C++编译器在编译期可以操作的数据。元数据不是运行期变量，只能是编译期常量，不能修改，常见的元数据有enum枚举常量、静态常量、基本类型和自定义类型等。
+　元函数是模板元编程中用于操作处理元数据的“构件”，可以在编译期被“调用”，因为它的功能和形式和运行时的函数类似，而被称为元函数，它是元编程中最重要的构件。元函数实际上表现为C++的一个类、模板类或模板函数，它的通常形式如下：
+template&amp;lt;int N, int M&amp;gt; struct meta_func { static const int value = N+M; } 　调用元函数获取value值：cout&amp;laquo;meta_func&amp;lt;1, 2&amp;gt;::value&amp;laquo;endl;
+　meta_func的执行过程是在编译期完成的，实际执行程序时，是没有计算动作而是直接使用编译期的计算结果的。元函数只处理元数据，元数据是编译期常量和类型，所以下面的代码是编译不过的：
+int i = 1, j = 2; meta_func&amp;lt;i, j&amp;gt;::value; //错误，元函数无法处理运行时普通数据 　模板元编程产生的源程序是在编译期执行的程序，因此它首先要遵循C++和模板的语法，但是它操作的对象不是运行时普通的变量，因此不能使用运行时的C++关键字（如if、else、for），可用的语法元素相当有限，最常用的是：
+ enum、static const，用来定义编译期的整数常量； typedef/using，用于定义元数据； T、Args&amp;hellip;，声明元数据类型； template，主要用于定义元函数； &amp;ldquo;::&amp;quot;，域运算符，用于解析类型作用域获取计算结果（元数据）。  如果模板元编程中需要if-else、for等逻辑时该怎么办呢？
+模板元中的if-else可以通过type_traits来实现，它不仅仅可以在编译期做判断，还可以做计算、查询、转换和选择。
+模板元中的for等逻辑可以通过递归、重载、和模板特化（偏特化）等方法实现。
+下面来看看C++11提供的模版元基础库type_traits。
+3.type_traits 　type_traits是C++11提供的模板元基础库，通过type_traits可以实现在编译期计算、查询、判断、转换和选择，提供了模板元编程需要的一些常用元函数。下面来看看一些基本的type_traits的基本用法。
+　最简单的一个type_traits是定义编译期常量的元函数integral_constant，它的定义如下：
+template&amp;lt; class T, T v &amp;gt; struct integral_constant; 　借助这个简单的trait，我们可以很方便地定义编译期常量，比如定义一个值为1的int常量可以这样定义：</description>
+    </item>
+    
     <item>
       <title>C&#43;&#43; - 性能测试</title>
       <link>https://jfy0o0.github.io/2021/cpp_%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/</link>
@@ -327,9 +349,9 @@ class A { public: A(int i) :a(i){} private: int a; }; int main() { A* example = 
       
       <guid>https://jfy0o0.github.io/2020/cpp_%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</guid>
       <description>变长数组 特点：
- 变长 空间合理  eg: struct MutableLenArray { int count; char p[0]; }; 宏的妙用 1. “#”符号把一个符号直接转换为字符串，例如：
-#define TO_STRING(x) #x const char *str = TO_STRING( test ); ##符号会连接两个符号，从而产生新的符号(词法层次)，例如：
-#define SIGN( x ) INT_##x int SIGN( 1 ); //宏被展开后将成为：int INT_1; 2. 变参宏 #define LOG( format, ... ) printf( format, __VA_ARGS__ ) LOG( &amp;#34;%s %d&amp;#34;, str, count );  VA_ARGS是系统预定义宏，被自动替换为参数列表。 经常需要进行输出格式化，重定义时，可以用到以上技巧。  不定参 模板实现： template&amp;lt;typename... T&amp;gt; void func(T... args) { for (auto x : {args.</description>
+ 变长 空间合理  eg: struct MutableLenArray { int count; char p[0]; }; 宏的妙用 1.#和## “#”符号把一个符号直接转换为字符串，例如：
+#define TO_STRING(x) #x const char *str = TO_STRING( test ); #define P(A) printf(&amp;#34;%s:%d\n&amp;#34;,#A,A); int a = 1; P(a) //	a:1  ##符号会连接两个符号，从而产生新的符号(词法层次)，例如：
+#define SIGN( x ) INT_##x int SIGN( 1 ); //宏被展开后将成为：int INT_1; 2. 变参宏 #define LOG( format, ... ) printf( format, __VA_ARGS__ ) LOG( &amp;#34;%s %d&amp;#34;, str, count ); #define LOG(format, args.</description>
     </item>
     
     <item>

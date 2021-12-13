@@ -57,7 +57,7 @@
     "datePublished": "2021-07-20 10:19:18 \u002b0800 CST",
     "dateModified" : "2021-07-20 10:19:18 \u002b0800 CST",
     "url" : "https:\/\/jfy0o0.github.io\/2021\/linux-note\/",
-    "wordCount" : "386",
+    "wordCount" : "404",
     "keywords" : [ "Linux", "Jiang . \u0027s blog"]
 }
 </script>
@@ -312,6 +312,20 @@ nonvoluntary_ctxt_switches: 18031
 <h1 id="demsg">demsg</h1>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">dmesg -Tx | grep <span style="color:#e6db74">&#39;Out of memory&#39;</span>
 <span style="color:#75715e">#查看是否有内存溢出</span>
+</code></pre></div><h1 id="将动态库路径加入系统默认路径">将动态库路径加入系统默认路径</h1>
+<h2 id="linux中error-while-loading-shared-libraries错误解决办法">（Linux中error while loading shared libraries错误解决办法）</h2>
+<ol>
+<li>首先打开/etc/ld.so.conf文件</li>
+<li>加入动态库文件所在的目录：执行vi /etc/ld.so.conf，在&quot;include ld.so.conf.d/*.conf&quot;下方增加&quot;/usr/local/lib&quot;。</li>
+<li>保存后，在命令行终端执行：/sbin/ldconfig -v；
+<ul>
+<li>其作用是将文件/etc/ld.so.conf列出的路径下的库文件缓存到/etc/ld.so.cache以供使用，因此当安装完一些库文件，</li>
+<li>或者修改/etc/ld.so.conf增加了库的新搜索路径，需要运行一下ldconfig，使所有的库文件都被缓存到文件/etc/ld.so.cache中，如果没做，可能会找不到刚安装的库。</li>
+</ul>
+</li>
+</ol>
+<h1 id="对某目录下所有文件内容进行匹配">对某目录下所有文件内容进行匹配</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">grep <span style="color:#e6db74">&#34;content&#34;</span> ./*
 </code></pre></div>
     </div>
 

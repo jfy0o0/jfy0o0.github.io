@@ -6,7 +6,20 @@
     <description>Recent content in elementary knowledge on Jiang . &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Aug 2021 15:06:25 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/elementary-knowledge/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 11 Nov 2021 15:34:01 +0800</lastBuildDate><atom:link href="https://jfy0o0.github.io/tags/elementary-knowledge/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>elementary knowledge - 内存五区</title>
+      <link>https://jfy0o0.github.io/2021/elementary-knowledge-%E5%86%85%E5%AD%98%E4%BA%94%E5%8C%BA/</link>
+      <pubDate>Thu, 11 Nov 2021 15:34:01 +0800</pubDate>
+      
+      <guid>https://jfy0o0.github.io/2021/elementary-knowledge-%E5%86%85%E5%AD%98%E4%BA%94%E5%8C%BA/</guid>
+      <description>内存五区 栈： 存放函数参数以及局部变量 , 在出作用域时 , 将自动被释放 . 栈内存分配运算内置于处理器的指令集中 , 效率 很 高 , 但分配的内存容量有限 .
+堆： new 分配的内存块 ( 包括数组 , 类实例等 ), 需 delete 手动释放 . 如果未释放 , 在整个程序结束后 ,OS 会帮你回收掉 .
+自由存储区: malloc 分配的内存块 , 需 free 手动释放 . 它和堆有些相似 .
+全局/静态区: 保存自动全局变量和static变量（包括static全局和局部变量）。静态区的内容在整个程序的生命周期内都存在，有编译器在编译的时候分配（数据段（存储全局数据和静态数据）和代码段（可执行的代码/只读常量））。
+常量存储区: 常量 (const) 存于此处 , 此存储区不可修改 .</description>
+    </item>
+    
     <item>
       <title>elementary knowledge - P2P技术之UDP打洞</title>
       <link>https://jfy0o0.github.io/2021/elementary-knowledge-p2p%E6%8A%80%E6%9C%AF%E4%B9%8Budp%E6%89%93%E6%B4%9E/</link>
